@@ -1,0 +1,53 @@
+# 
+# Translators:
+# Thu Hoai <contact@bizover.net>, 2013
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-09-05 07:06+0000\n"
+"Last-Translator: Thu Hoai <contact@bizover.net>\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi_VN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: reports.incident_id.required
+msgctxt "reports.incident_id.required"
+msgid "Please verify that you have checked an item"
+msgstr "Xin xác nhận bạn đã chọn đối tượng"
+
+#: reports.incident_id.numeric
+msgctxt "reports.incident_id.numeric"
+msgid "Please verify that you have checked an item"
+msgstr "Xin xác nhận bạn đã chọn đối tượng"
+
+#: reports.incident_id.categories_required
+msgctxt "reports.incident_id.categories_required"
+msgid "Reports must be categorized before they can be approved"
+msgstr "Báo cáo phải được phân loại trước khi được chấp thuận"
+
+#: reports.action.permission
+msgctxt "reports.action.permission"
+msgid "You don't have permission to perform this action"
+msgstr "Bạn không có quyền thực hiện thao tác này"
+
+#: reports.uploadfile.required
+msgctxt "reports.uploadfile.required"
+msgid "You must select a file to upload"
+msgstr "Bạn phải chọn một tập tin để tải lên"
+
+#: reports.uploadfile.type
+msgctxt "reports.uploadfile.type"
+msgid "The upload file must either be of .csv or .xml format"
+msgstr "Tập tin tải lên phải có định dạng .csv hoặc .xml"
+
+#: reports.uploadfile.valid
+msgctxt "reports.uploadfile.valid"
+msgid "The file upload field does not seem to contain a valid file"
+msgstr "lĩnh vực thông tin tập tin tải lên dường như không chứa tập tin hợp lệ"

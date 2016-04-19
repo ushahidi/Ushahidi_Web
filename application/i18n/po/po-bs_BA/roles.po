@@ -1,0 +1,64 @@
+# 
+# Translators:
+# Jasmina Borovina <jasminaha@gmail.com>, 2012
+# Samra Hodzic <samra989@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Bosnian (Bosnia and Herzegovina) (http://www.transifex.com/ushahidi/ushahidi-v2/language/bs_BA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bs_BA\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: roles.description.length
+msgctxt "roles.description.length"
+msgid ""
+"The Description field must be at least 3 and no more 100 characters long."
+msgstr "Polje opis mora da sadrži najmanje 3 i ne više od 100 karaktera. "
+
+#: roles.description.required
+msgctxt "roles.description.required"
+msgid "The Description field is required."
+msgstr "Polje Opis je neophodno ispuniti"
+
+#: roles.name.alpha_numeric
+msgctxt "roles.name.alpha_numeric"
+msgid "The Name field must only contain letters or numbers."
+msgstr "Polje Ime mora sadržavati slova ili brojeve"
+
+#: roles.name.length
+msgctxt "roles.name.length"
+msgid "The Name field must be at least 2 and no more than 30 characters long."
+msgstr "Polje ime mora da sadrži najmanje 2 i ne više od 30 karaktera."
+
+#: roles.name.nomodify
+msgctxt "roles.name.nomodify"
+msgid "SuperAdmin Role Cannot Be Modified."
+msgstr "Super Admin uloga se ne može mijenjati."
+
+#: roles.name.required
+msgctxt "roles.name.required"
+msgid "The Name field is required."
+msgstr "Polje Ime je neophodno ispuniti"
+
+#: roles.access_level.numeric
+msgctxt "roles.access_level.numeric"
+msgid "Access Level field must be a number between 0 - 100."
+msgstr "Polje razina pristupa mora biti broj između 0-100."
+
+#: roles.access_level.required
+msgctxt "roles.access_level.required"
+msgid "Access Level field must be a number between 0 - 100."
+msgstr "Polje razina pristupa mora biti broj između 0-100."
+
+#: roles.permissions.numeric
+msgctxt "roles.permissions.numeric"
+msgid "Permissions field must be a number between 0 - 100."
+msgstr "Polje dozvole mora biti broj između 0-100."

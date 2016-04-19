@@ -1,0 +1,3175 @@
+# 
+# Translators:
+# darkapex <jailuthra6sep@gmail.com>, 2012
+# Jayesh Vani <jayeshvani@gmail.com>, 2013
+# nikhil <nikhil.js@gmail.com>, 2012
+# Pratik <kpratik217@gmail.com>, 2013
+# Rishab Arora <ra.rishab@gmail.com>, 2012
+# santhosh <santhosh.thottingal@gmail.com>, 2013
+# Shantanu Sarkar <shantanusarkar.me@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Hindi (India) (http://www.transifex.com/ushahidi/ushahidi-v2/language/hi_IN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi_IN\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_main.about
+msgctxt "ui_main.about"
+msgid "About "
+msgstr "जानिये"
+
+#: ui_main.access
+msgctxt "ui_main.access"
+msgid "Access"
+msgstr "पहुँच"
+
+#: ui_main.access_limits
+msgctxt "ui_main.access_limits"
+msgid "Access Limits"
+msgstr "पहुँच सीमा"
+
+#: ui_main.account_name
+msgctxt "ui_main.account_name"
+msgid "Account Name"
+msgstr "खाते का नाम"
+
+#: ui_main.actions
+msgctxt "ui_main.actions"
+msgid "Actions"
+msgstr "कार्य"
+
+#: ui_main.action_confirm
+msgctxt "ui_main.action_confirm"
+msgid "This action cannot be undone. Are you sure you want to continue?"
+msgstr "इस कार्य को पूर्ववत नहीं किया जा सकता। क्या आप निश्चित रूप से आगे बढ़ना चाहते हैं?"
+
+#: ui_main.activate
+msgctxt "ui_main.activate"
+msgid "Activate"
+msgstr "सक्रिय करें"
+
+#: ui_main.active
+msgctxt "ui_main.active"
+msgid "Active"
+msgstr "सक्रिय"
+
+#: ui_main.add
+msgctxt "ui_main.add"
+msgid "Add"
+msgstr "जोडें"
+
+#: ui_main.added_by
+msgctxt "ui_main.added_by"
+msgid "Added By"
+msgstr "जोड़ने वाला"
+
+#: ui_main.additional_data
+msgctxt "ui_main.additional_data"
+msgid "Additional Data"
+msgstr "अतिरिक्त डेटा"
+
+#: ui_main.additional_reports
+msgctxt "ui_main.additional_reports"
+msgid "Additional Reports"
+msgstr "अतिरिक्त रिपोर्ट"
+
+#: ui_main.add_edit
+msgctxt "ui_main.add_edit"
+msgid "Add/Edit"
+msgstr "जोडें/बदलें"
+
+#: ui_main.add_field
+msgctxt "ui_main.add_field"
+msgid "Add a Field"
+msgstr "क्षेत्र जोडें"
+
+#: ui_main.add_language
+msgctxt "ui_main.add_language"
+msgid "Add Language"
+msgstr "भाषा जोडें"
+
+#: ui_main.add_new
+msgctxt "ui_main.add_new"
+msgid "Add New"
+msgstr "नया जोडें"
+
+#: ui_main.add_new_category
+msgctxt "ui_main.add_new_category"
+msgid "Add New Category"
+msgstr "नई श्रेणी जोड़ें"
+
+#: ui_main.add_translation
+msgctxt "ui_main.add_translation"
+msgid "Add Translation"
+msgstr "अनुवाद जोड़ें"
+
+#: ui_main.admin
+msgctxt "ui_main.admin"
+msgid "Administration"
+msgstr "प्रशासन"
+
+#: ui_main.alerts
+msgctxt "ui_main.alerts"
+msgid "Get Alerts"
+msgstr "अलर्ट प्राप्त करें"
+
+#: ui_main.alerts_alert_me
+msgctxt "ui_main.alerts_alert_me"
+msgid "Alert me if a report is filed in, or around:"
+msgstr "इस क्षेत्र में या उसके पास रिपोर्ट दर्ज होने पर मुझे अलर्ट भेजें"
+
+#: ui_main.alerts_btn_send
+msgctxt "ui_main.alerts_btn_send"
+msgid "Save My Alert"
+msgstr "मेरे अलर्ट अंकित करें"
+
+#: ui_main.alerts_email
+msgctxt "ui_main.alerts_email"
+msgid "Email address:"
+msgstr "ईमेल पता"
+
+#: ui_main.alerts_enter_email
+msgctxt "ui_main.alerts_enter_email"
+msgid "enter email address"
+msgstr "ईमेल पता भरें"
+
+#: ui_main.alerts_enter_mobile
+msgctxt "ui_main.alerts_enter_mobile"
+msgid "enter mobile number with country code"
+msgstr "देश कोड के साथ मोबाइल नंबर भरें"
+
+#: ui_main.alerts_get
+msgctxt "ui_main.alerts_get"
+msgid "Get Alerts"
+msgstr "अलर्ट प्राप्त करें"
+
+#: ui_main.alert_has_been
+msgctxt "ui_main.alert_has_been"
+msgid "Alert has been"
+msgstr "चेतावनी भेजी गयी है"
+
+#: ui_main.alerts_mobile_phone
+msgctxt "ui_main.alerts_mobile_phone"
+msgid "Mobile phone:"
+msgstr "मोबाइल फ़ोन"
+
+#: ui_main.alerts_place_spot
+msgctxt "ui_main.alerts_place_spot"
+msgid ""
+"Or place a spot on the map below, and we will alert you when a report is "
+"submitted within 20 kilometers."
+msgstr "या नीचे दिए गए नक्शे पर चिह्न लगायें, और 20 किलोमीटर की दूरी के भीतर रिपोर्ट दर्ज होने पर आप को अलर्ट भेज दिया जायेगा।"
+
+#: ui_main.alerts_place_spot2
+msgctxt "ui_main.alerts_place_spot2"
+msgid ""
+"If you can't find your location, please click on the map to pinpoint the "
+"correct location."
+msgstr "यदि आप अपना स्थान नहीं ढून्ढ पा रहे है तो सही स्थान चिह्नित करने के लिए नक्शे पर क्लिक करें।"
+
+#: ui_main.alerts_rss
+msgctxt "ui_main.alerts_rss"
+msgid "RSS Feeds (copy the URL below)"
+msgstr "आरएसएस फ़ीड (नीचे दी गई यूआरएल को कॉपी करें) "
+
+#: ui_main.alerts_select_city
+msgctxt "ui_main.alerts_select_city"
+msgid "Select a city"
+msgstr "शहर का चयन करें"
+
+#: ui_main.alerts_step1_select_city
+msgctxt "ui_main.alerts_step1_select_city"
+msgid "<strong>Step 1:</strong> Select your city or location:"
+msgstr "<strong> चरण 1: </ strong> अपने शहर या स्थान का चयन करें:"
+
+#: ui_main.alerts_step2_send_alerts
+msgctxt "ui_main.alerts_step2_send_alerts"
+msgid "<strong>Step 2:</strong> Send alerts to my:"
+msgstr "<strong> चरण 2: </ strong> मेरे अलर्ट भेजें यहाँ भेजें:"
+
+#: ui_main.alerts_step3_select_catgories
+msgctxt "ui_main.alerts_step3_select_catgories"
+msgid "<strong>Step 3 (Optional):</strong> Select Categories"
+msgstr "<strong> चरण 3 (वैकल्पिक): </ strong> श्रेणियां चुनें"
+
+#: ui_main.alert_confirm_previous
+msgctxt "ui_main.alert_confirm_previous"
+msgid "Confirm A Previous Alert Request"
+msgstr "पिछले एक अलर्ट अनुरोध की पुष्टि करें"
+
+#: ui_main.alert_saved
+msgctxt "ui_main.alert_saved"
+msgid "Your Alert Has Been Saved!"
+msgstr "आपके अलर्ट को सहेज लिया गया है"
+
+#: ui_main.all
+msgctxt "ui_main.all"
+msgid "All"
+msgstr "सभी"
+
+#: ui_main.allowed
+msgctxt "ui_main.allowed"
+msgid "Allowed"
+msgstr "अनुमति है"
+
+#: ui_main.allowed_tags
+msgctxt "ui_main.allowed_tags"
+msgid "Allowed HTML tags: \"%s\"."
+msgstr "अनुमतित HTML  टॅग्स : \"%s\""
+
+#: ui_main.allowed_iframes
+msgctxt "ui_main.allowed_iframes"
+msgid "Iframes are only allowed from: %s."
+msgstr "आइफ्रेम्स जहाँ से अनुमतित है : \"%s\""
+
+#: ui_main.all_categories
+msgctxt "ui_main.all_categories"
+msgid "All Categories"
+msgstr "सभी श्रेणियां"
+
+#: ui_main.all_time
+msgctxt "ui_main.all_time"
+msgid "All Time"
+msgstr "सभी समय"
+
+#: ui_main.and
+msgctxt "ui_main.and"
+msgid "and"
+msgstr "और"
+
+#: ui_main.api
+msgctxt "ui_main.api"
+msgid "API"
+msgstr "API"
+
+#: ui_main.approve
+msgctxt "ui_main.approve"
+msgid "Approve"
+msgstr "स्वीकार करें"
+
+#: ui_main.approved
+msgctxt "ui_main.approved"
+msgid "Approved"
+msgstr "स्वीकृत"
+
+#: ui_main.approved_reports
+msgctxt "ui_main.approved_reports"
+msgid "Approved Reports"
+msgstr "स्वीकृत रिपोर्टें"
+
+#: ui_main.approve_this_report
+msgctxt "ui_main.approve_this_report"
+msgid "Approve this Report"
+msgstr "इस रिपोर्ट को स्वीकार करें"
+
+#: ui_main.approximate
+msgctxt "ui_main.approximate"
+msgid "Approximate"
+msgstr "लगभग"
+
+#: ui_main.archive
+msgctxt "ui_main.archive"
+msgid "Archive"
+msgstr "संग्रह"
+
+#: ui_main.archived
+msgctxt "ui_main.archived"
+msgid "Archived"
+msgstr "संग्रहीत"
+
+#: ui_main.ascending
+msgctxt "ui_main.ascending"
+msgid "Ascending"
+msgstr "उठता हुआ "
+
+#: ui_main.at
+msgctxt "ui_main.at"
+msgid "at"
+msgstr "में"
+
+#: ui_main.author
+msgctxt "ui_main.author"
+msgid "Author"
+msgstr "लेखक"
+
+#: ui_main.auto_checkin
+msgctxt "ui_main.auto_checkin"
+msgid "Auto Checkin"
+msgstr "ऑटो उपस्थिति"
+
+#: ui_main.Auto
+msgctxt "ui_main.Auto"
+msgid "Auto"
+msgstr ""
+
+#: ui_main.avg_reports_per_day
+msgctxt "ui_main.avg_reports_per_day"
+msgid "Avg Reports Per Day"
+msgstr "प्रति दिन औसत रिपोर्ट"
+
+#: ui_main.awaiting_approval
+msgctxt "ui_main.awaiting_approval"
+msgid "Awaiting Approval"
+msgstr "स्वीकृति के लिए प्रतीक्षा में"
+
+#: ui_main.awaiting_verification
+msgctxt "ui_main.awaiting_verification"
+msgid "Awaiting Verification"
+msgstr "सत्यापन का इंतजार है"
+
+#: ui_main.badge
+msgctxt "ui_main.badge"
+msgid "Badge"
+msgstr "पदक"
+
+#: ui_main.badges
+msgctxt "ui_main.badges"
+msgid "Badges"
+msgstr "पदक"
+
+#: ui_main.badge_image
+msgctxt "ui_main.badge_image"
+msgid "Badge Image"
+msgstr "पदक छवि"
+
+#: ui_main.badge_image_upload_your_own
+msgctxt "ui_main.badge_image_upload_your_own"
+msgid "Or you can upload your own badge image instead."
+msgstr "या आप अपना बैज चित्र अपलोड कर सकते हैं."
+
+#: ui_main.badge_pack
+msgctxt "ui_main.badge_pack"
+msgid "Badge Pack"
+msgstr "बैज समूह"
+
+#: ui_main.badge_select
+msgctxt "ui_main.badge_select"
+msgid "Select a Badge"
+msgstr "बैज चुनें"
+
+#: ui_main.blog
+msgctxt "ui_main.blog"
+msgid "Blog"
+msgstr "ब्लॉग"
+
+#: ui_main.browse_profiles
+msgctxt "ui_main.browse_profiles"
+msgid "Browse Profiles"
+msgstr "प्रोफाइलें देखें"
+
+#: ui_main.cancel
+msgctxt "ui_main.cancel"
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: ui_main.categories
+msgctxt "ui_main.categories"
+msgid "Categories"
+msgstr "श्रेणियां"
+
+#: ui_main.category
+msgctxt "ui_main.category"
+msgid "Category"
+msgstr "श्रेणी"
+
+#: ui_main.category_filter
+msgctxt "ui_main.category_filter"
+msgid "Category Filter"
+msgstr "श्रेणी छन्ना"
+
+#: ui_main.category_has_been
+msgctxt "ui_main.category_has_been"
+msgid "The category has been "
+msgstr "यह वर्ग हो गया है "
+
+#: ui_main.category_name
+msgctxt "ui_main.category_name"
+msgid "Category Name"
+msgstr "श्रेणी का नाम"
+
+#: ui_main.change_date_range
+msgctxt "ui_main.change_date_range"
+msgid "Change Date Range"
+msgstr "तिथि सीमा बदलें"
+
+#: ui_main.change_password
+msgctxt "ui_main.change_password"
+msgid "Change Password"
+msgstr "पासवर्ड बदलें"
+
+#: ui_main.change_picture
+msgctxt "ui_main.change_picture"
+msgid "Change My Picture"
+msgstr "मेरा चित्र बदलें"
+
+#: ui_main.choose
+msgctxt "ui_main.choose"
+msgid "Choose a"
+msgstr "एक चुनें"
+
+#: ui_main.choose_data_points
+msgctxt "ui_main.choose_data_points"
+msgid "Choose data points to download"
+msgstr "डाउनलोड करने के डेटा बिंदुओं को चुनें"
+
+#: ui_main.choose_date_range
+msgctxt "ui_main.choose_date_range"
+msgid "Or choose your own date range"
+msgstr "या अपनी तिथि सीमा का चयन करें"
+
+#: ui_main.choose_field_type
+msgctxt "ui_main.choose_field_type"
+msgid "Choose field type"
+msgstr "फ़ील्ड प्रकार का चयन करें"
+
+#: ui_main.cleanurl
+msgctxt "ui_main.cleanurl"
+msgid "Clean URLs"
+msgstr "URL साफ़ करें"
+
+#: ui_main.clear
+msgctxt "ui_main.clear"
+msgid "Clear"
+msgstr "साफ़ करें"
+
+#: ui_main.clear_map
+msgctxt "ui_main.clear_map"
+msgid "Clear Map"
+msgstr "नक्षा साफ़ करें"
+
+#: ui_main.close
+msgctxt "ui_main.close"
+msgid "Close"
+msgstr "बंद करें"
+
+#: ui_main.clusters
+msgctxt "ui_main.clusters"
+msgid "clusters"
+msgstr "समूह"
+
+#: ui_main.color
+msgctxt "ui_main.color"
+msgid "Color"
+msgstr "रंग"
+
+#: ui_main.comment
+msgctxt "ui_main.comment"
+msgid "Comment"
+msgstr "टिप्पणी"
+
+#: ui_main.comments
+msgctxt "ui_main.comments"
+msgid "Comments"
+msgstr "टिप्पणियाँ"
+
+#: ui_main.comment_details
+msgctxt "ui_main.comment_details"
+msgid "Comment Details"
+msgstr "टिप्पणी विवरण"
+
+#: ui_main.configuration_saved
+msgctxt "ui_main.configuration_saved"
+msgid "Your Settings Have Been Saved!"
+msgstr "आपकी सेटिंग्स अंकित हो गई हैं!"
+
+#: ui_main.configure
+msgctxt "ui_main.configure"
+msgid "Configure"
+msgstr "कॉन्फ़िगर"
+
+#: ui_main.confirm_email_successful
+msgctxt "ui_main.confirm_email_successful"
+msgid ""
+"You have successfully confirmed your email address! Please login below."
+msgstr "आपने सफलतापूर्वक अपने ईमेल पते की पुष्टि की है!कृपया नीचे लॉगिन करें|"
+
+#: ui_main.confirm_email_successful_and_approval
+msgctxt "ui_main.confirm_email_successful_and_approval"
+msgid ""
+"You have successfully confirmed your email address! An administrator must "
+"approve your account before you login"
+msgstr "आपने सफलतापूर्वक अपने ईमेल पते की पुष्टि की है! एड्मिनिस्ट्रेटर द्वारा आपके अकाउंट को स्वीकृति मिलने के बाद ही आप लॉगिन कर सकते है!"
+
+#: ui_main.confirm_email_failed
+msgctxt "ui_main.confirm_email_failed"
+msgid ""
+"Email confirmation failed! You can request a new email confirmation below."
+msgstr "ईमेल पुष्टिकरण विफल हुआ! नीचे से आप दोबारा नया ईमेल पुष्टिकरण माँग सकते है !"
+
+#: ui_main.contact
+msgctxt "ui_main.contact"
+msgid "Contact Us"
+msgstr "हमसे संपर्क करें"
+
+#: ui_main.contact_code
+msgctxt "ui_main.contact_code"
+msgid "Security Code"
+msgstr "सुरक्षा कोड"
+
+#: ui_main.contact_email
+msgctxt "ui_main.contact_email"
+msgid "Your Email Address"
+msgstr "आपका ईमेल पता"
+
+#: ui_main.contact_message
+msgctxt "ui_main.contact_message"
+msgid "Message"
+msgstr "संदेश"
+
+#: ui_main.contact_message_has_send
+msgctxt "ui_main.contact_message_has_send"
+msgid "Your Message Has Been Sent!"
+msgstr "आपका संदेश भेज दिया गया है!"
+
+#: ui_main.contact_name
+msgctxt "ui_main.contact_name"
+msgid "Your Name"
+msgstr "आपका नाम"
+
+#: ui_main.contact_phone
+msgctxt "ui_main.contact_phone"
+msgid "Your Phone Number"
+msgstr "आपका फोन नंबर"
+
+#: ui_main.contact_send
+msgctxt "ui_main.contact_send"
+msgid "Send Message"
+msgstr "संदेश भेजें"
+
+#: ui_main.contact_subject
+msgctxt "ui_main.contact_subject"
+msgid "Message Subject"
+msgstr "संदेश का विषय"
+
+#: ui_main.copyright
+msgctxt "ui_main.copyright"
+msgid "Copyright ©"
+msgstr "सर्वाधिकार ©"
+
+#: ui_main.create
+msgctxt "ui_main.create"
+msgid "Create"
+msgstr "बनाएँ"
+
+#: ui_main.create_edit
+msgctxt "ui_main.create_edit"
+msgid "Create/Edit"
+msgstr "नया बनाए / बदले "
+
+#: ui_main.create_new
+msgctxt "ui_main.create_new"
+msgid "Create New"
+msgstr "नया बनाए "
+
+#: ui_main.create_new_password
+msgctxt "ui_main.create_new_password"
+msgid "Create New Password"
+msgstr "नया पासवर्ड बनाएँ"
+
+#: ui_main.create_report
+msgctxt "ui_main.create_report"
+msgid "Create Report"
+msgstr "रिपोर्ट बनाए "
+
+#: ui_main.credibility
+msgctxt "ui_main.credibility"
+msgid "Credibility"
+msgstr "विश्वसनीयता"
+
+#: ui_main.current_password
+msgctxt "ui_main.current_password"
+msgid "Current Password"
+msgstr "वर्तमान पासवर्ड"
+
+#: ui_main.custom_fields
+msgctxt "ui_main.custom_fields"
+msgid "Custom Fields"
+msgstr "अनुकूलित क्षेत्र"
+
+#: ui_main.data
+msgctxt "ui_main.data"
+msgid "Information"
+msgstr "जानकारी"
+
+#: ui_main.date
+msgctxt "ui_main.date"
+msgid "Date"
+msgstr "तारीख"
+
+#: ui_main.date_format
+msgctxt "ui_main.date_format"
+msgid "(mm/dd/yyyy)"
+msgstr "(माह / तिथि / वर्ष)"
+
+#: ui_main.date_time
+msgctxt "ui_main.date_time"
+msgid "Date & Time"
+msgstr "दिनांक और समय"
+
+#: ui_main.day
+msgctxt "ui_main.day"
+msgid "day"
+msgstr "दिन"
+
+#: ui_main.Daily
+msgctxt "ui_main.Daily"
+msgid "Daily"
+msgstr ""
+
+#: ui_main.deactivate
+msgctxt "ui_main.deactivate"
+msgid "Deactivate"
+msgstr "निष्क्रिय करें"
+
+#: ui_main.default_location_name
+msgctxt "ui_main.default_location_name"
+msgid "Nairobi, Kenya"
+msgstr "नैरोबी, केन्या"
+
+#: ui_main.delete
+msgctxt "ui_main.delete"
+msgid "Delete"
+msgstr "हटाएँ"
+
+#: ui_main.deleted
+msgctxt "ui_main.deleted"
+msgid "Deleted"
+msgstr "हटाए गए"
+
+#: ui_main.deletes
+msgctxt "ui_main.deletes"
+msgid "Deletes"
+msgstr "हटाए गए"
+
+#: ui_main.delete_disabled
+msgctxt "ui_main.delete_disabled"
+msgid "Delete Disabled"
+msgstr "हटाना निषेध"
+
+#: ui_main.delete_last
+msgctxt "ui_main.delete_last"
+msgid "Delete Last"
+msgstr "पिछला हटाए"
+
+#: ui_main.delete_report
+msgctxt "ui_main.delete_report"
+msgid "Delete this Report"
+msgstr "यह रिपोर्ट हटाए"
+
+#: ui_main.delete_selected
+msgctxt "ui_main.delete_selected"
+msgid "Delete Selected"
+msgstr "चुने हुए हटाए"
+
+#: ui_main.delete_spam
+msgctxt "ui_main.delete_spam"
+msgid "Delete Spam"
+msgstr "स्पैम हटाएँ"
+
+#: ui_main.demo
+msgctxt "ui_main.demo"
+msgid "Demo"
+msgstr "प्रदर्शन"
+
+#: ui_main.description
+msgctxt "ui_main.description"
+msgid "Description"
+msgstr "वर्णन"
+
+#: ui_main.descending
+msgctxt "ui_main.descending"
+msgid "Descending"
+msgstr "गिरता हुआ"
+
+#: ui_main.detailed_location_example
+msgctxt "ui_main.detailed_location_example"
+msgid "Example: Corner of City Market, 5th Street & 4th Avenue, Johannesburg"
+msgstr "उदहारण : ३४, माहि बिल्डिंग, मेघ नगर गली क्र. ३, दिल्ली "
+
+#: ui_main.details
+msgctxt "ui_main.details"
+msgid "Details"
+msgstr "विस्तार"
+
+#: ui_main.direct_report
+msgctxt "ui_main.direct_report"
+msgid "Direct Report"
+msgstr "सीधा रिपोर्ट"
+
+#: ui_main.disabled
+msgctxt "ui_main.disabled"
+msgid "Disabled"
+msgstr "बंद किया हुआ "
+
+#: ui_main.disapprove
+msgctxt "ui_main.disapprove"
+msgid "Unapprove"
+msgstr "अनुमोदन वापिस लो"
+
+#: ui_main.download_reports
+msgctxt "ui_main.download_reports"
+msgid "Download Reports"
+msgstr "रिपोर्ट करो डाउनलोड"
+
+#: ui_main.download
+msgctxt "ui_main.download"
+msgid "Download"
+msgstr "डाउनलोड"
+
+#: ui_main.edit
+msgctxt "ui_main.edit"
+msgid "Edit"
+msgstr "बदले "
+
+#: ui_main.edit_form_fields
+msgctxt "ui_main.edit_form_fields"
+msgid "Edit Form Fields"
+msgstr "प्रपत्र में क्षेत्र बदले"
+
+#: ui_main.edit_report
+msgctxt "ui_main.edit_report"
+msgid "Edit Report"
+msgstr "रिपोर्ट बदले"
+
+#: ui_main.email
+msgctxt "ui_main.email"
+msgid "Email"
+msgstr "ईमेल"
+
+#: ui_main.email_address
+msgctxt "ui_main.email_address"
+msgid "Email Address"
+msgstr "ईमेल पता"
+
+#: ui_main.email_configuration
+msgctxt "ui_main.email_configuration"
+msgid "Mail Server Settings"
+msgstr "मेल सर्वर की स्थिति"
+
+#: ui_main.email_server_host
+msgctxt "ui_main.email_server_host"
+msgid "Mail Server Host"
+msgstr "मेल सर्वर मेजबान"
+
+#: ui_main.email_server_password
+msgctxt "ui_main.email_server_password"
+msgid "Mail Server Password"
+msgstr "मेल सर्वर पासवर्ड"
+
+#: ui_main.email_server_port
+msgctxt "ui_main.email_server_port"
+msgid "Mail Server Port"
+msgstr "मेल सर्वर द्वार"
+
+#: ui_main.email_server_ssl_support
+msgctxt "ui_main.email_server_ssl_support"
+msgid "Mail Server SSL support"
+msgstr "मेल सर्वर एस.एस.एल. के लिए समर्थन"
+
+#: ui_main.email_server_type
+msgctxt "ui_main.email_server_type"
+msgid "Mail Server Type"
+msgstr "मेल सर्वर का प्ररूप"
+
+#: ui_main.email_server_username
+msgctxt "ui_main.email_server_username"
+msgid "Mail Server Username"
+msgstr "मेल सर्वर प्रयोक्ता नाम"
+
+#: ui_main.email_settings_comment_0
+msgctxt "ui_main.email_settings_comment_0"
+msgid "so your settings have to be associated with this email address"
+msgstr "इस लिए आपके विकल्प इस ईमेल के साथ जुड़े होने चाहिए"
+
+#: ui_main.email_settings_comment_00
+msgctxt "ui_main.email_settings_comment_00"
+msgid ""
+"In order to receive reports by email, please input your email account "
+"settings below. Please note that emails will be received at your"
+msgstr "ईमेल द्वारा रिपोर्ट मिलने के लिए कृपया आपके ईमेल अकाउंट के सेट्टिंग नीचे दीजिए. कृपया ध्यान दें की ईमेल इधर आएँगे :"
+
+#: ui_main.email_settings_comment_1
+msgctxt "ui_main.email_settings_comment_1"
+msgid "Some servers require a complete email address"
+msgstr "कुछ सर्वर के लिए पूरा ईमेल एड्रेस चाहिए"
+
+#: ui_main.email_settings_comment_2
+msgctxt "ui_main.email_settings_comment_2"
+msgid "Email account password"
+msgstr "ईमेल अकाउंट का गुप्त शब्द"
+
+#: ui_main.email_settings_comment_3
+msgctxt "ui_main.email_settings_comment_3"
+msgid "Common ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "सामान्य द्वार :  25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: ui_main.email_settings_comment_4
+msgctxt "ui_main.email_settings_comment_4"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "उदाहरण: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: ui_main.email_settings_comment_5
+msgctxt "ui_main.email_settings_comment_5"
+msgid "Examples: pop3, imap"
+msgstr "उदाहरण: pop3, imap"
+
+#: ui_main.email_settings_comment_6
+msgctxt "ui_main.email_settings_comment_6"
+msgid "Enable or disable SSL connections"
+msgstr "SSL कनेक्शन सक्रिय या निष्क्रिय करें"
+
+#: ui_main.empty
+msgctxt "ui_main.empty"
+msgid "---EMPTY---"
+msgstr "--खाली-- "
+
+#: ui_main.end_point
+msgctxt "ui_main.end_point"
+msgid "to"
+msgstr "को"
+
+#: ui_main.error
+msgctxt "ui_main.error"
+msgid "Error!"
+msgstr "एरर"
+
+#: ui_main.example
+msgctxt "ui_main.example"
+msgid "Example"
+msgstr "उदाहरण"
+
+#: ui_main.example_country
+msgctxt "ui_main.example_country"
+msgid "Kenya"
+msgstr "केन्या"
+
+#: ui_main.external_apps
+msgctxt "ui_main.external_apps"
+msgid "External Apps"
+msgstr "बाहरी ऐप्स"
+
+#: ui_main.external_video_link
+msgctxt "ui_main.external_video_link"
+msgid "External Video Link"
+msgstr "बहरी विडियो लिंक"
+
+#: ui_main.facebook
+msgctxt "ui_main.facebook"
+msgid "Facebook"
+msgstr "फ़ेसबुक"
+
+#: ui_main.feed
+msgctxt "ui_main.feed"
+msgid "Feed"
+msgstr "फीड"
+
+#: ui_main.feedback
+msgctxt "ui_main.feedback"
+msgid "Provide Feedback"
+msgstr " प्रतिक्रिया प्रदान करें"
+
+#: ui_main.feedback_reports
+msgctxt "ui_main.feedback_reports"
+msgid "Please give us feedback about your experience by sending an email to "
+msgstr ""
+
+#: ui_main.feeds
+msgctxt "ui_main.feeds"
+msgid "Feeds"
+msgstr "फीड"
+
+#: ui_main.feed_has_been
+msgctxt "ui_main.feed_has_been"
+msgid "The feed has been"
+msgstr "इस फीड को"
+
+#: ui_main.feed_items
+msgctxt "ui_main.feed_items"
+msgid "Feed Items"
+msgstr "फीड \tविषय - सूची"
+
+#: ui_main.feed_name
+msgctxt "ui_main.feed_name"
+msgid "Feed Name"
+msgstr "ख़बर नाम "
+
+#: ui_main.feed_url
+msgctxt "ui_main.feed_url"
+msgid "Feed URL"
+msgstr "ख़बर URL"
+
+#: ui_main.field_unused
+msgctxt "ui_main.field_unused"
+msgid "Unused field"
+msgstr "उपयोग नहीं किया गया क्षेत्र "
+
+#: ui_main.file
+msgctxt "ui_main.file"
+msgid "File"
+msgstr "फ़ाइल"
+
+#: ui_main.file_over_max_allowed
+msgctxt "ui_main.file_over_max_allowed"
+msgid "Your file is over the maximum allowed filesize."
+msgstr "आपकी फाइल अधिकतम परिमाण से ज्यादा है "
+
+#: ui_main.filters
+msgctxt "ui_main.filters"
+msgid "Filters"
+msgstr "छन्नियाँ"
+
+#: ui_main.filter_reports
+msgctxt "ui_main.filter_reports"
+msgid "Filter Reports"
+msgstr "रिपोर्ट छानें"
+
+#: ui_main.filter_reports_by
+msgctxt "ui_main.filter_reports_by"
+msgid "Filter Reports By"
+msgstr "इस से रिपोर्ट छानें"
+
+#: ui_main.filter_reports_contain
+msgctxt "ui_main.filter_reports_contain"
+msgid "Filter reports that contain"
+msgstr "वह रिपोर्ट छानें जिनमें यह है"
+
+#: ui_main.find
+msgctxt "ui_main.find"
+msgid "Find"
+msgstr "खोजें"
+
+#: ui_main.find_location
+msgctxt "ui_main.find_location"
+msgid "Find Location"
+msgstr "स्थान खोजें"
+
+#: ui_main.first_name
+msgctxt "ui_main.first_name"
+msgid "First Name"
+msgstr "प्रथम नाम"
+
+#: ui_main.force_run_scheduler
+msgctxt "ui_main.force_run_scheduler"
+msgid "Force Run Scheduler"
+msgstr "Force Run Scheduler"
+
+#: ui_main.forgot_password
+msgctxt "ui_main.forgot_password"
+msgid "Forgot your password?"
+msgstr "पासवर्ड भूल गए हैं?"
+
+#: ui_main.form
+msgctxt "ui_main.form"
+msgid "Form"
+msgstr "फॉर्म"
+
+#: ui_main.forms
+msgctxt "ui_main.forms"
+msgid "Forms"
+msgstr "फॉर्म"
+
+#: ui_main.form_description
+msgctxt "ui_main.form_description"
+msgid "Form Description"
+msgstr "फॉर्म विवरण"
+
+#: ui_main.form_edit
+msgctxt "ui_main.form_edit"
+msgid "Edit this Form"
+msgstr "फॉर्म में बदलाव करें"
+
+#: ui_main.form_has_been
+msgctxt "ui_main.form_has_been"
+msgid "The form has been"
+msgstr "इस फॉर्म को"
+
+#: ui_main.form_title
+msgctxt "ui_main.form_title"
+msgid "Form Title"
+msgstr "फॉर्म शीर्षक"
+
+#: ui_main.from
+msgctxt "ui_main.from"
+msgid "From"
+msgstr "से"
+
+#: ui_main.full_name
+msgctxt "ui_main.full_name"
+msgid "Full Name"
+msgstr "पूरा नाम"
+
+#: ui_main.geolocation_available
+msgctxt "ui_main.geolocation_available"
+msgid "GeoLocation Available"
+msgstr "जियोलोकेशन उप्लब्द"
+
+#: ui_main.geometry_color
+msgctxt "ui_main.geometry_color"
+msgid "Color"
+msgstr "रंग"
+
+#: ui_main.geometry_comments
+msgctxt "ui_main.geometry_comments"
+msgid "Comments"
+msgstr "टिप्पणिया"
+
+#: ui_main.geometry_label
+msgctxt "ui_main.geometry_label"
+msgid "Label"
+msgstr "लेबल"
+
+#: ui_main.geometry_strokewidth
+msgctxt "ui_main.geometry_strokewidth"
+msgid "Stroke Width"
+msgstr "रेखा की चौड़ाई"
+
+#: ui_main.go
+msgctxt "ui_main.go"
+msgid "Go"
+msgstr "जाएं"
+
+#: ui_main.hashtag
+msgctxt "ui_main.hashtag"
+msgid "Hashtag"
+msgstr "हॅशटेग"
+
+#: ui_main.has_been
+msgctxt "ui_main.has_been"
+msgid "Has Been"
+msgstr "हुआ है"
+
+#: ui_main.help
+msgctxt "ui_main.help"
+msgid "How to Help"
+msgstr "मदद कैसे करें"
+
+#: ui_main.hidden
+msgctxt "ui_main.hidden"
+msgid "Hidden"
+msgstr "छिपा हुआ "
+
+#: ui_main.hide
+msgctxt "ui_main.hide"
+msgid "Hide"
+msgstr "छिपाएं"
+
+#: ui_main.hide_this_message
+msgctxt "ui_main.hide_this_message"
+msgid "hide this message"
+msgstr "मेसेज को छुपाए"
+
+#: ui_main.home
+msgctxt "ui_main.home"
+msgid "Home"
+msgstr "घर"
+
+#: ui_main.Hourly
+msgctxt "ui_main.Hourly"
+msgid "Hourly"
+msgstr ""
+
+#: ui_main.how_to_report
+msgctxt "ui_main.how_to_report"
+msgid "How to Report"
+msgstr "रिपोर्ट कैसे करें"
+
+#: ui_main.https
+msgctxt "ui_main.https"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: ui_main.id
+msgctxt "ui_main.id"
+msgid "ID"
+msgstr "आइडी"
+
+#: ui_main.identify_you
+msgctxt "ui_main.identify_you"
+msgid "Used to identify you on the site to other users."
+msgstr "दूसरे उपभोगताओं को आपकी यह पहचान दिखिए देगी !"
+
+#: ui_main.image
+msgctxt "ui_main.image"
+msgid "Image"
+msgstr "चित्र"
+
+#: ui_main.images
+msgctxt "ui_main.images"
+msgid "Images"
+msgstr "चित्र"
+
+#: ui_main.image_icon
+msgctxt "ui_main.image_icon"
+msgid "Image/Icon"
+msgstr "चित्र/आइकॉन"
+
+#: ui_main.inactive
+msgctxt "ui_main.inactive"
+msgid "Inactive"
+msgstr "निष्क्रिय"
+
+#: ui_main.inbox
+msgctxt "ui_main.inbox"
+msgid "Inbox"
+msgstr "इनबॉक्स"
+
+#: ui_main.incident
+msgctxt "ui_main.incident"
+msgid "Incident"
+msgstr "घटना"
+
+#: ui_main.incidents_nearby
+msgctxt "ui_main.incidents_nearby"
+msgid "Incidents Nearby"
+msgstr "नज़दीकी घटनाए"
+
+#: ui_main.incident_location
+msgctxt "ui_main.incident_location"
+msgid "Incident Location"
+msgstr "घटनास्थल"
+
+#: ui_main.include
+msgctxt "ui_main.include"
+msgid "Include"
+msgstr "शामिल करे"
+
+#: ui_main.include_categories
+msgctxt "ui_main.include_categories"
+msgid "Include Categories"
+msgstr "वर्गीकरण शामिल करे"
+
+#: ui_main.include_custom_fields
+msgctxt "ui_main.include_custom_fields"
+msgid "Include Custom Fields"
+msgstr "कस्टम फील्ड्स शामिल करे"
+
+#: ui_main.include_description
+msgctxt "ui_main.include_description"
+msgid "Include Description"
+msgstr "वर्णन शामिल करे "
+
+#: ui_main.include_detail
+msgctxt "ui_main.include_detail"
+msgid "Include as much detail as possible"
+msgstr "जितना हो सके उतना विस्तार मे वर्णन करे!"
+
+#: ui_main.include_latitude
+msgctxt "ui_main.include_latitude"
+msgid "Include Latitude"
+msgstr "अक्षांश शामिल करे "
+
+#: ui_main.include_location_information
+msgctxt "ui_main.include_location_information"
+msgid "Include Location Information"
+msgstr "जगह की जानकारी शामिल करे"
+
+#: ui_main.include_longitude
+msgctxt "ui_main.include_longitude"
+msgid "Include Longitude"
+msgstr "देशांतर शामिल करे"
+
+#: ui_main.include_personal_info
+msgctxt "ui_main.include_personal_info"
+msgid "Include Personal Information"
+msgstr "अपनी जानकारी शामिल कीजिये"
+
+#: ui_main.incoming_media
+msgctxt "ui_main.incoming_media"
+msgid "Incoming Media"
+msgstr "आता हुआ संचार माध्यम"
+
+#: ui_main.information_evaluation
+msgctxt "ui_main.information_evaluation"
+msgid "Information Evaluation"
+msgstr "जानकारी का आंकलन"
+
+#: ui_main.input_location
+msgctxt "ui_main.input_location"
+msgid "Enter your precise location"
+msgstr "अपनी सटीक स्थान भरें"
+
+#: ui_main.insufficient_role
+msgctxt "ui_main.insufficient_role"
+msgid ""
+"Your account doesn't have the proper permission to fully log you in. Please "
+"contact the administrator."
+msgstr "आपके अकाउंट को लॉगिन करने की पूर्ण अनुमति नही है ! कृपया करके प्रबंदक को संपर्क करे !"
+
+#: ui_main.interval
+msgctxt "ui_main.interval"
+msgid "Interval"
+msgstr ""
+
+#: ui_main.in_response_to
+msgctxt "ui_main.in_response_to"
+msgid "In response to"
+msgstr "के जवाब में"
+
+#: ui_main.ip_address
+msgctxt "ui_main.ip_address"
+msgid "IP Address"
+msgstr "आइपी अड्रेस"
+
+#: ui_main.is_this_your_profile
+msgctxt "ui_main.is_this_your_profile"
+msgid "Is this your profile?"
+msgstr "क्या यह आपकी प्रोफ़ाइल है?"
+
+#: ui_main.item
+msgctxt "ui_main.item"
+msgid "item"
+msgstr "वस्तु"
+
+#: ui_main.items
+msgctxt "ui_main.items"
+msgid "items"
+msgstr "वस्तुएं"
+
+#: ui_main.item_details
+msgctxt "ui_main.item_details"
+msgid "item_details"
+msgstr "वस्तु-विवरण "
+
+#: ui_main.item_title
+msgctxt "ui_main.item_title"
+msgid "Item Title"
+msgstr "वस्तु शीर्षक"
+
+#: ui_main.key
+msgctxt "ui_main.key"
+msgid "Key"
+msgstr "चाबी"
+
+#: ui_main.keywords
+msgctxt "ui_main.keywords"
+msgid "Keywords"
+msgstr "कीवर्ड्स"
+
+#: ui_main.kml_kmz_file
+msgctxt "ui_main.kml_kmz_file"
+msgid "KMZ/KML File"
+msgstr "KMZ/KML फ़ाइल"
+
+#: ui_main.kml_kmz_upload
+msgctxt "ui_main.kml_kmz_upload"
+msgid "Upload KMZ/KML File"
+msgstr "फ़ाइल अपलोड करें"
+
+#: ui_main.kml_url
+msgctxt "ui_main.kml_url"
+msgid "KML URL"
+msgstr "KML URL"
+
+#: ui_main.laconica
+msgctxt "ui_main.laconica"
+msgid "Laconica"
+msgstr "सांक्षिप्त रूप मे"
+
+#: ui_main.language
+msgctxt "ui_main.language"
+msgid "Language"
+msgstr "भाषा"
+
+#: ui_main.last
+msgctxt "ui_main.last"
+msgid "Last"
+msgstr "आखरी"
+
+#: ui_main.last_month
+msgctxt "ui_main.last_month"
+msgid "Last Month"
+msgstr "पिछले महीने"
+
+#: ui_main.last_name
+msgctxt "ui_main.last_name"
+msgid "Last Name"
+msgstr "अंतिम नाम"
+
+#: ui_main.last_year
+msgctxt "ui_main.last_year"
+msgid "Last Year"
+msgstr "पिछले साल"
+
+#: ui_main.latitude
+msgctxt "ui_main.latitude"
+msgid "Latitude"
+msgstr "अक्षांश "
+
+#: ui_main.layers
+msgctxt "ui_main.layers"
+msgid "Layers"
+msgstr "परतें"
+
+#: ui_main.layers_filter
+msgctxt "ui_main.layers_filter"
+msgid "Other Layers"
+msgstr "दूसरी परतें"
+
+#: ui_main.layer_has_been
+msgctxt "ui_main.layer_has_been"
+msgid "The Layer Has Been"
+msgstr "ये परत का"
+
+#: ui_main.layer_name
+msgctxt "ui_main.layer_name"
+msgid "Layer Name"
+msgstr "परत का नाम"
+
+#: ui_main.layer_url
+msgctxt "ui_main.layer_url"
+msgid "Layer URL"
+msgstr "परत का  URL"
+
+#: ui_main.leave_a_comment
+msgctxt "ui_main.leave_a_comment"
+msgid "Leave a Comment"
+msgstr "आपकी टिप्पणी"
+
+#: ui_main.less_information
+msgctxt "ui_main.less_information"
+msgid "Less Information"
+msgstr "संक्षिप्‍त जानकारी"
+
+#: ui_main.level
+msgctxt "ui_main.level"
+msgid "Level"
+msgstr "स्तर"
+
+#: ui_main.level_has_been
+msgctxt "ui_main.level_has_been"
+msgid "This level has been"
+msgstr "यह स्तर का"
+
+#: ui_main.level_name
+msgctxt "ui_main.level_name"
+msgid "Level Name"
+msgstr "स्तर का नाम"
+
+#: ui_main.limited
+msgctxt "ui_main.limited"
+msgid "Limited"
+msgstr "सिमित"
+
+#: ui_main.link
+msgctxt "ui_main.link"
+msgid "Link"
+msgstr "कड़ी"
+
+#: ui_main.list
+msgctxt "ui_main.list"
+msgid "List"
+msgstr "ds "
+
+#: ui_main.loading_reports
+msgctxt "ui_main.loading_reports"
+msgid "Loading Reports"
+msgstr "रिपोर्ट्स लोड हो रही है"
+
+#: ui_main.location
+msgctxt "ui_main.location"
+msgid "Location"
+msgstr "जगह"
+
+#: ui_main.locations
+msgctxt "ui_main.locations"
+msgid "Locations"
+msgstr "जगोह"
+
+#: ui_main.location_example
+msgctxt "ui_main.location_example"
+msgid "City, State and/or Country"
+msgstr "शहर, राज्या और/या देश."
+
+#: ui_main.login
+msgctxt "ui_main.login"
+msgid "Login"
+msgstr "लॉगिन"
+
+#: ui_main.login_account_creation_successful
+msgctxt "ui_main.login_account_creation_successful"
+msgid "Account created successfully. You may log in now."
+msgstr "खाता सफलतापूर्वक बनाया गया। आप अब लॉग इन कर सकते हैं।"
+
+#: ui_main.login_confirmation_sent
+msgctxt "ui_main.login_confirmation_sent"
+msgid "A confirmation has been sent to your email address."
+msgstr "आपके ईमेल पते पर एक पुष्टिकरण भेजा गया है।"
+
+#: ui_main.login_approval_required
+msgctxt "ui_main.login_approval_required"
+msgid ""
+"Account created. Your account must be approved by an admin before you can "
+"login."
+msgstr "आपका अकाउंट बन गया है! एड्मिनिस्ट्रेटर द्वारा आपके अकाउंट को स्वीकृति मिलने के बाद ही आप लॉगिन कर सकते है!"
+
+#: ui_main.login_email_doesnt_exist
+msgctxt "ui_main.login_email_doesnt_exist"
+msgid ""
+"Email address doesn't exist. Try a different address or create an account."
+msgstr "ईमेल पता मौजूद नहीं है। एक अलग पते से कोशिश करो या नया खाता बनाएं।"
+
+#: ui_main.login_select_openid
+msgctxt "ui_main.login_select_openid"
+msgid "Please click your account provider"
+msgstr "कृपया कर के अपने अकाउंट प्रोवाइडर पर क्लिक करे"
+
+#: ui_main.login_with
+msgctxt "ui_main.login_with"
+msgid "Login with"
+msgstr "इसके साथ लोगिन करे"
+
+#: ui_main.login_userpass
+msgctxt "ui_main.login_userpass"
+msgid "Email and Password"
+msgstr "ईमेल और पासवर्ड"
+
+#: ui_main.login_openid
+msgctxt "ui_main.login_openid"
+msgid "OpenID"
+msgstr "ओपन-आइडी"
+
+#: ui_main.login_signup
+msgctxt "ui_main.login_signup"
+msgid "Sign Up"
+msgstr "रजिस्टर करे"
+
+#: ui_main.login_signup_click
+msgctxt "ui_main.login_signup_click"
+msgid "Create an Account"
+msgstr "अपना अकाउंट बनाये"
+
+#: ui_main.login_signup_confirmation_message
+msgctxt "ui_main.login_signup_confirmation_message"
+msgid ""
+"Thank you for signing up at %1$s. To confirm your email address, please go "
+"to the following URL: %2$s"
+msgstr "%1$s पर रजिस्ट्रेशन के लिए धन्यवाद! अपने ईमेल अड्रेस की पुश्ठी के लिए इस URL पर जाए : %2$s"
+
+#: ui_main.login_signup_confirmation_subject
+msgctxt "ui_main.login_signup_confirmation_subject"
+msgid "Signup Confirmation"
+msgstr "रजिस्ट्रेशन का पुष्टिकरण"
+
+#: ui_main.login_signup_admin_approval_message
+msgctxt "ui_main.login_signup_admin_approval_message"
+msgid ""
+"An new user has signed up at %1$s. To approve their registration please go "
+"to the following URL: %2$s"
+msgstr "%1$s पर एक नये यूज़र ने रेजिस्टर किया है! उसके रेजिस्ट्रेशन को स्वीकृति देने के लिए इस URL पर जाए : %2$s"
+
+#: ui_main.login_signup_admin_approval_subject
+msgctxt "ui_main.login_signup_admin_approval_subject"
+msgid "New User Approval"
+msgstr "नये यूज़र की स्वीकृति"
+
+#: ui_main.login_signup_approval_message
+msgctxt "ui_main.login_signup_approval_message"
+msgid ""
+"Your user account has been approved for %1$s. To login go to the following "
+"URL: %2$s"
+msgstr "आपके यूज़र अकाउंट को इस %1$s की मंज़ूरी दी गयी है! लॉगिन करने के लिए इस URL पर जाए: %2$s"
+
+#: ui_main.login_signup_approval_subject
+msgctxt "ui_main.login_signup_approval_subject"
+msgid "User account approved"
+msgstr "यूज़र अकाउंट स्वीकृत"
+
+#: ui_main.login_signup_text
+msgctxt "ui_main.login_signup_text"
+msgid "Create an account now to take advantage of more features on the site."
+msgstr "हमारे साइट पर अपना अकाउंट बनाए ताकि आप नये फीचर्स का फ़ायदा ले सके !"
+
+#: ui_main.longitude
+msgctxt "ui_main.longitude"
+msgid "Longitude"
+msgstr "देशांतर"
+
+#: ui_main.map
+msgctxt "ui_main.map"
+msgid "Map"
+msgstr "नक्शा"
+
+#: ui_main.mark_read
+msgctxt "ui_main.mark_read"
+msgid "Mark as Read"
+msgstr "पढ़ा हुआ अंकित करे"
+
+#: ui_main.mark_unread
+msgctxt "ui_main.mark_unread"
+msgid "Mark as Unread"
+msgstr "नही पढ़ा हुआ अंकित करे"
+
+#: ui_main.maximum_filesize
+msgctxt "ui_main.maximum_filesize"
+msgid "Maximum filesize"
+msgstr "महत्तम फाइल की साइज़"
+
+#: ui_main.media
+msgctxt "ui_main.media"
+msgid "Media"
+msgstr "संचार माध्यम"
+
+#: ui_main.media_filter
+msgctxt "ui_main.media_filter"
+msgid "Media Filter"
+msgstr "संचार माध्यम की छन्नियाँ"
+
+#: ui_main.members
+msgctxt "ui_main.members"
+msgid "Members"
+msgstr "सदस्य"
+
+#: ui_main.manage_your_account
+msgctxt "ui_main.manage_your_account"
+msgid "Manage Your Account"
+msgstr "अपना खाता प्रबंधित करें"
+
+#: ui_main.message
+msgctxt "ui_main.message"
+msgid "Message"
+msgstr "संदेश"
+
+#: ui_main.messages
+msgctxt "ui_main.messages"
+msgid "Messages"
+msgstr "संदेश"
+
+#: ui_main.message_details
+msgctxt "ui_main.message_details"
+msgid "Message Details"
+msgstr "संदेश का विवरण"
+
+#: ui_main.message_non_numeric_source
+msgctxt "ui_main.message_non_numeric_source"
+msgid "Message from a non-numeric source:"
+msgstr "संदेश बिन-आंकी स्रोत से :"
+
+#: ui_main.mobile
+msgctxt "ui_main.mobile"
+msgid "Mobile"
+msgstr "मोबाइल"
+
+#: ui_main.modify
+msgctxt "ui_main.modify"
+msgid "Modify"
+msgstr "सुधारे"
+
+#: ui_main.modify_date
+msgctxt "ui_main.modify_date"
+msgid "Modify Date"
+msgstr "तिथि बदले"
+
+#: ui_main.month
+msgctxt "ui_main.month"
+msgid "month"
+msgstr "माह"
+
+#: ui_main.Monthly
+msgctxt "ui_main.Monthly"
+msgid "Monthly"
+msgstr ""
+
+#: ui_main.more
+msgctxt "ui_main.more"
+msgid "More"
+msgstr "अधिक"
+
+#: ui_main.more_information
+msgctxt "ui_main.more_information"
+msgid "More Information"
+msgstr "अधिक जानकारी"
+
+#: ui_main.multi_country_instance
+msgctxt "ui_main.multi_country_instance"
+msgid "Does this Ushahidi Deployment Span Multiple Countries"
+msgstr "क्या यह उशहीदी का डेप्लाय्मेंट एक से ज़्यादा राष्ट्रो मे है"
+
+#: ui_main.must_confirm_email_address
+msgctxt "ui_main.must_confirm_email_address"
+msgid ""
+"You must confirm your email address to access this deployment. If you lost "
+"your confirmation email, you can request a new one below."
+msgstr "एस प्रस्तरण को अभिगम करने के लाइ अपने ईमेल के पते की पुष्टि करे| अगर आपने स्वीकृति ईमेल को खो दिया है तो आप न्ये के लाइ आवेदन कर सकते है|"
+
+#: ui_main.name
+msgctxt "ui_main.name"
+msgid "Name"
+msgstr "नाम"
+
+#: ui_main.nearby_report
+msgctxt "ui_main.nearby_report"
+msgid "Nearby Report"
+msgstr "नज़दीकी रिपोर्ट"
+
+#: ui_main.new
+msgctxt "ui_main.new"
+msgid "New"
+msgstr "नई"
+
+#: ui_main.news
+msgctxt "ui_main.news"
+msgid "News"
+msgstr "समाचार"
+
+#: ui_main.news_feeds
+msgctxt "ui_main.news_feeds"
+msgid "News Feeds"
+msgstr "समाचार फ़ीड्स"
+
+#: ui_main.news_source
+msgctxt "ui_main.news_source"
+msgid "News Source"
+msgstr "समाचार स्रोत"
+
+#: ui_main.new_category
+msgctxt "ui_main.new_category"
+msgid "New Category"
+msgstr "नई श्रेणी"
+
+#: ui_main.new_password
+msgctxt "ui_main.new_password"
+msgid "New Password"
+msgstr "नया पासवर्ड"
+
+#: ui_main.new_report
+msgctxt "ui_main.new_report"
+msgid "New Report"
+msgstr " नयी रिपोर्ट"
+
+#: ui_main.next
+msgctxt "ui_main.next"
+msgid "Next"
+msgstr "अगला"
+
+#: ui_main.no
+msgctxt "ui_main.no"
+msgid "No"
+msgstr "नहीं"
+
+#: ui_main.no_checkins
+msgctxt "ui_main.no_checkins"
+msgid "No checkins to display."
+msgstr "प्रदर्शित करने के लिए कोई चेकइन नहीं."
+
+#: ui_main.no_data
+msgctxt "ui_main.no_data"
+msgid "No data"
+msgstr "कोई डेटा नहीं"
+
+#: ui_main.none
+msgctxt "ui_main.none"
+msgid "None"
+msgstr "कोई नहीं"
+
+#: ui_main.notices
+msgctxt "ui_main.notices"
+msgid "Notices"
+msgstr "नोटिस"
+
+#: ui_main.not_approved
+msgctxt "ui_main.not_approved"
+msgid "Not Approved"
+msgstr "स्वीकृत नही"
+
+#: ui_main.not_approved_singular
+msgctxt "ui_main.not_approved_singular"
+msgid "Not Approved"
+msgstr "स्वीकृत नही"
+
+#: ui_main.not_selected
+msgctxt "ui_main.not_selected"
+msgid "---Not Selected---"
+msgstr "---चयनित नहीं---"
+
+#: ui_main.not_spam
+msgctxt "ui_main.not_spam"
+msgid "not spam"
+msgstr "स्पैम नहीं"
+
+#: ui_main.not_specified
+msgctxt "ui_main.not_specified"
+msgid "Not Specified"
+msgstr "नही दर्शाया गया"
+
+#: ui_main.no_reports
+msgctxt "ui_main.no_reports"
+msgid "There are no reports"
+msgstr "यहा कोई रिपोर्ट्स नही है"
+
+#: ui_main.no_results
+msgctxt "ui_main.no_results"
+msgid "There are no results"
+msgstr "यहा कोई परिणाम  नही है "
+
+#: ui_main.off
+msgctxt "ui_main.off"
+msgid "Off"
+msgstr "बंद"
+
+#: ui_main.official_news
+msgctxt "ui_main.official_news"
+msgid "Official &amp; mainstream news"
+msgstr "अफीशियल &amp; मुख्यधारा समाचार"
+
+#: ui_main.on
+msgctxt "ui_main.on"
+msgid "On"
+msgstr "चालू"
+
+#: ui_main.option
+msgctxt "ui_main.option"
+msgid "Option"
+msgstr "विकल्प"
+
+#: ui_main.optional
+msgctxt "ui_main.optional"
+msgid "Optional"
+msgstr "वैकल्पिक"
+
+#: ui_main.options
+msgctxt "ui_main.options"
+msgid "Options"
+msgstr "विकल्प"
+
+#: ui_main.organization
+msgctxt "ui_main.organization"
+msgid "Organization"
+msgstr "संस्था"
+
+#: ui_main.organizations
+msgctxt "ui_main.organizations"
+msgid "Organizations"
+msgstr "संस्था"
+
+#: ui_main.organization_description
+msgctxt "ui_main.organization_description"
+msgid "Organization Description"
+msgstr "संगठन विवरण"
+
+#: ui_main.organization_email
+msgctxt "ui_main.organization_email"
+msgid "Organization Email"
+msgstr "संगठन का ईमेल"
+
+#: ui_main.organization_has_been
+msgctxt "ui_main.organization_has_been"
+msgid "The Organization Has Been"
+msgstr "यह संस्थान का"
+
+#: ui_main.organization_name
+msgctxt "ui_main.organization_name"
+msgid "Organization Name"
+msgstr "संगठन का नाम"
+
+#: ui_main.organization_phone_1
+msgctxt "ui_main.organization_phone_1"
+msgid "Organization Phone 1"
+msgstr "संगठन दूरभाष 1"
+
+#: ui_main.organization_phone_2
+msgctxt "ui_main.organization_phone_2"
+msgid "Organization Phone 2"
+msgstr "संगठन का दूरभाष 2"
+
+#: ui_main.organization_website
+msgctxt "ui_main.organization_website"
+msgid "Organization Website"
+msgstr "संगठन की वेबसाइट"
+
+#: ui_main.original
+msgctxt "ui_main.original"
+msgid "Original"
+msgstr "मूल"
+
+#: ui_main.original_description
+msgctxt "ui_main.original_description"
+msgid "Original Description"
+msgstr "मूल वर्णन"
+
+#: ui_main.original_title
+msgctxt "ui_main.original_title"
+msgid "Original Title"
+msgstr "मूल उपाधि"
+
+#: ui_main.other_ushahidi_instances
+msgctxt "ui_main.other_ushahidi_instances"
+msgid "Other Deployments"
+msgstr "दूसरी डेप्लाय्मेंट्स"
+
+#: ui_main.outbox
+msgctxt "ui_main.outbox"
+msgid "Outbox"
+msgstr "आउट-बॉक्स"
+
+#: ui_main.outgoing
+msgctxt "ui_main.outgoing"
+msgid "Outgoing"
+msgstr "आउट-गोयिंग"
+
+#: ui_main.page
+msgctxt "ui_main.page"
+msgid "Page"
+msgstr "पेज"
+
+#: ui_main.pages
+msgctxt "ui_main.pages"
+msgid "Pages"
+msgstr "पेजिस"
+
+#: ui_main.page_description
+msgctxt "ui_main.page_description"
+msgid "Page Description"
+msgstr "पेज वर्णन"
+
+#: ui_main.page_has_been
+msgctxt "ui_main.page_has_been"
+msgid "The Page Has Been"
+msgstr "ये पेज है"
+
+#: ui_main.page_tab_name
+msgctxt "ui_main.page_tab_name"
+msgid "Page Tab Name"
+msgstr "पेज टेब का नाम"
+
+#: ui_main.page_title
+msgctxt "ui_main.page_title"
+msgid "Page Title"
+msgstr "पेज शीर्षक\n "
+
+#: ui_main.parent_category
+msgctxt "ui_main.parent_category"
+msgid "Parent Category"
+msgstr "उत्पादक विभाग"
+
+#: ui_main.password
+msgctxt "ui_main.password"
+msgid "Password"
+msgstr "पैस्वर्ड"
+
+#: ui_main.password_again
+msgctxt "ui_main.password_again"
+msgid "Verify Password"
+msgstr "पैस्वर्ड प्रमाणित करे"
+
+#: ui_main.password_changed_successfully
+msgctxt "ui_main.password_changed_successfully"
+msgid "Password changed successfully! Login below."
+msgstr "पैस्वर्ड सफलतापूर्वक बदल दिया गया है! लॉगिन करे|"
+
+#: ui_main.password_forgot
+msgctxt "ui_main.password_forgot"
+msgid "Forgot your password?"
+msgstr "क्या आप पैस्वर्ड भूल चुके है?"
+
+#: ui_main.password_reset_confirm
+msgctxt "ui_main.password_reset_confirm"
+msgid "Check your email for the new password."
+msgstr "नये पैस्वर्ड के लिए आपने ईमेल को जाचे|"
+
+#: ui_main.password_save
+msgctxt "ui_main.password_save"
+msgid "Stay logged in on this computer?"
+msgstr "ईस कम्प्यूटर पर लॉग्ड ईन्न रहे|"
+
+#: ui_main.past_month
+msgctxt "ui_main.past_month"
+msgid "Past Month"
+msgstr "पिछला महीना"
+
+#: ui_main.past_year
+msgctxt "ui_main.past_year"
+msgid "Past Year"
+msgstr "पिछला साल "
+
+#: ui_main.pending
+msgctxt "ui_main.pending"
+msgid "Pending"
+msgstr "बाकी"
+
+#: ui_main.per
+msgctxt "ui_main.per"
+msgid "per"
+msgstr "प्रति"
+
+#: ui_main.personal_information
+msgctxt "ui_main.personal_information"
+msgid "Personal Information <span>Optional.</span>"
+msgstr "व्यक्तिगत सूचना  <span>वैकल्पिक </span>"
+
+#: ui_main.phone
+msgctxt "ui_main.phone"
+msgid "Phone"
+msgstr "फोन"
+
+#: ui_main.photos
+msgctxt "ui_main.photos"
+msgid "Photos"
+msgstr "तस्वीरे"
+
+#: ui_main.pictures
+msgctxt "ui_main.pictures"
+msgid "Pictures"
+msgstr "चित्र"
+
+#: ui_main.pictures_and_videos
+msgctxt "ui_main.pictures_and_videos"
+msgid "Pictures and Videos"
+msgstr "चित्र और वीडियो"
+
+#: ui_main.pinpoint_location
+msgctxt "ui_main.pinpoint_location"
+msgid ""
+"* Search for your location using a location name OR latitude,longitude "
+"coordinates (format: 38.19, 85.61), OR click on the map to pinpoint the "
+"correct location."
+msgstr "* स्थानीए नाम या विश्व रेखान्तर के सहारे आपने स्थान को खोजे, देशांतर निर्देशांक(फॉर्मॅट: 38.19, 85.61),सही स्थान को ठीक से निर्धारित करने के लिए मानचित्र पर क्लिक करें|"
+
+#: ui_main.play
+msgctxt "ui_main.play"
+msgid "Play"
+msgstr "शुरू करे"
+
+#: ui_main.please_note
+msgctxt "ui_main.please_note"
+msgid "Please Note"
+msgstr "कृपया ध्यान मे रखे"
+
+#: ui_main.plugins
+msgctxt "ui_main.plugins"
+msgid "Plugins"
+msgstr "प्लगीन्स"
+
+#: ui_main.plugin_url
+msgctxt "ui_main.plugin_url"
+msgid "Plugin Website"
+msgstr "प्लगिन वेबसाइट"
+
+#: ui_main.public_profile
+msgctxt "ui_main.public_profile"
+msgid "Public Profile"
+msgstr "लोकछवी"
+
+#: ui_main.public_profile_url
+msgctxt "ui_main.public_profile_url"
+msgid "Public Profile URL"
+msgstr "लोकछवी URL"
+
+#: ui_main.preview
+msgctxt "ui_main.preview"
+msgid "Preview"
+msgstr "पूर्व-दर्शन करना"
+
+#: ui_main.preview_item
+msgctxt "ui_main.preview_item"
+msgid "Preview Item"
+msgstr "वस्तु का पूर्व-दर्शन "
+
+#: ui_main.preview_message
+msgctxt "ui_main.preview_message"
+msgid "Preview Message"
+msgstr "संदेश का पूर्व-दर्शन "
+
+#: ui_main.previous
+msgctxt "ui_main.previous"
+msgid "Previous"
+msgstr "पिछला"
+
+#: ui_main.private
+msgctxt "ui_main.private"
+msgid "Private"
+msgstr "व्यक्तिगत"
+
+#: ui_main.profile_color
+msgctxt "ui_main.profile_color"
+msgid "Profile Color"
+msgstr "लोकछवी का रंग"
+
+#: ui_main.profile_saved
+msgctxt "ui_main.profile_saved"
+msgid "Your Profile Has Been Saved"
+msgstr "आपकी रूपरेखा संग्रह हो गई है "
+
+#: ui_main.quick_stats
+msgctxt "ui_main.quick_stats"
+msgid "Quick Stats"
+msgstr "क्विक स्टॅट्स"
+
+#: ui_main.rating
+msgctxt "ui_main.rating"
+msgid "Rating"
+msgstr "रेटिंग"
+
+#: ui_main.read
+msgctxt "ui_main.read"
+msgid "Read"
+msgstr "पढ़ा हुआ"
+
+#: ui_main.receive
+msgctxt "ui_main.receive"
+msgid "Receive"
+msgstr "प्राप्त करना"
+
+#: ui_main.receive_from
+msgctxt "ui_main.receive_from"
+msgid "Receive from"
+msgstr "किससे प्राप्त हुआ"
+
+#: ui_main.receive_notifications
+msgctxt "ui_main.receive_notifications"
+msgid "Receive Notifications"
+msgstr "अधिसूचना प्राप्त करना"
+
+#: ui_main.recent_reports
+msgctxt "ui_main.recent_reports"
+msgid "Recent Reports"
+msgstr "हाल के रिपोर्ट्स"
+
+#: ui_main.refresh_news_feeds
+msgctxt "ui_main.refresh_news_feeds"
+msgid "Refresh News Feeds"
+msgstr "ताजे समाचार फीड्स के लिए क्लिक करे"
+
+#: ui_main.registered_email
+msgctxt "ui_main.registered_email"
+msgid "Registered Email"
+msgstr "रजिसटर्द ईमेल"
+
+#: ui_main.remove
+msgctxt "ui_main.remove"
+msgid "Remove"
+msgstr "निकाल दे"
+
+#: ui_main.reply
+msgctxt "ui_main.reply"
+msgid "Reply"
+msgstr "जवाब दे"
+
+#: ui_main.report
+msgctxt "ui_main.report"
+msgid "Report"
+msgstr "रिपोर्ट"
+
+#: ui_main.reports_listed
+msgctxt "ui_main.reports_listed"
+msgid "Reports <span>(from the map, listed in chronological order)</span>"
+msgstr "रिपोर्ट्स <span>(नक्शे मे से, कालानूक्रम अधिसूचित)</span>"
+
+#: ui_main.reporter
+msgctxt "ui_main.reporter"
+msgid "Reporter"
+msgstr "रिपोर्टर"
+
+#: ui_main.reporters
+msgctxt "ui_main.reporters"
+msgid "Reporters"
+msgstr "रिपोर्टर्स"
+
+#: ui_main.reporter_date
+msgctxt "ui_main.reporter_date"
+msgid "Reporter Date"
+msgstr "रिपोर्ट की तारीख़"
+
+#: ui_main.reporter_email
+msgctxt "ui_main.reporter_email"
+msgid "Reporter Email"
+msgstr "रिपोर्टर का ईमेल"
+
+#: ui_main.reporter_first_name
+msgctxt "ui_main.reporter_first_name"
+msgid "Reporter First Name"
+msgstr "रिपोर्टर का नाम"
+
+#: ui_main.reporter_has_been
+msgctxt "ui_main.reporter_has_been"
+msgid "The Reporter Has Been"
+msgstr "यह रिपोर्टर क्या कर चुका है"
+
+#: ui_main.reporter_ip
+msgctxt "ui_main.reporter_ip"
+msgid "Reporter IP Address"
+msgstr "रिपोर्टर का आइपी अड्रेस"
+
+#: ui_main.reporter_last_name
+msgctxt "ui_main.reporter_last_name"
+msgid "Reporter Last Name"
+msgstr "रिपोर्टर का कुलनाम नाम"
+
+#: ui_main.reporter_level
+msgctxt "ui_main.reporter_level"
+msgid "Reporter Level"
+msgstr "रिपोर्टर का स्तर"
+
+#: ui_main.reporter_levels
+msgctxt "ui_main.reporter_levels"
+msgid "Reporter Levels"
+msgstr "रिपोर्टर्स का स्तर"
+
+#: ui_main.reporter_phone
+msgctxt "ui_main.reporter_phone"
+msgid "Reporter Phone"
+msgstr "रिपोर्टर का फोन"
+
+#: ui_main.reports
+msgctxt "ui_main.reports"
+msgid "Reports"
+msgstr "रिपोर्ट्स"
+
+#: ui_main.reports_btn_browse
+msgctxt "ui_main.reports_btn_browse"
+msgid "Browse"
+msgstr "ब्राउज़"
+
+#: ui_main.reports_btn_submit
+msgctxt "ui_main.reports_btn_submit"
+msgid "Submit"
+msgstr "सब्मिट"
+
+#: ui_main.reports_by_this_user
+msgctxt "ui_main.reports_by_this_user"
+msgid "Reports By This User"
+msgstr "रिपोर्ट्स"
+
+#: ui_main.reports_categories
+msgctxt "ui_main.reports_categories"
+msgid "Categories"
+msgstr "वर्गीकरण"
+
+#: ui_main.reports_count
+msgctxt "ui_main.reports_count"
+msgid "%d Reports"
+msgstr "%d रिपोर्ट्स"
+
+#: ui_main.reports_date
+msgctxt "ui_main.reports_date"
+msgid "Date"
+msgstr "तारिक़्ख"
+
+#: ui_main.reports_description
+msgctxt "ui_main.reports_description"
+msgid "Description"
+msgstr "वर्णन"
+
+#: ui_main.reports_download_csv
+msgctxt "ui_main.reports_download_csv"
+msgid "Reports will be downloaded in CSV format"
+msgstr "रिपोर्ट्स CSV फॉर्मॅट मे डाउनलोड की जाएगी"
+
+#: ui_main.reports_email
+msgctxt "ui_main.reports_email"
+msgid "Email"
+msgstr "ईमेल"
+
+#: ui_main.reports_features
+msgctxt "ui_main.reports_features"
+msgid "Features"
+msgstr "फीचर्स"
+
+#: ui_main.reports_find_location
+msgctxt "ui_main.reports_find_location"
+msgid "Find a location near you"
+msgstr "अपने नज़दीक की जगह ढूंदिए"
+
+#: ui_main.reports_first
+msgctxt "ui_main.reports_first"
+msgid "First Name"
+msgstr "पहला नाम"
+
+#: ui_main.reports_last
+msgctxt "ui_main.reports_last"
+msgid "Last Name"
+msgstr "कुलनाम"
+
+#: ui_main.reports_location_name
+msgctxt "ui_main.reports_location_name"
+msgid "Location Name"
+msgstr "जगह का नाम"
+
+#: ui_main.reports_news
+msgctxt "ui_main.reports_news"
+msgid "News Source Link"
+msgstr "समाचार स्रोत लिंक"
+
+#: ui_main.reports_optional
+msgctxt "ui_main.reports_optional"
+msgid "Optional Information"
+msgstr "वैल्काल्पिक जानकारी"
+
+#: ui_main.reports_photos
+msgctxt "ui_main.reports_photos"
+msgid "Upload Photos"
+msgstr "तस्वीरे अपलोड करे"
+
+#: ui_main.reports_return
+msgctxt "ui_main.reports_return"
+msgid "Return to the reports page"
+msgstr "रिपोर्ट्स पेज पर वापस जाये"
+
+#: ui_main.reports_select_city
+msgctxt "ui_main.reports_select_city"
+msgid "Select a City"
+msgstr "शहर का चयन करें"
+
+#: ui_main.reports_submitted
+msgctxt "ui_main.reports_submitted"
+msgid ""
+"Your Report has been submitted to our staff for review. We will get back to "
+"you shortly if necessary."
+msgstr "आपका रिपोर्ट समीक्षा के लिए प्रस्तुत हो गया है. अगर ज़रूरत पड़े तो हम आपको जल्द ही संपर्क करेंगे."
+
+#: ui_main.reports_submit_new
+msgctxt "ui_main.reports_submit_new"
+msgid "Submit a New Report"
+msgstr "नये रिपोर्ट जमा करे"
+
+#: ui_main.reports_time
+msgctxt "ui_main.reports_time"
+msgid "Time"
+msgstr "समय"
+
+#: ui_main.reports_timeline
+msgctxt "ui_main.reports_timeline"
+msgid "Reports Timeline"
+msgstr "रिपोर्ट्स टाइमलाइन"
+
+#: ui_main.reports_title
+msgctxt "ui_main.reports_title"
+msgid "Report Title"
+msgstr "रिपोर्ट का शीर्षक"
+
+#: ui_main.reports_video
+msgctxt "ui_main.reports_video"
+msgid "Video link"
+msgstr "विडियो लिंक"
+
+#: ui_main.report_an_incident
+msgctxt "ui_main.report_an_incident"
+msgid "Report an Incident"
+msgstr "घटना की रिपोर्ट करे"
+
+#: ui_main.report_details
+msgctxt "ui_main.report_details"
+msgid "Report Details"
+msgstr "विस्तुरित रिपोर्ट"
+
+#: ui_main.report_option_1
+msgctxt "ui_main.report_option_1"
+msgid "By sending a message to"
+msgstr "संदेस भेज कर"
+
+#: ui_main.report_option_2
+msgctxt "ui_main.report_option_2"
+msgid "By sending an email"
+msgstr "ईमेल भेज कर"
+
+#: ui_main.report_option_3
+msgctxt "ui_main.report_option_3"
+msgid "By sending a tweet with the hashtag/s"
+msgstr "हैशटैग के साथ ट्वीट भेज कर"
+
+#: ui_main.report_option_4
+msgctxt "ui_main.report_option_4"
+msgid "By filling this form on our website."
+msgstr "वेबसाईट पर एस फॉर्म को भरके"
+
+#: ui_main.report_option_external_apps
+msgctxt "ui_main.report_option_external_apps"
+msgid "By using an app"
+msgstr "एस अप्प कआ प्रयोग करके"
+
+#: ui_main.report_saved
+msgctxt "ui_main.report_saved"
+msgid "Your Report Has Been Saved"
+msgstr "आपका रिपोर्ट संग्रह हो गया है "
+
+#: ui_main.report_title
+msgctxt "ui_main.report_title"
+msgid "Report Title"
+msgstr "रिपोर्ट का शीर्षक"
+
+#: ui_main.request_information
+msgctxt "ui_main.request_information"
+msgid "Request more information"
+msgstr "अधिक जानकारी की विनती करे"
+
+#: ui_main.request_location
+msgctxt "ui_main.request_location"
+msgid "Request location"
+msgstr "स्थान की विनती करे"
+
+#: ui_main.required
+msgctxt "ui_main.required"
+msgid "Required"
+msgstr "आवश्यक"
+
+#: ui_main.requirements
+msgctxt "ui_main.requirements"
+msgid "Requirements"
+msgstr "आवश्यकता"
+
+#: ui_main.resend_confirm_email
+msgctxt "ui_main.resend_confirm_email"
+msgid "Resend Confirmation Email"
+msgstr "स्वीकृति ईमेल को फिर से भेजे"
+
+#: ui_main.reset
+msgctxt "ui_main.reset"
+msgid "Reset"
+msgstr "रिसेट"
+
+#: ui_main.reset_all_filters
+msgctxt "ui_main.reset_all_filters"
+msgid "Reset all filters"
+msgstr "सभी फिलटर्स को रिसेट करे"
+
+#: ui_main.reset_password
+msgctxt "ui_main.reset_password"
+msgid "Reset Password"
+msgstr "पासवर्ड को रिसेट करे"
+
+#: ui_main.retrieve_city_names
+msgctxt "ui_main.retrieve_city_names"
+msgid "Retrieve city names for the selected country"
+msgstr "चयनित देश के शहरों के नाम पुन: प्राप्त करें"
+
+#: ui_main.riverid_information
+msgctxt "ui_main.riverid_information"
+msgid "Accounts managed by the %s service."
+msgstr "लेखा %s सेवा द्वारा प्रबंधित."
+
+#: ui_main.riverid_exists_login
+msgctxt "ui_main.riverid_exists_login"
+msgid ""
+"You already have an account managed by CrowdmapID! Try using your CrowdmapID"
+" email and password to login."
+msgstr "आपका CrowdmapID अकाउंट हमारे पास रजिस्टरेड है! कृपया लॉगिन करने के लिए अपना CrowdmapID  ईमेल और पासवर्ड इस्तेमाल करे !"
+
+#: ui_main.role
+msgctxt "ui_main.role"
+msgid "Role"
+msgstr "रोल"
+
+#: ui_main.rss
+msgctxt "ui_main.rss"
+msgid "RSS"
+msgstr "RSS"
+
+#: ui_main.save
+msgctxt "ui_main.save"
+msgid "Save"
+msgstr "बचाये"
+
+#: ui_main.saved
+msgctxt "ui_main.saved"
+msgid "Saved"
+msgstr "बचा चुके"
+
+#: ui_main.save_add_new
+msgctxt "ui_main.save_add_new"
+msgid "Save & Add New"
+msgstr "बचाये और नया जोडें"
+
+#: ui_main.save_close
+msgctxt "ui_main.save_close"
+msgid "Save & Close"
+msgstr "बचाये और बंद करे"
+
+#: ui_main.save_report
+msgctxt "ui_main.save_report"
+msgid "Save Report"
+msgstr "रिपोर्ट बचाये"
+
+#: ui_main.schedule
+msgctxt "ui_main.schedule"
+msgid "Schedule"
+msgstr "कार्यक्रम"
+
+#: ui_main.scheduler
+msgctxt "ui_main.scheduler"
+msgid "Scheduler"
+msgstr "शेड्यूलर"
+
+#: ui_main.scheduler_day
+msgctxt "ui_main.scheduler_day"
+msgid "Day"
+msgstr "दिन"
+
+#: ui_main.scheduler_hour
+msgctxt "ui_main.scheduler_hour"
+msgid "Hour"
+msgstr "घंटा"
+
+#: ui_main.scheduler_log
+msgctxt "ui_main.scheduler_log"
+msgid "Scheduler Log"
+msgstr "शेड्यूलर लॉग"
+
+#: ui_main.scheduler_minute
+msgctxt "ui_main.scheduler_minute"
+msgid "Minute"
+msgstr "मिनिट"
+
+#: ui_main.scheduler_weekday
+msgctxt "ui_main.scheduler_weekday"
+msgid "Day of the Week"
+msgstr "हफ्ते का दिन"
+
+#: ui_main.search
+msgctxt "ui_main.search"
+msgid "Search"
+msgstr "खोजें"
+
+#: ui_main.search_results
+msgctxt "ui_main.search_results"
+msgid "Search Results"
+msgstr "परिणाम को खोजे"
+
+#: ui_main.security_code
+msgctxt "ui_main.security_code"
+msgid "Security Code"
+msgstr "सुरक्षा कूट"
+
+#: ui_main.select_all
+msgctxt "ui_main.select_all"
+msgid "Select All"
+msgstr "सभी का चयन करे"
+
+#: ui_main.select_field_type
+msgctxt "ui_main.select_field_type"
+msgid "Select a Field Type"
+msgstr "एक फील्ड प्रकार का चयन करें"
+
+#: ui_main.select_form_type
+msgctxt "ui_main.select_form_type"
+msgid "Select A Form Type"
+msgstr "पर्चा एक प्रकार का चयन करें"
+
+#: ui_main.select_in_map
+msgctxt "ui_main.select_in_map"
+msgid "Select in the map"
+msgstr "नक्शे में चुने"
+
+#: ui_main.select_multiple
+msgctxt "ui_main.select_multiple"
+msgid "Select as many as needed"
+msgstr "जरूरत के रूप में चयन करें"
+
+#: ui_main.select_one
+msgctxt "ui_main.select_one"
+msgid "Please verify that you have checked an item"
+msgstr "यदि आपने किसी वस्तु की जाँच की है तो कृपया सत्यापित करें"
+
+#: ui_main.select_theme
+msgctxt "ui_main.select_theme"
+msgid "Select Theme"
+msgstr "थीम पसंद करे"
+
+#: ui_main.send
+msgctxt "ui_main.send"
+msgid "Send"
+msgstr "भेज दे"
+
+#: ui_main.send_confirmation
+msgctxt "ui_main.send_confirmation"
+msgid "Send Confirmation"
+msgstr "पुष्टिकरण भेजे"
+
+#: ui_main.sending_to
+msgctxt "ui_main.sending_to"
+msgid "Sending To"
+msgstr "भेजेने वाले"
+
+#: ui_main.sent
+msgctxt "ui_main.sent"
+msgid "Sent"
+msgstr "भेजा गया"
+
+#: ui_main.sent_by
+msgctxt "ui_main.sent_by"
+msgid "Sent by"
+msgstr "भेजने वाले का नाम"
+
+#: ui_main.server_address
+msgctxt "ui_main.server_address"
+msgid "Server address"
+msgstr "सर्वर अड्रेस"
+
+#: ui_main.server_type
+msgctxt "ui_main.server_type"
+msgid "Server type"
+msgstr "सर्वर टाइप"
+
+#: ui_main.service
+msgctxt "ui_main.service"
+msgid "Service"
+msgstr "सेवा"
+
+#: ui_main.service_username
+msgctxt "ui_main.service_username"
+msgid "Service Username"
+msgstr "सेवा का यूज़रनेम"
+
+#: ui_main.service_user_id
+msgctxt "ui_main.service_user_id"
+msgid "Service User ID"
+msgstr "सेवा का यूज़र-आइडी"
+
+#: ui_main.share
+msgctxt "ui_main.share"
+msgid "Share"
+msgstr "शेयर"
+
+#: ui_main.shared_data
+msgctxt "ui_main.shared_data"
+msgid "Shared data"
+msgstr "साझा डेटा"
+
+#: ui_main.share_has_been
+msgctxt "ui_main.share_has_been"
+msgid "The share has been"
+msgstr "इस शेयर को"
+
+#: ui_main.sharing
+msgctxt "ui_main.sharing"
+msgid "Sharing"
+msgstr "सहभाजन"
+
+#: ui_main.shorter_map
+msgctxt "ui_main.shorter_map"
+msgid "Shorter Map"
+msgstr "अल्प नक्शा"
+
+#: ui_main.show
+msgctxt "ui_main.show"
+msgid "Show"
+msgstr "दिखाए"
+
+#: ui_main.show_all
+msgctxt "ui_main.show_all"
+msgid "Show all"
+msgstr "सब कुछ दिखाए"
+
+#: ui_main.show_messages
+msgctxt "ui_main.show_messages"
+msgid "Show Messages"
+msgstr "मेसेज दिखाए"
+
+#: ui_main.showing_reports_from
+msgctxt "ui_main.showing_reports_from"
+msgid "Showing Reports From <span class=\"time-period\">%1$s to %2$s</span>"
+msgstr "रिपोर्ट्स दर्शाना <span class=\"time-period\">%1$s to %2$s</span>"
+
+#: ui_main.site
+msgctxt "ui_main.site"
+msgid "Website"
+msgstr "वेबसाइट"
+
+#: ui_main.site_email_address
+msgctxt "ui_main.site_email_address"
+msgid "site email address"
+msgstr "साइट ईमेल अड्रेस"
+
+#: ui_main.site_url
+msgctxt "ui_main.site_url"
+msgid "Site URL"
+msgstr "साइट URL"
+
+#: ui_main.smaller_map
+msgctxt "ui_main.smaller_map"
+msgid "Smaller Map"
+msgstr "छोटा नक्शा"
+
+#: ui_main.sms
+msgctxt "ui_main.sms"
+msgid "SMS"
+msgstr "SMS"
+
+#: ui_main.sorry_no_badges
+msgctxt "ui_main.sorry_no_badges"
+msgid "Sorry, you do not have any badges."
+msgstr "क्षमा कीजिए, आपके पास कोई भी बॅडजस नही है !"
+
+#: ui_main.source
+msgctxt "ui_main.source"
+msgid "Source"
+msgstr "स्रोत"
+
+#: ui_main.source_name
+msgctxt "ui_main.source_name"
+msgid "Source name"
+msgstr "स्रोत का नाम"
+
+#: ui_main.sort
+msgctxt "ui_main.sort"
+msgid "Sort"
+msgstr "छांटना"
+
+#: ui_main.sort_by
+msgctxt "ui_main.sort_by"
+msgid "Sort By"
+msgstr "इससे छांटना"
+
+#: ui_main.source_url
+msgctxt "ui_main.source_url"
+msgid "Source URL"
+msgstr "स्रोत URL"
+
+#: ui_main.spam
+msgctxt "ui_main.spam"
+msgid "Spam"
+msgstr "स्पॅम"
+
+#: ui_main.ssl_support
+msgctxt "ui_main.ssl_support"
+msgid "SSL Support?"
+msgstr "SSL साहयता?"
+
+#: ui_main.start_point
+msgctxt "ui_main.start_point"
+msgid "From"
+msgstr "किससे आया"
+
+#: ui_main.step
+msgctxt "ui_main.step"
+msgid "Step"
+msgstr "स्टेप"
+
+#: ui_main.submit
+msgctxt "ui_main.submit"
+msgid "Submit a Report"
+msgstr "रिपोर्ट जमा कीजिए"
+
+#: ui_main.submitted_by
+msgctxt "ui_main.submitted_by"
+msgid "Submitted by <strong>%1$s</strong> via <strong>%2$s</strong>"
+msgstr "सॅबमिटेड बाइ <strong>%1$s</strong> वाया <strong>%2$s</strong>"
+
+#: ui_main.submit_sms
+msgctxt "ui_main.submit_sms"
+msgid "Submit via SMS"
+msgstr "SMS द्वारा भेजे"
+
+#: ui_main.submit_sms1
+msgctxt "ui_main.submit_sms1"
+msgid "Send your SMS to"
+msgstr "आपका SMS किसे भेजना है"
+
+#: ui_main.submit_sms2
+msgctxt "ui_main.submit_sms2"
+msgid "on your phone"
+msgstr "आपके फोन पर"
+
+#: ui_main.success
+msgctxt "ui_main.success"
+msgid "Success!"
+msgstr "सफल !"
+
+#: ui_main.successfuly_imported
+msgctxt "ui_main.successfuly_imported"
+msgid "Succesfully imported"
+msgstr "सफलता पूर्वक इम्पोर्ट किया गया"
+
+#: ui_main.surname
+msgctxt "ui_main.surname"
+msgid "Surname"
+msgstr "कुलनाम"
+
+#: ui_main.survey
+msgctxt "ui_main.survey"
+msgid "Survey"
+msgstr "सर्वेक्षण"
+
+#: ui_main.system
+msgctxt "ui_main.system"
+msgid "System"
+msgstr "सिस्टम"
+
+#: ui_main.taller_map
+msgctxt "ui_main.taller_map"
+msgid "Taller Map"
+msgstr "लंबा नक्शा"
+
+#: ui_main.tcp_port
+msgctxt "ui_main.tcp_port"
+msgid "TCP Port"
+msgstr "TCP पोर्ट"
+
+#: ui_main.themes
+msgctxt "ui_main.themes"
+msgid "Themes"
+msgstr "थीम्स"
+
+#: ui_main.theme_default
+msgctxt "ui_main.theme_default"
+msgid "Default Ushahidi Theme"
+msgstr "डिफॉल्ट उशहीदी थीम"
+
+#: ui_main.theme_settings
+msgctxt "ui_main.theme_settings"
+msgid "Theme Settings"
+msgstr "थीम सेट्टिंग्स"
+
+#: ui_main.this
+msgctxt "ui_main.this"
+msgid "This"
+msgstr "यह"
+
+#: ui_main.this_day
+msgctxt "ui_main.this_day"
+msgid "Today"
+msgstr "आज"
+
+#: ui_main.this_month
+msgctxt "ui_main.this_month"
+msgid "This Month"
+msgstr " ये महीना"
+
+#: ui_main.this_week
+msgctxt "ui_main.this_week"
+msgid "This Week"
+msgstr " ये साप्ताह"
+
+#: ui_main.this_year
+msgctxt "ui_main.this_year"
+msgid "This Year"
+msgstr " ये वर्ष"
+
+#: ui_main.this_is_your_profile
+msgctxt "ui_main.this_is_your_profile"
+msgid "This is your profile."
+msgstr "आपका अपना वर्णन"
+
+#: ui_main.time
+msgctxt "ui_main.time"
+msgid "Time"
+msgstr "समय"
+
+#: ui_main.title
+msgctxt "ui_main.title"
+msgid "Title "
+msgstr "पद"
+
+#: ui_main.to
+msgctxt "ui_main.to"
+msgid "to"
+msgstr "को"
+
+#: ui_main.today
+msgctxt "ui_main.today"
+msgid "Today"
+msgstr "आज"
+
+#: ui_main.today_at
+msgctxt "ui_main.today_at"
+msgid "Today at"
+msgstr "आज"
+
+#: ui_main.token
+msgctxt "ui_main.token"
+msgid "Token"
+msgstr "टोकन"
+
+#: ui_main.total_reports
+msgctxt "ui_main.total_reports"
+msgid "Total Reports"
+msgstr "कुल रिपोर्टें"
+
+#: ui_main.translated
+msgctxt "ui_main.translated"
+msgid "Translated"
+msgstr "अनूवादित"
+
+#: ui_main.translated_description
+msgctxt "ui_main.translated_description"
+msgid "Translated Description"
+msgstr "अनूवादित विवरण"
+
+#: ui_main.translated_title
+msgctxt "ui_main.translated_title"
+msgid "Translated Title"
+msgstr "अनूवादित शीर्षक"
+
+#: ui_main.translate_to
+msgctxt "ui_main.translate_to"
+msgid "Translate to"
+msgstr "अनुवाद करें"
+
+#: ui_main.translation
+msgctxt "ui_main.translation"
+msgid "Translation"
+msgstr "अनुवाद"
+
+#: ui_main.translation_saved
+msgctxt "ui_main.translation_saved"
+msgid "Translation has been saved"
+msgstr "अनुवाद संचय किया गया"
+
+#: ui_main.trusted
+msgctxt "ui_main.trusted"
+msgid "Trusted"
+msgstr "विश्वसनीय"
+
+#: ui_main.type
+msgctxt "ui_main.type"
+msgid "Type"
+msgstr "प्रकार"
+
+#: ui_main.twitter
+msgctxt "ui_main.twitter"
+msgid "Twitter"
+msgstr "ट्विटर"
+
+#: ui_main.unable_send_email
+msgctxt "ui_main.unable_send_email"
+msgid "Unable to send email."
+msgstr "ईमेल भेजने में असमर्थ."
+
+#: ui_main.uncategorized_reports
+msgctxt "ui_main.uncategorized_reports"
+msgid "Uncategorized Reports"
+msgstr "उनकटेगोरिज़ेड रिपोर्ट्स"
+
+#: ui_main.unread
+msgctxt "ui_main.unread"
+msgid "unread"
+msgstr "अपठित"
+
+#: ui_main.unverified
+msgctxt "ui_main.unverified"
+msgid "Unverified"
+msgstr "असत्यापित"
+
+#: ui_main.update_feeds
+msgctxt "ui_main.update_feeds"
+msgid "Update feeds"
+msgstr "अद्यतन फ़ीड"
+
+#: ui_main.upload
+msgctxt "ui_main.upload"
+msgid "Upload"
+msgstr "अपलोड करे"
+
+#: ui_main.upload_guide
+msgctxt "ui_main.upload_guide"
+msgid "View our report upload guides:-"
+msgstr "हमारे रिपोर्ट अपलोड गाइडस देखिए"
+
+#: ui_main.upload_docs_1
+msgctxt "ui_main.upload_docs_1"
+msgid "XML Upload guide"
+msgstr "XML अपलोड गाइड"
+
+#: ui_main.upload_docs_2
+msgctxt "ui_main.upload_docs_2"
+msgid "CSV Upload guide"
+msgstr "CSV अपलोड गाइड"
+
+#: ui_main.upload_file
+msgctxt "ui_main.upload_file"
+msgid "File to upload"
+msgstr "ये फाइल अपलोड करे"
+
+#: ui_main.upload_reports
+msgctxt "ui_main.upload_reports"
+msgid "Upload Reports"
+msgstr "अपलोड रिपोर्ट्स"
+
+#: ui_main.upload_reports_custom_forms
+msgctxt "ui_main.upload_reports_custom_forms"
+msgid ""
+"Custom field columns must have their form_id appended to them e.g custom "
+"field Test, on the default form, whose id is 1, will be Test-1. During "
+"custom form field import, ensure that"
+msgstr " कस्टम क्षेत्र के फॉर्म_आईडी उनके साथ संलग्न रहने चाहिए उदाहरण के लिए कस्टम क्षेत्र जाँच, डिफॉल्ट फॉर्म पर, जिनका आईडी1 है  उनका जाँच-1 होगा| कस्टम फॉर्म क्षेत्र के आयात के दौरान एस बात का ख्याल रखे की"
+
+#: ui_main.upload_reports_detail_1
+msgctxt "ui_main.upload_reports_detail_1"
+msgid ""
+"With the form below, you can import incidents into the Ushahidi engine."
+msgstr "नीचे दिए गए फार्म के साथ, आप Ushahidi इंजन में घटनाओं को आयात कर सकते हैं."
+
+#: ui_main.upload_reports_detail_2
+msgctxt "ui_main.upload_reports_detail_2"
+msgid "Reports must be uploaded in either CSV or XML format."
+msgstr "रिपोर्ट्स CSV अथवा XML फॉर्मॅट मे  अपलोड करे"
+
+#: ui_main.upload_reports_detail_3
+msgctxt "ui_main.upload_reports_detail_3"
+msgid ""
+"When incident ID already exists in the database, the entry in the CSV/XML "
+"file will be ignored."
+msgstr "अगर इन्सिडेंट ID डेटबेस में पहले से मौजूद है तो जो एंट्री CSV/XML में है, उसे नज़र-अंदाज़ किया जाएगा!"
+
+#: ui_main.upload_reports_detail_4
+msgctxt "ui_main.upload_reports_detail_4"
+msgid "It must contain at least Incident Title and Incident Date."
+msgstr "इसमे कम से कम घटनाओं के शीर्षक और घटनाओं के तिथि होने चाहिए."
+
+#: ui_main.upload_reports_detail_4b
+msgctxt "ui_main.upload_reports_detail_4b"
+msgid ""
+"If no latitude and longitude columns are supplied, the location will be "
+"geocoded using the Google Geocoder."
+msgstr "कोई अक्षांश और देशांतर कॉलम आपूर्ति की जाती है, तो स्थान गूगल Geocoder उपयोग कर भूकूटित किया जाएगा."
+
+#: ui_main.upload_reports_detail_4c
+msgctxt "ui_main.upload_reports_detail_4c"
+msgid ""
+"If importing additional info i.e personal information and/or custom form "
+"fields"
+msgstr "अतिरिक्त जानकारी यानी व्यक्तिगत जानकारी और / या कस्टम प्रपत्र फ़ील्ड का आयात करते हैं"
+
+#: ui_main.upload_reports_detail_4d
+msgctxt "ui_main.upload_reports_detail_4d"
+msgid ""
+"At least one of the personal information fields(name, surname,email) entries"
+" MUST exist. Empty records will not be imported"
+msgstr "आपकी अपनी जानकारी के फील्ड्स मे कम से कम (नाम या कुलनाम या ईमेल) होना ज़रूरी है! यदी ये तीनो फील्ड्स खाली हुए तो वो रेकॉर्ड इम्पोर्ट नही होगा!"
+
+#: ui_main.upload_reports_detail_4e
+msgctxt "ui_main.upload_reports_detail_4e"
+msgid ""
+"Your entries for dropdown fields, radio buttons and checkboxes match the "
+"options provided for the custom field on your instance"
+msgstr "लटकती क्षेत्रों, रेडियो बटन और चेक बॉक्स के लिए अपनी प्रविष्टियां अपनी आवृत्ति पर कस्टम क्षेत्र के लिए उपलब्ध विकल्पों मैच करते हैं"
+
+#: ui_main.upload_reports_detail_4f
+msgctxt "ui_main.upload_reports_detail_4f"
+msgid ""
+"Checkbox options are separated by a comma e.g if your selected choice of "
+"fruits is apples,mangoes and grapes, your entry for this should be "
+"\"apples,mangoes,grapes\""
+msgstr "चेकबॉक्स विकल्प एक अल्पविराम से अलग होती है उदाहरण अगर आपके चुने हुए फल के विकल्प सेब, आपकी प्रविष्टि \"सेब, आम, अंगूर\" होनी चाहिए"
+
+#: ui_main.upload_reports_detail_4g
+msgctxt "ui_main.upload_reports_detail_4g"
+msgid ""
+"Date field values are in the following format: mm/dd/yyyy e.g 3rd October "
+"2012 = 10/03/2012"
+msgstr "तारीख़ फील्ड का फॉर्मॅट ऐसा होना चाईए: mm/dd/yyyy e.g 3rd October 2012 = 10/03/2012"
+
+#: ui_main.upload_reports_detail_5
+msgctxt "ui_main.upload_reports_detail_5"
+msgid "A Sample CSV Report"
+msgstr "एक नमूना CSV रिपोर्ट"
+
+#: ui_main.upload_reports_detail_6
+msgctxt "ui_main.upload_reports_detail_6"
+msgid ""
+"#,INCIDENT TITLE,INCIDENT "
+"DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED,LATITUDE,LONGITUDE<br "
+"/>\"1\",\"Suspected death in Nairobi\",\"2009-05-15 "
+"01:06:00\",\"Nairobi\",\"Three cases have been confirmed in C. del "
+"Uruguay\",\"DEATHS, CIVILIANS, \",YES,YES,\"-1.287\",\"36.821\""
+msgstr "#,इन्सिडेंट टाइटल,इन्सिडेंट डटे,लोकेशन,डिस्क्रिप्षन,केटेगरी,अप्रूव्ड,वेरिफाइड,लॅटिट्यूड,लॉंजिट्यूड<ब्र />\"1\",\" नैरोबी मे संदिग्ध की मौत\",\"2009-05-15 01:06:00\",\"नैरोबी\",\"सी. डेल यूवरग्वे मे तीन मामलो की पुष्टि हो गई है\",\"डेत्स, सिविलियेन्स, \",एस,एस,\"-1.287\",\"36.821\""
+
+#: ui_main.upload_reports_detail_7
+msgctxt "ui_main.upload_reports_detail_7"
+msgid ""
+"\"2\",\"Looting\",\"2009-03-18 10:10:00\",\"Accra\",\"Looting happening "
+"everywhere\",\"RIOTS, DEATHS, PROPERTY LOSS, "
+"\",YES,NO,\"5.55\",\"-0.2166667\""
+msgstr "\"2\",\"लूटिंग\",\"2009-03-18 10:10:00\",\"अक्रा\",\"सभी जगहो पर लूट हो रही है\",\"राइयट्स, डेत्स, प्रॉपर्टी लॉस, \",एस,नो,\"5.55\",\"-0.2166667\""
+
+#: ui_main.upload_successful
+msgctxt "ui_main.upload_successful"
+msgid "Upload Successful"
+msgstr "सफल अपलोड"
+
+#: ui_main.upload_video
+msgctxt "ui_main.upload_video"
+msgid "Upload Video"
+msgstr "अपलोड वीडियो"
+
+#: ui_main.url
+msgctxt "ui_main.url"
+msgid "URL"
+msgstr "URL"
+
+#: ui_main.user
+msgctxt "ui_main.user"
+msgid "User"
+msgstr "उपभोक्ता"
+
+#: ui_main.username
+msgctxt "ui_main.username"
+msgid "Username"
+msgstr "यूज़रनेम"
+
+#: ui_main.ushahidi_admin
+msgctxt "ui_main.ushahidi_admin"
+msgid "Ushahidi Admin"
+msgstr "उशहीदी प्रबंधक"
+
+#: ui_main.verification
+msgctxt "ui_main.verification"
+msgid "Verification"
+msgstr "प्रमाण"
+
+#: ui_main.verified
+msgctxt "ui_main.verified"
+msgid "Verified"
+msgstr "प्रामाणिक"
+
+#: ui_main.verified_reports
+msgctxt "ui_main.verified_reports"
+msgid "Verified Reports"
+msgstr "प्रामाणिक रिपोर्ट्स"
+
+#: ui_main.verify
+msgctxt "ui_main.verify"
+msgid "Verify"
+msgstr "प्रमाणित करना"
+
+#: ui_main.verify_this_report
+msgctxt "ui_main.verify_this_report"
+msgid "Verify this Report"
+msgstr "रिपोर्ट प्रमाणित करें"
+
+#: ui_main.version
+msgctxt "ui_main.version"
+msgid "Version"
+msgstr "संस्करण"
+
+#: ui_main.via
+msgctxt "ui_main.via"
+msgid "via"
+msgstr "वाया"
+
+#: ui_main.video
+msgctxt "ui_main.video"
+msgid "Video"
+msgstr "वीडियो"
+
+#: ui_main.view
+msgctxt "ui_main.view"
+msgid "View"
+msgstr "दिखाए"
+
+#: ui_main.views
+msgctxt "ui_main.views"
+msgid "Views"
+msgstr "दिखाए"
+
+#: ui_main.view_all
+msgctxt "ui_main.view_all"
+msgid "View All"
+msgstr "सब कुछ दिखाए"
+
+#: ui_main.view_all_feeds
+msgctxt "ui_main.view_all_feeds"
+msgid "View all feeds"
+msgstr "सारे फीड्स दिखाए"
+
+#: ui_main.view_all_reports
+msgctxt "ui_main.view_all_reports"
+msgid "View all reports"
+msgstr "सारे रिपोर्ट्स दिखाए"
+
+#: ui_main.view_items
+msgctxt "ui_main.view_items"
+msgid "View Items"
+msgstr "वस्तुए दिखाए"
+
+#: ui_main.view_more
+msgctxt "ui_main.view_more"
+msgid "View More"
+msgstr "और दिखाए"
+
+#: ui_main.view_public_profile
+msgctxt "ui_main.view_public_profile"
+msgid "View Public Profile"
+msgstr "लोकछवी दिखाए"
+
+#: ui_main.view_report
+msgctxt "ui_main.view_report"
+msgid "View Report"
+msgstr "रिपोर्ट दिखाए"
+
+#: ui_main.view_reports
+msgctxt "ui_main.view_reports"
+msgid "View Reports"
+msgstr "रिपोर्ट्स दिखाए"
+
+#: ui_main.view_video
+msgctxt "ui_main.view_video"
+msgid "View Video"
+msgstr "वीडियो देखे"
+
+#: ui_main.visible
+msgctxt "ui_main.visible"
+msgid "Visible"
+msgstr "प्रत्यक्ष"
+
+#: ui_main.waiting_approval
+msgctxt "ui_main.waiting_approval"
+msgid "Waiting Approval"
+msgstr "अनुमति की प्रतीक्षा"
+
+#: ui_main.waiting_verification
+msgctxt "ui_main.waiting_verification"
+msgid "Waiting Verification"
+msgstr "प्रमाण की प्रतीक्षा"
+
+#: ui_main.wider_map
+msgctxt "ui_main.wider_map"
+msgid "Wider Map"
+msgstr "बड़ा नक्शा"
+
+#: ui_main.web_form
+msgctxt "ui_main.web_form"
+msgid "Web Form"
+msgstr "वेब फॉर्म"
+
+#: ui_main.web
+msgctxt "ui_main.web"
+msgid "Web"
+msgstr "वेब"
+
+#: ui_main.weight
+msgctxt "ui_main.weight"
+msgid "Weight"
+msgstr "वजन"
+
+#: ui_main.Weekly
+msgctxt "ui_main.Weekly"
+msgid "Weekly"
+msgstr ""
+
+#: ui_main.yes
+msgctxt "ui_main.yes"
+msgid "Yes"
+msgstr "हा"
+
+#: ui_main.yesterday
+msgctxt "ui_main.yesterday"
+msgid "Yesterday"
+msgstr "गत दिन"
+
+#: ui_main.your_dashboard
+msgctxt "ui_main.your_dashboard"
+msgid "Your Dashboard"
+msgstr "आपका डॅशबोर्ड"
+
+#: ui_main.your_file
+msgctxt "ui_main.your_file"
+msgid "Your file"
+msgstr "आपकी फाइल"
+
+#: ui_main.zoom_in
+msgctxt "ui_main.zoom_in"
+msgid "Zoom In"
+msgstr "पास जाए "
+
+#: ui_main.zoom_out
+msgctxt "ui_main.zoom_out"
+msgid "Zoom Out"
+msgstr "दूर जाए "

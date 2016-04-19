@@ -1,0 +1,62 @@
+# 
+# Translators:
+# Neogeografen <soren.johannessen@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-06-27 14:21+0000\n"
+"Last-Translator: Neogeografen <soren.johannessen@gmail.com>\n"
+"Language-Team: Danish (http://www.transifex.com/ushahidi/ushahidi-v2/language/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: message.captcha.default
+msgctxt "message.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Angiv en valid sikkerhedskode."
+
+#: message.captcha.required
+msgctxt "message.captcha.required"
+msgid "Please enter the security code."
+msgstr "Angiv en sikkerhedskode."
+
+#: message.email.email
+msgctxt "message.email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "E-mail feltet ser ikke ud til at indholde en valid e-mail-adresse."
+
+#: message.email.length
+msgctxt "message.email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "E-mail feltet skal mindst være på 4 tegn og max. 64 tegn langt."
+
+#: message.email.required
+msgctxt "message.email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "E-mail feltet er påkrævet hvis tjekboksen er afkrydset."
+
+#: message.message.required
+msgctxt "message.message.required"
+msgid "The comments field is required."
+msgstr "Kommentarfeltet skal angives."
+
+#: message.name.length
+msgctxt "message.name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Navnefeltet skal være på mindst 3 tegn."
+
+#: message.name.required
+msgctxt "message.name.required"
+msgid "The name field is required."
+msgstr "Navnefeltet skal angives."
+
+#: message.phone.length
+msgctxt "message.phone.length"
+msgid "The phone field is not valid."
+msgstr "Telefonfeltet er ikke valid."

@@ -1,0 +1,585 @@
+# 
+# Translators:
+# orsime <orsime@yahoo.com>, 2013
+# Peter K. <kpehelp@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Hungarian (Hungary) (http://www.transifex.com/ushahidi/ushahidi-v2/language/hu_HU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu_HU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: tooltips.actions.add_to_category
+msgctxt "tooltips.actions.add_to_category"
+msgid ""
+"This adds the report to additional categories. If you select Category 1 here"
+" and the report already has Category 2 attached to it, the report will then "
+"have both Category 1 and Category 2."
+msgstr "Így adhatja hozzá a bejelentést újabb kategóriákhoz. Ha itt kiválasztja az \"1-es Kategóriát\" és a bejelentés már a \"2-es Kategóriába\" van sorolva, ezután mindkét kategóriához hozzá lesz rendelve. "
+
+#: tooltips.actions.approve
+msgctxt "tooltips.actions.approve"
+msgid "Approves a report or not. If approved, it will show up publicly."
+msgstr "A bejelentés jóváhagyása vagy elvetése. A jóváhagyott bejelentéseket minden látogató látni fogja."
+
+#: tooltips.actions.assign_badge
+msgctxt "tooltips.actions.assign_badge"
+msgid ""
+"You will be able to assign a badge to the triggering user. Pick the badge "
+"that gets assigned here."
+msgstr "Itt adhat érmet a felhasználónak, ha az teljesíti a feltételt. Válassza ki az érmet!"
+
+#: tooltips.actions.between_times
+msgctxt "tooltips.actions.between_times"
+msgid ""
+"This is a range of hours and/or minutes between two times in 24 hour format."
+" If you input an earlier time in the second field, it will be flipped with "
+"the first. These times must be within a single day. Also, this time is "
+"checked against the time you have configured on your site in site settings "
+"and <strong>not</strong> necessarily the timezone of the user interacting "
+"with your deployment. Leave this at 00:00 to 00:00 to ignore this qualifier."
+msgstr "Ez egy időszak hossza órákban és/vagy percekben kifejezve két időpont között 24 órás formátumban. Ha egy korábbi időpontot ír a második mezőbe, az helyet cserél az első mező tartalmával. Ezek a dátumok egyetlen napon belüli időpontokra kell, hogy vonatkozzanak. Sőt, ezt az időt az Ön által a portálra beállított idővel vetjük össze, amit a portál  Beállítások-nál megadott és <strong>nem</strong> feltétlenül a felhasználó időzónájával. Ha nem kíván élni ezzel a lehetőséggel, hagyja meg ezt a beállítást: 00:00-tól 00:00-ig."
+
+#: tooltips.actions.category
+msgctxt "tooltips.actions.category"
+msgid ""
+"If you would like to activate triggers only when a certain category is being"
+" used, you can set that here. This will allow a trigger to be activated if "
+"only one of the categories is used. For instace, if you select Category 1 "
+"and Category 2 here and a report is submitted using Category 2 and Category "
+"3, it will pass the test."
+msgstr "Ha azt szeretné, hogy csak egy bizonyos kategória esetén aktiválódjanak triggerek, azt itt tudja beállítani. Ilyen esetben a trigger csak akkor aktiválódik, ha ez a kategória egymagában jelenik meg. Például ha az 1-es kategóriát és a 2-es kategóriát választja itt ki és a bejelentéskor a 2-es és 3-as kategóriákat választja ki a felhasználó, teljesül a feltétel."
+
+#: tooltips.actions.days_of_the_week
+msgctxt "tooltips.actions.days_of_the_week"
+msgid ""
+"If these actions happen on certain days of the week, set that here. Keep in "
+"mind the day is determined by the timezone configured on your deployment. "
+"Hold shift, command, or control for multiple day selection."
+msgstr "Ha ezek az intézkedések a hétnek csak meghatározott napjain történnek, az itt tudja beállítani. Ne feledje, hogy a napokat a portálra beállított időzóna szerint veszi majd figyelembe az eszköz. Tartsa lenyomva a Shift, Command (Cmd), vagy kontroll (Ctrl) gombokat több nap kiválasztásához."
+
+#: tooltips.actions.email_body
+msgctxt "tooltips.actions.email_body"
+msgid "Body of the email that will be sent."
+msgstr "A kiküldendő e-mail szövege."
+
+#: tooltips.actions.email_subject
+msgctxt "tooltips.actions.email_subject"
+msgid "Subject of email that will be sent."
+msgstr "A kiküldendő e-mail tárgya."
+
+#: tooltips.actions.feed_id
+msgctxt "tooltips.actions.feed_id"
+msgid ""
+"The feed can be all feeds or a specific feeds. If you would only like "
+"specific feeds to activate a trigger, you will want to select them here. "
+"Otherwise, you will want to leave this as \"all\""
+msgstr "A feed beállítása lehet \"minden feed\" vagy egy \"konkrét feed\". Ha csak konkrét feed-ek esetén szertné aktiválni a triggert, azokat itt állíthatja be. Egyébként a \"minden feed\" beállítás javasolt."
+
+#: tooltips.actions.from
+msgctxt "tooltips.actions.from"
+msgid ""
+"Twitter author username (or multiple usernames separated by commas). If you "
+"would like to activate triggers only for twitter messages from a particular "
+"user, enter their username here (not including @)"
+msgstr "A figyelt Twitter-ező felhasználóneve (vagy több felhasználónév vesszővel elválasztva). Ha csak bizonyos felhasználók Twitter üzeneteit szeretné triggernek beállítani, itt sorolhatja fel a Twitteres felhasználónevüket (elhagyva a @ jelet)"
+
+#: tooltips.actions.keywords
+msgctxt "tooltips.actions.keywords"
+msgid ""
+"You can choose to leave this blank if you do not want to check against "
+"keywords. If you add words here, you will need to separate them with a comma"
+" (,). For example, if you want to activate a trigger when someone mentions "
+"\"love\" or \"peace\" in their message, you will want to add \"love, peace\""
+" in the keywords box."
+msgstr "Ezt a részt szabadon lehet hagyni, ha nem szeretné a kulcsszavakkal összevetni. Ha beír ide szavakat, azokat vesszővel (,) kell elválasztani. Például ha szeretne egy triggert beállítani arra az esetre, ha valaki a \"szeretet\" vagy \"béke\" szavakat használja a bejegyzésében, a kulcsszó mezőbe ezt kell írnia: \"szeretet, béke\"."
+
+#: tooltips.actions.location
+msgctxt "tooltips.actions.location"
+msgid ""
+"You can either select anywhere or a specific location. If you select a "
+"specific location, you will be asked to draw a box around the area that "
+"qualifies an action. For example, if you want this trigger to be activated "
+"when someone submits a report in Brazil, you will select \"specific area\" "
+"and then draw the box around Brazil. You can make these boxes as small or as"
+" large as you would like. You can also draw multiple boxes."
+msgstr "Itt két lehetőség közül válaszhat:  \"bárhol\" vagy \"konkrét hely\". Ha konkrét helyet választ, kérem jelölje négyzettel a térképen azt a területet, amit ez alatt ért. Például ha Brazíliára vonatkozik a bejelentése, válassza a \"konkrét hely\" lehetőséget és jelölje ki Brazília területét a négyzettel. Ezek a négyzetek tetszőlegesen kicsik vagy nagyok lehenek. Egyszerre több területet is bejelölhet."
+
+#: tooltips.actions.on_specific_count
+msgctxt "tooltips.actions.on_specific_count"
+msgid ""
+"This qualifier will activate the trigger on the N-th count either for the "
+"entire collective user base or for each individual user. Leave this blank to"
+" ignore it."
+msgstr "Ez a jellemző aktiválja a triggert az N-edik alkalommal a teljes összevont felhasználói körben vagy egy konkrét felhasználó esetén. Ha üresen hagyja, nem vizsgáljuk ezt a feltételt."
+
+#: tooltips.actions.report_title
+msgctxt "tooltips.actions.report_title"
+msgid "This is the default title to add to the report."
+msgstr "Ez a bejelentés címének alapbeállítása."
+
+#: tooltips.actions.response
+msgctxt "tooltips.actions.response"
+msgid ""
+"If all of the qualifiers above are passed, the trigger will initiate a "
+"response. This can range from approving a report to emailing a user. Select "
+"the response here to activate additional options for the specific responses."
+msgstr "Haz összes fenti feltétel teljesült, a trigger kiváltja a válaszeseményt. A válaszesemény bármi lehet a bejelentés jóváhagyásától a felhasználónak küldött e-mail üzenetig. Jelöljön meg itt egy válaszeseményt, hogy az arra jellemző beállítási lehetőségek megjelenjenek."
+
+#: tooltips.actions.send_to
+msgctxt "tooltips.actions.send_to"
+msgid ""
+"If you select \"Triggering User\", the email will be sent to the user who "
+"performed the action. If you select the radio button next to the input box, "
+"you will be able to enter a custom email address. This is useful if you are "
+"setting up triggers to notify people when certain parts of the map are "
+"seeing reports, check ins or some other activity."
+msgstr "Ha a \"Felhasználó Értesítése\" lehetőséget választja, az illető felhasználó e-mail értesítést kap. Ha a szövegdoboz melletti választógombot bejelöli, meg tudja adni az értesítendő e-mail címet. Ez akkor lehet hasznos, ha arra állít be triggereket, hogy értesítést küldjenek bizonyos embereknek, ha a térkép bizonyos részeire bejelentések, bejelentkezések  érkeznek vagy más aktivitást tapasztal a rendszer."
+
+#: tooltips.actions.specific_days
+msgctxt "tooltips.actions.specific_days"
+msgid ""
+"You can select multiple days here. Dates are determined by your deployment "
+"timezone setting. In order to default to all dates, do not select any dates."
+msgstr "Itt több napot is kiválaszthat. A dátumokat a portálra beállított időzóna határozza meg. Tetszőleges dátum beállításához ne válasszon dátumot."
+
+#: tooltips.actions.trigger
+msgctxt "tooltips.actions.trigger"
+msgid ""
+"The trigger is the core component of setting up your Action Triggers. This "
+"is where you determine if you would like something to happen when someone "
+"submits a report, performs a check in, etc. You will be able to filter "
+"responses to these actions after selecting one."
+msgstr "A kiváltó esemény (trigger) az alapja a Kiváltó Esemény beállításoknak. Itt határozhatja meg, hogy mi történjen, amikor valaki bejelentést tesz, bejelentkezik a portálra, stb. Leszűrheti a válaszlahetőségeket, miután kiválasztott egy trigger eseményt."
+
+#: tooltips.actions.user
+msgctxt "tooltips.actions.user"
+msgid ""
+"The user can be anyone or a specific user. If you would only like specific "
+"users to activate a trigger, you will want to select them here. Otherwise, "
+"you will want to leave this as \"anyone\" since most triggers are set up for"
+" all users interacting with the system"
+msgstr "A felhasználó lehet \"bárki\" vagy egy konkrét felhasználó. Ha csak bizonyos felhasználóknak engedné aktiválni a triggert, ezeket a felhasználókat itt válaszhatja ki. Egyébként a \"bárki\" beállítást érdemes választani, hiszen a legtöbb trigger minden felhasználóra értelmezhető, aki a rendszerrel kapcsolatba lép."
+
+#: tooltips.actions.verify
+msgctxt "tooltips.actions.verify"
+msgid "Marks a report as verified or not."
+msgstr "A bejelentés ellenőrzöttnek jelölése."
+
+#: tooltips.change_picture
+msgctxt "tooltips.change_picture"
+msgid ""
+"Profile pages on this site use Gravatar. By clicking on your image, you will"
+" be taken to the Gravatar website where you can change your profile picture."
+msgstr "A Profil oldalak ezen a portálon a Gravatar-t használják. A fényképére kattintva, a Gravatar oldalra irányítjuk át, ahol módosíthatja a profilképét."
+
+#: tooltips.default_value
+msgctxt "tooltips.default_value"
+msgid "Separate each value with a comma, e.g. value1, value2."
+msgstr "A felsorolás elemeit vesszővel válassza el! pl. érték1, érték2."
+
+#: tooltips.radio_choices
+msgctxt "tooltips.radio_choices"
+msgid ""
+"Separate each value with a comma, e.g. value1, value2. In case you want to "
+"set a default value, end your list of options with :: e.g If you want to "
+"make value3 the default, it will be value1, value2, value3::value3"
+msgstr "A felsorolás elemeit vesszővel válassza el! pl. érték1, érték2. Ha szeretne alapbeállított értéket meghatározni, a felsorolást zárja dupla kettősponttal :: pl, ha az érték3-at szeretné alapbeállításnak, ez lesz a felsorolás: érték1, érték2, érték3::érték3"
+
+#: tooltips.dropdown_choices
+msgctxt "tooltips.dropdown_choices"
+msgid "Separate each choice item with a comma, e.g. Item 1, Item 2 etc."
+msgstr "A kiválasztott elemeket vesszővel válassza el! pl. elem1, elem2."
+
+#: tooltips.private_to
+msgctxt "tooltips.private_to"
+msgid "Start typing to list members."
+msgstr "Kezdjen gépelni, a listaelemek megjelenítéséhez."
+
+#: tooltips.private_subject
+msgctxt "tooltips.private_subject"
+msgid "Private message subject"
+msgstr "Személyes üzenet tárgya"
+
+#: tooltips.private_message
+msgctxt "tooltips.private_message"
+msgid "Private message"
+msgstr "Személyes üzenet"
+
+#: tooltips.profile_color
+msgctxt "tooltips.profile_color"
+msgid ""
+"You can select a color that will show up under your profile picture on your "
+"public profile. This color will also be the color dot that shows up on the "
+"map for your checkins."
+msgstr "Itt válaszhat színt, ami a nyilvános profilképe alatt fog megjelenni. Ugyanez a szín jelzi majd a térképen az Ön bejenentkezéseit."
+
+#: tooltips.profile_email
+msgctxt "tooltips.profile_email"
+msgid "Your email address"
+msgstr "Az Ön e-mail címe"
+
+#: tooltips.profile_name
+msgctxt "tooltips.profile_name"
+msgid ""
+"This is one of the ways that you are identified on the website. Keep in mind"
+" that this is public!"
+msgstr "Ez az egyik név, amellyel Ön a portálon megjelenik. Ne feledje, hogy ez a név nyilvános lesz!"
+
+#: tooltips.profile_new_password
+msgctxt "tooltips.profile_new_password"
+msgid ""
+"If set, this will be your new password. Leave this field blank if you wish "
+"to keep your current password."
+msgstr "Ha beállítja, ez lesz az új jelszava. Hagyja üresen, ha a továbbra is a jelenlegi jelszavát szeretné használni."
+
+#: tooltips.profile_new_users_password
+msgctxt "tooltips.profile_new_users_password"
+msgid ""
+"This is a requirement when creating a new user and will be the users "
+"password. You should inform your new user to change their password after "
+"logging in for the first time."
+msgstr "Ez egy kötelező elem új felhasználó létrehozásához és ez lesz a felhasználó jelszava. Érdemes emlékeztetni az új felhasználót, hogy az első bejelentkezéskor változtassa meg a jelszavát."
+
+#: tooltips.profile_notify
+msgctxt "tooltips.profile_notify"
+msgid ""
+"Selecting YES lets you get alerts via email when new reports or comments are"
+" posted on your website."
+msgstr "Ha az IGEN-t választod, akkor emailben riasztást kapsz a joszolgalat.hu-ra érkező új bejelentésekről és fejleményekről (csak amelyek megfelelnek a megjelölt körzetnek és kategóriának)."
+
+#: tooltips.profile_password
+msgctxt "tooltips.profile_password"
+msgid ""
+"Your current password. We require you enter your password to prevent any "
+"unauthorized changes to your account."
+msgstr "A jelenlegi jelszó. Kötelező beírni a jelszót, nehogy illetéktelenek módosítsák a személyes beállításait."
+
+#: tooltips.profile_public
+msgctxt "tooltips.profile_public"
+msgid ""
+"Your profile can be viewed by anyone on the Internet if you check this "
+"option. This is also the easiest way to show off the reports you've "
+"submitted, your checkins, badges, etc all on one page."
+msgstr "Az ön Adatlapját bárki megtekintheti az interneten, ha ezt a beállítást választja. Ez egyébként a legegyszerűbb módja, hogy az Ön által küldött bejelentéseket, bejelentkezéseket, érmeket, stb egy oldalon megmutassa a külvilágnak."
+
+#: tooltips.profile_public_url
+msgctxt "tooltips.profile_public_url"
+msgid "This is the address where your public profile can be found."
+msgstr "Ezen a címen található a nyilvános Adatlapja."
+
+#: tooltips.profile_username
+msgctxt "tooltips.profile_username"
+msgid "Your username cannot be changed."
+msgstr "A felhasználónevet nem lehet módosítani."
+
+#: tooltips.settings_access_level
+msgctxt "tooltips.settings_access_level"
+msgid ""
+"Access Levels are used to restrict access to custom form field data. Higher "
+"access levels can access fields from lower levels. Superadmin has the "
+"highest access level (100). Public data is displayed at the lowest access "
+"level (0). Members have access level 10. Admin is access level 90 by "
+"default."
+msgstr "A Hozzáférési Szintek korlátozzák a hozzáférést a kérdőív mezőinek adataihoz. Magasabb hozzáférési szintek elérik az alacsonyabbakat. A Superadmin a legmagasabb hozzáférési szint (100). A nyilvános adatok jelentik a legalacsonyabb szintet (0). A tagok hozzáférési szintje 10-es. Az Admin hozzáférési szint 90-es alapbeállítással jön létre."
+
+#: tooltips.settings_alert_email
+msgctxt "tooltips.settings_alert_email"
+msgid "This is the email address that will be used to send email alerts."
+msgstr "Erre az email címre fogjuk a küldeni a riasztásokat."
+
+#: tooltips.settings_allow_alerts
+msgctxt "tooltips.settings_allow_alerts"
+msgid "Allow users to subscribe for alerts via the web."
+msgstr "Itt engedélyezheti, hogy a felhasználók a weben feliratkozzanak a riasztásokra."
+
+#: tooltips.settings_allow_clustering
+msgctxt "tooltips.settings_allow_clustering"
+msgid "This allows bundling of similar reports into a single dot on the map"
+msgstr "Ez teszi hehetővé, hogy hasonló bejelentések egyetlen pontként jelenjenek meg a térképen."
+
+#: tooltips.settings_allow_comments
+msgctxt "tooltips.settings_allow_comments"
+msgid "Allow users to comment on reports on the main site."
+msgstr "Itt engedélyezheti, hogy a felhasználók megjegyzésben reagálhassanak a főoldalon megjelenő bejelentésekre."
+
+#: tooltips.settings_allow_feed
+msgctxt "tooltips.settings_allow_feed"
+msgid "This allows RSS News feeds to be displayed on the main site."
+msgstr "Itt engedélyezheti az RSS csatornák megjelenítését a főoldalon."
+
+#: tooltips.settings_allow_feed_category
+msgctxt "tooltips.settings_allow_feed_category"
+msgid "This allows creating new Category from RSS News feeds."
+msgstr ""
+
+#: tooltips.settings_allow_reports
+msgctxt "tooltips.settings_allow_reports"
+msgid "Allow users to submit information via the web form."
+msgstr "Itt engedélyezheti, hogy a felhasználók a web-es kérdőíven keresztül információt adjanak."
+
+#: tooltips.settings_api_default_record_limit
+msgctxt "tooltips.settings_api_default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "Alapbeállítás: hány rekordot engedjen letölteni a rendszer egy API request-ben?"
+
+#: tooltips.settings_api_max_record_limit
+msgctxt "tooltips.settings_api_max_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "Maximum hány rekordot engedjen letölteni a rendszer egy API request-ben?"
+
+#: tooltips.settings_api_max_requests_per_ip
+msgctxt "tooltips.settings_api_max_requests_per_ip"
+msgid "Maximum number of API requests per IP address"
+msgstr "Maximum hány API request-et teljesítsen a rendszer IP címenként?"
+
+#: tooltips.settings_banner
+msgctxt "tooltips.settings_banner"
+msgid ""
+"The site banner shows up at the top of the front end of your website if the "
+"theme you are using supports it. The recommended size for this banner will "
+"depend on the theme you are using. Keep in mind that this will replace the "
+"site title and tagline at the top of the page."
+msgstr "Az oldalfejléc (banner) a portál nyitóoldalának tetején jelenik meg, ha a használt oldalkép (theme) megengedi. Az oldalfejléc javasolt mérete az oldalkép méretétől függ. Ne feledje, hogy ez az oldal címe és tagline-ja HELYETT jelenik meg az oldal tetején!"
+
+#: tooltips.settings_blocks_per_row
+msgctxt "tooltips.settings_blocks_per_row"
+msgid "Number of Block columns that will be displayed on each row."
+msgstr "Hány blokk oszlop jelenjen meg soronként?"
+
+#: tooltips.settings_cache_pages
+msgctxt "tooltips.settings_cache_pages"
+msgid ""
+"Enable or disable page caching. This makes pages display faster by cutting "
+"response times. We recommend using caching on high traffic sites. **Remember"
+" that reports will be populated on the front end based on the schedule you "
+"set below (Cache Lifetime)."
+msgstr "Itt lehet engedélyezni és tiltani a gyorsítótár használatát. Engedélyezése esetén a lapok gyorsabban fognak betöltődni a böngészőbe, ami csökkenti a válaszidőt. Nagyforgalmú oldalakon, ajánlott az Engedélyezni. **Figyelem: a lapok a gyorsító tárban az alábbi beállítás szerint frissülnek. (gyorsítótár időtartam)"
+
+#: tooltips.settings_cache_pages_lifetime
+msgctxt "tooltips.settings_cache_pages_lifetime"
+msgid "Set the lifetime of the cache."
+msgstr "Állítsa be a gyorsítótár időtartamát"
+
+#: tooltips.settings_checkins
+msgctxt "tooltips.settings_checkins"
+msgid ""
+"This setting enables checkins on your deployment. This is a simplified "
+"report type that is not moderated before it goes on the homepage and "
+"requires your site to be configured a certain way. When you enable this, "
+"make sure your timezone setting is on UTC and your theme supports checkins. "
+"When you enable this, checkin-only themes will become enabled under your "
+"addons/themes settings page."
+msgstr "Ez a beállítás engedélyezi a bejelentkezéseket a portálon.  A bejelentkezés egy egyszerűsített bejelentés, ami moderálás nélkül kerül a honlapra és emiatt meghatározott beállításokat feltételez a portálon. Amikor ezt engedélyezi, ellenőrizze, hogy az időzóna beállítás UTC és az oldalkép (theme) támogatja a bejelentkezéseket. Amint ezt engedélyezi, csak bejelentkezéses oldalképek lesznek elérhetők a kiegészítők/oldalképek beállítása oldalon."
+
+#: tooltips.settings_configure_map
+msgctxt "tooltips.settings_configure_map"
+msgid "Set the map to cover a specific location."
+msgstr "Egy meghatározott helyre beállítja a térképet"
+
+#: tooltips.settings_default_category_colors
+msgctxt "tooltips.settings_default_category_colors"
+msgid "Set one color code for all the categories on the site."
+msgstr "Egyetlen színkód kiválasztása az összes kategóriára az oldalon."
+
+#: tooltips.settings_default_category_icons
+msgctxt "tooltips.settings_default_category_icons"
+msgid "Set one icon for all the categories on the site."
+msgstr "Egyetlen ikon kiválasztása az összes kategóriára az oldalon."
+
+#: tooltips.settings_default_location
+msgctxt "tooltips.settings_default_location"
+msgid "This is the country the site is being deployed."
+msgstr "Ebben az országban telepítette az alkalmazást"
+
+#: tooltips.settings_display_contact
+msgctxt "tooltips.settings_display_contact"
+msgid "Turn the Contact Tab on or off on the main site."
+msgstr "A Kapcsolat fül be- és kikapcsolása a főoldalon."
+
+#: tooltips.settings_display_howtohelp
+msgctxt "tooltips.settings_display_howtohelp"
+msgid "Turn the How to Help Tab on or off on the main site."
+msgstr "'Hogyan segíthet' fül be-, ill. kikapcsolása a főoldalon."
+
+#: tooltips.settings_display_items_per_page
+msgctxt "tooltips.settings_display_items_per_page"
+msgid "This is the number of reports displayed per page on the main site."
+msgstr "A főoldalon megjelenő beJelentések száma oldalanként."
+
+#: tooltips.settings_display_items_per_page_admin
+msgctxt "tooltips.settings_display_items_per_page_admin"
+msgid ""
+"This is the number of reports displayed per page on the admin Back End."
+msgstr "Az admin felületen megjelenő bejelentések Jelentések száma oldalanként."
+
+#: tooltips.settings_flsms_download
+msgctxt "tooltips.settings_flsms_download"
+msgid "This is the hub for incoming messages."
+msgstr "Ez a bejövő üzenetek központja."
+
+#: tooltips.settings_flsms_synchronize
+msgctxt "tooltips.settings_flsms_synchronize"
+msgid "This synchronizes the messages in the hub with the Ushahidi platform."
+msgstr "Ez szinkronizálja a központba érkezett üzeneteket az Ushahidi platformmal."
+
+#: tooltips.settings_flsms_text_1
+msgctxt "tooltips.settings_flsms_text_1"
+msgid "Phone numbers through which the text messages are received."
+msgstr "Telefonszámok, amelyekre az SMS-ek érkeznek."
+
+#: tooltips.settings_google_analytics
+msgctxt "tooltips.settings_google_analytics"
+msgid "Tracks visitors of your site. Get detailed visitor statistics."
+msgstr "Ez követi nyomon az oldalra látogatókat. Itt láthatók a részletes látogatói statisztikák."
+
+#: tooltips.settings_locale
+msgctxt "tooltips.settings_locale"
+msgid "Sets the language that will be used in the site."
+msgstr "Itt állíthatja be az oldalon használt nyelvet."
+
+#: tooltips.settings_manually_approve_users
+msgctxt "tooltips.settings_manually_approve_users"
+msgid ""
+"If you set this option to yes, you must approve every individual user who "
+"creates an account on your site by assigning them roles (ie. Member, Admin, "
+"Superadmin)."
+msgstr "Ha ezt a lehetőséget igenre állítja, minden egyes felhasználót jóvá kell hagyni, aki regisztrál az oldalra és szerepekhez rendelni őket. (pl. Felhasználó, Admin, Superadmin)"
+
+#: tooltips.settings_map_provider
+msgctxt "tooltips.settings_map_provider"
+msgid "This defines which map is to be used on the site."
+msgstr "Itt lehet beállítani, melyik térképet használja az oldal."
+
+#: tooltips.settings_map_timeline
+msgctxt "tooltips.settings_map_timeline"
+msgid ""
+"This shows the timeline based on the date and time reports were submitted"
+msgstr "Ez mutatja az időrendet a bejelentések beérkezésének dátuma és időpontja szerint."
+
+#: tooltips.settings_private_deployment
+msgctxt "tooltips.settings_private_deployment"
+msgid ""
+"Setting this value to true or yes will make your deployment private so only "
+"users with accounts that you specify will be able to access the deployment."
+msgstr "Ha ez az érték igazra van állítva, a portált priváttá teszi, azaz csak a regisztrációt követően engedélyezett felhasználók számára lesz hozzáférhető."
+
+#: tooltips.settings_require_email_confirmation
+msgctxt "tooltips.settings_require_email_confirmation"
+msgid ""
+"Users will be emailed with a confirmation link to click before they are "
+"allowed to log into the deployment if this is set to yes. If you enable this"
+" after your deployment has accepted users, they will be prompted to confirm "
+"their account before they will be allowed to continue using it."
+msgstr "A felhasználók e-mailben kapnak egy igazoló linket, és első alkalommal csak azon keresztül léphetnek a portálra, ha ez a beállítás igenre van állítva. Ha már vannak a portálnak regisztrált felhasználói amikor ez a beállítás igenre változik, ezeknek a felhasználóknak is igazolniuk kell az e-mail címük valódiságát azzal, hogy a kapott linkre kattintanak mielőtt tovább használhatják a portált. "
+
+#: tooltips.settings_server_host
+msgctxt "tooltips.settings_server_host"
+msgid "This is where the emails reside"
+msgstr "Itt tárolja a rendszer az e-maileket"
+
+#: tooltips.settings_server_password
+msgctxt "tooltips.settings_server_password"
+msgid "This is the password for the email address that receives reports."
+msgstr "Ez a jelszava annak az e-mail címnek, ahova a bejelentések érkeznek."
+
+#: tooltips.settings_server_port
+msgctxt "tooltips.settings_server_port"
+msgid ""
+"This is required to accept incoming connections from the email address."
+msgstr "Ez a beállítás kötelező a e-mail címre érkező bejövő kapcsolatok fogadásához."
+
+#: tooltips.settings_server_ssl_support
+msgctxt "tooltips.settings_server_ssl_support"
+msgid "This is required to enhance a secure connection."
+msgstr "Ez kötelező beállítás a biztonságos adatkapcsolat javításához."
+
+#: tooltips.settings_server_type
+msgctxt "tooltips.settings_server_type"
+msgid "This is required to retrieve e-mails from the host server."
+msgstr "Ez kötelező beállítás a kiszolgáló szerverre érkező e-mailek letöltéséhez."
+
+#: tooltips.settings_server_username
+msgctxt "tooltips.settings_server_username"
+msgid "This is the email address that receives reports."
+msgstr "Erre az e-mail címre érkeznek a bejelentések."
+
+#: tooltips.settings_share_site_stats
+msgctxt "tooltips.settings_share_site_stats"
+msgid ""
+"Hit statistics are stored on a server controlled by Ushahidi. By enabling "
+"this option, you gain access to hit statistics directly in your admin panel."
+" By disabling it, you will stop collecting statistics and will be unable to "
+"recover traffic stats collected while this is turned off."
+msgstr "A nézettségi statisztikákat az Ushahidi szerverei kontrollálják. Ennek a beállításnak az engedélyezése a nézettségi statisztikák közvetlenül megjelennek az admin oldalon. Ha ez a beállítás nincs engedélyezve, a rendszer nem gyűjt statisztikákat és erre az időre később sem lesznek kinyerhetők a forgalmi statisztikák, amíg ez a beállítás ki van kapcsolva."
+
+#: tooltips.settings_site_copyright_statement
+msgctxt "tooltips.settings_site_copyright_statement"
+msgid ""
+"Do others have the right to republish text, images, video and/or design "
+"themes that you and your users create? Go to "
+"https://creativecommons.org/choose/ if you are interested in specifying what"
+" others are able to do with your work. And remember to be specific about "
+"what elements of the site you are licensing!"
+msgstr "Engedélyezi -e, hogy más kiszolgálók újrapublikálják az Ön és a felhasználók által létrehozott szöveget, videót, és/vagy design elemekei? Olvassa el a https://creativecommons.org/choose/ oldalt, ha pontosabban szeretné szabályozni, mit tehetnek mások az Önök munkájának eredményeivel. Fontos, hogy pontosan meghatározza, az oldal mely elemeit kívánja licenccel védeni!"
+
+#: tooltips.settings_site_email
+msgctxt "tooltips.settings_site_email"
+msgid ""
+"This is the email address that will receive email reports and messages from "
+"the contact form."
+msgstr "Erre az e-mail címre érkeznek az e-mailes bejelentések és üzenetek a Kapcsolat adatlapról."
+
+#: tooltips.settings_site_message
+msgctxt "tooltips.settings_site_message"
+msgid ""
+"This is text that will appear above the map on the homepage. This is useful "
+"for giving important information to visitors on the site. To remove the box,"
+" simply delete the message here."
+msgstr "Ez a szöveg jelenik majd meg a honlapon a térkpé fölött. Érdemes itt fontos információt közölni a látogatókkal. Ha kitörli ezt az üzenetet, a szövegdoboz is eltűnik a honlapról."
+
+#: tooltips.settings_site_name
+msgctxt "tooltips.settings_site_name"
+msgid "This is the name of the site that appears at the top of the main site."
+msgstr "Ez az oldalnév jelenik meg a főoldal tetején"
+
+#: tooltips.settings_site_submit_report_message
+msgctxt "tooltips.settings_site_submit_report_message"
+msgid ""
+"This is a message that will show up on the submit report page. This is good "
+"for disclaimers or further instructions for your visitors who are reporting."
+msgstr "Ez az üzenetet látja a felhasználó, a \"bejelentés elküldése\" oldalon. Itt lehet jognyilatkozatot vagy további tájékoztatást adni a bejelentéseket kezelő látogatóknak."
+
+#: tooltips.settings_site_tagline
+msgctxt "tooltips.settings_site_tagline"
+msgid "In a few words, explain what this site is about."
+msgstr "Néhány mondatban írja le, miről szól ez az oldal."
+
+#: tooltips.settings_site_timezone
+msgctxt "tooltips.settings_site_timezone"
+msgid ""
+"This is the timezone that your site will operate on. This has an impact on "
+"any actions you have set up that utilize time and date, as well as the "
+"default current time for reports on the front and back end of the site."
+msgstr "Ezt az időzónát használja az oldal. Ez a beállítás befolyásol minden eseményt, ami dátumot és időt használ, ezen kívül ez adja a bejelentések alapbeállított időbélyegzőjét az oldal front és back endjén egyaránt."
+
+#: tooltips.settings_twitter_configuration
+msgctxt "tooltips.settings_twitter_configuration"
+msgid "Set the twitter hashtag that will be used on a tweet"
+msgstr "Itt állíthatja be a twitter hash-tagjét."
+
+#: tooltips.feed_geolocation_user
+msgctxt "tooltips.feed_geolocation_user"
+msgid ""
+"If you want to geocode your feed entries, grab a user http://geonames.org, "
+"enable the free webservices and enter it here. Leave empty to disable this "
+"function.<br /><br />Beware of the the use limits!"
+msgstr ""

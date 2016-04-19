@@ -1,0 +1,255 @@
+# 
+# Translators:
+# Gideon van Melle <translations@gvmelle.com>, 2013
+# Andrea_Pio <ivan.schepens@wynns.be>, 2012
+# Milo van der Linden <milo@dogodigi.net>, 2013
+# Milo van der Linden <milo@dogodigi.net>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-19 16:10+0000\n"
+"Last-Translator: Gideon van Melle <translations@gvmelle.com>\n"
+"Language-Team: Dutch (Netherlands) (http://www.transifex.com/ushahidi/ushahidi-v2/language/nl_NL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: auth.email.email
+msgctxt "auth.email.email"
+msgid "The email you entered is not a valid email address."
+msgstr "het ingevulde e-mailadres is ongeldig."
+
+#: auth.email.exists
+msgctxt "auth.email.exists"
+msgid "Sorry, a user account already exists for this email address."
+msgstr "Er bestaat al een gebruiker met het opgegeven e-mail adres"
+
+#: auth.email.length
+msgctxt "auth.email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "Het e-mail adres dient uit tenminste 4 en maximaal 64 tekens te bestaan"
+
+#: auth.email.required
+msgctxt "auth.email.required"
+msgid "The email field is required."
+msgstr "Een geldig e-mail adres is verplicht."
+
+#: auth.name.length
+msgctxt "auth.name.length"
+msgid "The name field must be at least 3 and no more 100 characters long."
+msgstr "Een volledige naam moet tenminste 3 en niet meer dan 100 tekens bevatten."
+
+#: auth.name.required
+msgctxt "auth.name.required"
+msgid "The name field is required."
+msgstr "Volledige naam is verplicht."
+
+#: auth.name.standard_text
+msgctxt "auth.name.standard_text"
+msgid "The username field contains disallowed characters."
+msgstr "De gebruikersnaam bevat ongeldige tekens"
+
+#: auth.current_password.length
+msgctxt "auth.current_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "Het paswoordveld moet minstens 8 tekens lang zijn."
+
+#: auth.current_password.login error
+msgctxt "auth.current_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Gelieve na te kijken of je het juiste e-mailadres en paswoord hebt ingevuld."
+
+#: auth.current_password.matches
+msgctxt "auth.current_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Gelieve hetzelfde paswoord in te vullen in beide paswoordvelden."
+
+#: auth.current_password.required
+msgctxt "auth.current_password.required"
+msgid "The password field is required."
+msgstr "Het paswoordveld is verplicht."
+
+#: auth.current_password.alpha_dash
+msgctxt "auth.current_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "Letter, cijfers en de tekens #(hekje), @(apestaartje), _(underscore) of -(liggend streepje) mogen worden gebruikt voor het wachtwoord. Andere tekens zijn niet toegestaan"
+
+#: auth.current_password.incorrect
+msgctxt "auth.current_password.incorrect"
+msgid ""
+"The current password you entered for your account is incorrect. Please try "
+"again."
+msgstr "Het huidig paswoord dat je invoerde voor je account is onjuist. Gelieve nog een keer te proberen."
+
+#: auth.new_password.length
+msgctxt "auth.new_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "Het paswoordveld moet minstens 8 tekens lang zijn."
+
+#: auth.new_password.login error
+msgctxt "auth.new_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Gelieve na te kijken of je het juiste e-mailadres en paswoord hebt ingevuld."
+
+#: auth.new_password.matches
+msgctxt "auth.new_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Gelieve hetzelfde paswoord in te vullen in beide paswoordvelden."
+
+#: auth.new_password.required
+msgctxt "auth.new_password.required"
+msgid "The password field is required."
+msgstr "Het paswoordveld is verplicht."
+
+#: auth.new_password.alpha_dash
+msgctxt "auth.new_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "Letter, cijfers en de tekens #(hekje), @(apestaartje), _(underscore) of -(liggend streepje) mogen worden gebruikt voor het wachtwoord. Andere tekens zijn niet toegestaan"
+
+#: auth.password.default
+msgctxt "auth.password.default"
+msgid "There has been an error attempting to log you in."
+msgstr "Er is een fout opgetreden bij de poging om je in te loggen."
+
+#: auth.password.length
+msgctxt "auth.password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "Een wachtwoord moet tenminste 5 en maximaal 16 tekens bevatten."
+
+#: auth.password.login error
+msgctxt "auth.password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Controleer het wachtwoord."
+
+#: auth.password.matches
+msgctxt "auth.password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Herhaal het wachtwoord."
+
+#: auth.password.required
+msgctxt "auth.password.required"
+msgid "The password field is required."
+msgstr "Wachtwoord is verplicht."
+
+#: auth.password.riverid server down
+msgctxt "auth.password.riverid server down"
+msgid "The authentication server is down. Please try again later."
+msgstr "Letter, cijfers en de tekens #(hekje), @(apestaartje), _(underscore) of -(liggend streepje) mogen worden gebruikt voor het wachtwoord. Andere tekens zijn niet toegestaan"
+
+#: auth.password.riverid
+msgctxt "auth.password.riverid"
+msgid "%s"
+msgstr "%s"
+
+#: auth.password.alpha_dash
+msgctxt "auth.password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "Letter, cijfers en de tekens #(hekje), @(apestaartje), _(underscore) of -(liggend streepje) mogen worden gebruikt voor het wachtwoord. Andere tekens zijn niet toegestaan"
+
+#: auth.password_confirm.matches
+msgctxt "auth.password_confirm.matches"
+msgid "The password confirmation field must match the password field."
+msgstr "De wachtwoord bevestiging moet hetzelfde zijn als het wachtwoord."
+
+#: auth.resetemail.email
+msgctxt "auth.resetemail.email"
+msgid "The email you entered is not a valid email address."
+msgstr "Er is geen geldig e-mail adres ingevuld"
+
+#: auth.resetemail.invalid
+msgctxt "auth.resetemail.invalid"
+msgid "Sorry, we don't have your email address"
+msgstr "Het e-mail adres is niet bekend"
+
+#: auth.resetemail.required
+msgctxt "auth.resetemail.required"
+msgid "The email field is required."
+msgstr "E-mail is verplicht."
+
+#: auth.role.superadmin_modify
+msgctxt "auth.role.superadmin_modify"
+msgid "Only a superadmin may modify a superadmin or upgrade a user to admin."
+msgstr "Alleen een superbeheerder mag een superbeheerder wijzigen of een gebruiker promoveren tot beheerder."
+
+#: auth.roles.alpha_numeric
+msgctxt "auth.roles.alpha_numeric"
+msgid "Invalid role format."
+msgstr "Ongeldige rol."
+
+#: auth.roles.length
+msgctxt "auth.roles.length"
+msgid "The role field must be at least 5 and no more than 30 characters long."
+msgstr "Een rol moet tenminste 5 en maximaal 30 tekens bevatten."
+
+#: auth.roles.required
+msgctxt "auth.roles.required"
+msgid "You must define at least one role."
+msgstr "Er dient tenminste een rol te worden gedefinieerd."
+
+#: auth.roles.values
+msgctxt "auth.roles.values"
+msgid "You must select either ADMIN or USER role."
+msgstr "Selecteer ADMIN of USER als rol."
+
+#: auth.token.invalid
+msgctxt "auth.token.invalid"
+msgid "The forgotten password token is invalid"
+msgstr "Het token voor vergeten wachtwoord is ongeldig"
+
+#: auth.token.required
+msgctxt "auth.token.required"
+msgid "Forgotten password token was required"
+msgstr "Een vergeten wachtwoord token is verplicht"
+
+#: auth.username.admin
+msgctxt "auth.username.admin"
+msgid "The admin user role cannot be modified."
+msgstr "De ADMIN rol kan niet worden gewijzigd."
+
+#: auth.username.alpha_numeric
+msgctxt "auth.username.alpha_numeric"
+msgid "The public profile URL field must only contain numbers and letters."
+msgstr "Het veld 'Openbaar profiel URL' mag alleen cijfers en letter bevatten."
+
+#: auth.username.exists
+msgctxt "auth.username.exists"
+msgid "Sorry, this public profile URL is already in use."
+msgstr "De opgegeven gebruikersnaam is al in gebruik."
+
+#: auth.username.length
+msgctxt "auth.username.length"
+msgid ""
+"The public profile URL field must be at least 2 and no more 100 characters "
+"long."
+msgstr "Een gebruikersnaam moet tenminste 2 en maxiimaal 16 tekens bevatten"
+
+#: auth.username.login error
+msgctxt "auth.username.login error"
+msgid "Please check that you entered the correct public profile URL."
+msgstr "Controleer of de gebruikersnaam juist is."
+
+#: auth.username.required
+msgctxt "auth.username.required"
+msgid "The public profile URL field is required."
+msgstr "Gebruikersnaam is verplicht"
+
+#: auth.username.superadmin
+msgctxt "auth.username.superadmin"
+msgid "The super admin role cannot be modified."
+msgstr "De SUPER ADMIN rol kan niet worden gewijzigd."
+
+#: auth.username.csrf
+msgctxt "auth.username.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a user?"
+msgstr "Mogelijke CSRF-aanval. Wou je echt een gebruiker aanmaken/bewerken?"

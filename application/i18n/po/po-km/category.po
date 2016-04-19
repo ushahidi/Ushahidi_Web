@@ -1,0 +1,95 @@
+# 
+# Translators:
+# Ath Ell <ellsomath@gmail.com>, 2013
+# Sok Sophea <sksophea@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:04+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Khmer (http://www.transifex.com/ushahidi/ushahidi-v2/language/km/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: category.category_color.length
+msgctxt "category.category_color.length"
+msgid "The color field must be 6 characters long."
+msgstr "វាល​ពណ៌​ត្រូវតែ​មាន​៦​តួអក្សរ​។"
+
+#: category.category_color.required
+msgctxt "category.category_color.required"
+msgid "The color field is required."
+msgstr "បាន​ទាមទារ​វាល​ពណ៌។"
+
+#: category.category_description.required
+msgctxt "category.category_description.required"
+msgid "The description field is required."
+msgstr "បាន​ទាមទារ​វាល​ពណ៌នា។"
+
+#: category.category_image.size
+msgctxt "category.category_image.size"
+msgid "Please ensure that image uploads sizes are limited to 50KB."
+msgstr "សូម​ប្រាកដ​ថា​ទំហំ​រូបភាព​ផ្ទុក​ឡើង​ត្រូវ​បាន​កំណត់​ត្រឹម​៥០​គីឡូបៃ។"
+
+#: category.category_image.type
+msgctxt "category.category_image.type"
+msgid ""
+"The image field does not appear to contain a valid image. The only accepted "
+"formats are .JPG, .PNG and .GIF."
+msgstr "វាល​រូបភាព​មិន​បង្ហាញ​ថា​មាន​រូបភាព​ត្រឹមត្រូវ​ទេ។ ទ្រង់ទ្រាយ​ដែល​ព្រម​ទទួល​គឺ .JPG .PNG និង .GIF។"
+
+#: category.category_image.valid
+msgctxt "category.category_image.valid"
+msgid "The image field does not appear to contain a valid file"
+msgstr "វាល​រូបភាព​មិន​បង្ហាញ​ថា​មាន​ឯកសារ​ត្រឹមត្រូវ​ទេ"
+
+#: category.category_title.length
+msgctxt "category.category_title.length"
+msgid "The title field must be at least 3 and no more 80 characters long."
+msgstr "វាល​ចំណងជើង​ត្រូវតែ​មាន​អក្សរ​យ៉ាងតិច៣ ប៉ុន្តែ​មិន​លើស​ពី​៨០​តួ​ឡើយ។"
+
+#: category.category_title.required
+msgctxt "category.category_title.required"
+msgid "The title field is required."
+msgstr "បាន​ទាមទារ​វាល​ចំណងជើង។"
+
+#: category.parent_id.already_parent
+msgctxt "category.parent_id.already_parent"
+msgid "You cannot subcategorize a category with subcategories."
+msgstr "អ្នក​មិន​អាច​ចាត់​ប្រភេទ​រង​ប្រភេទ​ជាមួយ​ប្រភេទ​រង​បាន​ទេ។"
+
+#: category.parent_id.exists
+msgctxt "category.parent_id.exists"
+msgid "The parent category does not exist."
+msgstr "មិន​មាន​ប្រភេទ​មេ។"
+
+#: category.parent_id.numeric
+msgctxt "category.parent_id.numeric"
+msgid "The parent category field must be numeric."
+msgstr "វាល​ប្រភេទ​មេ​ត្រូវតែ​ជា​លេខ។"
+
+#: category.parent_id.parent_trusted
+msgctxt "category.parent_id.parent_trusted"
+msgid "The parent category cannot be a special category"
+msgstr "ប្រភេទ​មេ​មិន​អាច​ជា​ប្រភេទ​ពិសេស​បាន​ទេ"
+
+#: category.parent_id.required
+msgctxt "category.parent_id.required"
+msgid "The parent category field is required."
+msgstr "បាន​ទាមទារ​វាល​ប្រភេទ​មេ។"
+
+#: category.parent_id.same
+msgctxt "category.parent_id.same"
+msgid "The category and the parent category cannot be the same."
+msgstr "ប្រភេទ​និង​ប្រភេទ​មេ​មិន​អាច​ដូចគ្នាបាន​ទេ។"
+
+#: category.parent_id.special
+msgctxt "category.parent_id.special"
+msgid "Special categories cannot be subcategorised."
+msgstr "ប្រភេទ​ពិសេស​មិន​អាច​ជា​ប្រភេទ​កូន​បាន​ទេ។"

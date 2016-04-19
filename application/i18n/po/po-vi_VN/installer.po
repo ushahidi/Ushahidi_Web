@@ -1,0 +1,411 @@
+# 
+# Translators:
+# Thu Hoai <contact@bizover.net>, 2013
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-09-05 17:06+0000\n"
+"Last-Translator: Thu Hoai <contact@bizover.net>\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi_VN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: installer.base_path
+msgctxt "installer.base_path"
+msgid "Base Path"
+msgstr "Đường dẫn gốc"
+
+#: installer.database
+msgctxt "installer.database"
+msgid "Database"
+msgstr "Cơ sở dữ liệu"
+
+#: installer.database_host
+msgctxt "installer.database_host"
+msgid "Database Host"
+msgstr "Host của cơ sở dữ liệu"
+
+#: installer.database_host_description
+msgctxt "installer.database_host_description"
+msgid ""
+"If you are running Ushahidi on your own computer, this will more than likely"
+" be \"localhost\". If you are running Ushahidi from a web server, you will "
+"get your host information from your web hosting provider."
+msgstr "Nếu bạn thực thi Ushahidi từ chính máy tính của bạn, điều này có nghĩa rằng đây là một \"localhost\". Nếu bạn thực thi Ushahidi từ web server, bạn sẽ nhận được thông tin về host của bạn từ nhà cung cấp dịch vụ web hosting."
+
+#: installer.database_name
+msgctxt "installer.database_name"
+msgid "Database Name"
+msgstr "Tên cơ sở dữ liệu"
+
+#: installer.database_name_description
+msgctxt "installer.database_name_description"
+msgid "The name of the database you want to run Ushahidi in"
+msgstr "Tên của cơ sở dữ liệu mà bạn muốn chạy Ushahidi trong đó"
+
+#: installer.db_information_link
+msgctxt "installer.db_information_link"
+msgid ""
+"For more information, please check out <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" "
+"target=\"_blank\">this article</a> on the wiki that talks about databases in"
+" more detail."
+msgstr "Để biết thêm thông tin, vui lòng truy cập <a href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" target=\"_blank\">phần đề mục này</a> trên hệ thống wiki có bàn về cơ sở dữ liệu với đầy đủ thông tin chi tiết."
+
+#: installer.default_language
+msgctxt "installer.default_language"
+msgid "Default Language (Locale)"
+msgstr "Ngôn ngữ mặc định (địa phương)"
+
+#: installer.default_language_description
+msgctxt "installer.default_language_description"
+msgid ""
+"Each deployment of Ushahidi comes with a set of built in language "
+"translations. You can also <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\""
+" target=\"_blank\">add your own</a>."
+msgstr "Mỗi phần phát triển của Ushahidi đi kèm theo đó là các gói ngôn ngữ ứng với từng quốc gia sở tại. Bạn cũng có thể <a href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\" target=\"_blank\">thêm vào phần dịch của riêng bạn</a>."
+
+#: installer.disable
+msgctxt "installer.disable"
+msgid "Disable"
+msgstr "Vô hiệu hóa"
+
+#: installer.enable
+msgctxt "installer.enable"
+msgid "Enable"
+msgstr "kích hoạt"
+
+#: installer.error_summary
+msgctxt "installer.error_summary"
+msgid "Listed below is a summary of the errors we encountered."
+msgstr "danh sách dưới đây là tóm tắt về các lỗi mà hệ thống gặp phải"
+
+#: installer.files_location_text
+msgctxt "installer.files_location_text"
+msgid ""
+"The location on your server where you placed your Ushahidi files. <strong>We"
+" have automatically detected this value, please make sure that it is "
+"correct.</strong> If the field is empty, do not worry, it means ushahidi is "
+"installed at the top level directory."
+msgstr "Địa điểm trên máy chủ của bạn nơi đặt các tập tin từ Ushahidi. <strong>Hệ thống sẽ tự động xác định giá trị này, hãy kiểm tra xem giá trị này có đúng và hợp lệ hay không.</strong> Nếu phần thông tin này bị để trống, thì cũng đừng quá lo lắng, điều này có nghĩa rằng Ushahidi đã được cài đặt ở thư mục gốc."
+
+#: installer.finished
+msgctxt "installer.finished"
+msgid "Finished"
+msgstr "Đã hoàn tất"
+
+#: installer.general
+msgctxt "installer.general"
+msgid "General"
+msgstr "Tổng quan"
+
+#: installer.google_key
+msgctxt "installer.google_key"
+msgid "<span>Google</span> API Key"
+msgstr "<span>Google</span> chìa khóa API"
+
+#: installer.google_key_description
+msgctxt "installer.google_key_description"
+msgid ""
+"Anyone can get an api key. <a id=\"api-link\" "
+"href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Get "
+"yours now</a>"
+msgstr "Bất kỳ ai cũng có thể nhận được khóa api này. <a id=\"api-link\" href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Bạn cũng có thể làm điều đó ngay bây giờ</a>"
+
+#: installer.go_back
+msgctxt "installer.go_back"
+msgid "Go Back"
+msgstr "Quay trở lại"
+
+#: installer.index.advanced
+msgctxt "installer.index.advanced"
+msgid "ADVANCED INSTALLATION"
+msgstr "CÀI ĐẶT NÂNG CAO"
+
+#: installer.index.advanced_installation_description
+msgctxt "installer.index.advanced_installation_description"
+msgid ""
+"Get all the basic settings completed through this 5-step process.  This "
+"includes server, map, site name and contact details."
+msgstr "Nhận tất cả các thiết lập cơ bản thông qua quá trình bao gồm 5 bước này. Bao gồm máy chủ, bản đồ, tên trang và chi tiết về các liên hệ cơ bản."
+
+#: installer.index.basic_installation
+msgctxt "installer.index.basic_installation"
+msgid "BASIC INSTALLATION"
+msgstr "CÀI ĐẶT CƠ BẢN"
+
+#: installer.index.basic_installation_description
+msgctxt "installer.index.basic_installation_description"
+msgid ""
+"Simple and fast. All you need is your website's root directory and your "
+"database information. Choose this option if you want to get up and running "
+"quickly, and you can always configure everything else later."
+msgstr "Đơn giản và nhanh chóng. Mọi điều bạn cần là một thư mục gốc của website do bạn lập cùng thông tin về cơ sở dữ liệu mà bạn thiết lập. Chọn tùy chọn này nếu bạn muốn trình cài đặt nhanh chóng hơn theo kiểu tự động, dĩ nhiên là bạn hoàn toàn có đầy đủ quyền thiết lập và chỉnh sửa bất cứ khi nào sau khi quá trình cài đặt đã hoàn tất."
+
+#: installer.index.proceed
+msgctxt "installer.index.proceed"
+msgid "Proceed"
+msgstr "Tiếp tục"
+
+#: installer.index.welcome
+msgctxt "installer.index.welcome"
+msgid ""
+"Welcome to the Ushahidi server install process.  Choose which type of "
+"installation you would like to use below."
+msgstr "Chào mừng bạn đến phần cài đặt dành cho máy chủ Ushahidi. Chọn loại cài đặt mà bạn mong muốn sử dụng ở phía dưới."
+
+#: installer.installation_successful
+msgctxt "installer.installation_successful"
+msgid "Installation Successful"
+msgstr "cài đặt thành công"
+
+#: installer.mail_server
+msgctxt "installer.mail_server"
+msgid "Mail Server"
+msgstr "thư máy chủ"
+
+#: installer.mail_server_host
+msgctxt "installer.mail_server_host"
+msgid "Mail Server Host"
+msgstr "Máy chủ host dành cho thư"
+
+#: installer.mail_server_host_description
+msgctxt "installer.mail_server_host_description"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "Thí dụ: mail.websitecủabạn.com, imap.gmail.com, pop.gmail.com"
+
+#: installer.mail_server_password
+msgctxt "installer.mail_server_password"
+msgid "Mail Server Password"
+msgstr "Mật khẩu thư máy chủ"
+
+#: installer.mail_server_password_description
+msgctxt "installer.mail_server_password_description"
+msgid "The password you normally use to login in to your email"
+msgstr "Mật khẩu bạn dùng để đăng nhập vào tài khoản email của mình"
+
+#: installer.mail_server_port
+msgctxt "installer.mail_server_port"
+msgid "Mail Server Port"
+msgstr "Cổng kết nối hòm thư máy chủ"
+
+#: installer.mail_server_port_description
+msgctxt "installer.mail_server_port_description"
+msgid "Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "Các cổng thông thường: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: installer.mail_server_type
+msgctxt "installer.mail_server_type"
+msgid "Mail Server Type"
+msgstr "Loại máy chủ mail"
+
+#: installer.mail_server_type_description
+msgctxt "installer.mail_server_type_description"
+msgid ""
+"Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a "
+"href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" "
+"target=\"_blank\">What is the difference?</a>"
+msgstr "Internet Message Access Protocol (IMAP) hoặc Post Office Protocol (POP). <a href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" target=\"_blank\">Điều gì là khác nhau giữa hai phần này?</a>"
+
+#: installer.mail_server_username
+msgctxt "installer.mail_server_username"
+msgid "Mail Server Username"
+msgstr "Tên người dùng máy chủ mail"
+
+#: installer.mail_server_username_description
+msgctxt "installer.mail_server_username_description"
+msgid ""
+"If you are using Gmail, Hotmail, or Yahoo Mail, enter a full email address "
+"as a username."
+msgstr "Nếu bạn sử dụng Gmail, Hotmail hoặc Yahoo Mail, điền vào đầy đủ địa chỉ email dưới dạng tên người dùng."
+
+#: installer.map
+msgctxt "installer.map"
+msgid "Map"
+msgstr "Bản đồ"
+
+#: installer.map_provider
+msgctxt "installer.map_provider"
+msgid "Map Provider"
+msgstr "Nhà cung cấp bản đồ"
+
+#: installer.map_provider_description
+msgctxt "installer.map_provider_description"
+msgid ""
+"Ushahidi works equally well with any of these three mapping providers: "
+"Google, Bing or Open Street Map. Choose the one that has the most detail in "
+"your area."
+msgstr "Ushahidi có thể thao tác trơn tru với bất kỳ nhà cung cấp dịch vụ bản đồ nào: Google, Bing hoặc Open Street Map. Chọn loại nhà cung cấp có thông tin hữu dụng nhất ở khu vực của bạn."
+
+#: installer.other_steps
+msgctxt "installer.other_steps"
+msgid "Other steps..."
+msgstr "Các bước khác..."
+
+#: installer.password
+msgctxt "installer.password"
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: installer.password_description
+msgctxt "installer.password_description"
+msgid "Your database password"
+msgstr "Mật khẩu đối với cơ sở dữ liệu"
+
+#: installer.previous
+msgctxt "installer.previous"
+msgid "Previous"
+msgstr "Trước đó"
+
+#: installer.restart_apache
+msgctxt "installer.restart_apache"
+msgid "Please restart your Apache Server"
+msgstr "Xin vui lòng khởi động lại máy chủ Apache của bạn"
+
+#: installer.select_mail_server_ssl
+msgctxt "installer.select_mail_server_ssl"
+msgid "Enable or disable SSL"
+msgstr "Bật hoặc vô hiệu hóa kết nối dạng SSL"
+
+#: installer.select_mail_server_ssl_description
+msgctxt "installer.select_mail_server_ssl_description"
+msgid ""
+"Some mail servers give you the option of using <abbr title=\"Secure Sockets "
+"Layer\">SSL</abbr> when making a connection. Using SSL is recommended as it "
+"gives you an added level of security."
+msgstr "Một vài máy chủ mail cung cấp cho bạn tùy chọn sử dụng <abbr title=\"Secure Sockets Layer\">kết nối dạng SSL</abbr> khi thực hiện việc kết nối truyền tải dữ liệu. Bạn nên dùng loại kết nối này để tăng tính bảo mật cho trang của bạn."
+
+#: installer.setup_sms
+msgctxt "installer.setup_sms"
+msgid "Set up your SMS server"
+msgstr "Cài đặt hệ thống máy chủ SMS"
+
+#: installer.site_email
+msgctxt "installer.site_email"
+msgid "Site Email Address"
+msgstr "Địa chỉ email của trang"
+
+#: installer.site_email_alerts
+msgctxt "installer.site_email_alerts"
+msgid "Site Alert Email Address"
+msgstr "Địa chỉ email nhận cảnh báo"
+
+#: installer.site_email_alerts_description
+msgctxt "installer.site_email_alerts_description"
+msgid ""
+"When your site visitors sign up for email alerts, they will receive emails "
+"from this address. This email address does not have to be the same as the "
+"Site Email Address."
+msgstr "Khi trang của bạn nhận đăng ký từ các người dùng khác, những người đăng ký sẽ nhận các email từ địa chỉ email này. Địa chỉ email này không cần thiết phải giống hệ địa chỉ email của trang."
+
+#: installer.site_email_description
+msgctxt "installer.site_email_description"
+msgid "Site wide email communication will be funneled through this address"
+msgstr "Việc mở rộng thao tác giao tiếp thông qua email sẽ được chọn lựa thông qua địa chỉ này"
+
+#: installer.site_name
+msgctxt "installer.site_name"
+msgid "Site Name"
+msgstr "Tên trang"
+
+#: installer.site_name_description
+msgctxt "installer.site_name_description"
+msgid "The name of your site"
+msgstr "Tên của trang mà bạn muốn lập"
+
+#: installer.site_tagline
+msgctxt "installer.site_tagline"
+msgid "Site Tagline"
+msgstr "Các thẻ đánh dấu liên quan đến trang"
+
+#: installer.site_tagline_description
+msgctxt "installer.site_tagline_description"
+msgid "Your tagline"
+msgstr "Thẻ đánh dấu của bạn"
+
+#: installer.summary.text_1
+msgctxt "installer.summary.text_1"
+msgid ""
+"The files and folders listed below need to be writable by your webserver."
+msgstr "Các tập tin và thư mục được liêkt bên dưới cần được thiết lập quyền có thể ghi dữ liệu trên hệ thống web của bạn."
+
+#: installer.summary.text_2
+msgctxt "installer.summary.text_2"
+msgid ""
+"<p>Here are instructions for changing file permissions:</p>\n"
+"        <ul>\n"
+"            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n"
+"            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n"
+"        </ul>"
+msgstr "<p>Sau đây là hướng dẫn về các quyền hạn liên quan đến việc thay đổi nội dung tập tin:</p>\n        <ul>\n            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n        </ul>"
+
+#: installer.summary.text_3
+msgctxt "installer.summary.text_3"
+msgid ""
+"Before you get started, you will need to make sure the following files and "
+"folders are writable by your webserver. This involves changing file "
+"permissions."
+msgstr "Trước khi bắt đầu, bạn cần phải chắc chắn rằng các tập tin và thư mục sau đây có được quyền ghi dữ liệu trên hệ thống máy chủ web của bạn. Bao gồm cả các quyền truy cập và thay đổi nội dung tập tin."
+
+#: installer.summary.text_4
+msgctxt "installer.summary.text_4"
+msgid ""
+"For the installation process, please have the following bits of information "
+"on hand."
+msgstr "Đối với quá trình cài đặt, xin vui lòng đọc các thông tin sau đây."
+
+#: installer.table_prefix
+msgctxt "installer.table_prefix"
+msgid "Table Prefix"
+msgstr "Table Prefix"
+
+#: installer.table_prefix_description
+msgctxt "installer.table_prefix_description"
+msgid ""
+"Normally you would not change the table prefix. However, if you want to run "
+"multiple Ushahidi installations from a single database, you can do that by "
+"changing the prefix here."
+msgstr "Thông thường bạn sẽ không cần thay đổi table prefix. Tuy nhiên, nếu bạn chạy nhiều tiến trình cài đặt liên quan đến Ushahidi từ một cơ sở dữ liệu duy nhất, bạn có thể thực hiện việc thay đổi các tiền tố đứng trước tên bảng dữ liệu tại đây."
+
+#: installer.title
+msgctxt "installer.title"
+msgid "Title"
+msgstr "Tiêu đề"
+
+#: installer.to_login
+msgctxt "installer.to_login"
+msgid "To login, go to"
+msgstr "Để đăng nhập, hãy truy cập"
+
+#: installer.upload_data
+msgctxt "installer.upload_data"
+msgid "Upload report data"
+msgstr "Tải lên dữ liệu báo cáo"
+
+#: installer.username
+msgctxt "installer.username"
+msgid "Username"
+msgstr "Tên người dùng"
+
+#: installer.username_description
+msgctxt "installer.username_description"
+msgid "Your database username"
+msgstr "Tên cơ sở dữ liệu của bạn"
+
+#: installer.use_credentials
+msgctxt "installer.use_credentials"
+msgid "and use the following credentials"
+msgstr "và sử dụng các phần ủy nhiệm tiếp sau đây"
+
+#: installer.view_site
+msgctxt "installer.view_site"
+msgid "View your website"
+msgstr "Xem trang web của bạn"

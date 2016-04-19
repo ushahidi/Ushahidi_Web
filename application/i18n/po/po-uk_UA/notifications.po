@@ -1,0 +1,92 @@
+# 
+# Translators:
+# Андрій Бандура <andriykopanytsia@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-06-27 16:45+0000\n"
+"Last-Translator: Андрій Бандура <andriykopanytsia@gmail.com>\n"
+"Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/ushahidi/ushahidi-v2/language/uk_UA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk_UA\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: notifications.admin_footer
+msgctxt "notifications.admin_footer"
+msgid "This message was sent from your website."
+msgstr "Це повідомлення було відправлено з вашого сайту"
+
+#: notifications.admin_login_url
+msgctxt "notifications.admin_login_url"
+msgid "Administrator Login"
+msgstr "Логін адміністратора"
+
+#: notifications.admin_new_comment.message
+msgctxt "notifications.admin_new_comment.message"
+msgid "A new comment has been submitted to your website in response to:"
+msgstr "Новий коментар був надісланий на ваш сайт у відповідь на:"
+
+#: notifications.admin_new_comment.subject
+msgctxt "notifications.admin_new_comment.subject"
+msgid "New Comment"
+msgstr "Новий коментар"
+
+#: notifications.admin_new_email.message
+msgctxt "notifications.admin_new_email.message"
+msgid "A new email message has been submitted to your website."
+msgstr "Нове повідомлення електронної пошти було надіслане на ваш сайт."
+
+#: notifications.admin_new_email.subject
+msgctxt "notifications.admin_new_email.subject"
+msgid "New Email Message"
+msgstr "Нове повідомлення електронної пошти"
+
+#: notifications.admin_new_report.message
+msgctxt "notifications.admin_new_report.message"
+msgid "A new report has been submitted to your website."
+msgstr "Нова доповідь була надіслана на ваш сайт."
+
+#: notifications.admin_new_report.subject
+msgctxt "notifications.admin_new_report.subject"
+msgid "New Report"
+msgstr "Нова доповідь"
+
+#: notifications.admin_new_sms.message
+msgctxt "notifications.admin_new_sms.message"
+msgid "A new text message has been submitted to your website."
+msgstr "Нове текстове повідомлення було надіслано на ваш сайт."
+
+#: notifications.admin_new_sms.subject
+msgctxt "notifications.admin_new_sms.subject"
+msgid "New Text Message"
+msgstr "Нове текстове повідомлення"
+
+#: notifications.member_new_alert.message
+msgctxt "notifications.member_new_alert.message"
+msgid "You Have Received a New Alert"
+msgstr "Ви отримали нове попередження"
+
+#: notifications.member_new_alert.subject
+msgctxt "notifications.member_new_alert.subject"
+msgid "New Alert!"
+msgstr "Нове попередження!"
+
+#: notifications.member_new_message.message
+msgctxt "notifications.member_new_message.message"
+msgid "You Have Received a Private Message"
+msgstr "Ви отримали приватне повідомлення"
+
+#: notifications.member_new_message.subject
+msgctxt "notifications.member_new_message.subject"
+msgid "New Private Message"
+msgstr "Нове приватне повідомлення"
+
+#: notifications.member_new_message.footer
+msgctxt "notifications.member_new_message.footer"
+msgid "To Reply Please Go To: "
+msgstr "Для відповіді перейдіть:"

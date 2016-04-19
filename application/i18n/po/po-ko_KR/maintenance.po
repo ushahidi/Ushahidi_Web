@@ -1,0 +1,24 @@
+# 
+# Translators:
+# Jungkwan Kim <donationsurvey@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Korean (Korea) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ko_KR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: maintenance.message
+msgctxt "maintenance.message"
+msgid ""
+"Sorry, our site is currently down for maintenance. Please try again in a few"
+" minutes."
+msgstr "웁스!!! 죄송합니다. 현재, 사이트 오류로 수정작업중입니다. 약 5분후에 다시 접속해주세요. "

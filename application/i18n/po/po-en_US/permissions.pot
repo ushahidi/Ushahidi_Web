@@ -1,0 +1,107 @@
+#. extracted from en_US/permissions.php, en_US/permissions.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-09-11 06:22+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: permissions.reports_view
+msgctxt "permissions.reports_view"
+msgid "View Reports"
+msgstr ""
+
+#: permissions.reports_edit
+msgctxt "permissions.reports_edit"
+msgid "Create/Edit/Delete Reports"
+msgstr ""
+
+#: permissions.reports_approve
+msgctxt "permissions.reports_approve"
+msgid "Approve Reports"
+msgstr ""
+
+#: permissions.reports_verify
+msgctxt "permissions.reports_verify"
+msgid "Verify Reports"
+msgstr ""
+
+#: permissions.reports_comments
+msgctxt "permissions.reports_comments"
+msgid "Manage Report Comments"
+msgstr ""
+
+#: permissions.reports_download
+msgctxt "permissions.reports_download"
+msgid "Download Reports"
+msgstr ""
+
+#: permissions.reports_upload
+msgctxt "permissions.reports_upload"
+msgid "Upload Reports"
+msgstr ""
+
+#: permissions.messages
+msgctxt "permissions.messages"
+msgid "Manage Messages"
+msgstr ""
+
+#: permissions.messages_reporters
+msgctxt "permissions.messages_reporters"
+msgid "Manage Message Reporters"
+msgstr ""
+
+#: permissions.stats
+msgctxt "permissions.stats"
+msgid "View Stats"
+msgstr ""
+
+#: permissions.settings
+msgctxt "permissions.settings"
+msgid "Modify Settings"
+msgstr ""
+
+#: permissions.manage
+msgctxt "permissions.manage"
+msgid "Manage Panel"
+msgstr ""
+
+#: permissions.users
+msgctxt "permissions.users"
+msgid "Manage Users"
+msgstr ""
+
+#: permissions.manage_roles
+msgctxt "permissions.manage_roles"
+msgid "Manage Roles"
+msgstr ""
+
+#: permissions.checkin
+msgctxt "permissions.checkin"
+msgid "Can checkin"
+msgstr ""
+
+#: permissions.checkin_admin
+msgctxt "permissions.checkin_admin"
+msgid "Manage checkins"
+msgstr ""
+
+#: permissions.admin_ui
+msgctxt "permissions.admin_ui"
+msgid "Access Admin UI"
+msgstr ""
+
+#: permissions.member_ui
+msgctxt "permissions.member_ui"
+msgid "Access Members UI"
+msgstr ""
+
+#: permissions.delete_all_reports
+msgctxt "permissions.delete_all_reports"
+msgid "Delete all reports"
+msgstr ""

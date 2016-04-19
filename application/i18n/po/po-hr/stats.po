@@ -1,0 +1,184 @@
+#. extracted from en_US/stats.php, hr/stats.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-25 00:10+0000\n"
+"PO-Revision-Date: 2012-09-25 00:10+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: hr\n"
+
+#: stats.approved
+msgctxt "stats.approved"
+msgid "Approved"
+msgstr ""
+
+#: stats.categories
+msgctxt "stats.categories"
+msgid "Categories"
+msgstr ""
+
+#: stats.category_impact
+msgctxt "stats.category_impact"
+msgid "Category Impact"
+msgstr ""
+
+#: stats.category_impact_description
+msgctxt "stats.category_impact_description"
+msgid "This chart gives you a linear view of the reports by category over time.  Scroll from left to right to see a comparative view of the different categories. Mouse over the graph for more details."
+msgstr ""
+
+#: stats.choose_date_range
+msgctxt "stats.choose_date_range"
+msgid "Choose a date range."
+msgstr ""
+
+#: stats.countries
+msgctxt "stats.countries"
+msgid "Countries"
+msgstr ""
+
+#: stats.country
+msgctxt "stats.country"
+msgid "Country"
+msgstr ""
+
+#: stats.country_breakdown
+msgctxt "stats.country_breakdown"
+msgid "Country Breakdown"
+msgstr ""
+
+#: stats.description
+msgctxt "stats.description"
+msgid "This is the statistics section and will contain a general description here soon. For now, browse around using the sub category links above."
+msgstr ""
+
+#: stats.error
+msgctxt "stats.error"
+msgid "Error"
+msgstr ""
+
+#: stats.glossary
+msgctxt "stats.glossary"
+msgid "Glossary"
+msgstr ""
+
+#: stats.hit_summary
+msgctxt "stats.hit_summary"
+msgid "Hit Summary"
+msgstr ""
+
+#: stats.legend
+msgctxt "stats.legend"
+msgid "Legend"
+msgstr ""
+
+#: stats.pageviews
+msgctxt "stats.pageviews"
+msgid "Pageviews"
+msgstr ""
+
+#: stats.pageviews_description
+msgctxt "stats.pageviews_description"
+msgid "The total number of pages that visitors have viewed on your site"
+msgstr ""
+
+#: stats.reports
+msgctxt "stats.reports"
+msgid "Reports"
+msgstr ""
+
+#: stats.reports_categories
+msgctxt "stats.reports_categories"
+msgid "Reports Categories"
+msgstr ""
+
+#: stats.reports_statistics
+msgctxt "stats.reports_statistics"
+msgid "Reports Statistics"
+msgstr ""
+
+#: stats.reports_status
+msgctxt "stats.reports_status"
+msgid "Reports Status"
+msgstr ""
+
+#: stats.report_punchcard
+msgctxt "stats.report_punchcard"
+msgid "Report Punchcard"
+msgstr ""
+
+#: stats.report_stats
+msgctxt "stats.report_stats"
+msgid "Report Stats"
+msgstr ""
+
+#: stats.stats_not_setup
+msgctxt "stats.stats_not_setup"
+msgid "Stats Not Set Up"
+msgstr ""
+
+#: stats.time_range_1
+msgctxt "stats.time_range_1"
+msgid "1 Month"
+msgstr ""
+
+#: stats.time_range_2
+msgctxt "stats.time_range_2"
+msgid "3 Months"
+msgstr ""
+
+#: stats.time_range_3
+msgctxt "stats.time_range_3"
+msgid "6 Months"
+msgstr ""
+
+#: stats.time_range_all
+msgctxt "stats.time_range_all"
+msgid "All"
+msgstr ""
+
+#: stats.unapproved
+msgctxt "stats.unapproved"
+msgid "Unapproved"
+msgstr ""
+
+#: stats.unique_visitors
+msgctxt "stats.unique_visitors"
+msgid "Unique Visitors"
+msgstr ""
+
+#: stats.unique_visitors_description
+msgctxt "stats.unique_visitors_description"
+msgid "The number of individuals coming to your deployment. Unique visitors are determined using cookies. Visitors that do not have cookies enabled will be identified using a simple heuristic taking into account IP address, resolution, browser, plugins, OS, etc."
+msgstr ""
+
+#: stats.unverified
+msgctxt "stats.unverified"
+msgid "Unverified"
+msgstr ""
+
+#: stats.verified
+msgctxt "stats.verified"
+msgid "Verified"
+msgstr ""
+
+#: stats.visitor_summary
+msgctxt "stats.visitor_summary"
+msgid "Visitor Summary"
+msgstr ""
+
+#: stats.visits
+msgctxt "stats.visits"
+msgid "Visits"
+msgstr ""
+
+#: stats.visits_description
+msgctxt "stats.visits_description"
+msgid "A visit is a record of a unique visitor coming to the site more than 30 minutes past his/her last pageview."
+msgstr ""
+

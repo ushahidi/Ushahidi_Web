@@ -1,0 +1,198 @@
+# 
+# Translators:
+# Sok Sophea <sksophea@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Khmer (http://www.transifex.com/ushahidi/ushahidi-v2/language/km/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: stats.approved
+msgctxt "stats.approved"
+msgid "Approved"
+msgstr "បាន​អនុម័ត"
+
+#: stats.categories
+msgctxt "stats.categories"
+msgid "Categories"
+msgstr "ប្រភេទ"
+
+#: stats.category_impact
+msgctxt "stats.category_impact"
+msgid "Category Impact"
+msgstr "ប្រភេទ​ប៉ះទង្គិច"
+
+#: stats.category_impact_description
+msgctxt "stats.category_impact_description"
+msgid ""
+"This chart gives you a linear view of the reports by category over time.  "
+"Scroll from left to right to see a comparative view of the different "
+"categories. Mouse over the graph for more details."
+msgstr "តារាង​នេះ​ផ្ដល់ឲ្យ​អ្នក​នូវ​ទិដ្ឋភាព​របាយការណ៍​លីនេអ៊ែរ​តាម​ប្រភេទ​នៃ​ពេលវេលា។ រមូរ​ពី​ឆ្វេង​ទៅ​ស្ដាំ​ដើម្បី​មើល​ការ​ប្រៀបធៀប​ទិដ្ឋភាព​ប្រភេទ​ខុសៗគ្នា។ រំកិល​កណ្ដុរ​ពីលើ​ក្រាប​ដើម្បី​មើល​សេចក្ដី​លម្អិត។"
+
+#: stats.choose_date_range
+msgctxt "stats.choose_date_range"
+msgid "Choose a date range."
+msgstr "ជ្រើស​ជួរ​កាលបរិច្ឆេទ។"
+
+#: stats.countries
+msgctxt "stats.countries"
+msgid "Countries"
+msgstr "ប្រទេស"
+
+#: stats.country
+msgctxt "stats.country"
+msgid "Country"
+msgstr "ប្រទេស"
+
+#: stats.country_breakdown
+msgctxt "stats.country_breakdown"
+msgid "Country Breakdown"
+msgstr "ប្រទេស​ដែល​មិន​អភិវឌ្ឍ"
+
+#: stats.description
+msgctxt "stats.description"
+msgid ""
+"This is the statistics section and will contain a general description here "
+"soon. For now, browse around using the sub category links above."
+msgstr "នេះ​ជា​ផ្នែក​ស្ថិតិ​ដែល​នឹង​មាន​សេចក្ដី​ពណ៌នា​ទូទៅ​នៅ​ទីនេះ។ ឥឡូវនេះ រុករក​ដោយ​ប្រើ​តំណ​ប្រភេទ​រង​ខាងលើ។"
+
+#: stats.error
+msgctxt "stats.error"
+msgid "Error"
+msgstr "កំហុស"
+
+#: stats.glossary
+msgctxt "stats.glossary"
+msgid "Glossary"
+msgstr "សទ្ទានុក្រម"
+
+#: stats.hit_summary
+msgctxt "stats.hit_summary"
+msgid "Hit Summary"
+msgstr "រក​ឃើញ​សេចក្ដី​សង្ខេប"
+
+#: stats.legend
+msgctxt "stats.legend"
+msgid "Legend"
+msgstr "គំនូសតាង"
+
+#: stats.pageviews
+msgctxt "stats.pageviews"
+msgid "Pageviews"
+msgstr "ទិដ្ឋភាព​ទំព័រ"
+
+#: stats.pageviews_description
+msgctxt "stats.pageviews_description"
+msgid "The total number of pages that visitors have viewed on your site"
+msgstr "ចំនួន​ទំព័រ​សរុប​ដែល​អ្នក​ទស្សនា​បាន​មើល​តំបន់​បណ្ដាញ​របស់​អ្នក"
+
+#: stats.reports
+msgctxt "stats.reports"
+msgid "Reports"
+msgstr "របាយការណ៍"
+
+#: stats.reports_categories
+msgctxt "stats.reports_categories"
+msgid "Reports Categories"
+msgstr "ប្រភេទ​របាយការណ៍"
+
+#: stats.reports_statistics
+msgctxt "stats.reports_statistics"
+msgid "Reports Statistics"
+msgstr "ស្ថិតិ​របាយការណ៍"
+
+#: stats.reports_status
+msgctxt "stats.reports_status"
+msgid "Reports Status"
+msgstr "របាយការណ៍​ស្ថានភាព"
+
+#: stats.report_punchcard
+msgctxt "stats.report_punchcard"
+msgid "Report Punchcard"
+msgstr "កាត​របាយការណ៍"
+
+#: stats.report_stats
+msgctxt "stats.report_stats"
+msgid "Report Stats"
+msgstr "ស្ថានភាព​របាយការណ៍"
+
+#: stats.stats_not_setup
+msgctxt "stats.stats_not_setup"
+msgid "Stats Not Set Up"
+msgstr "មិន​បាន​រៀបចំ​ស្ថានភាព"
+
+#: stats.time_range_1
+msgctxt "stats.time_range_1"
+msgid "1 Month"
+msgstr "១​ខែ"
+
+#: stats.time_range_2
+msgctxt "stats.time_range_2"
+msgid "3 Months"
+msgstr "៣​ខែ"
+
+#: stats.time_range_3
+msgctxt "stats.time_range_3"
+msgid "6 Months"
+msgstr "៦​ខែ"
+
+#: stats.time_range_all
+msgctxt "stats.time_range_all"
+msgid "All"
+msgstr "ទាំងអស់"
+
+#: stats.unapproved
+msgctxt "stats.unapproved"
+msgid "Unapproved"
+msgstr "មិន​បាន​អនុម័ត"
+
+#: stats.unique_visitors
+msgctxt "stats.unique_visitors"
+msgid "Unique Visitors"
+msgstr "អ្នក​ទស្សនា​តែ​ម្នាក់"
+
+#: stats.unique_visitors_description
+msgctxt "stats.unique_visitors_description"
+msgid ""
+"The number of individuals coming to your deployment. Unique visitors are "
+"determined using cookies. Visitors that do not have cookies enabled will be "
+"identified using a simple heuristic taking into account IP address, "
+"resolution, browser, plugins, OS, etc."
+msgstr "ចំនួន​អ្នក​អ្នក​ចូល​ទស្សនា​ដាច់ដោយឡែក​ទៅ​លើ​ការ​បង្ហាញ​របស់​អ្នក។ អ្នក​ទស្សនា​តែ​ម្នាក់​ត្រូវ​បាន​កំណត់​ដោយ​ខូគី។ អ្នក​ទស្សនា​ដែល​មិន​បាន​បើក​ខូគី នឹង​ត្រូវ​បាន​សម្គាល់​ដោយ​ប្រើការ​គិត​ទៅលើ​ការ​ស្រាវជ្រាវ​ធម្មតា​ចំពោះ​អាសយដ្ឋាន IP គុណភាព​បង្ហាញ កម្មវិធី​រុករក កម្មវិធី​ជំនួយ ប្រព័ន្ធ​ប្រតិបត្តិការ។ល។"
+
+#: stats.unverified
+msgctxt "stats.unverified"
+msgid "Unverified"
+msgstr "មិន​បាន​ផ្ទៀងផ្ទាត់"
+
+#: stats.verified
+msgctxt "stats.verified"
+msgid "Verified"
+msgstr "បាន​ផ្ទៀងផ្ទាត់"
+
+#: stats.visitor_summary
+msgctxt "stats.visitor_summary"
+msgid "Visitor Summary"
+msgstr "សេចក្ដី​សង្ខេប​របស់​អ្នក​ទស្សនា"
+
+#: stats.visits
+msgctxt "stats.visits"
+msgid "Visits"
+msgstr "ទស្សនា"
+
+#: stats.visits_description
+msgctxt "stats.visits_description"
+msgid ""
+"A visit is a record of a unique visitor coming to the site more than 30 "
+"minutes past his/her last pageview."
+msgstr "ការ​ទស្សនា​គឺជា​កំណត់ត្រា​របស់​អ្នក​ទស្សនា​តែ​ម្នាក់ ដែល​ចូល​មើល​តំបន់​ច្រើន​ជាង​៣០នាទី លើ​ទិដ្ឋភាព​ទំព័រ​ចុងក្រោយ​របស់​គាត់/នាង។"

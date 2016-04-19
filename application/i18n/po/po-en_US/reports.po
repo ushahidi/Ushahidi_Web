@@ -1,0 +1,51 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: English (http://www.transifex.com/ushahidi/ushahidi-v2/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: reports.incident_id.required
+msgctxt "reports.incident_id.required"
+msgid "Please verify that you have checked an item"
+msgstr "Please verify that you have checked an item"
+
+#: reports.incident_id.numeric
+msgctxt "reports.incident_id.numeric"
+msgid "Please verify that you have checked an item"
+msgstr "Please verify that you have checked an item"
+
+#: reports.incident_id.categories_required
+msgctxt "reports.incident_id.categories_required"
+msgid "Reports must be categorized before they can be approved"
+msgstr "Reports must be categorized before they can be approved"
+
+#: reports.action.permission
+msgctxt "reports.action.permission"
+msgid "You don't have permission to perform this action"
+msgstr "You don't have permission to perform this action"
+
+#: reports.uploadfile.required
+msgctxt "reports.uploadfile.required"
+msgid "You must select a file to upload"
+msgstr "You must select a file to upload"
+
+#: reports.uploadfile.type
+msgctxt "reports.uploadfile.type"
+msgid "The upload file must either be of .csv or .xml format"
+msgstr "The upload file must either be of .csv or .xml format"
+
+#: reports.uploadfile.valid
+msgctxt "reports.uploadfile.valid"
+msgid "The file upload field does not seem to contain a valid file"
+msgstr "The file upload field does not seem to contain a valid file"

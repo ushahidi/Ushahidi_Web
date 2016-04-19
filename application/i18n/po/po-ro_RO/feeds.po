@@ -1,0 +1,54 @@
+# 
+# Translators:
+# Monica Ipate <monica.ipate@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Romanian (Romania) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ro_RO/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: feeds.date
+msgctxt "feeds.date"
+msgid "DATE"
+msgstr "DATA"
+
+#: feeds.feed_name.length
+msgctxt "feeds.feed_name.length"
+msgid ""
+"The feed name field must be at least 3 and no more \n"
+"\t\t\t70 characters long."
+msgstr "Câmpul nume trebuie să aibă cel puțin 3 dar nu mai mult de ⏎ »»»70 de caractere lungime."
+
+#: feeds.feed_name.required
+msgctxt "feeds.feed_name.required"
+msgid "Please enter the name of the feed."
+msgstr "Vă rugăm să introduceți numele feed-ului."
+
+#: feeds.feed_url.required
+msgctxt "feeds.feed_url.required"
+msgid "Please enter feed's URL."
+msgstr "Vă rugăm să introduceți URL-ul feed-ului."
+
+#: feeds.feed_url.url
+msgctxt "feeds.feed_url.url"
+msgid "Please enter a valid URL, e.g. http://www.ushahidi.com"
+msgstr "Vă rugăm să introduceți un URL valid, de ex http://www.ushahidi.com"
+
+#: feeds.source
+msgctxt "feeds.source"
+msgid "SOURCE"
+msgstr "SURSA"
+
+#: feeds.title
+msgctxt "feeds.title"
+msgid "Title"
+msgstr "Titlul"

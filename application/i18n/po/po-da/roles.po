@@ -1,0 +1,63 @@
+# 
+# Translators:
+# Neogeografen <soren.johannessen@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-06-27 14:27+0000\n"
+"Last-Translator: Neogeografen <soren.johannessen@gmail.com>\n"
+"Language-Team: Danish (http://www.transifex.com/ushahidi/ushahidi-v2/language/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: roles.description.length
+msgctxt "roles.description.length"
+msgid ""
+"The Description field must be at least 3 and no more 100 characters long."
+msgstr "Beskrivelsesfeltet skal være på mindst 3 tegn og på max. 100 tegn."
+
+#: roles.description.required
+msgctxt "roles.description.required"
+msgid "The Description field is required."
+msgstr "Beskrivelsesfeltet skal angives"
+
+#: roles.name.alpha_numeric
+msgctxt "roles.name.alpha_numeric"
+msgid "The Name field must only contain letters or numbers."
+msgstr "Navnetfeltet må kun indeholde bogstaver eller numre."
+
+#: roles.name.length
+msgctxt "roles.name.length"
+msgid "The Name field must be at least 2 and no more than 30 characters long."
+msgstr "Navnefeltet skal være på mindst 2 tegn og på max. 30 tegn."
+
+#: roles.name.nomodify
+msgctxt "roles.name.nomodify"
+msgid "SuperAdmin Role Cannot Be Modified."
+msgstr "SuperAdmin rollen kan ikke ændres."
+
+#: roles.name.required
+msgctxt "roles.name.required"
+msgid "The Name field is required."
+msgstr "Navnefeltet skal angives."
+
+#: roles.access_level.numeric
+msgctxt "roles.access_level.numeric"
+msgid "Access Level field must be a number between 0 - 100."
+msgstr ""
+
+#: roles.access_level.required
+msgctxt "roles.access_level.required"
+msgid "Access Level field must be a number between 0 - 100."
+msgstr ""
+
+#: roles.permissions.numeric
+msgctxt "roles.permissions.numeric"
+msgid "Permissions field must be a number between 0 - 100."
+msgstr ""

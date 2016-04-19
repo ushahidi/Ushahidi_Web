@@ -1,0 +1,123 @@
+# 
+# Translators:
+# Boripat Lebel <inactive+boripatlebel@transifex.com>, 2014
+# Ngamnet_review <ngamnetaektasaeng@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2014-08-13 05:08+0000\n"
+"Last-Translator: Ngamnet_review <ngamnetaektasaeng@gmail.com>\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/ushahidi/ushahidi-v2/language/th_TH/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th_TH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: form.field_default.default
+msgctxt "form.field_default.default"
+msgid "The default value you have provided for the field is invalid."
+msgstr "ค่าเริ่มต้นที่คุณใส่ไม่ถูกต้อง"
+
+#: form.field_default.length
+msgctxt "form.field_default.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 200 characters long."
+msgstr "ชื่่อฟิลด์ต้องมีอย่างน้อย 3 ตัวอักษรและไม่เกิน 200 ตัวอักษร"
+
+#: form.field_height.between
+msgctxt "form.field_height.between"
+msgid "Please enter a value 0 to 50 for the Field Height."
+msgstr "กรุณาใส่ค่าความสูงของฟิล์ด 0 ถึง 50"
+
+#: form.field_isdate.between
+msgctxt "form.field_isdate.between"
+msgid "You have entered an invalid value for Date Field."
+msgstr "คุณได้ใส่ค่าไม่ถูกต้องในช่องวันที่"
+
+#: form.field_isdate.required
+msgctxt "form.field_isdate.required"
+msgid "Please select Yes or No for the Date Field."
+msgstr "กรุณาเลือกว่า ใช่หรือไม่ใช่ฟิล์ดวันที่"
+
+#: form.field_name.length
+msgctxt "form.field_name.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 100 characters long."
+msgstr "ชื่อฟิลด์ต้องมีอย่างน้อย 3 ตัวอักษร และไม่เกิน 100 ตัวอักษร"
+
+#: form.field_name.required
+msgctxt "form.field_name.required"
+msgid "Please enter Field Name."
+msgstr "กรุณาใส่ชื่่อฟิลด์"
+
+#: form.field_name.duplicate
+msgctxt "form.field_name.duplicate"
+msgid ""
+"The field name you entered already exists on this form. Please enter another"
+" one."
+msgstr "ชื่่อฟิลค์ที่คุณใส่มีแล้วในแบบฟอร์มนี้ กรุณาใส่อีกอย่างหนึ่ง"
+
+#: form.field_required.between
+msgctxt "form.field_required.between"
+msgid "You have entered an invalid value for Field Required."
+msgstr "คุณได้ใส่ค่าไม่ถูกต้องสำหรับฟิลด์ที่จำเป็น"
+
+#: form.field_required.required
+msgctxt "form.field_required.required"
+msgid "Please select Yes or No for Field Required."
+msgstr "กรุณาเลือกใช่หรือไม่ใช่สำหรับฟิล์ดที่จำเป็น"
+
+#: form.field_type.numeric
+msgctxt "form.field_type.numeric"
+msgid "Please select a valid Field Type."
+msgstr "กรุณาเลือกประเภทฟิลด์ที่ถูกต้อง"
+
+#: form.field_type.required
+msgctxt "form.field_type.required"
+msgid "Please select a Field Type."
+msgstr "กรุณาเลือกประเภทฟิลด์"
+
+#: form.field_width.between
+msgctxt "form.field_width.between"
+msgid "Please enter a value 0 to 300 for the Field Width."
+msgstr "กรุณาใส่ค่า 0 ถึง 300 สำหรับความกว้างฟิลด์"
+
+#: form.form_description.required
+msgctxt "form.form_description.required"
+msgid "Please enter form's Description."
+msgstr "กรุณาใส่รายละเอียดแบบฟอร์ม"
+
+#: form.form_id.default
+msgctxt "form.form_id.default"
+msgid "The default form cannot be deleted."
+msgstr "รูปแบบเริ่มต้นไม่สามารถลบได้"
+
+#: form.form_id.numeric
+msgctxt "form.form_id.numeric"
+msgid "Please select which form to add this field to."
+msgstr "กรุณาเลือกรูปแบบที่จะเติ่มในฟิลด์"
+
+#: form.form_id.required
+msgctxt "form.form_id.required"
+msgid "Please select which form to add this field to."
+msgstr "กรุณาเลือกรูปแบบที่จะเติ่มในฟิลด์"
+
+#: form.form_title.length
+msgctxt "form.form_title.length"
+msgid ""
+"The form name field must be at least 3 and no more than 100 characters long."
+msgstr "ชื่่อของฟิลค์ต้องมีอย่างน้อย 3 ตัวอักษร และไม่เกิน 100 ตัวอักษร"
+
+#: form.form_title.required
+msgctxt "form.form_title.required"
+msgid "Please enter the name of the form."
+msgstr "กรุณาใส่ชื่อของฟอร์ม"
+
+#: form.form_title.exists
+msgctxt "form.form_title.exists"
+msgid "A form with that title already exists. Please choose another."
+msgstr "แบบฟอร์มที่มีชื่่อนี้มีแล้ว กรุณาเลือกชื่่ออื่่น"

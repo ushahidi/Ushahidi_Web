@@ -1,0 +1,67 @@
+# 
+# Translators:
+# Ljiljana Smiljanić <ljiljanas@blic.net>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-19 16:52+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Bosnian (Bosnia and Herzegovina) (http://www.transifex.com/ushahidi/ushahidi-v2/language/bs_BA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bs_BA\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: bug.captcha.default
+msgctxt "bug.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Unesite važeći sigurnosni kod."
+
+#: bug.captcha.required
+msgctxt "bug.captcha.required"
+msgid "Please enter the security code."
+msgstr "Unesite važeći kod."
+
+#: bug.email.email
+msgctxt "bug.email.email"
+msgid "The Email field does not appear to contain a valid email address?"
+msgstr "Polje za e-mail ne sadrži važeću e-mail adresu?"
+
+#: bug.email.length
+msgctxt "bug.email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "E-mail mora da sadrži najmanje 4 i ne više od 64 znaka."
+
+#: bug.email.required
+msgctxt "bug.email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "E-mail je neophodan ukoliko je kućica označena kvačicom."
+
+#: bug.error.required
+msgctxt "bug.error.required"
+msgid "The error field is required."
+msgstr "Neophodno je polje za greške."
+
+#: bug.subject.length
+msgctxt "bug.subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr "Naslov mora imati najmanje 3 znaka."
+
+#: bug.subject.required
+msgctxt "bug.subject.required"
+msgid "The subject field is required."
+msgstr "Neophodno je polje za naslov."
+
+#: bug.yourname.length
+msgctxt "bug.yourname.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Ime mora da ima najmanje 3 znaka."
+
+#: bug.yourname.required
+msgctxt "bug.yourname.required"
+msgid "The name field is required."
+msgstr "Polje za ime je neophodno."

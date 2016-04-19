@@ -1,0 +1,24 @@
+#. extracted from en_US/database.php, hi_IN/database.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-20 22:16+0000\n"
+"PO-Revision-Date: 2012-09-20 22:16+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: hi_IN\n"
+
+#: database.error
+msgctxt "database.error"
+msgid "Database error: %s"
+msgstr ""
+
+#: database.table_not_found
+msgctxt "database.table_not_found"
+msgid "Table \"%s\" cannot be found in the database. Please make sure you are using the latest version of the database for this version of Ushahidi."
+msgstr ""
+

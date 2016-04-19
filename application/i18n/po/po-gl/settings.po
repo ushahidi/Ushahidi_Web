@@ -1,0 +1,859 @@
+# 
+# Translators:
+# Xnake, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-03-12 06:26+0000\n"
+"PO-Revision-Date: 2014-05-19 22:49+0000\n"
+"Last-Translator: Xnake\n"
+"Language-Team: Galician (http://www.transifex.com/projects/p/ushahidi-v2/language/gl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: settings.allow_comments.between
+msgctxt "settings.allow_comments.between"
+msgid "The allow comments field does not appear to contain a valid value."
+msgstr "O campo Comentarios Permitidos semella non conter datos válidos."
+
+#: settings.allow_comments.required
+msgctxt "settings.allow_comments.required"
+msgid "The allow comments field is required."
+msgstr "O campo Comentarios Permitidos é obrigatorio."
+
+#: settings.allow_feed.between
+msgctxt "settings.allow_feed.between"
+msgid "The include feed field does not appear to contain a valid value."
+msgstr "O campo Incluir Feed semella non conter datos válidos."
+
+#: settings.allow_feed.required
+msgctxt "settings.allow_feed.required"
+msgid "The include feed field is required."
+msgstr "O campo Incluir Feed é obrigatorio."
+
+#: settings.allow_feed_category.between
+msgctxt "settings.allow_feed_category.between"
+msgid ""
+"The include feed category field does not appear to contain a valid value."
+msgstr "O campo de incluir categoría de feed parece non ter un valor válido."
+
+#: settings.allow_feed_category.required
+msgctxt "settings.allow_feed_category.required"
+msgid "The include feed category field is required."
+msgstr "Requírese o campo de incluir categoría de feed."
+
+#: settings.allow_alerts.between
+msgctxt "settings.allow_alerts.between"
+msgid "The allow alerts field does not appear to contain a valid value."
+msgstr "O campo Permitir Alertas semella non conter datos válidos."
+
+#: settings.allow_alerts.required
+msgctxt "settings.allow_alerts.required"
+msgid "The allow alerts field is required."
+msgstr "O campo Permitir Alertas é obrigatorio."
+
+#: settings.allow_reports.between
+msgctxt "settings.allow_reports.between"
+msgid "The allow reports field does not appear to contain a valid value."
+msgstr "O campo Permitir Informes semella non conter datos válidos."
+
+#: settings.allow_reports.required
+msgctxt "settings.allow_reports.required"
+msgid "The allow reports field is required."
+msgstr "O campo Permitir Informes é obrigatorio."
+
+#: settings.allow_stat_sharing.between
+msgctxt "settings.allow_stat_sharing.between"
+msgid "The stat sharing field does not appear to contain a valid value."
+msgstr "O campo Compartillar Estatísticas semella non conter datos válidos."
+
+#: settings.allow_stat_sharing.required
+msgctxt "settings.allow_stat_sharing.required"
+msgid "The stat sharing field is required."
+msgstr "O Campo Compartillar Estatísticas é obrigatorio."
+
+#: settings.api.default_record_limit
+msgctxt "settings.api.default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "Número predetermiñado de rexistros a procurar en cada solicitude da API"
+
+#: settings.api.maximum_record_limit
+msgctxt "settings.api.maximum_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "Número máximo de rexistros a procurar en cada solicitude da API"
+
+#: settings.api.maximum_requests_per_ip_address
+msgctxt "settings.api.maximum_requests_per_ip_address"
+msgid "Maximum number of API requests per IP address"
+msgstr "Número máximo de solicitudes da API por enderezo IP"
+
+#: settings.api_akismet.alpha_numeric
+msgctxt "settings.api_akismet.alpha_numeric"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "O campo Akismet semella non conter datos válidos."
+
+#: settings.api_akismet.length
+msgctxt "settings.api_akismet.length"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "O campo Akismet semella non conter datos válidos."
+
+#: settings.banner_image.type
+msgctxt "settings.banner_image.type"
+msgid ""
+"The Site Banner field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "O campo Banner do Site semella non conter datos válidos.Os únicos formatos aceptados son .JPG, .PNG e .GIF."
+
+#: settings.banner_image.size
+msgctxt "settings.banner_image.size"
+msgid "Please ensure that \"Banner Image\" size is less than 250 KB."
+msgstr "Comprobe que o tamaño da \"Imaxe do Banner\" é menor de 250KB."
+
+#: settings.banner_image.valid
+msgctxt "settings.banner_image.valid"
+msgid "The \"Banner Image\" field does not appear to contain a valid file."
+msgstr "O campo de \"Imaxe do Banner\" semella non conter datos válidos."
+
+#: settings.cache_pages.between
+msgctxt "settings.cache_pages.between"
+msgid "The cache pages field is required."
+msgstr "O campo Páxinas en Caché é obrigatorio."
+
+#: settings.cache_pages.required
+msgctxt "settings.cache_pages.required"
+msgid "The cache pages field does not appear to contain a valid value."
+msgstr "O campo de Páxinas en Caché semella non conter datos válidos."
+
+#: settings.cache_pages_lifetime.in_array
+msgctxt "settings.cache_pages_lifetime.in_array"
+msgid ""
+"The cache pages lifetime field does not appear to contain a valid value."
+msgstr "O campo Duración de Páxinas na Caché semella non conter datos válidos."
+
+#: settings.cache_pages_lifetime.required
+msgctxt "settings.cache_pages_lifetime.required"
+msgid "The cache pages lifetime field is required."
+msgstr "O campo Duración de Páxinas na Caché é obrigatorio."
+
+#: settings.cleanurl.clean_url_disabled
+msgctxt "settings.cleanurl.clean_url_disabled"
+msgid ""
+"It looks like your server is not configured to handle clean URLs. You will "
+"need to change the configuration of your server before you can enable clean "
+"URLs. See more info on how to enable clean URLs at <a "
+"href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-"
+"rewrite\" target=\"_blank\">this forum post</a>"
+msgstr "Semella que o seu servidor non está configurado para empregar URLs limpos.É preciso trocar a configuración do server para activalos. Vexa máis información sobre cómo habilitar os URLs limpos <a href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite\" target=\"_blank\">neste post do foro</a>."
+
+#: settings.cleanurl.clean_url_enabled
+msgctxt "settings.cleanurl.clean_url_enabled"
+msgid ""
+"This option makes Ushahidi to be accessed via \"clean\" URLs (without "
+"\"index.php\" in the URL)."
+msgstr "Esta opción permite a Ushahidi acceder por medio de URLs \"limpos\" (sen \"index.php\" no URL)."
+
+#: settings.cleanurl.enable_clean_url
+msgctxt "settings.cleanurl.enable_clean_url"
+msgid "Enable Clean URLs"
+msgstr "Activar URLs Limpos"
+
+#: settings.cleanurl.title
+msgctxt "settings.cleanurl.title"
+msgid "Clean URLs"
+msgstr "URLs Limpos"
+
+#: settings.clickatell_api.length
+msgctxt "settings.clickatell_api.length"
+msgid "The Clickatell API number field must be no more 20 characters long."
+msgstr "O campo de Número API Clickatell debe conter un máximo de 20 caracteres."
+
+#: settings.clickatell_api.required
+msgctxt "settings.clickatell_api.required"
+msgid "The Clickatell API number field is required."
+msgstr "O campo Número API CLickatell é obrigatorio."
+
+#: settings.clickatell_password.length
+msgctxt "settings.clickatell_password.length"
+msgid ""
+"The Clickatell Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "O campo Contrasinal Clickatell debe conter entre 5 e 50 caracteres de lonxitude."
+
+#: settings.clickatell_password.required
+msgctxt "settings.clickatell_password.required"
+msgid "The Clickatell Password field is required."
+msgstr "O campo Contrasinal Clickatell é obrigatorio."
+
+#: settings.clickatell_username.length
+msgctxt "settings.clickatell_username.length"
+msgid "The Clickatell Username field must be no more 50 characters long."
+msgstr "O campo Usuaria/o Clickatell non debe conter máis de 50 caracteres."
+
+#: settings.clickatell_username.required
+msgctxt "settings.clickatell_username.required"
+msgid "The Clickatell Username field is required."
+msgstr "O campo Usuaria/o Clickatell é obrigatorio."
+
+#: settings.configure_map
+msgctxt "settings.configure_map"
+msgid "Configure Map"
+msgstr "Configurar Mapa"
+
+#: settings.default_location
+msgctxt "settings.default_location"
+msgid "Default Location"
+msgstr "Localización Predetermiñada"
+
+#: settings.default_map_all.alpha_numeric
+msgctxt "settings.default_map_all.alpha_numeric"
+msgid "The color feed field does not appear to contain a valid value."
+msgstr "O campo Cor do Feed semella non conter datos válidos."
+
+#: settings.default_map_all.length
+msgctxt "settings.default_map_all.length"
+msgid "The color field must be no more 6 characters long."
+msgstr "O campo Cor debe contar con non máis de 6 caracteres de lonxitude."
+
+#: settings.default_map_all.required
+msgctxt "settings.default_map_all.required"
+msgid "The color field is required."
+msgstr "O campo Cor é obrigatorio."
+
+#: settings.default_map_view
+msgctxt "settings.default_map_view"
+msgid "Default Map View"
+msgstr "Visualización do Mapa Predetermiñado"
+
+#: settings.default_zoom_level
+msgctxt "settings.default_zoom_level"
+msgid "Default Zoom Level"
+msgstr "Nivel de Zoom Predetermiñado"
+
+#: settings.download_city_list
+msgctxt "settings.download_city_list"
+msgid "Retrieve Cities From Geonames"
+msgstr "Obter Cidades dende Geonames"
+
+#: settings.email_host.length
+msgctxt "settings.email_host.length"
+msgid "The Mail server port field is too long."
+msgstr "O porto do servidor de correo é demasiado alto."
+
+#: settings.email_host.numeric
+msgctxt "settings.email_host.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "O campo Porto do Servidor de Correo só pode conter números."
+
+#: settings.email_password.length
+msgctxt "settings.email_password.length"
+msgid ""
+"The Mail Server Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "O contrasinal do Servidor de Correo debe ter entre 5 e 50 caracteres."
+
+#: settings.email_password.required
+msgctxt "settings.email_password.required"
+msgid "The Mail Server Password field is required."
+msgstr "O Contrasinal do Servidor de Correo é obligatorio."
+
+#: settings.email_port.length
+msgctxt "settings.email_port.length"
+msgid "The Mail server port field is too long."
+msgstr "O campo Porto do Servidor de Correo é demasiado longo."
+
+#: settings.email_port.numeric
+msgctxt "settings.email_port.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "O campo Porto do Servidor de Correo só pode conter números."
+
+#: settings.email_servertype.length
+msgctxt "settings.email_servertype.length"
+msgid "The Mail server port field is too long."
+msgstr "O campo Porto do Servidor de Correo é demasiado longo."
+
+#: settings.email_servertype.required
+msgctxt "settings.email_servertype.required"
+msgid "The Mail Server Type field is required."
+msgstr "O campo Servidor de Correo é obrigatorio."
+
+#: settings.email_username.length
+msgctxt "settings.email_username.length"
+msgid "The Mail Server Username field must be no more 50 characters long."
+msgstr "O campo Nome de Usuaria/o do Servidor de Correo non pode ter máis de 50 caracteres de lonxitude."
+
+#: settings.email_username.required
+msgctxt "settings.email_username.required"
+msgid "The Mail Server Username field is required."
+msgstr "O campo Nome de Usuaria/o do Servidor de Correo é obrigatorio."
+
+#: settings.facebook.title
+msgctxt "settings.facebook.title"
+msgid "Facebook Setup Options"
+msgstr "Opcións de configuración do Facebook"
+
+#: settings.facebook.description
+msgctxt "settings.facebook.description"
+msgid ""
+"To get the information below you will need to create a new Facebook "
+"application at"
+msgstr "Para obter a información referida embaixo é preciso crear unha nova aplicación do Facebook en "
+
+#: settings.facebook.description_2
+msgctxt "settings.facebook.description_2"
+msgid ""
+"These settings allow users to login via Facebook, this <strong>does "
+"not</strong> create a facebook application for your deployment"
+msgstr "Esas configuracións permiten que as/os usuarias/os accedan via Facebook. Esto <strong>non</ strong> crea una aplicación para a súa instancia de Ushahidi."
+
+#: settings.facebook.app_id
+msgctxt "settings.facebook.app_id"
+msgid "Facebook App ID"
+msgstr "ID da App do Facebook"
+
+#: settings.facebook.app_secret
+msgctxt "settings.facebook.app_secret"
+msgid "Facebook App Secret"
+msgstr "App Secret do Facebook"
+
+#: settings.google_analytics.length
+msgctxt "settings.google_analytics.length"
+msgid ""
+"The Google Analytics field must contain a valid Web Property ID in the "
+"format UA-XXXXX-XX."
+msgstr "O campo Google Analytics debe conter un ID Web Property en formato UA-XXXXX-XX."
+
+#: settings.https.enable_https
+msgctxt "settings.https.enable_https"
+msgid "Enable HTTPS"
+msgstr "Activar HTTPS"
+
+#: settings.https.https_disabled
+msgctxt "settings.https.https_disabled"
+msgid ""
+"This option makes Ushahidi be accessed in unsecure mode; "
+"<strong>without</strong> \"https://\" in the URL prefix"
+msgstr "Esta opción fai que se poda acceder ao Ushahidi de xeito inseguro; <strong>sen</strong> \"https://\" no prefixo URL."
+
+#: settings.https.https_enabled
+msgctxt "settings.https.https_enabled"
+msgid ""
+"This option makes Ushahidi be accessed in secure mode; with "
+"<strong>https</strong> in the URL prefix"
+msgstr "Esta opción fai que se poda acceder ao Ushahidi de xeito seguro; <strong>con</strong> \"https://\" no prefixo URL."
+
+#: settings.https.title
+msgctxt "settings.https.title"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: settings.items_per_page.between
+msgctxt "settings.items_per_page.between"
+msgid ""
+"The items per page (Frontend) field does not appear to contain a valid "
+"value."
+msgstr "Semella que o campo Elementos por Páxina (Frontend) non contén un valor correcto."
+
+#: settings.items_per_page.required
+msgctxt "settings.items_per_page.required"
+msgid "The items per page (Frontend) field is required."
+msgstr "O campo Elementos por Páxina (Frontend) é obligatorio."
+
+#: settings.items_per_page_admin.between
+msgctxt "settings.items_per_page_admin.between"
+msgid ""
+"The items per page (Admin) field does not appear to contain a valid value."
+msgstr "Semella que o campo Elementos por Páxina (Admin) non contén un valor correcto."
+
+#: settings.items_per_page_admin.required
+msgctxt "settings.items_per_page_admin.required"
+msgid "The items per page (Admin) field is required."
+msgstr "O campo Elementos por Páxina (Admin) é obrigatorio."
+
+#: settings.map.default_location
+msgctxt "settings.map.default_location"
+msgid ""
+"Setting up your map provider is a straight- forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "Configurar o provedor de mapas é un proceso sinxelo. Seleccione un provedor, obteña una chave para a API do site e dixite o código da mesma."
+
+#: settings.map.zoom
+msgctxt "settings.map.zoom"
+msgid "Zoom Level"
+msgstr "Nivel de Zoom"
+
+#: settings.map_provider.choose
+msgctxt "settings.map_provider.choose"
+msgid "Select a Map Provider"
+msgstr "Seleccione un Provedor de Mapas"
+
+#: settings.map_provider.enter_api
+msgctxt "settings.map_provider.enter_api"
+msgid "Enter the new API Key"
+msgstr "Introduza a nova Chave da API"
+
+#: settings.map_provider.get_api
+msgctxt "settings.map_provider.get_api"
+msgid "Get an API Key"
+msgstr "Obteña unha Chave API"
+
+#: settings.map_provider.info
+msgctxt "settings.map_provider.info"
+msgid ""
+"Setting up your map provider is a straight-forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "Configurar o provedor de mapas é un proceso sinxelo. Seleccione un provedor, obteña una chave para a API do site e dixite o código da mesma."
+
+#: settings.map_provider.name
+msgctxt "settings.map_provider.name"
+msgid "Map provider"
+msgstr "Provedor de Mapas"
+
+#: settings.map_timeline
+msgctxt "settings.map_timeline"
+msgid "Map Timeline"
+msgstr "Liña de Tempo do Mapa"
+
+#: settings.map_settings
+msgctxt "settings.map_settings"
+msgid "Map Settings"
+msgstr "Configuracións do Mapa"
+
+#: settings.multiple_countries
+msgctxt "settings.multiple_countries"
+msgid "Does this Ushahidi Deployment span multiple countries?"
+msgstr "Esta instancia do Ushahidi abrangue varios paises?"
+
+#: settings.select_default_location
+msgctxt "settings.select_default_location"
+msgid "Please select a default country"
+msgstr "Seleccione o país predetermiñado"
+
+#: settings.set_location
+msgctxt "settings.set_location"
+msgid "Click and drag the map to set your exact location"
+msgstr "Prema e arrastre no map para establecer a súa localización exacta"
+
+#: settings.site.allow_clustering
+msgctxt "settings.site.allow_clustering"
+msgid "Cluster Reports on Map"
+msgstr "Agrupar Informes no Mapa"
+
+#: settings.site.allow_comments
+msgctxt "settings.site.allow_comments"
+msgid "Allow Users to Submit Comments to Reports"
+msgstr "Permitir ás/aos usuarias/os enviar Comentarios nos Informes"
+
+#: settings.site.allow_feed
+msgctxt "settings.site.allow_feed"
+msgid "Include RSS News Feed on Website"
+msgstr "Incluir Feed de Novas no site"
+
+#: settings.site.allow_feed_category
+msgctxt "settings.site.allow_feed_category"
+msgid "Create New Category from Feeds"
+msgstr "Crear nova Categorñia dende os Feeds"
+
+#: settings.site.allow_alerts
+msgctxt "settings.site.allow_alerts"
+msgid "Allow Users To Subscribe For Alerts"
+msgstr "Permitir ás/aos usuarias/os suscribirse ás Alertas"
+
+#: settings.site.allow_reports
+msgctxt "settings.site.allow_reports"
+msgid "Allow Users To Submit Reports"
+msgstr "Permitir ás/aos usuarias/os Enviar Informes"
+
+#: settings.site.api_akismet
+msgctxt "settings.site.api_akismet"
+msgid "Akismet Key"
+msgstr "Chave do Akismet"
+
+#: settings.site.banner
+msgctxt "settings.site.banner"
+msgid "Site Banner"
+msgstr "Banner do Site"
+
+#: settings.site.blocks_per_row
+msgctxt "settings.site.blocks_per_row"
+msgid "Blocks Per Row"
+msgstr "Bloques por Liña"
+
+#: settings.site.cache_pages
+msgctxt "settings.site.cache_pages"
+msgid "Cache Pages"
+msgstr "Páxinas en Caché"
+
+#: settings.site.cache_pages_lifetime
+msgctxt "settings.site.cache_pages_lifetime"
+msgid "Cache Pages Lifetime"
+msgstr "Duración das Páxinas na Caché"
+
+#: settings.site.checkins
+msgctxt "settings.site.checkins"
+msgid "Enable Checkins"
+msgstr "Activar Checkins"
+
+#: settings.site.copyright_statement
+msgctxt "settings.site.copyright_statement"
+msgid "Site Copyright Statement"
+msgstr "Política sobre Direitos de Autoría"
+
+#: settings.site.default_category_colors
+msgctxt "settings.site.default_category_colors"
+msgid "Default Color For All Categories"
+msgstr "Cor predetermiñada para as categorías"
+
+#: settings.site.default_category_icons
+msgctxt "settings.site.default_category_icons"
+msgid "Default Icon For All Categories"
+msgstr "Icona predetermiñada para as categorías"
+
+#: settings.site.delete_banner_image
+msgctxt "settings.site.delete_banner_image"
+msgid "Delete Banner Image"
+msgstr "Borrar Imaxe do Banner"
+
+#: settings.site.delete_default_map_all_icon
+msgctxt "settings.site.delete_default_map_all_icon"
+msgid "Delete Default Icon"
+msgstr "Borrar Icona Predetermiñada"
+
+#: settings.site.display_contact_page
+msgctxt "settings.site.display_contact_page"
+msgid "Display Contact Page"
+msgstr "Amosar Páxina de Contacto"
+
+#: settings.site.display_howtohelp_page
+msgctxt "settings.site.display_howtohelp_page"
+msgid "Display \"How to Help\" Page"
+msgstr "Amosar Páxina \"Cómo Axudar\""
+
+#: settings.site.email_alerts
+msgctxt "settings.site.email_alerts"
+msgid "Alerts Email Address"
+msgstr "Enderezo de Mail para Alertas"
+
+#: settings.site.email_notice
+msgctxt "settings.site.email_notice"
+msgid ""
+"<span>In order to receive reports by email, please configure your email "
+"account settings.</span>"
+msgstr "<span>Para receber alertas por email, configure a súa conta de correo.</span>"
+
+#: settings.site.email_site
+msgctxt "settings.site.email_site"
+msgid "Site Email Address"
+msgstr "Enderezo de Correo do Site"
+
+#: settings.site.google_analytics
+msgctxt "settings.site.google_analytics"
+msgid "Google Analytics"
+msgstr "Google Analytics"
+
+#: settings.site.google_analytics_example
+msgctxt "settings.site.google_analytics_example"
+msgid "Web Property ID - Format: UA-XXXXX-XX"
+msgstr "Web Property ID - Formato: UA-XXXXX-XX"
+
+#: settings.site.items_per_page
+msgctxt "settings.site.items_per_page"
+msgid "Items Per Page - Front End"
+msgstr "Elementos por Páxina - Frontend"
+
+#: settings.site.items_per_page_admin
+msgctxt "settings.site.items_per_page_admin"
+msgid "Items Per Page - Admin"
+msgstr "Elementos por Páxina - Admin"
+
+#: settings.site.kismet_notice
+msgctxt "settings.site.kismet_notice"
+msgid ""
+"Prevent comment spam using <a href=\"http://akismet.com/\" "
+"target=\"_blank\">Akismet</a> from Automattic. <BR />You can get a free API "
+"key by registering for a <a href=\"http://en.wordpress.com/api-keys/\" "
+"target=\"_blank\">WordPress.com user account</a>"
+msgstr "Preveña spam nos comentarios empregando o <a href=\"http://akismet.com/\" target=\"_blank\">Akismet</a> do Automattic. <BR />Pode obter gratuitamente unha chave API rexistrándose en <a href=\"http://en.wordpress.com/api-keys/\" target=\"_blank\">WordPress.com</a>"
+
+#: settings.site.laconica_configuration
+msgctxt "settings.site.laconica_configuration"
+msgid "Laconica Credentials"
+msgstr "Credenciáis de Laconica"
+
+#: settings.site.laconica_site
+msgctxt "settings.site.laconica_site"
+msgid "Laconica Site "
+msgstr "Site Laconica"
+
+#: settings.site.language
+msgctxt "settings.site.language"
+msgid "Site Language"
+msgstr "Lingua do Site"
+
+#: settings.site.manually_approve_users
+msgctxt "settings.site.manually_approve_users"
+msgid "Manually Approve Users"
+msgstr "Aprobar Manualmente Usuarias/os"
+
+#: settings.site.message
+msgctxt "settings.site.message"
+msgid "Site Message"
+msgstr "Mensaxe do Site"
+
+#: settings.site.name
+msgctxt "settings.site.name"
+msgid "Site Name"
+msgstr "Nome do Site"
+
+#: settings.site.private_deployment
+msgctxt "settings.site.private_deployment"
+msgid "Private Deployment"
+msgstr "Instancia Privada"
+
+#: settings.site.require_email_confirmation
+msgctxt "settings.site.require_email_confirmation"
+msgid "Require User Email Confirmation"
+msgstr "Precisa Confirmación por Email da/o Usuaria/o"
+
+#: settings.site.submit_report_message
+msgctxt "settings.site.submit_report_message"
+msgid "Submit Report Message"
+msgstr "Enviar Mensaxe co Informe"
+
+#: settings.site.share_site_stats
+msgctxt "settings.site.share_site_stats"
+msgid "Enable Statistics (Stored on Ushahidi's server)"
+msgstr "Compartillar Estatísticas do Site"
+
+#: settings.site.tagline
+msgctxt "settings.site.tagline"
+msgid "Site Tagline"
+msgstr "Eslogan do Site"
+
+#: settings.site.timezone
+msgctxt "settings.site.timezone"
+msgid "Timezone"
+msgstr "Timezone"
+
+#: settings.site.title
+msgctxt "settings.site.title"
+msgid "Site Settings"
+msgstr "Configuracións do Site"
+
+#: settings.site.twitter_configuration
+msgctxt "settings.site.twitter_configuration"
+msgid "Twitter Search Terms"
+msgstr "Configuracións do Twitter"
+
+#: settings.site.twitter_hashtags
+msgctxt "settings.site.twitter_hashtags"
+msgid "Hashtags - Separate with commas "
+msgstr "Hashtags - Separados por comas "
+
+#: settings.site.feed_geolocation_user
+msgctxt "settings.site.feed_geolocation_user"
+msgid "Feeds geolocation - Geonames username"
+msgstr "Geoloclaización dos Feeds - Nome de usuario Xeonomes"
+
+#: settings.site_email.email
+msgctxt "settings.site_email.email"
+msgid "The site email field does not appear to contain a valid email address."
+msgstr "O campo Email do Site semella non conter una enderezo de correo válido."
+
+#: settings.site_email.length
+msgctxt "settings.site_email.length"
+msgid ""
+"The site email field must be at least 4 and no more 100 characters long."
+msgstr "O campo Email do Site debe contar cun número de caracteres entre 4 e 100."
+
+#: settings.site_name.length
+msgctxt "settings.site_name.length"
+msgid "The site name field must be at least 3 and no more 50 characters long."
+msgstr "O campo Nome do Site debe contar cun número de caracteres entre 3 e 50."
+
+#: settings.site_name.required
+msgctxt "settings.site_name.required"
+msgid "The site name field is required."
+msgstr "O campo Nome do Site é obrigatorio."
+
+#: settings.site_tagline.length
+msgctxt "settings.site_tagline.length"
+msgid "The tagline field must be at least 3 and no more 100 characters long."
+msgstr "O campo Eslogan debe contar cun número de caracteres entre 3 e 100."
+
+#: settings.site_tagline.required
+msgctxt "settings.site_tagline.required"
+msgid "The tagline field is required."
+msgstr "O campo Eslogan é obrigatorio"
+
+#: settings.sms.clickatell_api
+msgctxt "settings.sms.clickatell_api"
+msgid "Your Clickatell API Number"
+msgstr "Número da API Clickatell"
+
+#: settings.sms.clickatell_check_balance
+msgctxt "settings.sms.clickatell_check_balance"
+msgid "Check Your Clickatell Credit Balance"
+msgstr "Comprobar saldo dispoñible no Clickatell "
+
+#: settings.sms.clickatell_load_balance
+msgctxt "settings.sms.clickatell_load_balance"
+msgid "Load Credit Balance"
+msgstr "Cargar Saldo"
+
+#: settings.sms.clickatell_password
+msgctxt "settings.sms.clickatell_password"
+msgid "Your Clickatell Password"
+msgstr "Contrasinal do Clickatell"
+
+#: settings.sms.clickatell_text_1
+msgctxt "settings.sms.clickatell_text_1"
+msgid ""
+"Sign up for Clickatells service by <a "
+"href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" "
+"target=\"_blank\">clicking here</a>"
+msgstr "Suscríbase ao servizo Clickatell <a href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" target=\"_blank\">nesta ligazón</a>."
+
+#: settings.sms.clickatell_text_2
+msgctxt "settings.sms.clickatell_text_2"
+msgid "Enter your Clickatell access information below"
+msgstr "Introduza os datos de acceso a Clickatell de seguido"
+
+#: settings.sms.clickatell_username
+msgctxt "settings.sms.clickatell_username"
+msgid "Your Clickatell User Name"
+msgstr "Nome de Usuaria/o do Clickatell"
+
+#: settings.sms.flsms_description
+msgctxt "settings.sms.flsms_description"
+msgid ""
+"FrontlineSMS is free and open source software that enables users to send and"
+" receive text messages with large groups of people through mobile phones. "
+"Click on the box below to download the latest version from FrontlineSMS.com."
+msgstr "FrontlineSMS é un software libre e de código aberto que permite a usuarias/os enviar e recibir mensaxes de texto colectivamente por medio de teléfonos móviles. Prema na caixa abaixo para descargar a última versión dende FrontlineSMS.com."
+
+#: settings.sms.flsms_download
+msgctxt "settings.sms.flsms_download"
+msgid "Download and install FrontlineSMS"
+msgstr "Baixar e instalar FrontlineSMS"
+
+#: settings.sms.flsms_instructions
+msgctxt "settings.sms.flsms_instructions"
+msgid ""
+"Detailed instructions on how to send SMS from your FronlineSMS installation "
+"are available <strong><a "
+"href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" "
+"target=\"_blank\">here</a></strong>. The URL and API Key below are required "
+"to set up the sync with FrontlineSMS."
+msgstr "Instruccións detalladas de cómo enviar SMS's dende FronlineSMS estam dispoñibles <strong><a href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" target=\"_blank\">acó</a></strong>. O URL e a chave API son datos necesarios para a sincronización con FrontlineSMS."
+
+#: settings.sms.flsms_link
+msgctxt "settings.sms.flsms_link"
+msgid "Copy and paste this into the FrontlineSMS \"Address\" field"
+msgstr "Copiar e pegar esto no campo \"Enderezo\" do FrontlineSMS."
+
+#: settings.sms.flsms_key
+msgctxt "settings.sms.flsms_key"
+msgid "Copy and paste this into the FrontlineSMS \"Ushahidi API Key\" field"
+msgstr "Copiar e pegar esto no campo \"Ushahidi API Key\" do FrontlineSMS."
+
+#: settings.sms.flsms_synchronize
+msgctxt "settings.sms.flsms_synchronize"
+msgid "Connecting FrontlineSMS to this Ushahidi deployment"
+msgstr "Conectando FrontlineSMS con esta instancia do Ushahidi"
+
+#: settings.sms.flsms_text_1
+msgctxt "settings.sms.flsms_text_1"
+msgid "Enter phone number(s) connected to Frontline SMS in the field(s) below"
+msgstr "Conectar número(s) de teléfono ao Frontline SMS no campo seguinte"
+
+#: settings.sms.flsms_text_2
+msgctxt "settings.sms.flsms_text_2"
+msgid "Enter the number without any + or dashes below"
+msgstr "Introducir o número sen nengún + e sen guións "
+
+#: settings.sms.option_1
+msgctxt "settings.sms.option_1"
+msgid "Option 1: Use Frontline SMS"
+msgstr "Opción 1: Empregar Frontline SMS"
+
+#: settings.sms.option_2
+msgctxt "settings.sms.option_2"
+msgid "Option 2: Use a Global SMS Gateway"
+msgstr "Opción 2: Empregar unha pasarela SMS externa"
+
+#: settings.sms.title
+msgctxt "settings.sms.title"
+msgid "SMS Setup Options"
+msgstr "Opcións de configuración do SMS"
+
+#: settings.sms_no1.length
+msgctxt "settings.sms_no1.length"
+msgid "The phone 1 field does not appear to contain a valid value."
+msgstr "O campo Teléfono 1 semella conter un valor incorrecto."
+
+#: settings.sms_no1.numeric
+msgctxt "settings.sms_no1.numeric"
+msgid "The phone 1 field should contain numbers only."
+msgstr "O campo Teléfono 1 debe conter únicamente números."
+
+#: settings.sms_no2.length
+msgctxt "settings.sms_no2.length"
+msgid "The phone 2 field is too long."
+msgstr "O campo Teléfono 2 é demasiado longo."
+
+#: settings.sms_no2.numeric
+msgctxt "settings.sms_no2.numeric"
+msgid "The phone 2 field should contain numbers only."
+msgstr "O campo Teléfono 2 debe conter únicamente números."
+
+#: settings.sms_no3.length
+msgctxt "settings.sms_no3.length"
+msgid "The phone 3 field is too long."
+msgstr "O campo Teléfono 3 é demasiado longo."
+
+#: settings.sms_no3.numeric
+msgctxt "settings.sms_no3.numeric"
+msgid "The phone 3 field should contain numbers only."
+msgstr "O campo Teléfono 3 debe conter únicamente números."
+
+#: settings.twitter.title
+msgctxt "settings.twitter.title"
+msgid "Twitter Setup Options"
+msgstr "Opcións de Configuración do Twitter"
+
+#: settings.twitter.description
+msgctxt "settings.twitter.description"
+msgid ""
+"To get the information below, set up your deployment as a new Twitter "
+"application at"
+msgstr "Para obter as informacións requeridas, configure a súa instancia do Ushahidicomo unha nova aplicación Twitter en "
+
+#: settings.twitter.api_key
+msgctxt "settings.twitter.api_key"
+msgid "Consumer Key"
+msgstr "Consumer Key"
+
+#: settings.twitter.api_key_secret
+msgctxt "settings.twitter.api_key_secret"
+msgid "Consumer secret"
+msgstr "Consumer Secret"
+
+#: settings.twitter.token
+msgctxt "settings.twitter.token"
+msgid "Access Token"
+msgstr "Access Token"
+
+#: settings.twitter.token_secret
+msgctxt "settings.twitter.token_secret"
+msgid "Access Token Secret"
+msgstr "Access Token Secret"
+
+#: settings.test_settings
+msgctxt "settings.test_settings"
+msgid "Test settings"
+msgstr "Configuracións de test"

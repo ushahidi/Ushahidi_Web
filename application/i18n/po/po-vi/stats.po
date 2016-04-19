@@ -1,0 +1,198 @@
+# 
+# Translators:
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-07-10 20:06+0000\n"
+"Last-Translator: Anh Phan <vietnamesel10n@gmail.com>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: stats.approved
+msgctxt "stats.approved"
+msgid "Approved"
+msgstr "Đã chấp thuận"
+
+#: stats.categories
+msgctxt "stats.categories"
+msgid "Categories"
+msgstr "Phân Loại"
+
+#: stats.category_impact
+msgctxt "stats.category_impact"
+msgid "Category Impact"
+msgstr "Tác động phân loại"
+
+#: stats.category_impact_description
+msgctxt "stats.category_impact_description"
+msgid ""
+"This chart gives you a linear view of the reports by category over time.  "
+"Scroll from left to right to see a comparative view of the different "
+"categories. Mouse over the graph for more details."
+msgstr "Biểu đồ này cho bạn cách nhìn theo dạng tuyến tính của các báo cáo theo từng dạng phân loại theo từng thời điểm thời gian. Kéo chuột từ trái sang phải để xem phần so sánh giữa các loại. Di chuyển chuột đến vùng biểu đồ để biết thêm chi tiết."
+
+#: stats.choose_date_range
+msgctxt "stats.choose_date_range"
+msgid "Choose a date range."
+msgstr "Chọn một khoảng ngày tháng."
+
+#: stats.countries
+msgctxt "stats.countries"
+msgid "Countries"
+msgstr "Quốc gia"
+
+#: stats.country
+msgctxt "stats.country"
+msgid "Country"
+msgstr "Quốc gia"
+
+#: stats.country_breakdown
+msgctxt "stats.country_breakdown"
+msgid "Country Breakdown"
+msgstr "Hệ thống quốc gia bị lỗi"
+
+#: stats.description
+msgctxt "stats.description"
+msgid ""
+"This is the statistics section and will contain a general description here "
+"soon. For now, browse around using the sub category links above."
+msgstr "Đây là phần dành cho thống kê và sẽ chứa các mô tả tổng quan trong thời gian sắp tới. Cho tới hiện tại, duyệt tìm các phần phân loại khác ở đường dẫn bên dưới."
+
+#: stats.error
+msgctxt "stats.error"
+msgid "Error"
+msgstr "Lỗi"
+
+#: stats.glossary
+msgctxt "stats.glossary"
+msgid "Glossary"
+msgstr "Bảng từ vựng"
+
+#: stats.hit_summary
+msgctxt "stats.hit_summary"
+msgid "Hit Summary"
+msgstr "Chọn Tóm tắt"
+
+#: stats.legend
+msgctxt "stats.legend"
+msgid "Legend"
+msgstr "Huyền thoại"
+
+#: stats.pageviews
+msgctxt "stats.pageviews"
+msgid "Pageviews"
+msgstr "Số lượng truy cập"
+
+#: stats.pageviews_description
+msgctxt "stats.pageviews_description"
+msgid "The total number of pages that visitors have viewed on your site"
+msgstr "Tổng số lượng lượng truy cập đến từ phía người dùng"
+
+#: stats.reports
+msgctxt "stats.reports"
+msgid "Reports"
+msgstr "Báo cáo"
+
+#: stats.reports_categories
+msgctxt "stats.reports_categories"
+msgid "Reports Categories"
+msgstr "Phân loại báo cáo"
+
+#: stats.reports_statistics
+msgctxt "stats.reports_statistics"
+msgid "Reports Statistics"
+msgstr "Thống kê báo cáo"
+
+#: stats.reports_status
+msgctxt "stats.reports_status"
+msgid "Reports Status"
+msgstr "Trạng thái báo cáo"
+
+#: stats.report_punchcard
+msgctxt "stats.report_punchcard"
+msgid "Report Punchcard"
+msgstr "Punchcard của báo cáo"
+
+#: stats.report_stats
+msgctxt "stats.report_stats"
+msgid "Report Stats"
+msgstr "Trạng thái báo cáo"
+
+#: stats.stats_not_setup
+msgctxt "stats.stats_not_setup"
+msgid "Stats Not Set Up"
+msgstr "Chưa cài đặt trạng thái"
+
+#: stats.time_range_1
+msgctxt "stats.time_range_1"
+msgid "1 Month"
+msgstr "1 tháng"
+
+#: stats.time_range_2
+msgctxt "stats.time_range_2"
+msgid "3 Months"
+msgstr "3 tháng"
+
+#: stats.time_range_3
+msgctxt "stats.time_range_3"
+msgid "6 Months"
+msgstr "6 tháng"
+
+#: stats.time_range_all
+msgctxt "stats.time_range_all"
+msgid "All"
+msgstr "Tất cả"
+
+#: stats.unapproved
+msgctxt "stats.unapproved"
+msgid "Unapproved"
+msgstr "Chưa được chấp thuận"
+
+#: stats.unique_visitors
+msgctxt "stats.unique_visitors"
+msgid "Unique Visitors"
+msgstr "Các người xem độc lập"
+
+#: stats.unique_visitors_description
+msgctxt "stats.unique_visitors_description"
+msgid ""
+"The number of individuals coming to your deployment. Unique visitors are "
+"determined using cookies. Visitors that do not have cookies enabled will be "
+"identified using a simple heuristic taking into account IP address, "
+"resolution, browser, plugins, OS, etc."
+msgstr "Số lượng của mỗi cá nhân trong dự án của bạn. Các người xem độc lập được xác định bởi việc sử dụng các cookies. Các người xem thường không bật tính năng cookies nên sẽ được xác định dựa vào thuật toán heuristic trong việc phân loại theo địa chỉ IP, độ phân giải, trình duyệt, tiện ích, hệ điều hành v.v..."
+
+#: stats.unverified
+msgctxt "stats.unverified"
+msgid "Unverified"
+msgstr "Chưa xác nhận"
+
+#: stats.verified
+msgctxt "stats.verified"
+msgid "Verified"
+msgstr "Đã xác nhận"
+
+#: stats.visitor_summary
+msgctxt "stats.visitor_summary"
+msgid "Visitor Summary"
+msgstr "Tóm tắt khách truy cập"
+
+#: stats.visits
+msgctxt "stats.visits"
+msgid "Visits"
+msgstr "Truy cập"
+
+#: stats.visits_description
+msgctxt "stats.visits_description"
+msgid ""
+"A visit is a record of a unique visitor coming to the site more than 30 "
+"minutes past his/her last pageview."
+msgstr "Một lượt được tính là truy cập trong bảng ghi dữ liệu với mỗi khách viếng thăm độc lập trang web dựa trên lượt xem qua mỗi quãng thời gian kéo dài 30 phút."

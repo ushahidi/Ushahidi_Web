@@ -1,0 +1,199 @@
+# 
+# Translators:
+# Haris Alisic <haris.alisic@gmail.com>, 2012
+# T68 <tlindstrom68@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/ushahidi/ushahidi-v2/language/sv_SE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: stats.approved
+msgctxt "stats.approved"
+msgid "Approved"
+msgstr "Godk&auml;nd"
+
+#: stats.categories
+msgctxt "stats.categories"
+msgid "Categories"
+msgstr "Kategorier"
+
+#: stats.category_impact
+msgctxt "stats.category_impact"
+msgid "Category Impact"
+msgstr "Kategoriaktivitet"
+
+#: stats.category_impact_description
+msgctxt "stats.category_impact_description"
+msgid ""
+"This chart gives you a linear view of the reports by category over time.  "
+"Scroll from left to right to see a comparative view of the different "
+"categories. Mouse over the graph for more details."
+msgstr "Denna graf visar en linj&auml;r vy &ouml;ver rapporter per kategori &ouml;ver tid.  Bl&auml;ddra fr&aring;n v&auml;nster till h&ouml;ger f&ouml;r att se en j&auml;mf&ouml;rande vy f&ouml;r de olika kategorierna. Peka p&aring grafen f&ouml;r mer detaljer"
+
+#: stats.choose_date_range
+msgctxt "stats.choose_date_range"
+msgid "Choose a date range."
+msgstr "V&auml;lj datumomr&aring;de"
+
+#: stats.countries
+msgctxt "stats.countries"
+msgid "Countries"
+msgstr "L&auml;nder"
+
+#: stats.country
+msgctxt "stats.country"
+msgid "Country"
+msgstr "Land"
+
+#: stats.country_breakdown
+msgctxt "stats.country_breakdown"
+msgid "Country Breakdown"
+msgstr "Nedbrytning av land"
+
+#: stats.description
+msgctxt "stats.description"
+msgid ""
+"This is the statistics section and will contain a general description here "
+"soon. For now, browse around using the sub category links above."
+msgstr "Detta &auml;r statistiksektionen. Allm&auml;n information kommer fram&ouml;ver. F&ouml;r tillf&auml;llet kan du bl&auml;ddra genom l&auml;nkarna till underkategorierna ovan"
+
+#: stats.error
+msgctxt "stats.error"
+msgid "Error"
+msgstr "Fel"
+
+#: stats.glossary
+msgctxt "stats.glossary"
+msgid "Glossary"
+msgstr "Ordlista"
+
+#: stats.hit_summary
+msgctxt "stats.hit_summary"
+msgid "Hit Summary"
+msgstr "Sammanfattning tr&auml;ffar"
+
+#: stats.legend
+msgctxt "stats.legend"
+msgid "Legend"
+msgstr "Teckenförklaring"
+
+#: stats.pageviews
+msgctxt "stats.pageviews"
+msgid "Pageviews"
+msgstr "Sidvisningar"
+
+#: stats.pageviews_description
+msgctxt "stats.pageviews_description"
+msgid "The total number of pages that visitors have viewed on your site"
+msgstr "Det totala antalet sidor som bes&ouml;kare har tittat p&aring p&aring din sajt"
+
+#: stats.reports
+msgctxt "stats.reports"
+msgid "Reports"
+msgstr "Rapporter"
+
+#: stats.reports_categories
+msgctxt "stats.reports_categories"
+msgid "Reports Categories"
+msgstr "Rapportkategorier"
+
+#: stats.reports_statistics
+msgctxt "stats.reports_statistics"
+msgid "Reports Statistics"
+msgstr "Rapportstatistik"
+
+#: stats.reports_status
+msgctxt "stats.reports_status"
+msgid "Reports Status"
+msgstr "Rapportstatus"
+
+#: stats.report_punchcard
+msgctxt "stats.report_punchcard"
+msgid "Report Punchcard"
+msgstr "Rapportblad"
+
+#: stats.report_stats
+msgctxt "stats.report_stats"
+msgid "Report Stats"
+msgstr "Rapportstatistik"
+
+#: stats.stats_not_setup
+msgctxt "stats.stats_not_setup"
+msgid "Stats Not Set Up"
+msgstr "Statistik &auml;r inte uppsatt"
+
+#: stats.time_range_1
+msgctxt "stats.time_range_1"
+msgid "1 Month"
+msgstr "1 m&aring;nad"
+
+#: stats.time_range_2
+msgctxt "stats.time_range_2"
+msgid "3 Months"
+msgstr "3 m&aring;nader"
+
+#: stats.time_range_3
+msgctxt "stats.time_range_3"
+msgid "6 Months"
+msgstr "6 m&aring;nader"
+
+#: stats.time_range_all
+msgctxt "stats.time_range_all"
+msgid "All"
+msgstr "Alla"
+
+#: stats.unapproved
+msgctxt "stats.unapproved"
+msgid "Unapproved"
+msgstr "Icke godk&auml;nda"
+
+#: stats.unique_visitors
+msgctxt "stats.unique_visitors"
+msgid "Unique Visitors"
+msgstr "Unika bes&ouml;kare"
+
+#: stats.unique_visitors_description
+msgctxt "stats.unique_visitors_description"
+msgid ""
+"The number of individuals coming to your deployment. Unique visitors are "
+"determined using cookies. Visitors that do not have cookies enabled will be "
+"identified using a simple heuristic taking into account IP address, "
+"resolution, browser, plugins, OS, etc."
+msgstr "Antalet bes&ouml;kare till din upps&auml;ttning; Unika bes&ouml;kare best&auml;ms genom cookies. Om en bes&ouml;kare inte har aktiverat cookies, kommer de att identifieras genom en enkel metod d&auml;r man tar h&auml;nsyn till IP adress, uppl&ouml;sning, webbl&auml;sare, plugins, operativsystem, etc"
+
+#: stats.unverified
+msgctxt "stats.unverified"
+msgid "Unverified"
+msgstr "Ej verifierad"
+
+#: stats.verified
+msgctxt "stats.verified"
+msgid "Verified"
+msgstr "Verifierad"
+
+#: stats.visitor_summary
+msgctxt "stats.visitor_summary"
+msgid "Visitor Summary"
+msgstr "Sammanst&auml;llning bes&ouml;kare"
+
+#: stats.visits
+msgctxt "stats.visits"
+msgid "Visits"
+msgstr "Bes&ouml;k"
+
+#: stats.visits_description
+msgctxt "stats.visits_description"
+msgid ""
+"A visit is a record of a unique visitor coming to the site more than 30 "
+"minutes past his/her last pageview."
+msgstr "Ett bes&ouml;k registreras f&ouml;r en unik bes&ouml;kare som &aring;terkommer till sajten efter mer &auml;n 30 minuter sedan senaste sidvisningen"

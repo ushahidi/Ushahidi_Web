@@ -1,0 +1,93 @@
+# 
+# Translators:
+# Luís Lago <luisalveslago@gmail.com>, 2013
+# alfalb_mansil, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-06-25 21:59+0000\n"
+"Last-Translator: alfalb_mansil\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/ushahidi/ushahidi-v2/language/pt_PT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: notifications.admin_footer
+msgctxt "notifications.admin_footer"
+msgid "This message was sent from your website."
+msgstr "Esta mensagem foi enviada do seu site da web."
+
+#: notifications.admin_login_url
+msgctxt "notifications.admin_login_url"
+msgid "Administrator Login"
+msgstr "Início de Sessão do Administrador"
+
+#: notifications.admin_new_comment.message
+msgctxt "notifications.admin_new_comment.message"
+msgid "A new comment has been submitted to your website in response to:"
+msgstr "Foi submetido um novo comentário para o seu site da web, em resposta a:"
+
+#: notifications.admin_new_comment.subject
+msgctxt "notifications.admin_new_comment.subject"
+msgid "New Comment"
+msgstr "Novo Comentário"
+
+#: notifications.admin_new_email.message
+msgctxt "notifications.admin_new_email.message"
+msgid "A new email message has been submitted to your website."
+msgstr "Foi submetida uma nova mensagem de e-mail para o seu site da web."
+
+#: notifications.admin_new_email.subject
+msgctxt "notifications.admin_new_email.subject"
+msgid "New Email Message"
+msgstr "Nova Mensagem de e-mail"
+
+#: notifications.admin_new_report.message
+msgctxt "notifications.admin_new_report.message"
+msgid "A new report has been submitted to your website."
+msgstr "Foi submetido um novo relatório para o seu site da web"
+
+#: notifications.admin_new_report.subject
+msgctxt "notifications.admin_new_report.subject"
+msgid "New Report"
+msgstr "Novo Relatório"
+
+#: notifications.admin_new_sms.message
+msgctxt "notifications.admin_new_sms.message"
+msgid "A new text message has been submitted to your website."
+msgstr "Foi submetida uma nova mensagem de texto para o seu site da web."
+
+#: notifications.admin_new_sms.subject
+msgctxt "notifications.admin_new_sms.subject"
+msgid "New Text Message"
+msgstr "Nova Mensagem de Texto"
+
+#: notifications.member_new_alert.message
+msgctxt "notifications.member_new_alert.message"
+msgid "You Have Received a New Alert"
+msgstr "Recebeu um Novo Alerta"
+
+#: notifications.member_new_alert.subject
+msgctxt "notifications.member_new_alert.subject"
+msgid "New Alert!"
+msgstr "Novo Alerta!"
+
+#: notifications.member_new_message.message
+msgctxt "notifications.member_new_message.message"
+msgid "You Have Received a Private Message"
+msgstr "Recebeu uma Mensagem Privada"
+
+#: notifications.member_new_message.subject
+msgctxt "notifications.member_new_message.subject"
+msgid "New Private Message"
+msgstr "Nova Mensagem Privada"
+
+#: notifications.member_new_message.footer
+msgctxt "notifications.member_new_message.footer"
+msgid "To Reply Please Go To: "
+msgstr "Para responder, vá por favor:"

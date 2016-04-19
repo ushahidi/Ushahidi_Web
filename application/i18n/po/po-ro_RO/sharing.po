@@ -1,0 +1,72 @@
+# 
+# Translators:
+# Monica Ipate <monica.ipate@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Romanian (Romania) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ro_RO/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: sharing.date
+msgctxt "sharing.date"
+msgid "Ingress date"
+msgstr "Data introducerii"
+
+#: sharing.date_added
+msgctxt "sharing.date_added"
+msgid "Date Added"
+msgstr "Data adăugarii"
+
+#: sharing.last_access
+msgctxt "sharing.last_access"
+msgid "Last Access"
+msgstr "Ultima accesare"
+
+#: sharing.sharing_color.length
+msgctxt "sharing.sharing_color.length"
+msgid "The color field must be 6 characters long."
+msgstr "Câmpul pentru culoare trebuie să aibă cel puțin 6 caractere."
+
+#: sharing.sharing_color.required
+msgctxt "sharing.sharing_color.required"
+msgid "The color field is required."
+msgstr "Câmpul pentru culoare este necesar."
+
+#: sharing.sharing_name.length
+msgctxt "sharing.sharing_name.length"
+msgid "The Sharing name does not appear to be valid."
+msgstr "Numele de sharing nu pare a fi valid."
+
+#: sharing.sharing_name.required
+msgctxt "sharing.sharing_name.required"
+msgid "A Sharing name is required."
+msgstr "Un nume de sharing este necesar."
+
+#: sharing.sharing_url.exists
+msgctxt "sharing.sharing_url.exists"
+msgid "The site URL already exists."
+msgstr "URL-ul acestui site existp deja."
+
+#: sharing.sharing_url.length
+msgctxt "sharing.sharing_url.length"
+msgid "The site URL does not appear to be valid."
+msgstr "URL-ul acestui site nu pare valid."
+
+#: sharing.sharing_url.required
+msgctxt "sharing.sharing_url.required"
+msgid "The site URL is required."
+msgstr "URL-ul acestui site este necesar."
+
+#: sharing.sharing_url.url
+msgctxt "sharing.sharing_url.url"
+msgid "The site URL field does not appear to contain a valid URL."
+msgstr "Câmpul ce conține URL-ul acestui site nu conține un URL valid."

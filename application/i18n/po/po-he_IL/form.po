@@ -1,0 +1,121 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Hebrew (Israel) (http://www.transifex.com/ushahidi/ushahidi-v2/language/he_IL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: form.field_default.default
+msgctxt "form.field_default.default"
+msgid "The default value you have provided for the field is invalid."
+msgstr "ערך ברירת המחדל שסיפקת עבור שדה זה אינו תקין."
+
+#: form.field_default.length
+msgctxt "form.field_default.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 200 characters long."
+msgstr "על שדה השם להיות באורך של בין3 ל- 200 תווים בדיוק."
+
+#: form.field_height.between
+msgctxt "form.field_height.between"
+msgid "Please enter a value 0 to 50 for the Field Height."
+msgstr "אנא הכנס ערך בין 0 ל- 50 עבור גובה השדה"
+
+#: form.field_isdate.between
+msgctxt "form.field_isdate.between"
+msgid "You have entered an invalid value for Date Field."
+msgstr "הזנת ערך שגוי עבור שדה התאריך"
+
+#: form.field_isdate.required
+msgctxt "form.field_isdate.required"
+msgid "Please select Yes or No for the Date Field."
+msgstr "אנא בחר כן או לא עבור שדה התאריך"
+
+#: form.field_name.length
+msgctxt "form.field_name.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 100 characters long."
+msgstr "שם השדה צריך להיות באורך של 3 עד 100 תווים בדיוק."
+
+#: form.field_name.required
+msgctxt "form.field_name.required"
+msgid "Please enter Field Name."
+msgstr "אנא הכנס שם שדה."
+
+#: form.field_name.duplicate
+msgctxt "form.field_name.duplicate"
+msgid ""
+"The field name you entered already exists on this form. Please enter another"
+" one."
+msgstr ""
+
+#: form.field_required.between
+msgctxt "form.field_required.between"
+msgid "You have entered an invalid value for Field Required."
+msgstr "הזנת ערך שגוי עבור השדה הדרוש"
+
+#: form.field_required.required
+msgctxt "form.field_required.required"
+msgid "Please select Yes or No for Field Required."
+msgstr "אנא בחר כן או לא עבור השדה הדרוש"
+
+#: form.field_type.numeric
+msgctxt "form.field_type.numeric"
+msgid "Please select a valid Field Type."
+msgstr "אנא בחר סוג שדה באופן תקין."
+
+#: form.field_type.required
+msgctxt "form.field_type.required"
+msgid "Please select a Field Type."
+msgstr "אנא בחר סוג שדה."
+
+#: form.field_width.between
+msgctxt "form.field_width.between"
+msgid "Please enter a value 0 to 300 for the Field Width."
+msgstr "אנא הזן ערך בין 0 ל - 300 תווים בדיוק עבור רוחב השדה"
+
+#: form.form_description.required
+msgctxt "form.form_description.required"
+msgid "Please enter form's Description."
+msgstr "אנא כתוב תיאור לטופס."
+
+#: form.form_id.default
+msgctxt "form.form_id.default"
+msgid "The default form cannot be deleted."
+msgstr "לא ניתן למחוק את טופס ברירת המחדל."
+
+#: form.form_id.numeric
+msgctxt "form.form_id.numeric"
+msgid "Please select which form to add this field to."
+msgstr "אנא בחר איזה טופס להוסיף לשדה."
+
+#: form.form_id.required
+msgctxt "form.form_id.required"
+msgid "Please select which form to add this field to."
+msgstr "אנא בחר איזה טופס להוסיף לשדה."
+
+#: form.form_title.length
+msgctxt "form.form_title.length"
+msgid ""
+"The form name field must be at least 3 and no more than 100 characters long."
+msgstr "על שדה השם של הטופס להיות באורך של בין 3 ל- 100 תווים בדיוק."
+
+#: form.form_title.required
+msgctxt "form.form_title.required"
+msgid "Please enter the name of the form."
+msgstr "אנא מלא שם עבור הטופס."
+
+#: form.form_title.exists
+msgctxt "form.form_title.exists"
+msgid "A form with that title already exists. Please choose another."
+msgstr ""

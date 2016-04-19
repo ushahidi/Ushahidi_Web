@@ -1,0 +1,121 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Albanian (Albania) (http://www.transifex.com/ushahidi/ushahidi-v2/language/sq_AL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sq_AL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: form.field_default.default
+msgctxt "form.field_default.default"
+msgid "The default value you have provided for the field is invalid."
+msgstr "Vlera q&euml; keni p&euml;rfshir&euml; n&euml; k&euml;t&euml; hap&euml;sir&euml; &euml;sht&euml; e pavlefshme."
+
+#: form.field_default.length
+msgctxt "form.field_default.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 200 characters long."
+msgstr "Emri i Fush&euml;s duhet t&euml; p&euml;rmbaj&euml; 3 deri n&euml; 200 karaktere."
+
+#: form.field_height.between
+msgctxt "form.field_height.between"
+msgid "Please enter a value 0 to 50 for the Field Height."
+msgstr "Ju lutem vendosni nj&euml; vler&euml; 0 deri n&euml; 50 p&euml;r gjat&euml;sin&euml; e fush&euml;s."
+
+#: form.field_isdate.between
+msgctxt "form.field_isdate.between"
+msgid "You have entered an invalid value for Date Field."
+msgstr "Ju keni vendosur nj&euml; vler&euml; t&euml; pa vlefshme n&euml; hap&euml;sir&euml;n e dat&euml;s."
+
+#: form.field_isdate.required
+msgctxt "form.field_isdate.required"
+msgid "Please select Yes or No for the Date Field."
+msgstr "Ju lutem zgjidhni PO ose JO p&euml;r hap&euml;sir&euml;n e dat&euml;s"
+
+#: form.field_name.length
+msgctxt "form.field_name.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 100 characters long."
+msgstr "Emri i fush&euml;s duhet t&euml; jet&euml; t&euml; pakt&euml;n 3 karaktere por jo m&euml; shum&euml; se 100 karaktere."
+
+#: form.field_name.required
+msgctxt "form.field_name.required"
+msgid "Please enter Field Name."
+msgstr "Ju lutem vendosni emrin e fush&euml;s."
+
+#: form.field_name.duplicate
+msgctxt "form.field_name.duplicate"
+msgid ""
+"The field name you entered already exists on this form. Please enter another"
+" one."
+msgstr ""
+
+#: form.field_required.between
+msgctxt "form.field_required.between"
+msgid "You have entered an invalid value for Field Required."
+msgstr "Ju keni futur nje vler&euml; t&euml; pa vlefshme p&euml;r Fush&euml;n e k&euml;rkuar."
+
+#: form.field_required.required
+msgctxt "form.field_required.required"
+msgid "Please select Yes or No for Field Required."
+msgstr "Ju lutem zgjidhni PO ose JO p&euml;r fush&euml;n e k&euml;rkuar."
+
+#: form.field_type.numeric
+msgctxt "form.field_type.numeric"
+msgid "Please select a valid Field Type."
+msgstr "Ju lutem zgjidhni nj&euml; lloj fushe  t&euml; vlefshme."
+
+#: form.field_type.required
+msgctxt "form.field_type.required"
+msgid "Please select a Field Type."
+msgstr "Ju lutem zgjidhni llojin e fush&euml;s."
+
+#: form.field_width.between
+msgctxt "form.field_width.between"
+msgid "Please enter a value 0 to 300 for the Field Width."
+msgstr "Ju lutem vendosni nj&euml; vler&euml; 0 deri n&euml; 300 p&euml;r gjer&euml;sin&euml; e fush&euml;s."
+
+#: form.form_description.required
+msgctxt "form.form_description.required"
+msgid "Please enter form's Description."
+msgstr "Ju lutem jepni p&euml;rshkrimin e Formularit."
+
+#: form.form_id.default
+msgctxt "form.form_id.default"
+msgid "The default form cannot be deleted."
+msgstr "Nuk u b&euml; e mundur fshirja e Formularit t&euml; parazgjedhur."
+
+#: form.form_id.numeric
+msgctxt "form.form_id.numeric"
+msgid "Please select which form to add this field to."
+msgstr "Ju lutem zgjidhni Formularin n&euml; t&euml; cil&euml;n doni t&euml; shtoni skedarin."
+
+#: form.form_id.required
+msgctxt "form.form_id.required"
+msgid "Please select which form to add this field to."
+msgstr "Ju lutem zgjidhni Formularin n&euml; t&euml; cil&euml;n doni t&euml; shtoni skedarin."
+
+#: form.form_title.length
+msgctxt "form.form_title.length"
+msgid ""
+"The form name field must be at least 3 and no more than 100 characters long."
+msgstr "Hap&euml;sira p&euml;r emrin duhet t&euml; jet&euml; t&euml; pakt&euml;n 3 karaktere dhe jo m&euml; shum&euml; se 100 karaktere."
+
+#: form.form_title.required
+msgctxt "form.form_title.required"
+msgid "Please enter the name of the form."
+msgstr "Ju lutem vendosni emrin e Formularit."
+
+#: form.form_title.exists
+msgctxt "form.form_title.exists"
+msgid "A form with that title already exists. Please choose another."
+msgstr ""

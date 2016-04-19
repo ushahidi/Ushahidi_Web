@@ -1,0 +1,230 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-20 11:56+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Georgian (Georgia) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ka_GE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ka_GE\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: alerts.alert_email.email
+msgctxt "alerts.alert_email.email"
+msgid "The Email field does not appear to contain a valid email address?"
+msgstr "ელექტრონული ფოსტის ველში არ არის მოქმედი ელექტრონული ფოსტის მისამართი შეყვანილი?"
+
+#: alerts.alert_email.email_check
+msgctxt "alerts.alert_email.email_check"
+msgid ""
+"That Email address has already been registered to receive alerts for that "
+"location."
+msgstr "ეს ელექტრონული ფოსტის მისამართი უკვე რეგისტრირებულია ამ ადგილმდებარეობაზე შეტყობინების მისაღებად"
+
+#: alerts.alert_email.length
+msgctxt "alerts.alert_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "ელექტრონული ფოსტის ველში უნდა უნდა ჩაწეროთ  მინიმუმ 4 და მაქსიმუმ 64 სიმბოლო."
+
+#: alerts.alert_email.required
+msgctxt "alerts.alert_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "ელექტრონული ფოსტის ველის შევსება საჭიროა თუ გრაფა მონიშნულია."
+
+#: alerts.alert_country.single_country
+msgctxt "alerts.alert_country.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the alert "
+"location is within the country %s."
+msgstr ""
+
+#: alerts.alert_lat.between
+msgctxt "alerts.alert_lat.between"
+msgid "You have not selected a valid location on the map."
+msgstr "თქვენ არ შეირჩიეთ მოქმედი ადგილმდებარეობა  რუქაზე."
+
+#: alerts.alert_lat.required
+msgctxt "alerts.alert_lat.required"
+msgid "You have not selected a valid location on the map."
+msgstr "თქვენ არ შეირჩიეთ მოქმედი ადგილმდებარეობა  რუქაზე."
+
+#: alerts.alert_lon.between
+msgctxt "alerts.alert_lon.between"
+msgid "You have not selected a valid location on the map."
+msgstr "თქვენ არ შეირჩიეთ მოქმედი ადგილმდებარეობა  რუქაზე."
+
+#: alerts.alert_lon.required
+msgctxt "alerts.alert_lon.required"
+msgid "You have not selected a valid location on the map."
+msgstr "თქვენ არ შეირჩიეთ მოქმედი ადგილმდებარეობა  რუქაზე."
+
+#: alerts.alert_mobile.length
+msgctxt "alerts.alert_mobile.length"
+msgid ""
+"The Mobile Phone field does not seem to contain the right amount of digits."
+msgstr "მობილური ტელეფონის ველი არ შეიცს შესაბამისი რაოდენობის ციფრებს."
+
+#: alerts.alert_mobile.mobile_check
+msgctxt "alerts.alert_mobile.mobile_check"
+msgid ""
+"That Mobile Phone Number has already been registered to receive alerts for "
+"that location."
+msgstr "ეს მობილური ტელეფონის ნომერი უკვე რეგისტრირებულია ამ ადგილმდებარეობაზე შეტყობინების მისაღებად"
+
+#: alerts.alert_mobile.numeric
+msgctxt "alerts.alert_mobile.numeric"
+msgid ""
+"The Mobile Phone field does not appear to contain a valid phone. Please "
+"input numbers only including Country Code."
+msgstr "მობილური ტელეფონის ნომრის ველში არ არის მითითებული სწორი ტელეფონი. გთხოვთ, ქვეყნის კოდის ჩათვლით ამ ველში დაწეროთ მხოლოდ ციფრები ."
+
+#: alerts.alert_mobile.one_required
+msgctxt "alerts.alert_mobile.one_required"
+msgid "You must enter either your Mobile Phone Number or your Email Address."
+msgstr "თქვენ უნდა შეიყვანოთ ან თქვენი მობილური ტელეფონის ნომერი ან თქვენი ელექტრონული ფოსტის მისამართი."
+
+#: alerts.alert_mobile.required
+msgctxt "alerts.alert_mobile.required"
+msgid "The Mobile Phone field is required if the checkbox is checked."
+msgstr "მობილური ტელეფონის ნომრის ველი სავალდებულოა თუ Checkbox შემოწმებულია."
+
+#: alerts.alert_radius.in_array
+msgctxt "alerts.alert_radius.in_array"
+msgid "You have not set a valid radius on the map."
+msgstr "თქვენ არ გაქვთ მითითებული მოქმედი რადიუსი რუკაზე."
+
+#: alerts.alert_radius.required
+msgctxt "alerts.alert_radius.required"
+msgid "You have not set your radius on the map."
+msgstr "თქვენ არ დააყენეთ რადიუსი რუქაზე."
+
+#: alerts.alert_recipient.required
+msgctxt "alerts.alert_recipient.required"
+msgid "You have not set a recipient for alerts."
+msgstr ""
+
+#: alerts.alerts_subscribed
+msgctxt "alerts.alerts_subscribed"
+msgid "You have subscribed for alerts with the following categories"
+msgstr ""
+
+#: alerts.code_already_verified
+msgctxt "alerts.code_already_verified"
+msgid "This code has been verified before!"
+msgstr "ეს კოდი უკვე შემოწმებული იყო ადრე!"
+
+#: alerts.code_not_found
+msgctxt "alerts.code_not_found"
+msgid ""
+"This verification code was not found! Please confirm that you have the "
+"correct URL."
+msgstr "ეს კოდი ვერ მოიძებნა! გთხოვთ დაადასტუროთ, რომ თქვენ სწორი მისამართი (URL) გაქვთ."
+
+#: alerts.code_verified
+msgctxt "alerts.code_verified"
+msgid ""
+" Your code was verified correctly. You will now receive alerts about "
+"incidents as they happen."
+msgstr " თქვენი კოდი შემოწმებულია. თქვენ ახლა მიიღებთ შეტყობინებებს."
+
+#: alerts.confirm_request
+msgctxt "alerts.confirm_request"
+msgid "To confirm your alert request, please go to "
+msgstr "თქვენი შეტყობინებასთან დაკავშირებით მოთხოვნის დასადასტურებლად, შედით "
+
+#: alerts.create_more_alerts
+msgctxt "alerts.create_more_alerts"
+msgid "Return to the Alerts page to create more alerts"
+msgstr "თუ გსურთ შეტყობინებების შექმნა დაბრუნდით შეტყობინებების გვერდზე"
+
+#: alerts.email_alert_request_created
+msgctxt "alerts.email_alert_request_created"
+msgid ""
+"Your Email Alert request has been created and verification message has been "
+"sent to "
+msgstr ""
+
+#: alerts.email_code
+msgctxt "alerts.email_code"
+msgid "Please enter the Email confirmation code you received below: "
+msgstr "გთხოვთ შეიყვანოთ ელექტრონული ფოსტის დადასტურების კოდი, რომელიც გაქვთ ქვემოთ მოცემული:"
+
+#: alerts.email_error_head
+msgctxt "alerts.email_error_head"
+msgid "Your Email Alert Request Has NOT Been Saved!"
+msgstr "თქვენი მოთხოვნა ელექტრონული ფოსტის შეტყობინებასთან დაკავშირებით არ შენახულა!"
+
+#: alerts.email_ok_head
+msgctxt "alerts.email_ok_head"
+msgid "Your Email Alert Request Has Been Saved!"
+msgstr "თქვენი მოთხოვნა ელექტრონული ფოსტის შეტყობინებასთან დაკავშირებით შენახულია!"
+
+#: alerts.error
+msgctxt "alerts.error"
+msgid "The system was not able to process your confirmation request!"
+msgstr "სისტემამ ვერ აამუშავა თქვენი დადასტურების მოთხოვნა"
+
+#: alerts.mobile_alert_request_created
+msgctxt "alerts.mobile_alert_request_created"
+msgid ""
+"Your Mobile Alert request has been created and verification message has been"
+" sent to "
+msgstr "თქვენი მობილურ ტელეფონზე შეტყობინების  მოთხოვნა შეიქმნილია და გადამოწმებისთვის სმს-ი გაგზავნილია "
+
+#: alerts.mobile_code
+msgctxt "alerts.mobile_code"
+msgid ""
+"Please enter the SMS confirmation code you received on your mobile phone "
+"below: "
+msgstr "გთხოვთ შეიყვანოთ თქვენ მობილურ ტელეფონზე სმს-ით მოსული დადასტურების კოდი : "
+
+#: alerts.mobile_error_head
+msgctxt "alerts.mobile_error_head"
+msgid "Your Mobile Alert Request Has NOT Been Saved!"
+msgstr "თქვენი მოთხოვნა მობილური ტელეფონის შეტყობინებასთან დაკავშირებით არ შენახულა !"
+
+#: alerts.mobile_ok_head
+msgctxt "alerts.mobile_ok_head"
+msgid "Your Mobile Alert Request Has Been Saved!"
+msgstr "თქვენი მოთხოვნა მობილური ტელეფონის შეტყობინებასთან დაკავშირებით შენახულია !"
+
+#: alerts.settings_error
+msgctxt "alerts.settings_error"
+msgid "This deployment is not set up to correctly process alerts"
+msgstr "შეტყობინების პროცესი სწორად  არ არის დაყენებული "
+
+#: alerts.unsubscribe
+msgctxt "alerts.unsubscribe"
+msgid ""
+"You have received this email because you subscribed to receive alerts. If "
+"you do not wish to receive future alerts go to "
+msgstr "თქვენ ვერ მიიღებთ შეტყობინება ამ ადგილმდებარეობაზე სანამ არ დაადასტურებთ თქვენს მოთხოვნას. თუ თქვენ არ გსურთ, რომ მომავალში მიიღოთ  შეტყობინება გადადით"
+
+#: alerts.unsubscribed
+msgctxt "alerts.unsubscribed"
+msgid "You will no longer receive alerts from "
+msgstr "თქვენ აღარ მიიღებთ შეტყობინებებს "
+
+#: alerts.unsubscribe_failed
+msgctxt "alerts.unsubscribe_failed"
+msgid ""
+"We were not able to unsubscribe you. Please confirm that you have the "
+"correct URL."
+msgstr "ჩვენ შევძელით გაგვეუქმებინა თქვენი შეტყობინებების გამოწერა. გთხოვთ დაადასტუროთ, რომ თქვენ სწორი მისამართით (URL) ხართ შესული."
+
+#: alerts.verification_email_subject
+msgctxt "alerts.verification_email_subject"
+msgid "alerts - verification"
+msgstr "შეტყობინება - შემოწმება"
+
+#: alerts.verify_code
+msgctxt "alerts.verify_code"
+msgid ""
+"You will not receive alerts on this location until you confirm your request."
+msgstr "თქვენ არ მიიღებთ შეტყობინებას ამ ადგილმდებარეობა ზე სანამ არ დაადასტურეთ თქვენს მოთხოვნას."

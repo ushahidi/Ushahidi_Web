@@ -1,0 +1,118 @@
+# 
+# Translators:
+# Lidia Cibor <lidka.cibor@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2014-08-30 19:01+0000\n"
+"Last-Translator: Lidia Cibor <lidka.cibor@gmail.com>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/ushahidi/ushahidi-v2/language/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: libraries.akismet_cannot_connect
+msgctxt "libraries.akismet_cannot_connect"
+msgid "Could not connect to Akismet server."
+msgstr "无法连接 Akismet 服务器"
+
+#: libraries.akismet_cannot_retrieve
+msgctxt "libraries.akismet_cannot_retrieve"
+msgid "The response from Akismet could not be retrieved."
+msgstr "无法从 Akismet 获得回复"
+
+#: libraries.api_library_not_found
+msgctxt "libraries.api_library_not_found"
+msgid ""
+"The API library: <strong>%s</strong> for the <strong>%s</strong> class could"
+" not be found. Please check your API task routing table."
+msgstr "API库 <strong>%s</strong>中无法找到<strong>%s</strong>类。请检查您的 API 任务中的路径表"
+
+#: libraries.askimet_invalid_apikey
+msgctxt "libraries.askimet_invalid_apikey"
+msgid "Your Akismet API key is not valid."
+msgstr "您的 Akismet API 密匙无效"
+
+#: libraries.clickatell_fopen_error
+msgctxt "libraries.clickatell_fopen_error"
+msgid ""
+"Error while executing fopen sending method!<br>Please check whether PHP has "
+"OpenSSL support and whether the PHP version is greater than 5.2."
+msgstr "执行打开文件发送方式中发生错误！<br>请检查 PHP 是否支持 OpenSSL，或 PHP 是否是5.2之后的版本"
+
+#: libraries.clickatell_message_too_long
+msgctxt "libraries.clickatell_message_too_long"
+msgid "Your unicode message is too long! (Current length="
+msgstr "您的验证信息过长！（目前长度："
+
+#: libraries.clickatell_no_destination_address
+msgctxt "libraries.clickatell_no_destination_address"
+msgid "Please specify a destination address (TO)!"
+msgstr "请写明收件地址（TO）！"
+
+#: libraries.clickatell_no_sender_address
+msgctxt "libraries.clickatell_no_sender_address"
+msgid "Please specify source address (FROM)!"
+msgstr "请写明发件地址（FROM）！"
+
+#: libraries.clickatell_unicode_message_too_long
+msgctxt "libraries.clickatell_unicode_message_too_long"
+msgid "Your unicode message is too long! (Current length="
+msgstr "您的验证信息过长！（目前长度："
+
+#: libraries.clickatell_unsupported_method
+msgctxt "libraries.clickatell_unsupported_method"
+msgid "Unsupported sending method!"
+msgstr "不支持的方送方式！"
+
+#: libraries.invalid_api_library
+msgctxt "libraries.invalid_api_library"
+msgid ""
+"The API library %s is invalid. All API libraries must be subclasses of %s."
+msgstr "API库%s无效。所有 API 库都必须是%s的子类型"
+
+#: libraries.upgrade_directory_not_deleted
+msgctxt "libraries.upgrade_directory_not_deleted"
+msgid "Directory <code>%s</coded> could not be deleted."
+msgstr "目录<code>%s</coded>无法被删除"
+
+#: libraries.upgrade_extracting_error
+msgctxt "libraries.upgrade_extracting_error"
+msgid "Error while extracting: <code>%s</code>"
+msgstr "解压时发生错误：<code>%s</coded>"
+
+#: libraries.upgrade_failed
+msgctxt "libraries.upgrade_failed"
+msgid "Downloading the latest Ushahidi failed. HTTP status code"
+msgstr "下载最新的 Ushahidi 中发生错误。服务器状态代码："
+
+#: libraries.upgrade_file_not_copied
+msgctxt "libraries.upgrade_file_not_copied"
+msgid "File <code>%s</coded> could not be copied."
+msgstr "无法拷贝文件<code>%s</coded>"
+
+#: libraries.upgrade_file_not_deleted
+msgctxt "libraries.upgrade_file_not_deleted"
+msgid "File <code>%s</coded> could not be deleted."
+msgstr "无法删除文件<code>%s</coded>"
+
+#: libraries.upgrade_title
+msgctxt "libraries.upgrade_title"
+msgid "Ushahidi upgrade script"
+msgstr "Ushahidi 升级脚本"
+
+#: libraries.upgrade_zip_error
+msgctxt "libraries.upgrade_zip_error"
+msgid ""
+"The downloaded Ushahidi zip file <code>%s</code>, could not be written."
+msgstr "下载的 Ushahidi 压缩文件<code>%s</coded>无法写入"
+
+#: libraries.riverid_variable_not_available
+msgctxt "libraries.riverid_variable_not_available"
+msgid "%s is not available in the RiverID class."
+msgstr "%s 不提供在RiverID类可。"

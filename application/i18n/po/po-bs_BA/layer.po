@@ -1,0 +1,65 @@
+# 
+# Translators:
+# Haris Ferizovic <harisferizovic@gmail.com>, 2012
+# Samra Hodzic <samra989@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Bosnian (Bosnia and Herzegovina) (http://www.transifex.com/ushahidi/ushahidi-v2/language/bs_BA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bs_BA\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: layer.layer_color.length
+msgctxt "layer.layer_color.length"
+msgid "The color field must be 6 characters long."
+msgstr "Označeno polje "
+
+#: layer.layer_color.required
+msgctxt "layer.layer_color.required"
+msgid "The color field is required."
+msgstr "Označeno polje mora imati 6 znakova."
+
+#: layer.layer_file.type
+msgctxt "layer.layer_file.type"
+msgid ""
+"The file field does not appear to contain a valid file. The only accepted "
+"formats are .KMZ and .KML."
+msgstr "Polje datoteke ne pokazuje da sadrži važeći dokument. Jedini prihvaćeni formati su .KMZ i .KML "
+
+#: layer.layer_file.valid
+msgctxt "layer.layer_file.valid"
+msgid "The file field does not appear to contain a valid file"
+msgstr "Polje datoteke ne pokazuje da sadrži važeći dokument. "
+
+#: layer.layer_name.length
+msgctxt "layer.layer_name.length"
+msgid "The name field must be at least 3 and no more 80 characters long."
+msgstr "Naziv polja mora da sadrži najmanje 3 i ne više od 80 znakova. "
+
+#: layer.layer_name.required
+msgctxt "layer.layer_name.required"
+msgid "The name field is required."
+msgstr "Naziv polja je potreban."
+
+#: layer.layer_url.atleast
+msgctxt "layer.layer_url.atleast"
+msgid "Either a KML URL or File is required."
+msgstr "Obavezan KML URL ili fajl."
+
+#: layer.layer_url.both
+msgctxt "layer.layer_url.both"
+msgid "You can't have both a KML file and a URL."
+msgstr "Ne možete imati oboje i KML dokument i URL. "
+
+#: layer.layer_url.url
+msgctxt "layer.layer_url.url"
+msgid "Please enter a valid URL, e.g. http://www.ushahidi.com/layerl.kml"
+msgstr "Molim unesite važeći URL, npr. http://www.ushahidi.com/layerl.kml "

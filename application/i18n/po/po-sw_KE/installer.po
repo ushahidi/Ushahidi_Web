@@ -1,0 +1,409 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Swahili (Kenya) (http://www.transifex.com/ushahidi/ushahidi-v2/language/sw_KE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sw_KE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: installer.base_path
+msgctxt "installer.base_path"
+msgid "Base Path"
+msgstr "Njia ya besi"
+
+#: installer.database
+msgctxt "installer.database"
+msgid "Database"
+msgstr "Databesi"
+
+#: installer.database_host
+msgctxt "installer.database_host"
+msgid "Database Host"
+msgstr "Shina la Databesi"
+
+#: installer.database_host_description
+msgctxt "installer.database_host_description"
+msgid ""
+"If you are running Ushahidi on your own computer, this will more than likely"
+" be \"localhost\". If you are running Ushahidi from a web server, you will "
+"get your host information from your web hosting provider."
+msgstr "Iwapo unaendeshea Ushahidi katika tarakilishi yako, hii hasa itakuwa \"shinalokali\". Iwapo unaendeshea Ushahidi katika seva ya mtandao, utapata habari kuhusu shina lako kutoka kwa mtoaji wa huduma za shina la mtandao."
+
+#: installer.database_name
+msgctxt "installer.database_name"
+msgid "Database Name"
+msgstr "Jina la Databesi"
+
+#: installer.database_name_description
+msgctxt "installer.database_name_description"
+msgid "The name of the database you want to run Ushahidi in"
+msgstr "Jina la databesi unalotaka kuendeshea Ushahidi"
+
+#: installer.db_information_link
+msgctxt "installer.db_information_link"
+msgid ""
+"For more information, please check out <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" "
+"target=\"_blank\">this article</a> on the wiki that talks about databases in"
+" more detail."
+msgstr "Kwa habari zaidi, tafadhali tazama <a href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" target=\"_blank\">this article</a> katika wiki inayotoa habari zaidi kuhusu databesi."
+
+#: installer.default_language
+msgctxt "installer.default_language"
+msgid "Default Language (Locale)"
+msgstr "Lugha Difoti (lugha maalum)"
+
+#: installer.default_language_description
+msgctxt "installer.default_language_description"
+msgid ""
+"Each deployment of Ushahidi comes with a set of built in language "
+"translations. You can also <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\""
+" target=\"_blank\">add your own</a>."
+msgstr "Kila kifurushi cha Ushahidi huwa na mseto wa tafsiri  za lugha zilizoundiwa ndani. Pia unaweza kuongeza lugha yako<a href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\" target=\"_blank\">add your own</a>."
+
+#: installer.disable
+msgctxt "installer.disable"
+msgid "Disable"
+msgstr "Wezusha"
+
+#: installer.enable
+msgctxt "installer.enable"
+msgid "Enable"
+msgstr "Wezesha"
+
+#: installer.error_summary
+msgctxt "installer.error_summary"
+msgid "Listed below is a summary of the errors we encountered."
+msgstr "Ulioorodheshwa hapa chini ni muhtasari wa hitilafu tulizokumbana nazo."
+
+#: installer.files_location_text
+msgctxt "installer.files_location_text"
+msgid ""
+"The location on your server where you placed your Ushahidi files. <strong>We"
+" have automatically detected this value, please make sure that it is "
+"correct.</strong> If the field is empty, do not worry, it means ushahidi is "
+"installed at the top level directory."
+msgstr "Eneo katika seva ulipoweka faili zako za Ushahidi kwenye mtandao wako. <strong> Tumefuta kadirio hili bila kiatomatiki, tafadhali hakikisha kuwa ni sahihi. </strong> Iwapo eneo hili li tupu, usiwe na shaka, inamaanisha kuwa Ushahidi imebandikwa katika ngazi kuu ya orodha ya anwani."
+
+#: installer.finished
+msgctxt "installer.finished"
+msgid "Finished"
+msgstr "Imekamilika"
+
+#: installer.general
+msgctxt "installer.general"
+msgid "General"
+msgstr "Jumla"
+
+#: installer.google_key
+msgctxt "installer.google_key"
+msgid "<span>Google</span> API Key"
+msgstr "<span>Google</span> Ufunguo wa API"
+
+#: installer.google_key_description
+msgctxt "installer.google_key_description"
+msgid ""
+"Anyone can get an api key. <a id=\"api-link\" "
+"href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Get "
+"yours now</a>"
+msgstr "Mtu yeyote anaweza kupata ufunguo wa api.<a id=\"api-link\" href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\"> Pokea ufunguo wako sasa</a>"
+
+#: installer.go_back
+msgctxt "installer.go_back"
+msgid "Go Back"
+msgstr "Rudi Nyuma"
+
+#: installer.index.advanced
+msgctxt "installer.index.advanced"
+msgid "ADVANCED INSTALLATION"
+msgstr "UBADIKAJI WA KIWANGO CHA JUU"
+
+#: installer.index.advanced_installation_description
+msgctxt "installer.index.advanced_installation_description"
+msgid ""
+"Get all the basic settings completed through this 5-step process.  This "
+"includes server, map, site name and contact details."
+msgstr "Pata vipimio vyote vya kimsingi vilivyoangaziwa kwenye utaratibu huu wa hatua 5. Hii ni pamoja na seva, ramani, jina la tovuti na habari za mawasiliano."
+
+#: installer.index.basic_installation
+msgctxt "installer.index.basic_installation"
+msgid "BASIC INSTALLATION"
+msgstr "UBANDIKAJI WA KIMSINGI"
+
+#: installer.index.basic_installation_description
+msgctxt "installer.index.basic_installation_description"
+msgid ""
+"Simple and fast. All you need is your website's root directory and your "
+"database information. Choose this option if you want to get up and running "
+"quickly, and you can always configure everything else later."
+msgstr "Ni rahisi na haraka. Unachohitaji ni kina cha orodha ya anwani tovuti yako na habari ya databesi yako. Tumia njia hii iwapo unataka kuanza na kuendelea kwa haraka na kisha unaweza kusanidi mengine yote baadaye."
+
+#: installer.index.proceed
+msgctxt "installer.index.proceed"
+msgid "Proceed"
+msgstr "Endelea"
+
+#: installer.index.welcome
+msgctxt "installer.index.welcome"
+msgid ""
+"Welcome to the Ushahidi server install process.  Choose which type of "
+"installation you would like to use below."
+msgstr "Karibu katika utaratibu wa kubandika seva ya Ushahidi. Chagua hapa chini aina ya ubandikaji ambao ungependa kutumia."
+
+#: installer.installation_successful
+msgctxt "installer.installation_successful"
+msgid "Installation Successful"
+msgstr "Ubandikaji Umefaulu"
+
+#: installer.mail_server
+msgctxt "installer.mail_server"
+msgid "Mail Server"
+msgstr "Seva ya Ujumbe"
+
+#: installer.mail_server_host
+msgctxt "installer.mail_server_host"
+msgid "Mail Server Host"
+msgstr "Shina la Seva ya Ujumbe"
+
+#: installer.mail_server_host_description
+msgctxt "installer.mail_server_host_description"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "Mifano: barua pepe.mtandao wako.com, imap.gmail.com, pop.gmail.com"
+
+#: installer.mail_server_password
+msgctxt "installer.mail_server_password"
+msgid "Mail Server Password"
+msgstr "Nenosiri ya Seva ya Ujumbe"
+
+#: installer.mail_server_password_description
+msgctxt "installer.mail_server_password_description"
+msgid "The password you normally use to login in to your email"
+msgstr "Nenosiri unayotumia kuingia katika barua pepe zako."
+
+#: installer.mail_server_port
+msgctxt "installer.mail_server_port"
+msgid "Mail Server Port"
+msgstr "Kiingilio cha Seva ya Ujumbe"
+
+#: installer.mail_server_port_description
+msgctxt "installer.mail_server_port_description"
+msgid "Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "Vingilio vinavyotumika sana: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: installer.mail_server_type
+msgctxt "installer.mail_server_type"
+msgid "Mail Server Type"
+msgstr "Aina ya  Seva ya Ujumbe"
+
+#: installer.mail_server_type_description
+msgctxt "installer.mail_server_type_description"
+msgid ""
+"Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a "
+"href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" "
+"target=\"_blank\">What is the difference?</a>"
+msgstr "Protokali ya kupata ujumbe wa intaneti (IMAP) au Protokali ya Shirika la posta (POP). <a href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" target=\"_blank\">Ni nini tofauti?</a>"
+
+#: installer.mail_server_username
+msgctxt "installer.mail_server_username"
+msgid "Mail Server Username"
+msgstr "Jina la mtumiaji wa  Seva ya Ujumbe"
+
+#: installer.mail_server_username_description
+msgctxt "installer.mail_server_username_description"
+msgid ""
+"If you are using Gmail, Hotmail, or Yahoo Mail, enter a full email address "
+"as a username."
+msgstr "Iwapo unatumia Gmail, Hotmail au Yahoo mail, tumia anwani yako ya barua pepe kama jina maalum la mtumiaji."
+
+#: installer.map
+msgctxt "installer.map"
+msgid "Map"
+msgstr "Ramani"
+
+#: installer.map_provider
+msgctxt "installer.map_provider"
+msgid "Map Provider"
+msgstr "Mtoaji Ramani"
+
+#: installer.map_provider_description
+msgctxt "installer.map_provider_description"
+msgid ""
+"Ushahidi works equally well with any of these three mapping providers: "
+"Google, Bing or Open Street Map. Choose the one that has the most detail in "
+"your area."
+msgstr "Ushahidi inafanya kazi vyema na kila mojawapo ya watoaji hawa wa ramani: Google, Bing au Open Street map. Chagua ile iliyo na habari nyingi kwa mujibu wa eneo lako."
+
+#: installer.other_steps
+msgctxt "installer.other_steps"
+msgid "Other steps..."
+msgstr "Hatua zingine..."
+
+#: installer.password
+msgctxt "installer.password"
+msgid "Password"
+msgstr "Nenosiri"
+
+#: installer.password_description
+msgctxt "installer.password_description"
+msgid "Your database password"
+msgstr "Nenosiri ya databesi yako"
+
+#: installer.previous
+msgctxt "installer.previous"
+msgid "Previous"
+msgstr "Awali"
+
+#: installer.restart_apache
+msgctxt "installer.restart_apache"
+msgid "Please restart your Apache Server"
+msgstr "Tafadhali anzisha tena seva yako ya Apache"
+
+#: installer.select_mail_server_ssl
+msgctxt "installer.select_mail_server_ssl"
+msgid "Enable or disable SSL"
+msgstr "Wezesha au uwezushe SSL"
+
+#: installer.select_mail_server_ssl_description
+msgctxt "installer.select_mail_server_ssl_description"
+msgid ""
+"Some mail servers give you the option of using <abbr title=\"Secure Sockets "
+"Layer\">SSL</abbr> when making a connection. Using SSL is recommended as it "
+"gives you an added level of security."
+msgstr "Baadhi ya seva za ujumbe hukupa chaguo la kutumia <abbr title=\"Secure Sockets Layer\">SSL</abbr> unapofanya muunganisho. Inapendekezwa kutumia SSL, kwani ni salama zaidi."
+
+#: installer.setup_sms
+msgctxt "installer.setup_sms"
+msgid "Set up your SMS server"
+msgstr "Weka seva yako ya SMS"
+
+#: installer.site_email
+msgctxt "installer.site_email"
+msgid "Site Email Address"
+msgstr "Anwani ya Barua pepe ya Tovuti"
+
+#: installer.site_email_alerts
+msgctxt "installer.site_email_alerts"
+msgid "Site Alert Email Address"
+msgstr "Anwani ya Arifa za Barua pepe za Tovuti"
+
+#: installer.site_email_alerts_description
+msgctxt "installer.site_email_alerts_description"
+msgid ""
+"When your site visitors sign up for email alerts, they will receive emails "
+"from this address. This email address does not have to be the same as the "
+"Site Email Address."
+msgstr "Wageni katika tovuti yako wanapojisajili kupata arifa za barua pepe, watapokea barua pepe kutoka kwa anwani hii. Si lazima anwani hii ya barua pepe iwe kama Anwani ya Barua pepe ya Tovuti."
+
+#: installer.site_email_description
+msgctxt "installer.site_email_description"
+msgid "Site wide email communication will be funneled through this address"
+msgstr "Mawasiliano ya barua pepe ya tovuti nzima yatawasilishwa kupitia anwani hii."
+
+#: installer.site_name
+msgctxt "installer.site_name"
+msgid "Site Name"
+msgstr "Jina la Tovuti"
+
+#: installer.site_name_description
+msgctxt "installer.site_name_description"
+msgid "The name of your site"
+msgstr "Jina la tovuti yako"
+
+#: installer.site_tagline
+msgctxt "installer.site_tagline"
+msgid "Site Tagline"
+msgstr "Wito wa Tovuti"
+
+#: installer.site_tagline_description
+msgctxt "installer.site_tagline_description"
+msgid "Your tagline"
+msgstr "Wito wako"
+
+#: installer.summary.text_1
+msgctxt "installer.summary.text_1"
+msgid ""
+"The files and folders listed below need to be writable by your webserver."
+msgstr "Faili na folda zilizoorodheshwa hapa chini zinahitaji kuweza kuandikika na seva yako."
+
+#: installer.summary.text_2
+msgctxt "installer.summary.text_2"
+msgid ""
+"<p>Here are instructions for changing file permissions:</p>\n"
+"        <ul>\n"
+"            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n"
+"            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n"
+"        </ul>"
+msgstr "<p>Haya ndiyo maagizo ya kubadilisha ruhusa za faili:</p>\n<ul>\n<li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n<li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n</ul>"
+
+#: installer.summary.text_3
+msgctxt "installer.summary.text_3"
+msgid ""
+"Before you get started, you will need to make sure the following files and "
+"folders are writable by your webserver. This involves changing file "
+"permissions."
+msgstr "Kabla hujaanza, utahitaji kuhakikisha kuwa faili na folda  zifuatazo zinaweza kuandikika na seva yako. Hii inahusisha kubadilisha ruhusa za faili."
+
+#: installer.summary.text_4
+msgctxt "installer.summary.text_4"
+msgid ""
+"For the installation process, please have the following bits of information "
+"on hand."
+msgstr "Kwa utaritibu wa kubandika, tafadhali jitayarishe na habari zifuatazo."
+
+#: installer.table_prefix
+msgctxt "installer.table_prefix"
+msgid "Table Prefix"
+msgstr "Utangulizi wa Jedwali"
+
+#: installer.table_prefix_description
+msgctxt "installer.table_prefix_description"
+msgid ""
+"Normally you would not change the table prefix. However, if you want to run "
+"multiple Ushahidi installations from a single database, you can do that by "
+"changing the prefix here."
+msgstr "Kwa kawaida, hufai kubadilisha utangulizi wa jedwali. Hata hivyo, iwapo unataka kuendesha bandiko kadhaa za Ushahidi kutoka kwa databesi moja, unaweza kufanya hivyo kwa kubadilisha utangulizi hapa."
+
+#: installer.title
+msgctxt "installer.title"
+msgid "Title"
+msgstr "Kichwa"
+
+#: installer.to_login
+msgctxt "installer.to_login"
+msgid "To login, go to"
+msgstr "Ili kuingia, nenda"
+
+#: installer.upload_data
+msgctxt "installer.upload_data"
+msgid "Upload report data"
+msgstr "Pakia data ya ripoti"
+
+#: installer.username
+msgctxt "installer.username"
+msgid "Username"
+msgstr "Jina la mtumiaji"
+
+#: installer.username_description
+msgctxt "installer.username_description"
+msgid "Your database username"
+msgstr "Jina la mtumiaji la databesi yako"
+
+#: installer.use_credentials
+msgctxt "installer.use_credentials"
+msgid "and use the following credentials"
+msgstr "na utumie hati zinazofuatazo"
+
+#: installer.view_site
+msgctxt "installer.view_site"
+msgid "View your website"
+msgstr "Tazama tovuti yako"

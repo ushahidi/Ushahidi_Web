@@ -1,0 +1,253 @@
+# 
+# Translators:
+# Abbas Adel Ibrahim <abbas@zabatak.com>, 2012
+# Farid Boushra <>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-19 16:10+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/ushahidi/ushahidi-v2/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: auth.email.email
+msgctxt "auth.email.email"
+msgid "The email you entered is not a valid email address."
+msgstr ".يبدو أن العنوان المُدرج في حقل البريد الإلكتروني غير صحيح"
+
+#: auth.email.exists
+msgctxt "auth.email.exists"
+msgid "Sorry, a user account already exists for this email address."
+msgstr ".عفواً، يوجد حساب مستخدم آخر لهذا البريد الإلكتروني"
+
+#: auth.email.length
+msgctxt "auth.email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr ".حقل البريد الإليكترونى يجب أن يحتوي 4 رموز على الأقل ولا يتعدى 64 رمز"
+
+#: auth.email.required
+msgctxt "auth.email.required"
+msgid "The email field is required."
+msgstr ".يجب إدخال بيانات حقل البريد الإلكترونى"
+
+#: auth.name.length
+msgctxt "auth.name.length"
+msgid "The name field must be at least 3 and no more 100 characters long."
+msgstr ".حقل الاسم يجب أن يحتوى 3 رموز على الأقل ولا يتعدى 100 رمز"
+
+#: auth.name.required
+msgctxt "auth.name.required"
+msgid "The name field is required."
+msgstr ".يجب إدخال حقل الاسم بالكامل"
+
+#: auth.name.standard_text
+msgctxt "auth.name.standard_text"
+msgid "The username field contains disallowed characters."
+msgstr ".حقل اسم المستخدم يحتوى على رموز غير مسموح بها"
+
+#: auth.current_password.length
+msgctxt "auth.current_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "كلمة المرور يجب ان لا تقل عن 8 حروف."
+
+#: auth.current_password.login error
+msgctxt "auth.current_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "برجاء التاكد من ادخال كلمة مرور وبريد اليكترونى صحيح"
+
+#: auth.current_password.matches
+msgctxt "auth.current_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "برجاء كتابة كلمة المرور فى الحقلين المخصصين لكلمة المرور"
+
+#: auth.current_password.required
+msgctxt "auth.current_password.required"
+msgid "The password field is required."
+msgstr "حقل كلمة المرور مطلوب"
+
+#: auth.current_password.alpha_dash
+msgctxt "auth.current_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "حقل كلمة المرور يجب ان يتكون من حروف و # و @ كرموز و ارقام و _ و / فقط."
+
+#: auth.current_password.incorrect
+msgctxt "auth.current_password.incorrect"
+msgid ""
+"The current password you entered for your account is incorrect. Please try "
+"again."
+msgstr "كلمة المرور التى ادخلتها لهذا الحساب غير صحيحة. اعد المحاولة."
+
+#: auth.new_password.length
+msgctxt "auth.new_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "كلمة المرور يجب ان لا تقل عن 8 حروف."
+
+#: auth.new_password.login error
+msgctxt "auth.new_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "برجاء التاكد من ادخال كلمة مرور وبريد اليكترونى صحيح"
+
+#: auth.new_password.matches
+msgctxt "auth.new_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "برجاء كتابة كلمة المرور فى الحقلين المخصصين لكلمة المرور"
+
+#: auth.new_password.required
+msgctxt "auth.new_password.required"
+msgid "The password field is required."
+msgstr "حقل كلمة المرور مطلوب"
+
+#: auth.new_password.alpha_dash
+msgctxt "auth.new_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "حقل كلمة المرور يجب ان يتكون من حروف و # و @ كرموز و ارقام و _ و / فقط."
+
+#: auth.password.default
+msgctxt "auth.password.default"
+msgid "There has been an error attempting to log you in."
+msgstr "هناك خطأ اثناء عملية الدخول"
+
+#: auth.password.length
+msgctxt "auth.password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "يجب ألا تقل كلمة المرور عن 5 أحرف أو أرقام وألا تزيد على 16 حرف أو رقم"
+
+#: auth.password.login error
+msgctxt "auth.password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "تأكد من إدخال كلمة المرور الصحيحة"
+
+#: auth.password.matches
+msgctxt "auth.password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr ".أدخل نفس كلمة السر فى الحقلين الخاصين بكلمة المرور"
+
+#: auth.password.required
+msgctxt "auth.password.required"
+msgid "The password field is required."
+msgstr ".يجب ملء حقل كلمة المرور"
+
+#: auth.password.riverid server down
+msgctxt "auth.password.riverid server down"
+msgid "The authentication server is down. Please try again later."
+msgstr "هناك مشكلة فى السيرفير. أعد المحاولة"
+
+#: auth.password.riverid
+msgctxt "auth.password.riverid"
+msgid "%s"
+msgstr "%s"
+
+#: auth.password.alpha_dash
+msgctxt "auth.password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "حقل كلمة المرور يجب ان يتكون من حروف و # و @ كرموز و ارقام و _ و / فقط."
+
+#: auth.password_confirm.matches
+msgctxt "auth.password_confirm.matches"
+msgid "The password confirmation field must match the password field."
+msgstr ".حقل تأكيد كلمة السر يجب أن تطابق حقل كلمة المسر"
+
+#: auth.resetemail.email
+msgctxt "auth.resetemail.email"
+msgid "The email you entered is not a valid email address."
+msgstr ".يبدو أن العنوان المُدرج في حقل البريد الإلكتروني غير صحيح"
+
+#: auth.resetemail.invalid
+msgctxt "auth.resetemail.invalid"
+msgid "Sorry, we don't have your email address"
+msgstr ".ليس لدينا عنوان بريدك الإلكتروني"
+
+#: auth.resetemail.required
+msgctxt "auth.resetemail.required"
+msgid "The email field is required."
+msgstr ".يجب ملء حقل البريد الإلكتروني"
+
+#: auth.role.superadmin_modify
+msgctxt "auth.role.superadmin_modify"
+msgid "Only a superadmin may modify a superadmin or upgrade a user to admin."
+msgstr "سوبر ادمن فقط يستطيع تعديل مستخدم سوبر ادمن او اعطاء صلاحية ادمن."
+
+#: auth.roles.alpha_numeric
+msgctxt "auth.roles.alpha_numeric"
+msgid "Invalid role format."
+msgstr ".صيغة المهمة غير صحيحة"
+
+#: auth.roles.length
+msgctxt "auth.roles.length"
+msgid "The role field must be at least 5 and no more than 30 characters long."
+msgstr ".حقل المهمة يجب أن يحتوى 5 رموز على الأقل ولا يتعدى 30 رمز"
+
+#: auth.roles.required
+msgctxt "auth.roles.required"
+msgid "You must define at least one role."
+msgstr ".يجب أن تحدد مهمة واحدة على الأقل"
+
+#: auth.roles.values
+msgctxt "auth.roles.values"
+msgid "You must select either ADMIN or USER role."
+msgstr ".يجب أن تختار مهمة مسئول إداري أو مستخدم"
+
+#: auth.token.invalid
+msgctxt "auth.token.invalid"
+msgid "The forgotten password token is invalid"
+msgstr "رمز استرداد كلمة المرور غير صحيح"
+
+#: auth.token.required
+msgctxt "auth.token.required"
+msgid "Forgotten password token was required"
+msgstr "مطلوب رمز لاسترداد كلمة المرور"
+
+#: auth.username.admin
+msgctxt "auth.username.admin"
+msgid "The admin user role cannot be modified."
+msgstr ".لا يمكن تعديل مهمة اسم المستخدم الإداري"
+
+#: auth.username.alpha_numeric
+msgctxt "auth.username.alpha_numeric"
+msgid "The public profile URL field must only contain numbers and letters."
+msgstr "الملف الشخصى العام يجب ان يحتوى على ارقام وحروف فقط."
+
+#: auth.username.exists
+msgctxt "auth.username.exists"
+msgid "Sorry, this public profile URL is already in use."
+msgstr ".عفواً، هذا اسم قيد الاستخدام"
+
+#: auth.username.length
+msgctxt "auth.username.length"
+msgid ""
+"The public profile URL field must be at least 2 and no more 100 characters "
+"long."
+msgstr ".حقل اسم المستخدم يجب ألا يقل عن رمزين وألا يزيد على 16 رمز"
+
+#: auth.username.login error
+msgctxt "auth.username.login error"
+msgid "Please check that you entered the correct public profile URL."
+msgstr "تأكد من إدخال اسم المستخدم الصحيح"
+
+#: auth.username.required
+msgctxt "auth.username.required"
+msgid "The public profile URL field is required."
+msgstr ".يجب ملء حقل اسم المستخدم"
+
+#: auth.username.superadmin
+msgctxt "auth.username.superadmin"
+msgid "The super admin role cannot be modified."
+msgstr ".لا يمكن تعديل مهمة المسئول الإداري الأعلى"
+
+#: auth.username.csrf
+msgctxt "auth.username.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a user?"
+msgstr "هل تعنى حقا تعديل/أنشا مستخدم؟"

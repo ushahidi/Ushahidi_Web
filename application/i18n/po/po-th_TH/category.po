@@ -1,0 +1,95 @@
+# 
+# Translators:
+# Boripat Lebel <inactive+boripatlebel@transifex.com>, 2014
+# Ngamnet_review <ngamnetaektasaeng@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2014-08-11 09:19+0000\n"
+"Last-Translator: Ngamnet_review <ngamnetaektasaeng@gmail.com>\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/ushahidi/ushahidi-v2/language/th_TH/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th_TH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: category.category_color.length
+msgctxt "category.category_color.length"
+msgid "The color field must be 6 characters long."
+msgstr "ข้อมูลในฟิล์ดีสีต้องมี 6 ตัวอักษร"
+
+#: category.category_color.required
+msgctxt "category.category_color.required"
+msgid "The color field is required."
+msgstr "จำเป็นต้องป้อนข้อมูลในฟิล์ดสี"
+
+#: category.category_description.required
+msgctxt "category.category_description.required"
+msgid "The description field is required."
+msgstr "จำเป็นต้องใส่คำอธิบาย"
+
+#: category.category_image.size
+msgctxt "category.category_image.size"
+msgid "Please ensure that image uploads sizes are limited to 50KB."
+msgstr "โปรดตรวจสอบว่าภาพที่จะอัปโหลดมีขนาดภาพไม่เกิน 50KB"
+
+#: category.category_image.type
+msgctxt "category.category_image.type"
+msgid ""
+"The image field does not appear to contain a valid image. The only accepted "
+"formats are .JPG, .PNG and .GIF."
+msgstr "รูปภาพไม่ปรากฏรูปแบบภาพที่ถูกต้อง รูปแบบที่ใช้ได้คือ .JPG, .PNG และ .GIF"
+
+#: category.category_image.valid
+msgctxt "category.category_image.valid"
+msgid "The image field does not appear to contain a valid file"
+msgstr "ช่องภาพไม่ปรากฏไฟล์ที่ถูกต้อง"
+
+#: category.category_title.length
+msgctxt "category.category_title.length"
+msgid "The title field must be at least 3 and no more 80 characters long."
+msgstr "ช่องสำหรับชื่อเรื่องต้องมีอย่างน้อย 3 ตัวอักษร และไม่มากกว่า 80 ตัวอักษร"
+
+#: category.category_title.required
+msgctxt "category.category_title.required"
+msgid "The title field is required."
+msgstr "จำเป็นต้องใส่ชื่อเรื่อง"
+
+#: category.parent_id.already_parent
+msgctxt "category.parent_id.already_parent"
+msgid "You cannot subcategorize a category with subcategories."
+msgstr "คุณไม่สามารถแยกหมวดหมู่ที่มีหมวดหมู่ย่อย"
+
+#: category.parent_id.exists
+msgctxt "category.parent_id.exists"
+msgid "The parent category does not exist."
+msgstr "ไม่มีหมวดหมู่หลัก"
+
+#: category.parent_id.numeric
+msgctxt "category.parent_id.numeric"
+msgid "The parent category field must be numeric."
+msgstr "หมวดหมู่หลักต้องเป็นตัวเลข"
+
+#: category.parent_id.parent_trusted
+msgctxt "category.parent_id.parent_trusted"
+msgid "The parent category cannot be a special category"
+msgstr "หมวดหมู่หลักไม่สามารถเป็นหมวดหมู่พิเศษ"
+
+#: category.parent_id.required
+msgctxt "category.parent_id.required"
+msgid "The parent category field is required."
+msgstr "จำเป็นต้องมีหมวดหมู่หลัก"
+
+#: category.parent_id.same
+msgctxt "category.parent_id.same"
+msgid "The category and the parent category cannot be the same."
+msgstr "หมวดหมู่และหมวดหมู่หลักไม่สามารถเหมือนกัน"
+
+#: category.parent_id.special
+msgctxt "category.parent_id.special"
+msgid "Special categories cannot be subcategorised."
+msgstr "หมวดหมู่พิเศษไม่สามารถแยกเป็นหมวดหมู่ย่อยได้"

@@ -1,0 +1,92 @@
+# 
+# Translators:
+# Jakub Mičuch <micuch.jakub@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-14 02:08+0000\n"
+"Last-Translator: Jakub Mičuch <micuch.jakub@gmail.com>\n"
+"Language-Team: Slovak (http://www.transifex.com/ushahidi/ushahidi-v2/language/sk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: notifications.admin_footer
+msgctxt "notifications.admin_footer"
+msgid "This message was sent from your website."
+msgstr "Správa bola odoslaná z vašej webstránky."
+
+#: notifications.admin_login_url
+msgctxt "notifications.admin_login_url"
+msgid "Administrator Login"
+msgstr "Prihlásenie administrátora"
+
+#: notifications.admin_new_comment.message
+msgctxt "notifications.admin_new_comment.message"
+msgid "A new comment has been submitted to your website in response to:"
+msgstr "Na vašej webstránke bol pridaný nový komentár v reakcii na:"
+
+#: notifications.admin_new_comment.subject
+msgctxt "notifications.admin_new_comment.subject"
+msgid "New Comment"
+msgstr "Nový komentár"
+
+#: notifications.admin_new_email.message
+msgctxt "notifications.admin_new_email.message"
+msgid "A new email message has been submitted to your website."
+msgstr "Nová e-mailová správa bola pridaná na vašu webstránku."
+
+#: notifications.admin_new_email.subject
+msgctxt "notifications.admin_new_email.subject"
+msgid "New Email Message"
+msgstr "Nová e-mail správa"
+
+#: notifications.admin_new_report.message
+msgctxt "notifications.admin_new_report.message"
+msgid "A new report has been submitted to your website."
+msgstr "Nová udalosť bola pridaná na vašu webstránku."
+
+#: notifications.admin_new_report.subject
+msgctxt "notifications.admin_new_report.subject"
+msgid "New Report"
+msgstr "Nová udalosť"
+
+#: notifications.admin_new_sms.message
+msgctxt "notifications.admin_new_sms.message"
+msgid "A new text message has been submitted to your website."
+msgstr "Nová textová správa bola pridaná na vašu webstránku."
+
+#: notifications.admin_new_sms.subject
+msgctxt "notifications.admin_new_sms.subject"
+msgid "New Text Message"
+msgstr "Nová textová správa"
+
+#: notifications.member_new_alert.message
+msgctxt "notifications.member_new_alert.message"
+msgid "You Have Received a New Alert"
+msgstr "Obdržali ste nové upozornenie"
+
+#: notifications.member_new_alert.subject
+msgctxt "notifications.member_new_alert.subject"
+msgid "New Alert!"
+msgstr "Nové upozornenie!"
+
+#: notifications.member_new_message.message
+msgctxt "notifications.member_new_message.message"
+msgid "You Have Received a Private Message"
+msgstr "Obdržali ste novú súkromnú správu"
+
+#: notifications.member_new_message.subject
+msgctxt "notifications.member_new_message.subject"
+msgid "New Private Message"
+msgstr "Nová súkromná správa"
+
+#: notifications.member_new_message.footer
+msgctxt "notifications.member_new_message.footer"
+msgid "To Reply Please Go To: "
+msgstr "Pre odpoveď choďte prosím do:"

@@ -1,0 +1,77 @@
+# 
+# Translators:
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-09-06 17:05+0000\n"
+"Last-Translator: Thu Hoai <contact@bizover.net>\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi_VN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: contact.captcha.default
+msgctxt "contact.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Vui lòng điền vào mã an ninh hợp lệ."
+
+#: contact.captcha.valid
+msgctxt "contact.captcha.valid"
+msgid "Please enter a valid security code."
+msgstr "Vui lòng điền vào mã an ninh hợp lệ."
+
+#: contact.captcha.required
+msgctxt "contact.captcha.required"
+msgid "Please enter the security code."
+msgstr "Vui lòng điền vào mã an ninh."
+
+#: contact.contact_email.email
+msgctxt "contact.contact_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "Phần khung thông tin email dường như chứa địa chỉ email không hợp lệ."
+
+#: contact.contact_email.length
+msgctxt "contact.contact_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "Phần thông tin email phải chứa ít nhất 4 và không được nhiều hơn 64 ký tự."
+
+#: contact.contact_email.required
+msgctxt "contact.contact_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Phần thông tin email được yêu cầu nếu phần lựa chọn được chọn."
+
+#: contact.contact_message.required
+msgctxt "contact.contact_message.required"
+msgid "The message field is required."
+msgstr "Phần nội dung tin nhắn không được để trống."
+
+#: contact.contact_name.length
+msgctxt "contact.contact_name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Phần khung thông tin tên phải chứa ít nhất 3 ký tự về độ dài."
+
+#: contact.contact_name.required
+msgctxt "contact.contact_name.required"
+msgid "The name field is required."
+msgstr "Phần khung thông tin tên không được để trống."
+
+#: contact.contact_subject.length
+msgctxt "contact.contact_subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr "Phần khung thông tin chủ đề phải chứa ít nhất 3 ký tự về độ dài."
+
+#: contact.contact_subject.required
+msgctxt "contact.contact_subject.required"
+msgid "The subject field is required."
+msgstr "Phần khung thông tin về chủ đề không được để trống."
+
+#: contact.email_send.failed
+msgctxt "contact.email_send.failed"
+msgid "There was an error sending your message."
+msgstr "Xảy ra lỗi khi gửi đi tin nhắn của bạn."

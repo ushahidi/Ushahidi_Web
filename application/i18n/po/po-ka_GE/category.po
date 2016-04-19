@@ -1,0 +1,93 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:04+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Georgian (Georgia) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ka_GE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ka_GE\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: category.category_color.length
+msgctxt "category.category_color.length"
+msgid "The color field must be 6 characters long."
+msgstr "ფერის ველი უნდა შედგებოდეს 6 სიმბოლოსგან."
+
+#: category.category_color.required
+msgctxt "category.category_color.required"
+msgid "The color field is required."
+msgstr "ფერის ველი სავალდებულოა."
+
+#: category.category_description.required
+msgctxt "category.category_description.required"
+msgid "The description field is required."
+msgstr "აღწერის ველი სავალდებულოა."
+
+#: category.category_image.size
+msgctxt "category.category_image.size"
+msgid "Please ensure that image uploads sizes are limited to 50KB."
+msgstr "გთხოვთ დარწმუნდეთ, რომ გამოსახულების ატვირთვის ზომები შეზღუდულია 50 კილო ბაიტამდე."
+
+#: category.category_image.type
+msgctxt "category.category_image.type"
+msgid ""
+"The image field does not appear to contain a valid image. The only accepted "
+"formats are .JPG, .PNG and .GIF."
+msgstr "გამოსახულების ველი როგორც ჩანს არ შეიცავს დასაშვებ გამოსახულებას. დასაშვები ფორმატები არის მხოლოდ და მხოლოდ .JPG, .PNG and .GIF."
+
+#: category.category_image.valid
+msgctxt "category.category_image.valid"
+msgid "The image field does not appear to contain a valid file"
+msgstr "ამოსახულების ველი როგორც ჩანს არ შეიცავს სწორ ფაილს"
+
+#: category.category_title.length
+msgctxt "category.category_title.length"
+msgid "The title field must be at least 3 and no more 80 characters long."
+msgstr "სათაურის ველი უნდა შედგებოდეს არანაკლებ 3 და არაუმეტეს  80 სიმბოლოსგან."
+
+#: category.category_title.required
+msgctxt "category.category_title.required"
+msgid "The title field is required."
+msgstr "სათაურის ველი სავალდებულოა."
+
+#: category.parent_id.already_parent
+msgctxt "category.parent_id.already_parent"
+msgid "You cannot subcategorize a category with subcategories."
+msgstr ""
+
+#: category.parent_id.exists
+msgctxt "category.parent_id.exists"
+msgid "The parent category does not exist."
+msgstr "მწარმოებლის კატეგორია არ არსებობს."
+
+#: category.parent_id.numeric
+msgctxt "category.parent_id.numeric"
+msgid "The parent category field must be numeric."
+msgstr "მწარმოებლის კატეგორიის ველი უნდა იყოს რიცხვითი."
+
+#: category.parent_id.parent_trusted
+msgctxt "category.parent_id.parent_trusted"
+msgid "The parent category cannot be a special category"
+msgstr ""
+
+#: category.parent_id.required
+msgctxt "category.parent_id.required"
+msgid "The parent category field is required."
+msgstr "მწარმოებლის კატეგორიის ველი სავალდებულოა."
+
+#: category.parent_id.same
+msgctxt "category.parent_id.same"
+msgid "The category and the parent category cannot be the same."
+msgstr "კატეგორია და მწარმოებლის კატეგორია შეუძლებელია იყოს ერთიდაიგივე."
+
+#: category.parent_id.special
+msgctxt "category.parent_id.special"
+msgid "Special categories cannot be subcategorised."
+msgstr ""

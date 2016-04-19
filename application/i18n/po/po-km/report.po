@@ -1,0 +1,395 @@
+# 
+# Translators:
+# Seng Sutha <sutha@open.org.kh>, 2013
+# Sokhem Khoem <sokhem@open.org.kh>, 2013
+# Sok Sophea <sksophea@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-08-22 06:26+0000\n"
+"PO-Revision-Date: 2013-09-09 03:30+0000\n"
+"Last-Translator: Sok Sophea <sksophea@gmail.com>\n"
+"Language-Team: Khmer (http://www.transifex.com/ushahidi/ushahidi-v2/language/km/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: report.comments_form_error
+msgctxt "report.comments_form_error"
+msgid "error!"
+msgstr "កំហុស!"
+
+#: report.country_name.single_country
+msgctxt "report.country_name.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the report "
+"location is within the country %s."
+msgstr "ការ​ប្រើប្រាស់​នេះ​ពង្រីក​តែ​ក្នុង​ប្រទេស​មួយ​ប៉ុណ្ណោះ។ សូម​ប្រាកដ​ថា ទីតាំង​រាយការណ៍​ស្ថិត​ក្នុង​ប្រទេស %s ។"
+
+#: report.custom_field.values
+msgctxt "report.custom_field.values"
+msgid "Please enter a valid value for the \"%s\" field."
+msgstr "សូម​បញ្ចូល​តម្លៃ​ត្រឹមត្រូវ​សម្រាប់​វាល \"%s\" ។"
+
+#: report.custom_field.numeric
+msgctxt "report.custom_field.numeric"
+msgid "The \"%s\" field must be numeric."
+msgstr "វាល \"%s\" ត្រូវ​តែ​ជា​លេខ។"
+
+#: report.custom_field.required
+msgctxt "report.custom_field.required"
+msgid "The \"%s\" field is required."
+msgstr "បាន​ទាមទារ​វាល \"%s\" ។"
+
+#: report.custom_field.not_exist
+msgctxt "report.custom_field.not_exist"
+msgid "The \"%s\" field is does not exist."
+msgstr "មិន​មាន​វាល​ \"%s\" ឡើយ។"
+
+#: report.custom_field.permission
+msgctxt "report.custom_field.permission"
+msgid "The \"%s\" field cannot be edited by your account."
+msgstr "វាល \"%s\" មិន​អាច​ត្រូវ​បាន​កែសម្រួល​ដោយ​គណនី​របស់​អ្នក​ឡើយ។"
+
+#: report.custom_field.email
+msgctxt "report.custom_field.email"
+msgid "The \"%s\" field must contain a valid email address."
+msgstr "វាល \"%s\" ត្រូវ​តែ​មាន​អាសយដ្ឋាន​អ៊ីមែល​ត្រឹមត្រូវ។"
+
+#: report.custom_field.phone
+msgctxt "report.custom_field.phone"
+msgid "The \"%s\" field must contain a valid phone number."
+msgstr "វាល \"%s\" ត្រូវ​តែ​មាន​លេខ​ទូរស័ព្ទ​ត្រឹមត្រូវ។"
+
+#: report.custom_field.date_mmddyyyy
+msgctxt "report.custom_field.date_mmddyyyy"
+msgid "The \"%s\" field must contain a valid date (MM/DD/YYYY)."
+msgstr "វាល \"%s\" ត្រូវ​តែ​មាន​​កាលបរិច្ឆេទ​ត្រឹមត្រូវ (MM/DD/YYYY)។"
+
+#: report.custom_field.date_ddmmyyyy
+msgctxt "report.custom_field.date_ddmmyyyy"
+msgid "The \"%s\" field must contain a valid date (DD/MM/YYYY)."
+msgstr "វាល \"%s\" ត្រូវ​តែ​មាន​កាលបរិច្ឆេទ​ត្រឹមត្រូវ (DD/MM/YYYY)។"
+
+#: report.data_include.between
+msgctxt "report.data_include.between"
+msgid "Please select a valid item to include in the download."
+msgstr "សូម​ជ្រើស​ធាតុ​ត្រឹមត្រូវ​ ដើម្បី​ដាក់​បញ្ចូល​ក្នុង​ការ​ទាញ​យក។"
+
+#: report.data_include.numeric
+msgctxt "report.data_include.numeric"
+msgid "Please select a valid item to include in the download."
+msgstr "សូម​ជ្រើស​ធាតុ​ត្រឹមត្រូវ ដើម្បី​ដាក់​បញ្ចូល​ក្នុង​ការ​ទាញ​យក។"
+
+#: report.data_active.between
+msgctxt "report.data_active.between"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "សូម​ជ្រើស \"របាយការណ៍​រង់ចាំ​ការ​អនុម័ត\" ឬ \"របាយការណ៍​បាន​អនុម័ត\" ឬ​ទាំង​ពីរ។"
+
+#: report.data_active.numeric
+msgctxt "report.data_active.numeric"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "សូម​ជ្រើស \"របាយការណ៍​រង់ចាំ​ការ​អនុម័ត\" ឬ \"របាយការណ៍​បាន​អនុម័ត\" ឬ​ទាំង​ពីរ។"
+
+#: report.data_active.required
+msgctxt "report.data_active.required"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "សូម​ជ្រើស \"របាយការណ៍​រង់ចាំ​ការ​អនុម័ត\" ឬ \"របាយការណ៍​បាន​អនុម័ត\" ឬ​ទាំង​ពីរ។"
+
+#: report.data_verified.between
+msgctxt "report.data_verified.between"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "សូម​ជ្រើស \"របាយការណ៍​រង់ចាំ​ការ​ផ្ទៀងផ្ទាត់\" ឬ \"របាយការណ៍​បាន​បាន​ផ្ទៀងផ្ទាត់\" ឬ​ទាំង​ពីរ។"
+
+#: report.data_verified.numeric
+msgctxt "report.data_verified.numeric"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "សូម​ជ្រើស \"របាយការណ៍​រង់ចាំ​ការ​ផ្ទៀងផ្ទាត់\" ឬ \"របាយការណ៍​បាន​បាន​ផ្ទៀងផ្ទាត់\" ឬ​ទាំង​ពីរ។"
+
+#: report.data_verified.required
+msgctxt "report.data_verified.required"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "សូម​ជ្រើស \"របាយការណ៍​រង់ចាំ​ការ​ផ្ទៀងផ្ទាត់\" ឬ \"របាយការណ៍​បាន​បាន​ផ្ទៀងផ្ទាត់\" ឬ​ទាំង​ពីរ។"
+
+#: report.data_point.between
+msgctxt "report.data_point.between"
+msgid "Please select a valid type of report to download."
+msgstr "សូម​ជ្រើស​ប្រភេទ​របាយការណ៍​ត្រឹមត្រូវ​ ដើម្បី​ទាញ​យក។"
+
+#: report.data_point.numeric
+msgctxt "report.data_point.numeric"
+msgid "Please select a valid type of report to download."
+msgstr "សូម​ជ្រើស​ប្រភេទ​របាយការណ៍​ត្រឹមត្រូវ​ ដើម្បី​ទាញ​យក។"
+
+#: report.data_point.required
+msgctxt "report.data_point.required"
+msgid "Please select a valid type of report to download."
+msgstr "សូម​ជ្រើស​ប្រភេទ​របាយការណ៍​ត្រឹមត្រូវ​ ដើម្បី​ទាញ​យក។"
+
+#: report.format.required
+msgctxt "report.format.required"
+msgid "You must select a download format. Select either CSV or XML."
+msgstr "អ្នក​ត្រូវ​តែ​ជ្រើស​ទ្រង់ទ្រាយ​ទាញ​យក។ ជ្រើស​ CSV ឬ XML ។"
+
+#: report.format.valid
+msgctxt "report.format.valid"
+msgid "Please select a valid format to download your reports in"
+msgstr "សូម​ជ្រើស​ទ្រង់ទ្រាយ​ត្រឹមត្រូវ ដើម្បី​ទាញ​យក​​របាយការណ៍​របស់​អ្នក"
+
+#: report.from_date.date_mmddyyyy
+msgctxt "report.from_date.date_mmddyyyy"
+msgid "The FROM date field does not appear to contain a valid date."
+msgstr "វាល​កាលបរិច្ឆេទ​ ពី មិន​បង្ហាញ​ថា​មាន​កាលបរិច្ឆេទ​ត្រឹមត្រូវ​ទេ។"
+
+#: report.from_date.range
+msgctxt "report.from_date.range"
+msgid "Please enter a valid FROM date. It cannot be greater than today."
+msgstr "សូម​បញ្ចូល​កាលបរិច្ឆេទ ពី ​ឲ្យ​បាន​​ត្រឹមត្រូវ។ វា​មិន​អាច​ធំ​ជាង​ថ្ងៃ​នេះ​ទេ។"
+
+#: report.incident_active.between
+msgctxt "report.incident_active.between"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "សូម​បញ្ចូល​តម្លៃ​ត្រឹមត្រូវ​សម្រាប់​អនុម័ត​របាយការណ៍​នេះ"
+
+#: report.incident_active.required
+msgctxt "report.incident_active.required"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "សូម​បញ្ចូល​តម្លៃ​ត្រឹមត្រូវ​សម្រាប់​អនុម័ត​របាយការណ៍​នេះ"
+
+#: report.incident_ampm.validvalues
+msgctxt "report.incident_ampm.validvalues"
+msgid "The am/pm field does not appear to contain a valid value."
+msgstr "វាល​ព្រឹក/ល្ងាច មិន​បង្ហាញ​ថា​ជា​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: report.incident_category.numeric
+msgctxt "report.incident_category.numeric"
+msgid "The \"Categories\" field does not appear to contain a valid category."
+msgstr "វាល \"ប្រភេទ\" មិន​បង្ហាញ​ថា​ជា​ប្រភេទ​ត្រឹមត្រូវ​ទេ។"
+
+#: report.incident_category.required
+msgctxt "report.incident_category.required"
+msgid "The \"Categories\" field is required."
+msgstr "វាល \"ប្រភេទ\" ត្រូវ​បាន​ទាមទារ។"
+
+#: report.incident_date.date_ddmmyyyy
+msgctxt "report.incident_date.date_ddmmyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "វាល​កាលបរិច្ឆេទ​មិន​បង្ហាញ​ថា​ជា​កាលបរិច្ឆេទ​ត្រឹមត្រូវ​ទេ។"
+
+#: report.incident_date.date_mmddyyyy
+msgctxt "report.incident_date.date_mmddyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "វាល​កាលបរិច្ឆេទ​មិន​បង្ហាញ​ថា​ជា​កាលបរិច្ឆេទ​ត្រឹមត្រូវ​ទេ។"
+
+#: report.incident_date.required
+msgctxt "report.incident_date.required"
+msgid "The date field is required."
+msgstr "វាល​កាលបរិច្ឆេទ​ត្រូវ​បាន​ទាមទារ។"
+
+#: report.incident_description.required
+msgctxt "report.incident_description.required"
+msgid "The \"Description\" field is required."
+msgstr "វាល \"សេចក្ដី​​ពណ៌នា\" ត្រូវ​បាន​ទាមទារ។"
+
+#: report.incident_hour.between
+msgctxt "report.incident_hour.between"
+msgid "The hour field does not appear to contain a valid hour."
+msgstr "វាល​ម៉ោង​មិ​ន​បង្ហាញ​ថា​ជា​ម៉ោង​ត្រឹមត្រូវ​ទេ។"
+
+#: report.incident_hour.required
+msgctxt "report.incident_hour.required"
+msgid "The hour field is required."
+msgstr "បាន​ទាមទារ​វាល​ម៉ោង​។"
+
+#: report.incident_information.alpha
+msgctxt "report.incident_information.alpha"
+msgid "Please enter a valid value for Information Probability."
+msgstr "សូម​បញ្ចូល​តម្លៃ​ត្រឹមត្រូវ​សម្រាប់​ប្រូបាប៊ីលេតេ​​ព័ត៌មាន។"
+
+#: report.incident_information.length
+msgctxt "report.incident_information.length"
+msgid "Please enter a valid value for Information Probability."
+msgstr "សូម​បញ្ចូល​តម្លៃ​ត្រឹមត្រូវ​សម្រាប់​ប្រូបាប៊ីលេតេ​​ព័ត៌មាន។"
+
+#: report.incident_minute.between
+msgctxt "report.incident_minute.between"
+msgid "The minute field does not appear to contain a valid value."
+msgstr "វាល​នាទី​មិន​បង្ហាញ​ថា​មាន​​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: report.incident_minute.required
+msgctxt "report.incident_minute.required"
+msgid "The minute field is required."
+msgstr "បាន​ទាមទារ​វាល​នាទី។"
+
+#: report.incident_news.url
+msgctxt "report.incident_news.url"
+msgid "The news source links field does not appear to contain a valid URL."
+msgstr "វាល​តំណ​ប្រភព​ព័ត៌មាន​មិន​បង្ហាញ​ថា​មាន​ URL ត្រឹមត្រូវ​ទេ។"
+
+#: report.incident_photo.size
+msgctxt "report.incident_photo.size"
+msgid "Please ensure that photo upload sizes are limited to 2MB."
+msgstr "សូម​ប្រាកដ​ថា​ទំហំ​ផ្ទុក​រូបថត​ឡើង​ត្រូវ​បាន​កំណត់​ត្រឹមត្រូវ ២ មេកាបៃ។"
+
+#: report.incident_photo.type
+msgctxt "report.incident_photo.type"
+msgid ""
+"The Upload Photos field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "វាល​ផ្ទុក​រូបថត​ឡើង​មិន​បង្ហាញ​ថា​ជា​រូបភាព​ត្រឹមត្រូវ​ទេ។ ទ្រង់ទ្រាយ​ដែល​ទទួល​យក​បាន​គឺ .JPG, .PNG and .GIF ។"
+
+#: report.incident_photo.valid
+msgctxt "report.incident_photo.valid"
+msgid "The Upload Photos field does not appear to contain a valid file."
+msgstr "វាល​ផ្ទុក​រូបថត​ឡើង​មិន​បង្ហាញ​ថា​មាន​​​ឯកសារ​ត្រឹមត្រូវ​ទេ។"
+
+#: report.incident_source.alpha
+msgctxt "report.incident_source.alpha"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "សូម​បញ្ចូល​តម្លៃ​ត្រឹមត្រូវ​សម្រាប់​ភាព​ទុកចិត្ត​បាន​របស់​ប្រភព។"
+
+#: report.incident_source.length
+msgctxt "report.incident_source.length"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "សូម​បញ្ចូល​តម្លៃ​ត្រឹមត្រូវ​សម្រាប់​ភាព​ទុកចិត្ត​បាន​របស់​ប្រភព។"
+
+#: report.incident_title.length
+msgctxt "report.incident_title.length"
+msgid ""
+"The \"Report Title\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "វាល \"ចំណង​ជើង​របាយការណ៍\" យ៉ាង​ហោច​ណាស់​ត្រូវ​មាន​ ៣ និង​មាន​ប្រវែង​មិន​លើស​ពី ២០០ តួអក្សរ។"
+
+#: report.incident_title.required
+msgctxt "report.incident_title.required"
+msgid "The \"Report Title\" field is required."
+msgstr "វាល \"ចំណង​ជើង​របាយការណ៍\" ត្រូវ​បាន​ទាមទារ។"
+
+#: report.incident_title.csrf
+msgctxt "report.incident_title.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a report?"
+msgstr "អាច​ប៉ះពាល់​ដល់ CSRF ។ តើ​អ្នក​ពិត​ជា​ចង់​បង្កើត/កែសម្រួល​របាយការណ៍​មែន​ឬ?"
+
+#: report.incident_verified.between
+msgctxt "report.incident_verified.between"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "សូម​បញ្ចូល​តម្លៃ​ត្រឹមត្រូវ​សម្រាប់​​ផ្ទៀងផ្ទាត់​របាយការណ៍​នេះ។"
+
+#: report.incident_verified.required
+msgctxt "report.incident_verified.required"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "សូម​បញ្ចូល​តម្លៃ​ត្រឹមត្រូវ​សម្រាប់​ផ្ទៀងផ្ទាត់​របាយការណ៍​នេះ។"
+
+#: report.incident_video.url
+msgctxt "report.incident_video.url"
+msgid "The video links field does not appear to contain a valid URL."
+msgstr "វាល​តំណ​វីដេអូ​មិន​បង្ហាញ​ថា​មាន​ URL ត្រឹមត្រូវ​ទេ។"
+
+#: report.latitude.between
+msgctxt "report.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "វាល​រយៈ​ទទឹង​មិន​បង្ហាញ​ថា​​មាន​រយៈ​ទទឹង​ត្រឹមត្រូវ​ទេ។"
+
+#: report.latitude.required
+msgctxt "report.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "វាល​រយៈ​ទទឹង​ត្រូវ​បាន​ទាមទារ។ សូម​ចុច​លើ​ផែនទី​ដើម្បី​បង្ហាញ​ទីតាំង។"
+
+#: report.locale.alpha_dash
+msgctxt "report.locale.alpha_dash"
+msgid "The locale field has an incorrect value. "
+msgstr "វាល​​មូលដ្ឋាន​មាន​តម្លៃ​មិន​ត្រឹមត្រូវ។"
+
+#: report.locale.exists
+msgctxt "report.locale.exists"
+msgid "This report already has a translation for this language."
+msgstr "របាយការណ៍​នេះ​មាន​ការ​បកប្រែ​សម្រាប់​ភាសា​នេះ​រួ​ច​ហើយ។"
+
+#: report.locale.length
+msgctxt "report.locale.length"
+msgid "The locale field has an incorrect value. "
+msgstr "វាល​មូលដ្ឋាន​មាន​តម្លៃ​មិន​ត្រឹមត្រូវ។"
+
+#: report.locale.locale
+msgctxt "report.locale.locale"
+msgid ""
+"The Original Report and the Translation have the same locale (language)."
+msgstr "របាយការណ៍​​ច្បាប់ដើម និង​ការ​បកប្រែ​មាន​ភាសា​​មូលដ្ឋាន (language) ដូច​គ្នា។"
+
+#: report.locale.required
+msgctxt "report.locale.required"
+msgid "The locale is required."
+msgstr "បាន​ទាមទារ​មូលដ្ឋាន។"
+
+#: report.location_name.length
+msgctxt "report.location_name.length"
+msgid ""
+"The \"Location Name\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "វាល​ \"ឈ្មោះ​ទីតាំង\" យ៉ាង​ហោច​ណាស់​ត្រូវ​មាន​ ៣ តួ​អក្សរ​ និង​មាន​ប្រវែង​មិន​លើស​ពី ២០០ តួអក្សរ​ឡើយ។"
+
+#: report.location_name.required
+msgctxt "report.location_name.required"
+msgid "The \"Location Name\" field is required."
+msgstr "បាន​ទាមទារ​វាល \"ឈ្មោះ​ទីតាំង\" ។"
+
+#: report.longitude.between
+msgctxt "report.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "វាល​រយៈ​បណ្ដោយ​មិន​បង្ហាញ​ថា​​មាន​រយៈ​បណ្ដោយ​​ត្រឹមត្រូវ​ទេ។"
+
+#: report.longitude.required
+msgctxt "report.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "វាល​រយៈ​បណ្ដោយ​ត្រូវ​បាន​ទាមទារ។ សូម​ចុច​​​លើ​ផែនទី ដើម្បី​បង្ហាញ​ទីតាំង។"
+
+#: report.person_email.email
+msgctxt "report.person_email.email"
+msgid "The email field does not appear to contain a valid email address."
+msgstr "វាល​អ៊ីមែល​មិន​បង្ហាញ​ថា​មាន​អាសយដ្ឋាន​អ៊ីមែល​ត្រឹមត្រូវ​ទេ។"
+
+#: report.person_email.length
+msgctxt "report.person_email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "វាល​​អ៊ីមែល​យ៉ាង​ហោច​ណាស់​ត្រូវ​មាន ៤ តួ​អក្សរ​ និង​មាន​ប្រវែង​មិន​លើស​ពី ៦៤ តួអក្សរ​ឡើយ។"
+
+#: report.person_first.length
+msgctxt "report.person_first.length"
+msgid ""
+"The first name field must be at least 3 and no more 100 characters long."
+msgstr "វាល​នាម​ខ្លួន​យ៉ាង​ហោច​ណាស់​ត្រូវ​មាន ៣ តួ​អក្សរ​ និង​មាន​ប្រវែង​មិន​លើស​ពី ១០០ តួអក្សរ​ទេ។"
+
+#: report.person_last.length
+msgctxt "report.person_last.length"
+msgid ""
+"The last name field must be at least 2 and no more 100 characters long."
+msgstr "វាល​នាម​ត្រកូល​​យ៉ាង​ហោច​ណាស់​ត្រូវ​មាន ២ តួអក្សរ និង​មាន​ប្រវែង​មិន​លើស​ពី ១០០ តួអក្សរ​ទេ។"
+
+#: report.to_date.date_mmddyyyy
+msgctxt "report.to_date.date_mmddyyyy"
+msgid "The TO date field does not appear to contain a valid date."
+msgstr "វាល​កាលបរិច្ឆេទ​ជូន​ចំពោះ មិន​បង្ហាញ​ថា​មាន​កាលបរិច្ឆេទ​ត្រឹមត្រូវ​ទេ។"
+
+#: report.to_date.range
+msgctxt "report.to_date.range"
+msgid "Please enter a valid TO date. It cannot be greater than today."
+msgstr "សូម​បញ្ចូល​កាលបរិច្ឆេទ​ជូន​ចំពោះ​ដែល​ត្រឹមត្រូវ។ វា​មិន​អាច​ធំ​ជាង​ថ្ងៃ​នេះ។"
+
+#: report.to_date.range_greater
+msgctxt "report.to_date.range_greater"
+msgid "Your FROM date cannot be greater than your TO date."
+msgstr "កាលបរិច្ឆេទ ​ពី ​របស់​អ្នក​មិន​អាច​ធំ​ជាង​កាលបរិច្ឆេទ ​ជូន​ចំពោះ​ របស់​អ្នក​ទេ។"

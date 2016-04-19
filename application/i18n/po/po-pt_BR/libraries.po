@@ -1,0 +1,118 @@
+# 
+# Translators:
+# allviana <allnoronha@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/ushahidi/ushahidi-v2/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: libraries.akismet_cannot_connect
+msgctxt "libraries.akismet_cannot_connect"
+msgid "Could not connect to Akismet server."
+msgstr "Não foi possível conectar com o servidor Akismet"
+
+#: libraries.akismet_cannot_retrieve
+msgctxt "libraries.akismet_cannot_retrieve"
+msgid "The response from Akismet could not be retrieved."
+msgstr "Não foi possível retornar uma resposta do Akismet"
+
+#: libraries.api_library_not_found
+msgctxt "libraries.api_library_not_found"
+msgid ""
+"The API library: <strong>%s</strong> for the <strong>%s</strong> class could"
+" not be found. Please check your API task routing table."
+msgstr "Não foi possível encontrar a biblioteca da API <strong>%s</strong>, para a class <strong>%s</strong>. Verifique no painel da tabela de roteamento de sua API."
+
+#: libraries.askimet_invalid_apikey
+msgctxt "libraries.askimet_invalid_apikey"
+msgid "Your Akismet API key is not valid."
+msgstr "A chave API Akismet não é válida."
+
+#: libraries.clickatell_fopen_error
+msgctxt "libraries.clickatell_fopen_error"
+msgid ""
+"Error while executing fopen sending method!<br>Please check whether PHP has "
+"OpenSSL support and whether the PHP version is greater than 5.2."
+msgstr "Erro durante a execução do método de envio!<br>Verifique se o PHP tem suporte OpenSSL e verifique se a versão de PHP é mais atual que 5.2"
+
+#: libraries.clickatell_message_too_long
+msgctxt "libraries.clickatell_message_too_long"
+msgid "Your unicode message is too long! (Current length="
+msgstr "Sua mensagem de unicode é muito longa (Tamanho atual="
+
+#: libraries.clickatell_no_destination_address
+msgctxt "libraries.clickatell_no_destination_address"
+msgid "Please specify a destination address (TO)!"
+msgstr "Especifique um endereço de destino (PARA)"
+
+#: libraries.clickatell_no_sender_address
+msgctxt "libraries.clickatell_no_sender_address"
+msgid "Please specify source address (FROM)!"
+msgstr "Especifique um endereço fonte (DE)"
+
+#: libraries.clickatell_unicode_message_too_long
+msgctxt "libraries.clickatell_unicode_message_too_long"
+msgid "Your unicode message is too long! (Current length="
+msgstr "Sua mensagem de unicode é muito longa (Tamanho atual="
+
+#: libraries.clickatell_unsupported_method
+msgctxt "libraries.clickatell_unsupported_method"
+msgid "Unsupported sending method!"
+msgstr "Método de envio não suportado"
+
+#: libraries.invalid_api_library
+msgctxt "libraries.invalid_api_library"
+msgid ""
+"The API library %s is invalid. All API libraries must be subclasses of %s."
+msgstr "A biblioteca da API %s é inválida. Todas as bibliotecas da API devem ser subclasses de %s."
+
+#: libraries.upgrade_directory_not_deleted
+msgctxt "libraries.upgrade_directory_not_deleted"
+msgid "Directory <code>%s</coded> could not be deleted."
+msgstr "Não foi possível apagar o diretório <code>%s</coded>"
+
+#: libraries.upgrade_extracting_error
+msgctxt "libraries.upgrade_extracting_error"
+msgid "Error while extracting: <code>%s</code>"
+msgstr "Erro durante a extração: <code>%s</code>"
+
+#: libraries.upgrade_failed
+msgctxt "libraries.upgrade_failed"
+msgid "Downloading the latest Ushahidi failed. HTTP status code"
+msgstr "Houve falha no download do último ushahidi. Código de status do HTTP"
+
+#: libraries.upgrade_file_not_copied
+msgctxt "libraries.upgrade_file_not_copied"
+msgid "File <code>%s</coded> could not be copied."
+msgstr "Não foi possível copiar o arquivo <code>%s</coded>"
+
+#: libraries.upgrade_file_not_deleted
+msgctxt "libraries.upgrade_file_not_deleted"
+msgid "File <code>%s</coded> could not be deleted."
+msgstr "Não foi possível apagar o arquivo <code>%s</coded>"
+
+#: libraries.upgrade_title
+msgctxt "libraries.upgrade_title"
+msgid "Ushahidi upgrade script"
+msgstr "Script de atualização do Ushahidi"
+
+#: libraries.upgrade_zip_error
+msgctxt "libraries.upgrade_zip_error"
+msgid ""
+"The downloaded Ushahidi zip file <code>%s</code>, could not be written."
+msgstr "Não foi possível concluir o download do arquivo zipado do ushahidi <code>%s</code>"
+
+#: libraries.riverid_variable_not_available
+msgctxt "libraries.riverid_variable_not_available"
+msgid "%s is not available in the RiverID class."
+msgstr "%s não está disponível na classe RiverID "

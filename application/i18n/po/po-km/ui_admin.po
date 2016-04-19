@@ -1,0 +1,1659 @@
+# 
+# Translators:
+# Seng Sutha <sutha@open.org.kh>, 2013-2014
+# Sok Sophea <sksophea@gmail.com>, 2013
+# Vantharith Oum <vantharith.oum@gmail.com>, 2012-2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-09-11 06:22+0000\n"
+"PO-Revision-Date: 2014-01-03 03:40+0000\n"
+"Last-Translator: Seng Sutha <sutha@open.org.kh>\n"
+"Language-Team: Khmer (http://www.transifex.com/ushahidi/ushahidi-v2/language/km/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_admin.access_denied_credentials
+msgctxt "ui_admin.access_denied_credentials"
+msgid ""
+"Access denied. Either your credentials are not valid or your request has "
+"been refused."
+msgstr "បាន​បដិសេធ​ការ​ចូល​ដំណើរការ។ លិខិត​សម្គាល់​របស់​អ្នក​មិន​ត្រឹម​ត្រូវ ឬ​សំណើ​របស់​អ្នក​ត្រូវ​បាន​បដិសេធ។"
+
+#: ui_admin.access_denied_others
+msgctxt "ui_admin.access_denied_others"
+msgid ""
+"Access denied. Your request has been understood, but denied due to access "
+"limits like time. Try back later."
+msgstr "បាន​បដិសេធ​ការ​ចូល​ដំណើរការ។ សំណើ​​របស់​អ្នក​ត្រូវ​បាន​ស្គាល់ ប៉ុន្តែ​បាន​បដិសេធ​ដោយសារតែ​ការ​កំណត់​ការ​ចូល​ដំណើរការ​អស់​ពេល​។ ព្យាយាម​​ម្ដងទៀត​ពេល​ក្រោយ។"
+
+#: ui_admin.access_level
+msgctxt "ui_admin.access_level"
+msgid "Access Level"
+msgstr "កម្រិត​ការ​ចូល​ដំណើរការ"
+
+#: ui_admin.actions
+msgctxt "ui_admin.actions"
+msgid "Actions"
+msgstr "សកម្មភាព"
+
+#: ui_admin.add_to_category
+msgctxt "ui_admin.add_to_category"
+msgid "Add to Category"
+msgstr "បន្ថែម​ទៅ​ប្រភេទ"
+
+#: ui_admin.added
+msgctxt "ui_admin.added"
+msgid "added"
+msgstr "បាន​បន្ថែម"
+
+#: ui_admin.added_edited
+msgctxt "ui_admin.added_edited"
+msgid "added/edited"
+msgstr "បាន​បន្ថែម/​បាន​កែសម្រួល"
+
+#: ui_admin.addons
+msgctxt "ui_admin.addons"
+msgid "Addons"
+msgstr "ឧបករណ៍​បន្ថែម"
+
+#: ui_admin.admin_role
+msgctxt "ui_admin.admin_role"
+msgid "Admin"
+msgstr "ជា​អ្នក​គ្រប់គ្រង"
+
+#: ui_admin.alerts
+msgctxt "ui_admin.alerts"
+msgid "Alerts"
+msgstr "ការ​ជូនដំណឹង"
+
+#: ui_admin.alerts_received
+msgctxt "ui_admin.alerts_received"
+msgid "Alerts Received"
+msgstr "បាន​ទទួល​ការ​ជូនដំណឹង"
+
+#: ui_admin.all
+msgctxt "ui_admin.all"
+msgid "All"
+msgstr "ទាំងអស់"
+
+#: ui_admin.am
+msgctxt "ui_admin.am"
+msgid "AM"
+msgstr "ព្រឹក"
+
+#: ui_admin.anonymous
+msgctxt "ui_admin.anonymous"
+msgid "Anonymous"
+msgstr "អនាមិក"
+
+#: ui_admin.anyone_role
+msgctxt "ui_admin.anyone_role"
+msgid "Anyone"
+msgstr "អ្នក​ណា​ម្នាក់"
+
+#: ui_admin.anywhere
+msgctxt "ui_admin.anywhere"
+msgid "Anywhere"
+msgstr "កន្លែង​ណាមួយ"
+
+#: ui_admin.api_banned
+msgctxt "ui_admin.api_banned"
+msgid "API Banned"
+msgstr "បាន​ហាម​ឃាត់ API"
+
+#: ui_admin.api_logs
+msgctxt "ui_admin.api_logs"
+msgid "API Logs"
+msgstr "កំណត់ហេតុ API"
+
+#: ui_admin.api_settings
+msgctxt "ui_admin.api_settings"
+msgid "API Settings"
+msgstr "ការ​កំណត់ API"
+
+#: ui_admin.api_unban
+msgctxt "ui_admin.api_unban"
+msgid "UNBAN"
+msgstr "មិន​ហាម​ឃាត់"
+
+#: ui_admin.api_unban_all
+msgctxt "ui_admin.api_unban_all"
+msgid "UNBAN ALL"
+msgstr "មិន​​ហាមឃាត់​ទាំងអស់"
+
+#: ui_admin.approved
+msgctxt "ui_admin.approved"
+msgid "approved"
+msgstr "បាន​អនុម័ត"
+
+#: ui_admin.approve_auto
+msgctxt "ui_admin.approve_auto"
+msgid "Auto Approve"
+msgstr "អនុម័ត​ស្វ័យប្រវត្តិ"
+
+#: ui_admin.approve_manual
+msgctxt "ui_admin.approve_manual"
+msgid "Manually Approve"
+msgstr "អនុម័ត​ដោយ​ដៃ"
+
+#: ui_admin.archived
+msgctxt "ui_admin.archived"
+msgid "Archived"
+msgstr "បាន​ទុក​ក្នុង​ប័ណ្ណសារ"
+
+#: ui_admin.are_you_sure_you_want_to
+msgctxt "ui_admin.are_you_sure_you_want_to"
+msgid "Are you sure you want to"
+msgstr "តើ​អ្នក​ប្រាកដ​ជា​ចង់"
+
+#: ui_admin.are_you_sure_you_want_to_delete_this_item
+msgctxt "ui_admin.are_you_sure_you_want_to_delete_this_item"
+msgid "Are you sure you want to delete this item?"
+msgstr "តើ​អ្នក​ប្រាកដ​ជា​ចង់​លុប​ធាតុ​នេះ​ឬ?"
+
+#: ui_admin.are_you_sure_you_want_to_delete_this_photo
+msgctxt "ui_admin.are_you_sure_you_want_to_delete_this_photo"
+msgid "Are you sure you want to delete this photo?"
+msgstr "តើ​អ្នក​ប្រាកដ​ជា​ចង់​លុប​រូបថត​នេះ​ឬ?"
+
+#: ui_admin.are_you_sure_you_want_to_switch_forms
+msgctxt "ui_admin.are_you_sure_you_want_to_switch_forms"
+msgid "Are you sure you want to switch forms?"
+msgstr "តើ​អ្នក​ពិត​ជា​ចង់​ប្ដូរ​​​សំណុំ​បែបបទ​នេះ​ឬ?"
+
+#: ui_admin.assign
+msgctxt "ui_admin.assign"
+msgid "Assign"
+msgstr "ផ្ដល់​កិច្ចការ"
+
+#: ui_admin.assignments
+msgctxt "ui_admin.assignments"
+msgid "Assignments"
+msgstr "កិច្ចការ"
+
+#: ui_admin.assign_badge
+msgctxt "ui_admin.assign_badge"
+msgid "Assign Badge"
+msgstr "ផ្ដល់​ស្លាក"
+
+#: ui_admin.author
+msgctxt "ui_admin.author"
+msgid "Author"
+msgstr "អ្នក​និពន្ធ"
+
+#: ui_admin.author_email
+msgctxt "ui_admin.author_email"
+msgid "Author email"
+msgstr "អ៊ីមែល​របស់​អ្នក​និពន្ធ"
+
+#: ui_admin.back
+msgctxt "ui_admin.back"
+msgid "Back"
+msgstr "ថយ​ក្រោយ"
+
+#: ui_admin.banip_action
+msgctxt "ui_admin.banip_action"
+msgid "Ban IP"
+msgstr "ហាម IP"
+
+#: ui_admin.between_times
+msgctxt "ui_admin.between_times"
+msgid "Between Times"
+msgstr "ចន្លោះ​ពេល"
+
+#: ui_admin.blocks
+msgctxt "ui_admin.blocks"
+msgid "Blocks"
+msgstr "ទប់​ស្កាត់"
+
+#: ui_admin.body
+msgctxt "ui_admin.body"
+msgid "Body"
+msgstr "តួ"
+
+#: ui_admin.cancel
+msgctxt "ui_admin.cancel"
+msgid "Cancel"
+msgstr "បោះ​បង់​"
+
+#: ui_admin.categories
+msgctxt "ui_admin.categories"
+msgid "Categories"
+msgstr "ចំណាត់ថ្នាក់ក្រុម"
+
+#: ui_admin.chart_display_error
+msgctxt "ui_admin.chart_display_error"
+msgid "Error displaying chart"
+msgstr "កំហុស​ក្នុង​ការ​បង្ហាញ​គំនូសតាង"
+
+#: ui_admin.check_message_valid
+msgctxt "ui_admin.check_message_valid"
+msgid "Please make sure your message is valid."
+msgstr "សូម​ប្រាកដ​ថា​សារ​របស់​អ្នក​ត្រឹមត្រូវ។"
+
+#: ui_admin.check_number
+msgctxt "ui_admin.check_number"
+msgid "Please make sure the number is valid."
+msgstr "សូម​ប្រាកដ​ថា​លេខ​ត្រឹមត្រូវ។"
+
+#: ui_admin.check_sms_settings
+msgctxt "ui_admin.check_sms_settings"
+msgid "Please check your SMS settings!"
+msgstr "សូម​ពិនិត្យមើល​សារ SMS របស់​អ្នក!"
+
+#: ui_admin.checkin_details
+msgctxt "ui_admin.checkin_details"
+msgid "Checkin Details"
+msgstr "សេចក្ដី​លម្អិត​ការ​ចូល"
+
+#: ui_admin.checkins
+msgctxt "ui_admin.checkins"
+msgid "Checkins"
+msgstr "ការ​ចូល"
+
+#: ui_admin.cities_loaded
+msgctxt "ui_admin.cities_loaded"
+msgid "Cities loaded"
+msgstr "បាន​ផ្ទុក​ទីក្រុង"
+
+#: ui_admin.code
+msgctxt "ui_admin.code"
+msgid "code"
+msgstr "កូដ"
+
+#: ui_admin.code_out_of_sync
+msgctxt "ui_admin.code_out_of_sync"
+msgid "Code version out of sync."
+msgstr "កំណែ​កូដ​​គ្មាន​សមកាលកម្ម។"
+
+#: ui_admin.color
+msgctxt "ui_admin.color"
+msgid "Color"
+msgstr "ពណ៌"
+
+#: ui_admin.comments
+msgctxt "ui_admin.comments"
+msgid "Comments"
+msgstr "មតិយោបល់"
+
+#: ui_admin.confirmation_code
+msgctxt "ui_admin.confirmation_code"
+msgid "Your alerts confirmation code is: "
+msgstr "កូដ​ការ​អះអាង​ការ​ជូនដំណឹង​របស់​អ្នក​គឺ៖"
+
+#: ui_admin.confirm_msg
+msgctxt "ui_admin.confirm_msg"
+msgid "The User Has Been"
+msgstr "អ្នក​ប្រើ​ត្រូវ​បាន"
+
+#: ui_admin.count
+msgctxt "ui_admin.count"
+msgid "Count"
+msgstr "រាប់"
+
+#: ui_admin.country_not_found
+msgctxt "ui_admin.country_not_found"
+msgid "Country Not Found"
+msgstr "រក​មិន​ឃើញ​ប្រទេស"
+
+#: ui_admin.created_edited
+msgctxt "ui_admin.created_edited"
+msgid "created/edited"
+msgstr "បាន​បង្កើត/បាន​កែសម្រួល"
+
+#: ui_admin.create_report
+msgctxt "ui_admin.create_report"
+msgid "Create a Report"
+msgstr "ធ្វើ​របាយការណ៍"
+
+#: ui_admin.critical_upgrade
+msgctxt "ui_admin.critical_upgrade"
+msgid "Critical Upgrade"
+msgstr "ធ្វើ​ឲ្យ​ប្រសើរ"
+
+#: ui_admin.csv
+msgctxt "ui_admin.csv"
+msgid "CSV"
+msgstr "CSV"
+
+#: ui_admin.currently_active
+msgctxt "ui_admin.currently_active"
+msgid "Currently Active"
+msgstr "សកម្ម​នៅ​ពេល​បច្ចុប្បន្ន"
+
+#: ui_admin.currently_inactive
+msgctxt "ui_admin.currently_inactive"
+msgid "Currently Inactive"
+msgstr "មិន​សកម្ម​នៅ​ពេល​បច្ចុប្បន្ន"
+
+#: ui_admin.custom_forms_insufficient_permissions
+msgctxt "ui_admin.custom_forms_insufficient_permissions"
+msgid ""
+"You don't have sufficient permissions to edit the following custom fields."
+msgstr "អ្នក​មិន​មាន​សិទ្ធិ​គ្រប់គ្រាន់​ក្នុង​ការ​កែសម្រួល​វាល​ផ្ទាល់​ខ្លួន​ខាង​ក្រោម​ឡើយ។"
+
+#: ui_admin.daily
+msgctxt "ui_admin.daily"
+msgid "Daily"
+msgstr "ប្រចាំ​ថ្ងៃ"
+
+#: ui_admin.dashboard
+msgctxt "ui_admin.dashboard"
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: ui_admin.database
+msgctxt "ui_admin.database"
+msgid "database"
+msgstr "មូលដ្ឋាន​ទិន្នន័យ"
+
+#: ui_admin.date_time
+msgctxt "ui_admin.date_time"
+msgid "Date & Time"
+msgstr "កាលបរិច្ឆេទ និង​ពេលវេលា"
+
+#: ui_admin.date_added
+msgctxt "ui_admin.date_added"
+msgid "Date Added"
+msgstr "បាន​បន្ថែម​កាលបរិច្ឆេទ"
+
+#: ui_admin.date_modified
+msgctxt "ui_admin.date_modified"
+msgid "Date Modified"
+msgstr "បាន​កែប្រែ​កាល​បរិច្ឆេទ"
+
+#: ui_admin.days_of_the_week
+msgctxt "ui_admin.days_of_the_week"
+msgid "Days of the week"
+msgstr "ថ្ងៃ​នៃ​​សប្ដាហ៍"
+
+#: ui_admin.db_out_of_sync
+msgctxt "ui_admin.db_out_of_sync"
+msgid "DB version out of sync."
+msgstr "កំណែ DB គ្មាន​សមកាលកម្ម។"
+
+#: ui_admin.deleted
+msgctxt "ui_admin.deleted"
+msgid "deleted"
+msgstr "បាន​លុប"
+
+#: ui_admin.delete_action
+msgctxt "ui_admin.delete_action"
+msgid "Delete"
+msgstr "លុប"
+
+#: ui_admin.delete_all
+msgctxt "ui_admin.delete_all"
+msgid "Delete all reports"
+msgstr "លុប​របាយការណ៍​ទាំងអស់"
+
+#: ui_admin.delete_badge
+msgctxt "ui_admin.delete_badge"
+msgid "Delete Badge"
+msgstr "លុប​ស្លាក"
+
+#: ui_admin.demo
+msgctxt "ui_admin.demo"
+msgid "Demo"
+msgstr "ការ​បង្ហាញ"
+
+#: ui_admin.description
+msgctxt "ui_admin.description"
+msgid "Description"
+msgstr "សេចក្ដី​ពិពណ៌នា"
+
+#: ui_admin.disabled
+msgctxt "ui_admin.disabled"
+msgid "Disabled"
+msgstr "បាន​បិទ"
+
+#: ui_admin.divider_start_field
+msgctxt "ui_admin.divider_start_field"
+msgid "Divider Start"
+msgstr "ចាប់ផ្ដើម​ការ​បែងចែក"
+
+#: ui_admin.divider_end_field
+msgctxt "ui_admin.divider_end_field"
+msgid "Divider End"
+msgstr "បញ្ចប់​ការ​បែងចែក"
+
+#: ui_admin.divider_class
+msgctxt "ui_admin.divider_class"
+msgid "div class"
+msgstr "div class"
+
+#: ui_admin.download_reports
+msgctxt "ui_admin.download_reports"
+msgid "Download Reports"
+msgstr "ទាញ​យក​របាយការណ៍"
+
+#: ui_admin.dropdown_choices
+msgctxt "ui_admin.dropdown_choices"
+msgid "Dropdown Choices"
+msgstr "ជម្រើស​​​ទម្លាក់​ចុះ"
+
+#: ui_admin.edited
+msgctxt "ui_admin.edited"
+msgid "EDITED"
+msgstr "បាន​កែសម្រួល"
+
+#: ui_admin.edited_by
+msgctxt "ui_admin.edited_by"
+msgid "Edited By"
+msgstr "បាន​កែសម្រួល​ដោយ"
+
+#: ui_admin.edit_action
+msgctxt "ui_admin.edit_action"
+msgid "Edit"
+msgstr "កែសម្រួល"
+
+#: ui_admin.edit_log
+msgctxt "ui_admin.edit_log"
+msgid "Edit Log"
+msgstr "កែសម្រួល​កំណត់​ហេតុ"
+
+#: ui_admin.email
+msgctxt "ui_admin.email"
+msgid "Email"
+msgstr "អ៊ីមែល"
+
+#: ui_admin.entire_collective
+msgctxt "ui_admin.entire_collective"
+msgid "Entire Collective"
+msgstr "សហការ​ជា​ក្រុម"
+
+#: ui_admin.error_geocoding
+msgctxt "ui_admin.error_geocoding"
+msgid "Error in geocoding! HTTP error"
+msgstr "កំហុស​នៅ​ក្នុង​ geocoding! កំហុស HTTP"
+
+#: ui_admin.error_imap
+msgctxt "ui_admin.error_imap"
+msgid "IMAP PHP Library is not installed"
+msgstr "មិន​បាន​ដំឡើង​បណ្ណាល័យ IMAP PHP ឡើយ"
+
+#: ui_admin.error_twitter
+msgctxt "ui_admin.error_twitter"
+msgid "Incorrect Credentials"
+msgstr "ព័ត៌មាន​សម្ងាត់​មិន​ត្រឹមត្រូវ"
+
+#: ui_admin.error_msg
+msgctxt "ui_admin.error_msg"
+msgid "Error"
+msgstr "កំហុស"
+
+#: ui_admin.error_post_incident
+msgctxt "ui_admin.error_post_incident"
+msgid "Error, unable to post incident"
+msgstr "កំហុស មិន​អាច​ប្រកាស​ហេតុការណ៍"
+
+#: ui_admin.every_six_hours
+msgctxt "ui_admin.every_six_hours"
+msgid "Every Six Hours"
+msgstr "រៀងរាល់​ប្រាំមួយ​ម៉ោង"
+
+#: ui_admin.every_twelve_hours
+msgctxt "ui_admin.every_twelve_hours"
+msgid "Every Twelve Hours"
+msgstr "រៀងរាល់​ដប់ពីរ​ម៉ោង"
+
+#: ui_admin.experimental
+msgctxt "ui_admin.experimental"
+msgid "Experimental"
+msgstr "ទាក់ទង​នឹង​បទពិសោធន៍"
+
+#: ui_admin.faqs
+msgctxt "ui_admin.faqs"
+msgid "FAQ's"
+msgstr "FAQ's"
+
+#: ui_admin.feed
+msgctxt "ui_admin.feed"
+msgid "feed"
+msgstr "មតិ​ព័ត៌មាន"
+
+#: ui_admin.feedback
+msgctxt "ui_admin.feedback"
+msgid "Feedback"
+msgstr "មតិ​ត្រឡប់"
+
+#: ui_admin.feeds
+msgctxt "ui_admin.feeds"
+msgid "feeds"
+msgstr "មតិ​ព័ត៌មាន "
+
+#: ui_admin.field_choices
+msgctxt "ui_admin.field_choices"
+msgid "List of Choices"
+msgstr "រាយ​ជម្រើស"
+
+#: ui_admin.field_default
+msgctxt "ui_admin.field_default"
+msgid "Default Value"
+msgstr "តម្លៃ​លំនាំ​ដើម"
+
+#: ui_admin.field_datatype
+msgctxt "ui_admin.field_datatype"
+msgid "Data Type"
+msgstr "ប្រភេទ​ទិន្នន័យ"
+
+#: ui_admin.field_datatype_javascript
+msgctxt "ui_admin.field_datatype_javascript"
+msgid "Javascript"
+msgstr "Javascript"
+
+#: ui_admin.field_datatype_markup
+msgctxt "ui_admin.field_datatype_markup"
+msgid "Markup"
+msgstr "Markup"
+
+#: ui_admin.field_datatype_numeric
+msgctxt "ui_admin.field_datatype_numeric"
+msgid "Numeric"
+msgstr "ជា​លេខ"
+
+#: ui_admin.field_datatype_text
+msgctxt "ui_admin.field_datatype_text"
+msgid "Free Text"
+msgstr "អត្ថបទ​ឥត​គិត​ថ្លៃ"
+
+#: ui_admin.field_height
+msgctxt "ui_admin.field_height"
+msgid "Height (In Rows)"
+msgstr "កម្ពស់ (ជួរ​ដេក)"
+
+#: ui_admin.field_hidden
+msgctxt "ui_admin.field_hidden"
+msgid "Hidden Field"
+msgstr "វាល​ដែល​បាន​លាក់"
+
+#: ui_admin.field_maxlength
+msgctxt "ui_admin.field_maxlength"
+msgid "Maximum Character Length"
+msgstr "ប្រវែង​តួ​អក្សរ​អតិបរមា"
+
+#: ui_admin.field_name
+msgctxt "ui_admin.field_name"
+msgid "Field Name"
+msgstr "ឈ្មោះ​វាល"
+
+#: ui_admin.field_toggle
+msgctxt "ui_admin.field_toggle"
+msgid "Toggle"
+msgstr "បើក/បិទ"
+
+#: ui_admin.field_toggle_no
+msgctxt "ui_admin.field_toggle_no"
+msgid "No"
+msgstr "ទេ"
+
+#: ui_admin.field_toggle_yes_close
+msgctxt "ui_admin.field_toggle_yes_close"
+msgid "Yes, Closed by default"
+msgstr "បាទ/ចាស បាន​បិទ​តាម​លំនាំដើម"
+
+#: ui_admin.field_toggle_yes_open
+msgctxt "ui_admin.field_toggle_yes_open"
+msgid "Yes, Open by default"
+msgstr "បាទ/ចាស បើក​តាម​លំនាំដើម"
+
+#: ui_admin.file_not_found_upload
+msgctxt "ui_admin.file_not_found_upload"
+msgid "Could not find uploaded file"
+msgstr "រក​មិន​ឃើញ​ឯកសារ​ដែល​បាន​ផ្ទុក​ឡើង"
+
+#: ui_admin.file_open_error
+msgctxt "ui_admin.file_open_error"
+msgid "Could not open file for reading"
+msgstr "មិន​អាច​បើក​ឯកសារ​សម្រាប់​អាន​បាន​ទេ"
+
+#: ui_admin.form_not_exists
+msgctxt "ui_admin.form_not_exists"
+msgid "That Form Does Not Exist!"
+msgstr "គ្មាន​សំណុំ​បែបបទ​នេះ​ទេ!"
+
+#: ui_admin.forum
+msgctxt "ui_admin.forum"
+msgid "Forum"
+msgstr "វេទិកា"
+
+#: ui_admin.free_text_field
+msgctxt "ui_admin.free_text_field"
+msgid "Text Area Field (Free Text)"
+msgstr "វាល​តំបន់​អត្ថបទ (វាល​អត្ថបទ​ឥត​គិត​ថ្លៃ)"
+
+#: ui_admin.date_field
+msgctxt "ui_admin.date_field"
+msgid "Date Field"
+msgstr "វាល​កាលបរិច្ឆេទ"
+
+#: ui_admin.radio_field
+msgctxt "ui_admin.radio_field"
+msgid "Radio Buttons Field"
+msgstr "វាល​​ប៊ូតុង​មូល"
+
+#: ui_admin.checkbox_field
+msgctxt "ui_admin.checkbox_field"
+msgid "Checkboxes Field"
+msgstr "វាល​​ប្រអប់​ធីក"
+
+#: ui_admin.dropdown_field
+msgctxt "ui_admin.dropdown_field"
+msgid "Dropdown Field"
+msgstr "វាល​​ទម្លាក់"
+
+#: ui_admin.from
+msgctxt "ui_admin.from"
+msgid "From"
+msgstr "ពី"
+
+#: ui_admin.from_date
+msgctxt "ui_admin.from_date"
+msgid "From"
+msgstr "ពី"
+
+#: ui_admin.geonames_timeout
+msgctxt "ui_admin.geonames_timeout"
+msgid "Geonames Timeout Error"
+msgstr "កំហុស​អស់​ពេល​ Geonames"
+
+#: ui_admin.get_help
+msgctxt "ui_admin.get_help"
+msgid "Get Help"
+msgstr "ទទួល​ជំនួយ"
+
+#: ui_admin.get_more_themes
+msgctxt "ui_admin.get_more_themes"
+msgid "Get more themes"
+msgstr "ទទួល​បាន​រូបរាង​បន្ថែម"
+
+#: ui_admin.get_more_plugins
+msgctxt "ui_admin.get_more_plugins"
+msgid "Get more plugins"
+msgstr "ទទួល​បាន​កម្មវិធី​ជំនួយ​បន្ថែម"
+
+#: ui_admin.header_actions
+msgctxt "ui_admin.header_actions"
+msgid "Actions"
+msgstr "សកម្មភាព"
+
+#: ui_admin.header_add_edit
+msgctxt "ui_admin.header_add_edit"
+msgid "Add/Edit"
+msgstr "បន្ថែម​/​កែសម្រួល"
+
+#: ui_admin.header_email
+msgctxt "ui_admin.header_email"
+msgid "Email"
+msgstr "អ៊ីមែល"
+
+#: ui_admin.header_manage_users
+msgctxt "ui_admin.header_manage_users"
+msgid "Manage Users"
+msgstr "គ្រប់គ្រង​អ្នក​ប្រើ"
+
+#: ui_admin.header_role
+msgctxt "ui_admin.header_role"
+msgid "Role"
+msgstr "មុខងារ"
+
+#: ui_admin.header_user
+msgctxt "ui_admin.header_user"
+msgid "User"
+msgstr "អ្នក​ប្រើ"
+
+#: ui_admin.help
+msgctxt "ui_admin.help"
+msgid "help"
+msgstr "ជំនួយ"
+
+#: ui_admin.hourly
+msgctxt "ui_admin.hourly"
+msgid "Hourly"
+msgstr "រាល់​ម៉ោង"
+
+#: ui_admin.incident_feed
+msgctxt "ui_admin.incident_feed"
+msgid "Incident feed for"
+msgstr "មតិ​ព័ត៌មាន​ហេតុ​ការណ៍​សម្រាប់"
+
+#: ui_admin.installer_info
+msgctxt "ui_admin.installer_info"
+msgid ""
+"The installer folder still exists. Delete the installer folder. It is a "
+"potential security vulnerability."
+msgstr "ថត​កម្មវិធី​ដំឡើង​នៅ​តែ​​មាន។ លុប​ថត​កម្មវិធី​ដំឡើង។ វា​ងាយ​ប៉ះពាល់​ដល់​សុវត្ថិភាព​យ៉ាង​ខ្លាំង។"
+
+#: ui_admin.instance
+msgctxt "ui_admin.instance"
+msgid "Instance"
+msgstr "ឧទាហរណ៍"
+
+#: ui_admin.instances
+msgctxt "ui_admin.instances"
+msgid "Instances"
+msgstr "ឧទាហរណ៍"
+
+#: ui_admin.instance_details
+msgctxt "ui_admin.instance_details"
+msgid "Instance Details"
+msgstr "សេចក្ដី​លម្អិត​សម្រាប់​ឧទាហរណ៍"
+
+#: ui_admin.invalid_parameter
+msgctxt "ui_admin.invalid_parameter"
+msgid "Invalid Parameter"
+msgstr "ប៉ារ៉ាម៉ែត្រ​មិន​ត្រឹមត្រូវ"
+
+#: ui_admin.ip_address
+msgctxt "ui_admin.ip_address"
+msgid "IP Address"
+msgstr "អាសយដ្ឋាន IP"
+
+#: ui_admin.is_date
+msgctxt "ui_admin.is_date"
+msgid "Is this a Date Field?"
+msgstr "តើ​នេះ​ជា​វាល​កាល​បរិច្ឆេទ​ឬ?"
+
+#: ui_admin.ispublic_visible
+msgctxt "ui_admin.ispublic_visible"
+msgid "Who Can View Answers"
+msgstr "អ្នក​ណា​អាច​​​មើល​​ចម្លើយ​នេះ"
+
+#: ui_admin.ispublic_submit
+msgctxt "ui_admin.ispublic_submit"
+msgid "Who Can Submit Answers"
+msgstr "អ្នក​ណា​ដែល​អាច​ដាក់​ស្នើ​ចម្លើយ​"
+
+#: ui_admin.keyword
+msgctxt "ui_admin.keyword"
+msgid "Keyword"
+msgstr "ពាក្យ​គន្លឹះ"
+
+#: ui_admin.keywords
+msgctxt "ui_admin.keywords"
+msgid "Keywords"
+msgstr "ពាក្យ​គន្លឹះ"
+
+#: ui_admin.label_email
+msgctxt "ui_admin.label_email"
+msgid "Email Address:"
+msgstr "អាសយដ្ឋាន​អ៊ីមែល៖"
+
+#: ui_admin.label_full_name
+msgctxt "ui_admin.label_full_name"
+msgid "Full Name:"
+msgstr "ឈ្មោះ​ពេញ៖"
+
+#: ui_admin.label_password
+msgctxt "ui_admin.label_password"
+msgid "Password:"
+msgstr "លេខសម្ងាត់"
+
+#: ui_admin.label_role
+msgctxt "ui_admin.label_role"
+msgid "Role:"
+msgstr "មុខងារ"
+
+#: ui_admin.label_username
+msgctxt "ui_admin.label_username"
+msgid "Username:"
+msgstr "ឈ្មោះ​អ្នក​ប្រើ៖"
+
+#: ui_admin.layers
+msgctxt "ui_admin.layers"
+msgid "Layers"
+msgstr "ស្រទាប់"
+
+#: ui_admin.login_role
+msgctxt "ui_admin.login_role"
+msgid "Moderator"
+msgstr "អ្នក​សម្របសម្រួល"
+
+#: ui_admin.logout
+msgctxt "ui_admin.logout"
+msgid "Logout"
+msgstr "ចេញ"
+
+#: ui_admin.logs
+msgctxt "ui_admin.logs"
+msgid "Logs"
+msgstr "កំណត់ហេតុ"
+
+#: ui_admin.manage
+msgctxt "ui_admin.manage"
+msgid "Manage"
+msgstr "គ្រប់គ្រង"
+
+#: ui_admin.manage_roles
+msgctxt "ui_admin.manage_roles"
+msgid "Manage Roles & Permissions"
+msgstr "គ្រប់គ្រង​សិទ្ធ និង​តួនាទី"
+
+#: ui_admin.manage_users
+msgctxt "ui_admin.manage_users"
+msgid "View Users"
+msgstr "មើល​អ្នក​ប្រើ"
+
+#: ui_admin.manage_users_edit
+msgctxt "ui_admin.manage_users_edit"
+msgid "Add/Edit Users"
+msgstr "បន្ថែម/កែសម្រួល​អ្នក​ប្រើ"
+
+#: ui_admin.manage_public_listing
+msgctxt "ui_admin.manage_public_listing"
+msgid "Manage Your Public Listing"
+msgstr "គ្រប់គ្រង​ការ​រាយ​សាធារណៈ​​របស់​អ្នក"
+
+#: ui_admin.mark_as
+msgctxt "ui_admin.mark_as"
+msgid "Mark As"
+msgstr "សម្គាល់​ជា"
+
+#: ui_admin.marked_as_not_spam
+msgctxt "ui_admin.marked_as_not_spam"
+msgid "marked as not spam"
+msgstr "បាន​សម្គាល់​មិន​មាន​ជា​​សារ​ឥត​បាន​ការ"
+
+#: ui_admin.marked_as_spam
+msgctxt "ui_admin.marked_as_spam"
+msgid "marked as spam"
+msgstr "បាន​សម្គាល់​ជា​​​សារ​ឥត​បាន​ការ"
+
+#: ui_admin.match_no_documents
+msgctxt "ui_admin.match_no_documents"
+msgid "did not match any documents"
+msgstr "មិន​បាន​ផ្គូផ្គង​ឯកសារ​មួយ​ចំនួន"
+
+#: ui_admin.message
+msgctxt "ui_admin.message"
+msgid "Message"
+msgstr "សារ"
+
+#: ui_admin.messages
+msgctxt "ui_admin.messages"
+msgid "Messages"
+msgstr "សារ"
+
+#: ui_admin.messages_laconica
+msgctxt "ui_admin.messages_laconica"
+msgid "Laconica Messages"
+msgstr "សារ​របស់ Laconica"
+
+#: ui_admin.messages_twitter
+msgctxt "ui_admin.messages_twitter"
+msgid "Twitter Messages"
+msgstr "សារ​​របស់ Twitter"
+
+#: ui_admin.message_sent
+msgctxt "ui_admin.message_sent"
+msgid "Your message has been sent!"
+msgstr "សារ​របស់​អ្នក​បាន​ផ្ញើ!"
+
+#: ui_admin.mhi
+msgctxt "ui_admin.mhi"
+msgid "MHI"
+msgstr "MHI"
+
+#: ui_admin.minute
+msgctxt "ui_admin.minute"
+msgid "Minute"
+msgstr "នាទី"
+
+#: ui_admin.minutes
+msgctxt "ui_admin.minutes"
+msgid "Minutes"
+msgstr "នាទី"
+
+#: ui_admin.missing_parameter
+msgctxt "ui_admin.missing_parameter"
+msgid "Missing Parameter"
+msgstr "បាត់​ប៉ារ៉ាម៉ែត្រ"
+
+#: ui_admin.moderator
+msgctxt "ui_admin.moderator"
+msgid "Moderator"
+msgstr "អ្នក​សម្របសម្រួល"
+
+#: ui_admin.modified
+msgctxt "ui_admin.modified"
+msgid "modified"
+msgstr "បាន​កែប្រែ"
+
+#: ui_admin.modify_timezone
+msgctxt "ui_admin.modify_timezone"
+msgid "Modify Timezone Setting"
+msgstr "កែប្រែ​ការ​កំណត់​តំបន់​ពេលវេលា"
+
+#: ui_admin.move_down_action
+msgctxt "ui_admin.move_down_action"
+msgid "move down"
+msgstr "ផ្លាស់ទី​ចុះ​ក្រោម"
+
+#: ui_admin.move_up_action
+msgctxt "ui_admin.move_up_action"
+msgid "move up"
+msgstr "ផ្លាស់​ទី​ឡើង​លើ"
+
+#: ui_admin.multiple_hosted_instances
+msgctxt "ui_admin.multiple_hosted_instances"
+msgid "Multiple Hosted Instances"
+msgstr "ធាតុ​ដែល​បាន​បង្ហោះ​​ច្រើន"
+
+#: ui_admin.my_alerts
+msgctxt "ui_admin.my_alerts"
+msgid "My Alerts"
+msgstr "ការ​​ជូនដំណឹង​របស់​ខ្ញុំ"
+
+#: ui_admin.my_checkins
+msgctxt "ui_admin.my_checkins"
+msgid "My Checkins"
+msgstr "ការ​ចូល​របស់​ខ្ញុំ"
+
+#: ui_admin.my_profile
+msgctxt "ui_admin.my_profile"
+msgid "My Profile"
+msgstr "ប្រវត្តិ​​រូប​ខ្ញុំ"
+
+#: ui_admin.my_reports
+msgctxt "ui_admin.my_reports"
+msgid "My Reports"
+msgstr "របាយការណ៍​របស់​ខ្ញុំ"
+
+#: ui_admin.my_votes
+msgctxt "ui_admin.my_votes"
+msgid "Votes Cast"
+msgstr "Votes Cast"
+
+#: ui_admin.my_votes_up
+msgctxt "ui_admin.my_votes_up"
+msgid "Positive"
+msgstr "វិជ្ជមាន"
+
+#: ui_admin.my_votes_down
+msgctxt "ui_admin.my_votes_down"
+msgid "Negative"
+msgstr "អវិជ្ជមាន"
+
+#: ui_admin.name
+msgctxt "ui_admin.name"
+msgid "Name"
+msgstr "ឈ្មោះ"
+
+#: ui_admin.new_alert
+msgctxt "ui_admin.new_alert"
+msgid "Create New Alert"
+msgstr "បង្កើត​ការ​ជូនដំណឹង​ថ្មី"
+
+#: ui_admin.new_private
+msgctxt "ui_admin.new_private"
+msgid "Create New Message"
+msgstr "បង្កើត​សារ​ថ្មី"
+
+#: ui_admin.new_password
+msgctxt "ui_admin.new_password"
+msgid "New Password"
+msgstr "ពាក្យសម្ងាត់​ថ្មី"
+
+#: ui_admin.no
+msgctxt "ui_admin.no"
+msgid "No"
+msgstr "ទេ"
+
+#: ui_admin.none_category_explanation
+msgctxt "ui_admin.none_category_explanation"
+msgid ""
+"This is a special category that will not show up on the report submission "
+"form for users submitting reports. This is used to hold reports left without"
+" categories(uncategorized reports) as a result of category deletion."
+msgstr "វា​ជា​ប្រភេទ​ពិសេស​ដែល​នឹង​មិន​បង្ហាញ​នៅ​លើ​សំណុំ​បែបបទ​ការ​ដាក់​ស្នើ​របាយការណ៍​សម្រាប់​​របាយការណ៍​ដាក់​ស្នើ​របស់​អ្នក​ប្រើ។ វា​ត្រូវ​បាន​​ប្រើ​នៅ​ក្នុង​ការ​ភ្ជាប់​ជាមួយ​លក្ខណ​ពិសេស \"របាយការណ៍​ដែល​មិន​បាន​ចាត់​តាម​ប្រភេទ​ជា​ការ​លុប​ចោល​ប្រភេទ​លទ្ធផល។\" ។"
+
+#: ui_admin.notification
+msgctxt "ui_admin.notification"
+msgid "Notification"
+msgstr "ការ​ជូន​ដំណឹង"
+
+#: ui_admin.not_case_sensitive
+msgctxt "ui_admin.not_case_sensitive"
+msgid "This is not case sensitive."
+msgstr "វា​មិន​ប្រកាន់​តួ​អក្សរ​តូច​ធំ។"
+
+#: ui_admin.not_found
+msgctxt "ui_admin.not_found"
+msgid "Not Found"
+msgstr "រក​មិន​ឃើញ"
+
+#: ui_admin.no_data
+msgctxt "ui_admin.no_data"
+msgid "No data. There are no results to show."
+msgstr "គ្មាន​ទិន្នន័យ។ គ្មាន​លទ្ធផល​សម្រាប់​បង្ហាញ​ឡើយ។"
+
+#: ui_admin.no_error
+msgctxt "ui_admin.no_error"
+msgid "No Error"
+msgstr "គ្មាន​កំហុស"
+
+#: ui_admin.no_result_display_msg
+msgctxt "ui_admin.no_result_display_msg"
+msgid "No Results To Display!"
+msgstr "គ្មាន​លទ្ធផល​សម្រាប់​បង្ហាញ​ឡើយ!"
+
+#: ui_admin.of
+msgctxt "ui_admin.of"
+msgid "of"
+msgstr "នៃ"
+
+#: ui_admin.on_specific_count
+msgctxt "ui_admin.on_specific_count"
+msgid "On Specific Count"
+msgstr "នៃ​ចំនួន​ជាក់លាក់"
+
+#: ui_admin.openids
+msgctxt "ui_admin.openids"
+msgid "OpenID's"
+msgstr "OpenID's"
+
+#: ui_admin.page
+msgctxt "ui_admin.page"
+msgid "page"
+msgstr "ទំព័រ"
+
+#: ui_admin.pages
+msgctxt "ui_admin.pages"
+msgid "pages"
+msgstr "ទំព័រ"
+
+#: ui_admin.page_not_found
+msgctxt "ui_admin.page_not_found"
+msgid "Page Not Found"
+msgstr "រក​មិន​ឃើញ​ទំព័រ"
+
+#: ui_admin.page_not_found_message_with_contact
+msgctxt "ui_admin.page_not_found_message_with_contact"
+msgid ""
+"Sorry, the page you are trying to view is not here.<p><strong>Did you follow"
+" a link from somewhere else on our site?</strong><br />If you reached this "
+"page from another part of our site, please <a href=\"%s\">contact us</a> so "
+"that we can correct our mistake.</p><p><strong>Did you follow a link from "
+"another site? </strong><br />Links from other sites can sometimes be "
+"outdated or misspelled. <a href=\"%s\">Tell us</a> where you came from and "
+"we can try to contact the other site in order to fix the "
+"problem.</p><p><strong>Did you type the URL? </strong><br />You may have "
+"typed the address (URL) incorrectly. Check to make sure you have got the "
+"exact right spelling, capitalization, etc. </p>"
+msgstr "សូមទោស ទំព័រ​ដែល​អ្នក​កំពុង​ព្យាយាម​មើល​មិន​មាន​នៅ​ទី​នេះ​ទេ។<p><strong>តើ​អ្នក​អនុវត្ត​តំណ​ពី​កន្លែង​ផ្សេង​​នៅ​លើ​តំបន់​បណ្ដាញ​របស់​ពួក​យើង​ហើយ​ឬ​នៅ?</strong><br />ប្រសិនបើ​អ្នក​បាន​ទៅ​ដល់​ទំព័រ​នេះ​ពី​ផ្នែក​ផ្សេង​ទៀត​នៃ​តំបន់​បណ្ដាញ​របស់​យើង សូម <a href=\"%s\">ទាក់ទង​​យើង</a> ដូច្នេះ​យើង​អាច​​កែ​កំហុស​របស់​​យើង​បាន។</p><p><strong>តើ​អ្នក​បាន​អនុវត្ត​តំណ​ពី​តំបន់​បណ្ដាញ​ផ្សេងទៀត​ហើយ​ឬ​នៅ? </strong><br />តំណ​ពី​តំបន់​បណ្ដាញ​ផ្សេង​​ទៀត​អាច​ត្រូវ​បាន​​ធ្វើ​បច្ចុប្បន្នភាព ឬ​ប្រកប​ខុស។ <a href=\"%s\">Tell us</a> អ្នក​មក​ពី​ណា ហើយ​យើង​អាច​ព្យាយាម​យើង​អាច​សាកល្បង​ទាក់ទង​តំបន់បណ្ដាញ​ផ្សេង​ទៀត​ ដើម្បី​កែ​កំហុស។</p><p><strong>តើ​អ្នក​វាយ URL ឬ? </strong><br />អ្នក​អាច​មាន​អាសយដ្ឋាន (URL) មិន​ត្រឹមត្រូវ។ ពិនិត្យមើល​ដើម្បី​ប្រាកដ​ថា​អ្នក​មាន​សិទ្ធិ​កែ​អក្ខរាវិរុទ្ធ សរសេរ​ជា​អក្សរពុម្ព ។ល។ </p>"
+
+#: ui_admin.page_not_found_message
+msgctxt "ui_admin.page_not_found_message"
+msgid "Sorry, the page you are trying to view is not here."
+msgstr "សូមទោស ទំព័រ​ដែល​អ្នក​ព្យាយាម​មើល​មិន​មាន​នៅ​ទី​នេះ​ឡើយ។"
+
+#: ui_admin.parameters_used
+msgctxt "ui_admin.parameters_used"
+msgid "Parameters Used"
+msgstr "ប៉ារ៉ាម៉ែត្រ​ដែល​បាន​ប្រើ"
+
+#: ui_admin.password
+msgctxt "ui_admin.password"
+msgid "Password"
+msgstr "ពាក្យ​សម្ងាត់"
+
+#: ui_admin.password_reset
+msgctxt "ui_admin.password_reset"
+msgid "Password Reset"
+msgstr "កំណត់​ពាក្យ​សម្ងាត់​ឡើង​វិញ"
+
+#: ui_admin.password_reset_message_line_1
+msgctxt "ui_admin.password_reset_message_line_1"
+msgid "Dear"
+msgstr "ជា​ទី​ស្រលាញ់"
+
+#: ui_admin.password_reset_message_line_2
+msgctxt "ui_admin.password_reset_message_line_2"
+msgid "We received a request to reset the password for"
+msgstr "យើង​បាន​ទទួល​សំណើ​ដើម្បី​កំណត់​ពាក្យ​សម្ងាត់​ឡើង​វិញ​សម្រាប់"
+
+#: ui_admin.password_reset_message_line_3
+msgctxt "ui_admin.password_reset_message_line_3"
+msgid ""
+"To change your password, please click on the link below (or copy and paste "
+"it into your browser)."
+msgstr "ផ្លាស់ប្ដូរ​ពាក្យ​សម្ងាត់​របស់​អ្នក សូម​ចុច​លើ​តំណ​​ខាងក្រោម (ឬ​ចម្លង ហើយ​បិទ​ភ្ជាប់​វា​ទៅ​កាន់​កម្មវិធី​រុករក​របស់​អ្នក) ។"
+
+#: ui_admin.password_reset_message_line_4
+msgctxt "ui_admin.password_reset_message_line_4"
+msgid ""
+"As you requested, your password has now been reset. Your new details are as "
+"follows"
+msgstr "ដូច​ដែល​អ្នក​បាន​ស្នើ ពាក្យ​សម្ងាត់​របស់​​អ្នក​ត្រូវ​បាន​កំណត់​ឡើង​វិញ​ឥឡូវ​នេះ។ សេចក្ដី​លម្អិត​ថ្មី​របស់​អ្នក​ដូច​​ខាងក្រោម"
+
+#: ui_admin.password_reset_subject
+msgctxt "ui_admin.password_reset_subject"
+msgid "Ushahidi password reset"
+msgstr "កំណត់​ពាក្យ​សម្ងាត់​សម្រាប់ Ushahidi ឡើង​វិញ"
+
+#: ui_admin.phone
+msgctxt "ui_admin.phone"
+msgid "Phone"
+msgstr "ទូរស័ព្ទ"
+
+#: ui_admin.please_select
+msgctxt "ui_admin.please_select"
+msgid "Please Select"
+msgstr "សូម​ជ្រើស"
+
+#: ui_admin.pm
+msgctxt "ui_admin.pm"
+msgid "PM"
+msgstr "ល្ងាច"
+
+#: ui_admin.post_method_not_used
+msgctxt "ui_admin.post_method_not_used"
+msgid "Data was not sent by post method"
+msgstr "ទិន្នន័យ​មិន​ត្រូវ​បាន​ផ្ញើ​តាម​វិធី​សាស្ត្រ​ប្រកាស​ឡើយ"
+
+#: ui_admin.preview
+msgctxt "ui_admin.preview"
+msgid "Preview"
+msgstr "មើល​ជា​មុន"
+
+#: ui_admin.private_message
+msgctxt "ui_admin.private_message"
+msgid "Message"
+msgstr "សារ"
+
+#: ui_admin.private_messages
+msgctxt "ui_admin.private_messages"
+msgid "Private Messages"
+msgstr "សារ​ឯកជន"
+
+#: ui_admin.private_sent
+msgctxt "ui_admin.private_sent"
+msgid "Private Message Sent"
+msgstr "ផ្ញើ​សារ​​ឯកជន"
+
+#: ui_admin.private_subject
+msgctxt "ui_admin.private_subject"
+msgid "Subject"
+msgstr "ប្រធាន​បទ"
+
+#: ui_admin.private_to
+msgctxt "ui_admin.private_to"
+msgid "To"
+msgstr "ជូន​ចំពោះ"
+
+#: ui_admin.public_listing
+msgctxt "ui_admin.public_listing"
+msgid "Public Listing"
+msgstr "ការ​រាយ​ជា​សាធារណៈ"
+
+#: ui_admin.qualifiers
+msgctxt "ui_admin.qualifiers"
+msgid "Qualifiers"
+msgstr "អ្នក​សម្របសម្រួល"
+
+#: ui_admin.read
+msgctxt "ui_admin.read"
+msgid "read"
+msgstr "អាន"
+
+#: ui_admin.relevance
+msgctxt "ui_admin.relevance"
+msgid "Relevance"
+msgstr "ភាព​ទាក់ទង"
+
+#: ui_admin.report_title
+msgctxt "ui_admin.report_title"
+msgid "Report Title"
+msgstr "ចំណង​ជើង​របាយការណ៍"
+
+#: ui_admin.report_date
+msgctxt "ui_admin.report_date"
+msgid "Report Date"
+msgstr "កាលបរិច្ឆេទ​របាយការណ៍"
+
+#: ui_admin.reporters
+msgctxt "ui_admin.reporters"
+msgid "Reporters"
+msgstr "​អ្នក​​ធ្វើ​​របាយការណ៍"
+
+#: ui_admin.reporter_levels
+msgctxt "ui_admin.reporter_levels"
+msgid "Reporter Levels"
+msgstr "កម្រិត​អ្នក​ធ្វើ​របាយការណ៍"
+
+#: ui_admin.reports
+msgctxt "ui_admin.reports"
+msgid "Reports"
+msgstr "របាយការណ៍"
+
+#: ui_admin.reputation
+msgctxt "ui_admin.reputation"
+msgid "Reputation Score"
+msgstr "ពិន្ទុ​កេរ្តិ៍ឈ្មោះ"
+
+#: ui_admin.required
+msgctxt "ui_admin.required"
+msgid "Required"
+msgstr "បាន​ទាមទារ"
+
+#: ui_admin.reset
+msgctxt "ui_admin.reset"
+msgid "Reset"
+msgstr "កំណត់​ឡើង​វិញ"
+
+#: ui_admin.response
+msgctxt "ui_admin.response"
+msgid "Response"
+msgstr "ចម្លើយ​តប"
+
+#: ui_admin.results
+msgctxt "ui_admin.results"
+msgid "Results"
+msgstr "លទ្ធផល"
+
+#: ui_admin.revoke
+msgctxt "ui_admin.revoke"
+msgid "Revoke"
+msgstr "ដកហូត"
+
+#: ui_admin.riverid_exists_admin
+msgctxt "ui_admin.riverid_exists_admin"
+msgid ""
+"This email already has an account managed by CrowdmapID. The user will need "
+"to use their existing Crowdmap password to login."
+msgstr "អ៊ីមែល​នេះ​មាន​គណនី​ដែល​បាន​គ្រប់គ្រង​តាម CrowdmapID រួច​ហើយ។ អ្នក​ប្រើ​នឹង​ត្រូវ​ការ​ដើម្បី​ប្រើ​ពាក្យសម្ងាត់ Crowdmap ដែល​មាន​ស្រាប់​ដើម្បី​ចូល។"
+
+#: ui_admin.save_settings
+msgctxt "ui_admin.save_settings"
+msgid "Save Settings"
+msgstr "រក្សាទុក​ការ​កំណត់"
+
+#: ui_admin.search
+msgctxt "ui_admin.search"
+msgid "Search"
+msgstr "ស្វែងរក"
+
+#: ui_admin.search_reports
+msgctxt "ui_admin.search_reports"
+msgid "Search Reports"
+msgstr "ស្វែងរក​របាយការណ៍"
+
+#: ui_admin.searching_for
+msgctxt "ui_admin.searching_for"
+msgid "searching for"
+msgstr "កំពុង​ស្វែងរក​"
+
+#: ui_admin.security_info_encryption_key
+msgctxt "ui_admin.security_info_encryption_key"
+msgid ""
+"The encryption key is still set to the default value. This is insecure and "
+"must be changed."
+msgstr "សោ​ការ​អ៊ិនគ្រីប​នៅ​តែ​កំណត់​តម្លៃ​លំនាំដើម។ វា​គ្មាន​សុវត្ថិភាព ត្រូវ​តែ​ផ្លាស់ប្ដូរ។"
+
+#: ui_admin.security_info_https
+msgctxt "ui_admin.security_info_https"
+msgid ""
+"This site being served over HTTP. This should be set to HTTPS for increased "
+"security."
+msgstr "តំបន់​បណ្ដាញ​នេះ​កំពុង​ត្រូវ​បាន​រក្សាទុក​នៅ​លើ HTTP ។ វា​គួរតែ​កំណត់​ទៅ HTTPS សម្រាប់​បង្កើន​សុវត្ថិភាព។"
+
+#: ui_admin.security_info_instructions
+msgctxt "ui_admin.security_info_instructions"
+msgid "Instructions are available on the wiki: "
+msgstr "សេចក្ដី​ណែនាំ​មាន​នៅ​លើ​វីគី៖"
+
+#: ui_admin.select_download_format
+msgctxt "ui_admin.select_download_format"
+msgid "Select your desired reports download format:-"
+msgstr "ជ្រើស​ទ្រង់ទ្រាយ​ទាញ​យក​របាយការណ៍​ដែល​អ្នក​ចង់​បាន៖"
+
+#: ui_admin.select_field_type
+msgctxt "ui_admin.select_field_type"
+msgid "--- Select A Field Type ---"
+msgstr "---ជ្រើស​ប្រភេទ​វាល ---"
+
+#: ui_admin.select_item
+msgctxt "ui_admin.select_item"
+msgid "Please select an item"
+msgstr "សូម​ជ្រើស​ធាតុ​មួយ"
+
+#: ui_admin.select_trigger_before_response
+msgctxt "ui_admin.select_trigger_before_response"
+msgid "You must select a Trigger before you can select a Response."
+msgstr "អ្នក​ត្រូវ​តែ​ជ្រើស​គន្លឹះ មុន​ពេល​អ្នក​អាច​ជ្រើស​ចម្លើយ​តប។"
+
+#: ui_admin.select_trigger_before_qualifiers
+msgctxt "ui_admin.select_trigger_before_qualifiers"
+msgid "You must select a Trigger before you can define Qualifiers."
+msgstr "អ្នក​ត្រូវ​តែ​ជ្រើស​ធ្វើ​ឲ្យ​សកម្ម មុន​ពេល​​អ្នក​អាច​កំណត់​អ្នក​សម្របសម្រួល។"
+
+#: ui_admin.sender
+msgctxt "ui_admin.sender"
+msgid "Sender"
+msgstr "អ្នក​ផ្ញើ"
+
+#: ui_admin.send_to
+msgctxt "ui_admin.send_to"
+msgid "Send To"
+msgstr "ផ្ញើ​ទៅ"
+
+#: ui_admin.sent_from_website
+msgctxt "ui_admin.sent_from_website"
+msgid "This message was sent from your website at "
+msgstr "សារ​នេះ​ត្រូវ​បាន​ផ្ញើ​ពី​តំបន់​បណ្ដាញ​របស់​​អ្នក​នៅ"
+
+#: ui_admin.server_time
+msgctxt "ui_admin.server_time"
+msgid "Server Time"
+msgstr "ពេលវេលា​​របស់​ម៉ាស៊ីន​មេ"
+
+#: ui_admin.settings
+msgctxt "ui_admin.settings"
+msgid "Settings"
+msgstr "ការ​កំណត់"
+
+#: ui_admin.showing_page
+msgctxt "ui_admin.showing_page"
+msgid "Showing page"
+msgstr "បង្ហាញ​ទំព័រ"
+
+#: ui_admin.showing_results
+msgctxt "ui_admin.showing_results"
+msgid "Showing results"
+msgstr "បង្ហាញ​លទ្ធផល"
+
+#: ui_admin.shown
+msgctxt "ui_admin.shown"
+msgid "shown"
+msgstr "បាន​បង្ហាញ"
+
+#: ui_admin.special_category
+msgctxt "ui_admin.special_category"
+msgid "Special Category"
+msgstr "ប្រភេទ​ពិសេស"
+
+#: ui_admin.special_category_explanation
+msgctxt "ui_admin.special_category_explanation"
+msgid ""
+"This is a special category that will not show up on the report submission "
+"form for users submitting reports. This is used in conjunction with the "
+"\"Trusted Reporters\" feature."
+msgstr "វា​ជា​ប្រភេទ​ពិសេស​ដែល​នឹង​មិន​បង្ហាញ​នៅ​លើ​សំណុំ​បែបបទ​ការ​ដាក់​ស្នើ​របាយការណ៍​សម្រាប់​​របាយការណ៍​ដាក់​ស្នើ​របស់​អ្នក​ប្រើ។ វា​ត្រូវ​បាន​​ប្រើ​នៅ​ក្នុង​ការ​ភ្ជាប់​ជាមួយ​លក្ខណ​ពិសេស \"របាយការណ៍​ដែល​ជឿ​ទុក​ចិត្ត\" ។"
+
+#: ui_admin.specific_area
+msgctxt "ui_admin.specific_area"
+msgid "Specific Area"
+msgstr "ផ្ទៃ​ជាក់​លាក់​​​"
+
+#: ui_admin.state
+msgctxt "ui_admin.state"
+msgid "State"
+msgstr "ស្ថិតិ"
+
+#: ui_admin.statistics
+msgctxt "ui_admin.statistics"
+msgid "Statistics"
+msgstr "ស្ថិតិ"
+
+#: ui_admin.stats
+msgctxt "ui_admin.stats"
+msgid "Stats"
+msgstr "ស្ថិតិ"
+
+#: ui_admin.stats_collection_error
+msgctxt "ui_admin.stats_collection_error"
+msgid "Stat collection failed! Please try again later."
+msgstr "បាន​បរាជ័យ​ការ​សម្រាំង​ស្ថិតិ​! សូម​ព្យាយាម​​ម្ដងទៀត​ពេល​ក្រោយ។"
+
+#: ui_admin.stats_collection_error_short
+msgctxt "ui_admin.stats_collection_error_short"
+msgid "Stat Collection Failed!"
+msgstr "បាន​បរាជ័យ​ការ​សម្រាំង​ស្ថិតិ!"
+
+#: ui_admin.specific_days
+msgctxt "ui_admin.specific_days"
+msgid "Specific Days"
+msgstr "ថ្ងៃ​ជាក់លាក់"
+
+#: ui_admin.subject
+msgctxt "ui_admin.subject"
+msgid "Subject"
+msgstr "ប្រធាន​បទ"
+
+#: ui_admin.superadmin_role
+msgctxt "ui_admin.superadmin_role"
+msgid "Super Admin"
+msgstr "ជា​អ្នក​គ្រប់គ្រង​ជាន់​ខ្ពស់"
+
+#: ui_admin.task_performed
+msgctxt "ui_admin.task_performed"
+msgid "Task Performed"
+msgstr "ភារកិច្ច​ដែល​បាន​អនុវត្ត"
+
+#: ui_admin.text_field
+msgctxt "ui_admin.text_field"
+msgid "Text Field"
+msgstr "វាល​កាលបរិច្ឆេទ"
+
+#: ui_admin.theme_name
+msgctxt "ui_admin.theme_name"
+msgid "Name"
+msgstr "ឈ្មោះ"
+
+#: ui_admin.title
+msgctxt "ui_admin.title"
+msgid "Manage Users"
+msgstr "គ្រប់គ្រង​អ្នកប្រើ"
+
+#: ui_admin.timeout
+msgctxt "ui_admin.timeout"
+msgid "Timeout Error"
+msgstr "កំហុស​អស់​ពេល"
+
+#: ui_admin.to
+msgctxt "ui_admin.to"
+msgid "to"
+msgstr "ជូន​ចំពោះ"
+
+#: ui_admin.total_records
+msgctxt "ui_admin.total_records"
+msgid "Total Records"
+msgstr "របាយការណ៍​សរុប"
+
+#: ui_admin.to_date
+msgctxt "ui_admin.to_date"
+msgid "to"
+msgstr "ជួន​ចំពោះ"
+
+#: ui_admin.translate_reports
+msgctxt "ui_admin.translate_reports"
+msgid "Translate Reports"
+msgstr "បកប្រែ​របាយការណ៍"
+
+#: ui_admin.trigger
+msgctxt "ui_admin.trigger"
+msgid "Trigger"
+msgstr "ធ្វើ​ឲ្យ​សកម្ម"
+
+#: ui_admin.triggering_user
+msgctxt "ui_admin.triggering_user"
+msgid "Triggering User"
+msgstr "ធ្វើ​ឲ្យ​អ្នក​ប្រើ​សកម្ម"
+
+#: ui_admin.triggers
+msgctxt "ui_admin.triggers"
+msgid "Triggers"
+msgstr "ការ​ធ្វើ​ឲ្យ​សកម្ម"
+
+#: ui_admin.unapproved
+msgctxt "ui_admin.unapproved"
+msgid "unapproved"
+msgstr "មិន​បាន​អនុម័ត"
+
+#: ui_admin.unknown
+msgctxt "ui_admin.unknown"
+msgid "Unknown"
+msgstr "មិន​ស្គាល់"
+
+#: ui_admin.unknown_failure
+msgctxt "ui_admin.unknown_failure"
+msgid "Unknown Failure"
+msgstr "ការ​បរាជ័យ​ដែល​មិន​ស្គាល់"
+
+#: ui_admin.unread
+msgctxt "ui_admin.unread"
+msgid "unread"
+msgstr "មិន​បាន​អាន"
+
+#: ui_admin.unsubscribe_message
+msgctxt "ui_admin.unsubscribe_message"
+msgid "You will no longer receive alerts from"
+msgstr "អ្នក​នឹង​មិន​ទទួល​បាន​ការ​ជូនដំណឹង​ទៀត​ទេ"
+
+#: ui_admin.update_link
+msgctxt "ui_admin.update_link"
+msgid " Click here to upgrade now"
+msgstr "ចុច​នៅ​ទី​នេះ​ដើម្បី​ធ្វើ​ឲ្យ​ប្រសើរ​ឡើង​ឥឡូវ​នេះ"
+
+#: ui_admin.upgrade_ushahidi
+msgctxt "ui_admin.upgrade_ushahidi"
+msgid "Upgrade Ushahidi"
+msgstr "ធ្វើ​បច្ចុប្បន្ន​ភាព Ushahidi"
+
+#: ui_admin.upgrade_ushahidi_status
+msgctxt "ui_admin.upgrade_ushahidi_status"
+msgid "Upgrade Ushahidi Status"
+msgstr "ធ្វើ​បច្ចុប្បន្នភាព​ស្ថានភាព Ushahidi"
+
+#: ui_admin.upload_reports
+msgctxt "ui_admin.upload_reports"
+msgid "Upload Reports"
+msgstr "ផ្ទុក​របាយការណ៍"
+
+#: ui_admin.user
+msgctxt "ui_admin.user"
+msgid "User"
+msgstr "អ្នក​ប្រើ"
+
+#: ui_admin.users
+msgctxt "ui_admin.users"
+msgid "Users"
+msgstr "អ្នក​ប្រើ"
+
+#: ui_admin.ushahidi
+msgctxt "ui_admin.ushahidi"
+msgid "Ushahidi"
+msgstr "Ushahidi"
+
+#: ui_admin.verified_unverified
+msgctxt "ui_admin.verified_unverified"
+msgid "Verified/Unverified"
+msgstr "បាន​ផ្ទៀងផ្ទាត់/មិន​​បាន​ផ្ទៀងផ្ទាត់"
+
+#: ui_admin.verify_unverify
+msgctxt "ui_admin.verify_unverify"
+msgid "Verify/Unverify"
+msgstr "ផ្ទៀងផ្ទាត់/មិន​បាន​​ផ្ទៀងផ្ទាត់"
+
+#: ui_admin.version
+msgctxt "ui_admin.version"
+msgid "Version"
+msgstr "កំណែ"
+
+#: ui_admin.version_available
+msgctxt "ui_admin.version_available"
+msgid " is available for upgrade."
+msgstr "មាន​សម្រាប់​ធ្វើ​បច្ចុប្បន្ន។"
+
+#: ui_admin.video_encoding
+msgctxt "ui_admin.video_encoding"
+msgid "Video Encoding"
+msgstr "ការ​អ៊ិនកូដ​វីដេអូ"
+
+#: ui_admin.view_private
+msgctxt "ui_admin.view_private"
+msgid "Private Messages"
+msgstr "សារ​ឯកជន"
+
+#: ui_admin.view_site
+msgctxt "ui_admin.view_site"
+msgid "View Site"
+msgstr "មើល​តំបន់​បណ្ដាញ"
+
+#: ui_admin.view_report
+msgctxt "ui_admin.view_report"
+msgid "View Report"
+msgstr "មើល​របាយការណ៍"
+
+#: ui_admin.welcome
+msgctxt "ui_admin.welcome"
+msgid "Welcome, "
+msgstr "ស្វាគមន៍"
+
+#: ui_admin.wiki
+msgctxt "ui_admin.wiki"
+msgid "Wiki"
+msgstr "វីគី"
+
+#: ui_admin.xml
+msgctxt "ui_admin.xml"
+msgid "XML"
+msgstr "XML"
+
+#: ui_admin.yes
+msgctxt "ui_admin.yes"
+msgid "Yes"
+msgstr "បាទ/ចាស​"
+
+#: ui_admin.your_search_for
+msgctxt "ui_admin.your_search_for"
+msgid "Your search for"
+msgstr "ការ​ស្វែងរក​របស់​អ្នក"
+
+#: ui_admin.delete_all_instructions
+msgctxt "ui_admin.delete_all_instructions"
+msgid ""
+"Clicking the button below will delete ALL reports on the database. You "
+"should use this with caution as this operation cannot be undone."
+msgstr "ពិនិត្យមើល​ប៊ូតុង​ខាង​ក្រោម​នឹង​លុប​របាយការណ៍​ទាំងអស់​នៅ​លើ​មូលដ្ឋាន​ទិន្នន័យ។ អ្នក​គូរ​តែ​ប្រើការ​ជូន​ដំណឹង​នេះ​ជា​ប្រតិបត្តិការ​ដែល​មិន​ត្រូវ​ធ្វើ​វិញ។"
+
+#: ui_admin.delete_all_backup
+msgctxt "ui_admin.delete_all_backup"
+msgid "We recommend you backup your database before proceeding"
+msgstr "យើង​ផ្ដល់​អនុសាសន៍​ឲ្យ​អ្នក​ថយក្រោយ​ទៅ​មូលដ្ឋាន​ទិន្នន័យ​របស់​អ្នក​មុន​ពេល​បន្ត"
+
+#: ui_admin.delete_all_button
+msgctxt "ui_admin.delete_all_button"
+msgid "I'm sure I want to delete all %s report(s) from the database."
+msgstr "ខ្ញុំ​ប្រាកដ​ជា​ចង់​លុប​របាយការណ៍​ទាំងអស់ %s ពី​មូលដ្ឋាន​ទិន្នន័យ។"
+
+#: ui_admin.delete_all_confirm
+msgctxt "ui_admin.delete_all_confirm"
+msgid "Are you sure you want to delete all reports?"
+msgstr "តើ​អ្នក​ប្រាកដ​ជា​ចង់​លុប​របាយការណ៍​​ទាំងអស់​ឬ?"
+
+#: ui_admin.delete_all_no_reports
+msgctxt "ui_admin.delete_all_no_reports"
+msgid "There are no reports to be deleted."
+msgstr "គ្មាន​របាយការណ៍​ត្រូវ​បាន​លុប​ទេ។"
+
+#: ui_admin.user_no_logins
+msgctxt "ui_admin.user_no_logins"
+msgid "Number of logins"
+msgstr "ចំនួន​ចូល"
+
+#: ui_admin.user_last_login
+msgctxt "ui_admin.user_last_login"
+msgid "Last login"
+msgstr "ការ​ចូល​ចុង​ក្រោយ"
+
+#: ui_admin.user_confirmed_account
+msgctxt "ui_admin.user_confirmed_account"
+msgid "Confirmed account?"
+msgstr "បាន​បញ្ជាក់​ពាក្យសម្ងាត់?"

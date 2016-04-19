@@ -1,0 +1,62 @@
+# 
+# Translators:
+# Monica Ipate <monica.ipate@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Romanian (Romania) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ro_RO/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: comments.captcha.default
+msgctxt "comments.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Vă rugăm să introduceți un cod de securitate valid."
+
+#: comments.captcha.required
+msgctxt "comments.captcha.required"
+msgid "Please enter the security code."
+msgstr "Vă rugăm să introduceți codul de securitate."
+
+#: comments.captcha.valid
+msgctxt "comments.captcha.valid"
+msgid "You entered the wrong security code."
+msgstr "Ați introdus un cod de securitate greșit."
+
+#: comments.comment_author.length
+msgctxt "comments.comment_author.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Câmpul nume trebuie să aibă cel puțin 3 caractere lungime."
+
+#: comments.comment_author.required
+msgctxt "comments.comment_author.required"
+msgid "The name field is required."
+msgstr "Câmpul nume este necesar."
+
+#: comments.comment_description.required
+msgctxt "comments.comment_description.required"
+msgid "The comments field is required."
+msgstr "Câmpul de comentarii este necesar."
+
+#: comments.comment_email.email
+msgctxt "comments.comment_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "Câmpul ce conține email-ul nu pare să conțină o adresă de email validă."
+
+#: comments.comment_email.length
+msgctxt "comments.comment_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "Câmpul ce conține email-ul trebuie să aibă cel puțin 4 dar nu mai mult de 64 de caractere lungime."
+
+#: comments.comment_email.required
+msgctxt "comments.comment_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Câmpul ce conține email-ul este necesar dacă checkbox-ul este activ."

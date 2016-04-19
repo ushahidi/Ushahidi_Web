@@ -1,0 +1,1656 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-09-11 06:22+0000\n"
+"PO-Revision-Date: 2013-12-10 19:45+0000\n"
+"Last-Translator: Xan das Bolas <xandasbolas@riseup.net>\n"
+"Language-Team: Galician (http://www.transifex.com/ushahidi/ushahidi-v2/language/gl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_admin.access_denied_credentials
+msgctxt "ui_admin.access_denied_credentials"
+msgid ""
+"Access denied. Either your credentials are not valid or your request has "
+"been refused."
+msgstr "Acceso denegado. As súas credenciáis non son correctas ou a súa solicitudefoi rexeitada."
+
+#: ui_admin.access_denied_others
+msgctxt "ui_admin.access_denied_others"
+msgid ""
+"Access denied. Your request has been understood, but denied due to access "
+"limits like time. Try back later."
+msgstr "Acceso denegado. A súa solicitude foi procesada mais denegada por exceder o límite de tempo. Probe de novo máis tarde."
+
+#: ui_admin.access_level
+msgctxt "ui_admin.access_level"
+msgid "Access Level"
+msgstr "Nivel de Acceso"
+
+#: ui_admin.actions
+msgctxt "ui_admin.actions"
+msgid "Actions"
+msgstr "Accións"
+
+#: ui_admin.add_to_category
+msgctxt "ui_admin.add_to_category"
+msgid "Add to Category"
+msgstr "Engadir Categoría"
+
+#: ui_admin.added
+msgctxt "ui_admin.added"
+msgid "added"
+msgstr "engadido"
+
+#: ui_admin.added_edited
+msgctxt "ui_admin.added_edited"
+msgid "added/edited"
+msgstr "engadido/editado"
+
+#: ui_admin.addons
+msgctxt "ui_admin.addons"
+msgid "Addons"
+msgstr "Extensións"
+
+#: ui_admin.admin_role
+msgctxt "ui_admin.admin_role"
+msgid "Admin"
+msgstr "Admin"
+
+#: ui_admin.alerts
+msgctxt "ui_admin.alerts"
+msgid "Alerts"
+msgstr "Alertas"
+
+#: ui_admin.alerts_received
+msgctxt "ui_admin.alerts_received"
+msgid "Alerts Received"
+msgstr "Alertas Recibidas"
+
+#: ui_admin.all
+msgctxt "ui_admin.all"
+msgid "All"
+msgstr "Todo"
+
+#: ui_admin.am
+msgctxt "ui_admin.am"
+msgid "AM"
+msgstr "AM"
+
+#: ui_admin.anonymous
+msgctxt "ui_admin.anonymous"
+msgid "Anonymous"
+msgstr "Anónimo"
+
+#: ui_admin.anyone_role
+msgctxt "ui_admin.anyone_role"
+msgid "Anyone"
+msgstr "Nengún"
+
+#: ui_admin.anywhere
+msgctxt "ui_admin.anywhere"
+msgid "Anywhere"
+msgstr "En calquera sitio"
+
+#: ui_admin.api_banned
+msgctxt "ui_admin.api_banned"
+msgid "API Banned"
+msgstr "API Bloqueada"
+
+#: ui_admin.api_logs
+msgctxt "ui_admin.api_logs"
+msgid "API Logs"
+msgstr "Logs da API"
+
+#: ui_admin.api_settings
+msgctxt "ui_admin.api_settings"
+msgid "API Settings"
+msgstr "Configuracións da API"
+
+#: ui_admin.api_unban
+msgctxt "ui_admin.api_unban"
+msgid "UNBAN"
+msgstr "DESBLOQUEAR"
+
+#: ui_admin.api_unban_all
+msgctxt "ui_admin.api_unban_all"
+msgid "UNBAN ALL"
+msgstr "DESBLOQUEAR TODO"
+
+#: ui_admin.approved
+msgctxt "ui_admin.approved"
+msgid "approved"
+msgstr "aprobado"
+
+#: ui_admin.approve_auto
+msgctxt "ui_admin.approve_auto"
+msgid "Auto Approve"
+msgstr "Aprobar Automáticamente"
+
+#: ui_admin.approve_manual
+msgctxt "ui_admin.approve_manual"
+msgid "Manually Approve"
+msgstr "Aprobación Manual"
+
+#: ui_admin.archived
+msgctxt "ui_admin.archived"
+msgid "Archived"
+msgstr "Arquivado"
+
+#: ui_admin.are_you_sure_you_want_to
+msgctxt "ui_admin.are_you_sure_you_want_to"
+msgid "Are you sure you want to"
+msgstr "Confirme que quere"
+
+#: ui_admin.are_you_sure_you_want_to_delete_this_item
+msgctxt "ui_admin.are_you_sure_you_want_to_delete_this_item"
+msgid "Are you sure you want to delete this item?"
+msgstr "Confirme que quere borrar este elemento."
+
+#: ui_admin.are_you_sure_you_want_to_delete_this_photo
+msgctxt "ui_admin.are_you_sure_you_want_to_delete_this_photo"
+msgid "Are you sure you want to delete this photo?"
+msgstr "Confirme que quere borrar esta foto."
+
+#: ui_admin.are_you_sure_you_want_to_switch_forms
+msgctxt "ui_admin.are_you_sure_you_want_to_switch_forms"
+msgid "Are you sure you want to switch forms?"
+msgstr "Confirme o cambio de formulario."
+
+#: ui_admin.assign
+msgctxt "ui_admin.assign"
+msgid "Assign"
+msgstr "Asignar"
+
+#: ui_admin.assignments
+msgctxt "ui_admin.assignments"
+msgid "Assignments"
+msgstr "Asignacións"
+
+#: ui_admin.assign_badge
+msgctxt "ui_admin.assign_badge"
+msgid "Assign Badge"
+msgstr "Asignar Distintivo"
+
+#: ui_admin.author
+msgctxt "ui_admin.author"
+msgid "Author"
+msgstr "Autor/a"
+
+#: ui_admin.author_email
+msgctxt "ui_admin.author_email"
+msgid "Author email"
+msgstr "Email do/a Autor/a "
+
+#: ui_admin.back
+msgctxt "ui_admin.back"
+msgid "Back"
+msgstr "Voltar"
+
+#: ui_admin.banip_action
+msgctxt "ui_admin.banip_action"
+msgid "Ban IP"
+msgstr "Bloquear IP"
+
+#: ui_admin.between_times
+msgctxt "ui_admin.between_times"
+msgid "Between Times"
+msgstr "Entre Tempos"
+
+#: ui_admin.blocks
+msgctxt "ui_admin.blocks"
+msgid "Blocks"
+msgstr "Bloques"
+
+#: ui_admin.body
+msgctxt "ui_admin.body"
+msgid "Body"
+msgstr "Corpo"
+
+#: ui_admin.cancel
+msgctxt "ui_admin.cancel"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: ui_admin.categories
+msgctxt "ui_admin.categories"
+msgid "Categories"
+msgstr "Categorías"
+
+#: ui_admin.chart_display_error
+msgctxt "ui_admin.chart_display_error"
+msgid "Error displaying chart"
+msgstr "Erro amosando o gráfico"
+
+#: ui_admin.check_message_valid
+msgctxt "ui_admin.check_message_valid"
+msgid "Please make sure your message is valid."
+msgstr "Asegúrese de que a mensaxe é válida."
+
+#: ui_admin.check_number
+msgctxt "ui_admin.check_number"
+msgid "Please make sure the number is valid."
+msgstr "Asegúrese de que o número é válido."
+
+#: ui_admin.check_sms_settings
+msgctxt "ui_admin.check_sms_settings"
+msgid "Please check your SMS settings!"
+msgstr "Comprobe as configuracións SMS!"
+
+#: ui_admin.checkin_details
+msgctxt "ui_admin.checkin_details"
+msgid "Checkin Details"
+msgstr "Detalles de Checkin"
+
+#: ui_admin.checkins
+msgctxt "ui_admin.checkins"
+msgid "Checkins"
+msgstr "Chekins"
+
+#: ui_admin.cities_loaded
+msgctxt "ui_admin.cities_loaded"
+msgid "Cities loaded"
+msgstr "Cidades cargadas"
+
+#: ui_admin.code
+msgctxt "ui_admin.code"
+msgid "code"
+msgstr "código"
+
+#: ui_admin.code_out_of_sync
+msgctxt "ui_admin.code_out_of_sync"
+msgid "Code version out of sync."
+msgstr "Versión do código desincronizada."
+
+#: ui_admin.color
+msgctxt "ui_admin.color"
+msgid "Color"
+msgstr "Cor"
+
+#: ui_admin.comments
+msgctxt "ui_admin.comments"
+msgid "Comments"
+msgstr "Comentarios"
+
+#: ui_admin.confirmation_code
+msgctxt "ui_admin.confirmation_code"
+msgid "Your alerts confirmation code is: "
+msgstr "O código de confirmación de alertas é: "
+
+#: ui_admin.confirm_msg
+msgctxt "ui_admin.confirm_msg"
+msgid "The User Has Been"
+msgstr "A/o Usuaria/o foi"
+
+#: ui_admin.count
+msgctxt "ui_admin.count"
+msgid "Count"
+msgstr "Contador"
+
+#: ui_admin.country_not_found
+msgctxt "ui_admin.country_not_found"
+msgid "Country Not Found"
+msgstr "País Non Atopado"
+
+#: ui_admin.created_edited
+msgctxt "ui_admin.created_edited"
+msgid "created/edited"
+msgstr "creado/editado"
+
+#: ui_admin.create_report
+msgctxt "ui_admin.create_report"
+msgid "Create a Report"
+msgstr "Crear un Informe"
+
+#: ui_admin.critical_upgrade
+msgctxt "ui_admin.critical_upgrade"
+msgid "Critical Upgrade"
+msgstr "Actualización Crítica"
+
+#: ui_admin.csv
+msgctxt "ui_admin.csv"
+msgid "CSV"
+msgstr "CSV"
+
+#: ui_admin.currently_active
+msgctxt "ui_admin.currently_active"
+msgid "Currently Active"
+msgstr "Activo Arestora"
+
+#: ui_admin.currently_inactive
+msgctxt "ui_admin.currently_inactive"
+msgid "Currently Inactive"
+msgstr "Inactivo Arestora"
+
+#: ui_admin.custom_forms_insufficient_permissions
+msgctxt "ui_admin.custom_forms_insufficient_permissions"
+msgid ""
+"You don't have sufficient permissions to edit the following custom fields."
+msgstr "Non ten permisos abondo para editar os seguintes campos persoalizados."
+
+#: ui_admin.daily
+msgctxt "ui_admin.daily"
+msgid "Daily"
+msgstr "Diario"
+
+#: ui_admin.dashboard
+msgctxt "ui_admin.dashboard"
+msgid "Dashboard"
+msgstr "Panel de Control"
+
+#: ui_admin.database
+msgctxt "ui_admin.database"
+msgid "database"
+msgstr "base de datos"
+
+#: ui_admin.date_time
+msgctxt "ui_admin.date_time"
+msgid "Date & Time"
+msgstr "Data e Hora"
+
+#: ui_admin.date_added
+msgctxt "ui_admin.date_added"
+msgid "Date Added"
+msgstr "Data Engadida"
+
+#: ui_admin.date_modified
+msgctxt "ui_admin.date_modified"
+msgid "Date Modified"
+msgstr "Data Modificada"
+
+#: ui_admin.days_of_the_week
+msgctxt "ui_admin.days_of_the_week"
+msgid "Days of the week"
+msgstr "Días da semana"
+
+#: ui_admin.db_out_of_sync
+msgctxt "ui_admin.db_out_of_sync"
+msgid "DB version out of sync."
+msgstr "Versión da base de datos desactualizada."
+
+#: ui_admin.deleted
+msgctxt "ui_admin.deleted"
+msgid "deleted"
+msgstr "borrado"
+
+#: ui_admin.delete_action
+msgctxt "ui_admin.delete_action"
+msgid "Delete"
+msgstr "Borrar"
+
+#: ui_admin.delete_all
+msgctxt "ui_admin.delete_all"
+msgid "Delete all reports"
+msgstr "Borrar tódolos informes"
+
+#: ui_admin.delete_badge
+msgctxt "ui_admin.delete_badge"
+msgid "Delete Badge"
+msgstr "Borrar Distintivo"
+
+#: ui_admin.demo
+msgctxt "ui_admin.demo"
+msgid "Demo"
+msgstr "Demo"
+
+#: ui_admin.description
+msgctxt "ui_admin.description"
+msgid "Description"
+msgstr "Descripción"
+
+#: ui_admin.disabled
+msgctxt "ui_admin.disabled"
+msgid "Disabled"
+msgstr "Desactivado"
+
+#: ui_admin.divider_start_field
+msgctxt "ui_admin.divider_start_field"
+msgid "Divider Start"
+msgstr "Iniciar Divisor"
+
+#: ui_admin.divider_end_field
+msgctxt "ui_admin.divider_end_field"
+msgid "Divider End"
+msgstr "Rematar Divisor"
+
+#: ui_admin.divider_class
+msgctxt "ui_admin.divider_class"
+msgid "div class"
+msgstr "div class"
+
+#: ui_admin.download_reports
+msgctxt "ui_admin.download_reports"
+msgid "Download Reports"
+msgstr "Baixar Informes"
+
+#: ui_admin.dropdown_choices
+msgctxt "ui_admin.dropdown_choices"
+msgid "Dropdown Choices"
+msgstr "Opcións do menú"
+
+#: ui_admin.edited
+msgctxt "ui_admin.edited"
+msgid "EDITED"
+msgstr "EDITADO"
+
+#: ui_admin.edited_by
+msgctxt "ui_admin.edited_by"
+msgid "Edited By"
+msgstr "Editado Por"
+
+#: ui_admin.edit_action
+msgctxt "ui_admin.edit_action"
+msgid "Edit"
+msgstr "Editar"
+
+#: ui_admin.edit_log
+msgctxt "ui_admin.edit_log"
+msgid "Edit Log"
+msgstr "Editar Log"
+
+#: ui_admin.email
+msgctxt "ui_admin.email"
+msgid "Email"
+msgstr "Email"
+
+#: ui_admin.entire_collective
+msgctxt "ui_admin.entire_collective"
+msgid "Entire Collective"
+msgstr "Colectivo"
+
+#: ui_admin.error_geocoding
+msgctxt "ui_admin.error_geocoding"
+msgid "Error in geocoding! HTTP error"
+msgstr "Erro na xeocodificación! Erro HTTP"
+
+#: ui_admin.error_imap
+msgctxt "ui_admin.error_imap"
+msgid "IMAP PHP Library is not installed"
+msgstr "A Biblioteca PHP para IMAP non está instalada"
+
+#: ui_admin.error_twitter
+msgctxt "ui_admin.error_twitter"
+msgid "Incorrect Credentials"
+msgstr "Credenciáis Incorrectas"
+
+#: ui_admin.error_msg
+msgctxt "ui_admin.error_msg"
+msgid "Error"
+msgstr "Erro"
+
+#: ui_admin.error_post_incident
+msgctxt "ui_admin.error_post_incident"
+msgid "Error, unable to post incident"
+msgstr "Erro, non foi posible publicar o incidente "
+
+#: ui_admin.every_six_hours
+msgctxt "ui_admin.every_six_hours"
+msgid "Every Six Hours"
+msgstr "A Cada Seis Horas"
+
+#: ui_admin.every_twelve_hours
+msgctxt "ui_admin.every_twelve_hours"
+msgid "Every Twelve Hours"
+msgstr "A Cada Doce Horas"
+
+#: ui_admin.experimental
+msgctxt "ui_admin.experimental"
+msgid "Experimental"
+msgstr "Experimental"
+
+#: ui_admin.faqs
+msgctxt "ui_admin.faqs"
+msgid "FAQ's"
+msgstr "FAQ's"
+
+#: ui_admin.feed
+msgctxt "ui_admin.feed"
+msgid "feed"
+msgstr "feed"
+
+#: ui_admin.feedback
+msgctxt "ui_admin.feedback"
+msgid "Feedback"
+msgstr "Feedback"
+
+#: ui_admin.feeds
+msgctxt "ui_admin.feeds"
+msgid "feeds"
+msgstr "feeds"
+
+#: ui_admin.field_choices
+msgctxt "ui_admin.field_choices"
+msgid "List of Choices"
+msgstr "Lista de Opcións"
+
+#: ui_admin.field_default
+msgctxt "ui_admin.field_default"
+msgid "Default Value"
+msgstr "Valor Predetermiñado"
+
+#: ui_admin.field_datatype
+msgctxt "ui_admin.field_datatype"
+msgid "Data Type"
+msgstr "Tipo de Dato"
+
+#: ui_admin.field_datatype_javascript
+msgctxt "ui_admin.field_datatype_javascript"
+msgid "Javascript"
+msgstr "Javascript"
+
+#: ui_admin.field_datatype_markup
+msgctxt "ui_admin.field_datatype_markup"
+msgid "Markup"
+msgstr "Markup"
+
+#: ui_admin.field_datatype_numeric
+msgctxt "ui_admin.field_datatype_numeric"
+msgid "Numeric"
+msgstr "Numérico"
+
+#: ui_admin.field_datatype_text
+msgctxt "ui_admin.field_datatype_text"
+msgid "Free Text"
+msgstr "Texto Libre"
+
+#: ui_admin.field_height
+msgctxt "ui_admin.field_height"
+msgid "Height (In Rows)"
+msgstr "Altura (en liñas)"
+
+#: ui_admin.field_hidden
+msgctxt "ui_admin.field_hidden"
+msgid "Hidden Field"
+msgstr "Campo Oculto"
+
+#: ui_admin.field_maxlength
+msgctxt "ui_admin.field_maxlength"
+msgid "Maximum Character Length"
+msgstr "Lonxitude Máxima de Caracteres"
+
+#: ui_admin.field_name
+msgctxt "ui_admin.field_name"
+msgid "Field Name"
+msgstr "Nome do Campo"
+
+#: ui_admin.field_toggle
+msgctxt "ui_admin.field_toggle"
+msgid "Toggle"
+msgstr "Alternar"
+
+#: ui_admin.field_toggle_no
+msgctxt "ui_admin.field_toggle_no"
+msgid "No"
+msgstr "Non"
+
+#: ui_admin.field_toggle_yes_close
+msgctxt "ui_admin.field_toggle_yes_close"
+msgid "Yes, Closed by default"
+msgstr "Sí, fechado por omisión"
+
+#: ui_admin.field_toggle_yes_open
+msgctxt "ui_admin.field_toggle_yes_open"
+msgid "Yes, Open by default"
+msgstr "Sí, aberto por omisión"
+
+#: ui_admin.file_not_found_upload
+msgctxt "ui_admin.file_not_found_upload"
+msgid "Could not find uploaded file"
+msgstr "Non se topa o arquivo subido"
+
+#: ui_admin.file_open_error
+msgctxt "ui_admin.file_open_error"
+msgid "Could not open file for reading"
+msgstr "Non se pode abrir para lectura o arquivo"
+
+#: ui_admin.form_not_exists
+msgctxt "ui_admin.form_not_exists"
+msgid "That Form Does Not Exist!"
+msgstr "Este Formulario Non Existe!"
+
+#: ui_admin.forum
+msgctxt "ui_admin.forum"
+msgid "Forum"
+msgstr "Foro"
+
+#: ui_admin.free_text_field
+msgctxt "ui_admin.free_text_field"
+msgid "Text Area Field (Free Text)"
+msgstr "Campo de Área de Texto (Texto Libre)"
+
+#: ui_admin.date_field
+msgctxt "ui_admin.date_field"
+msgid "Date Field"
+msgstr "Campo de Data"
+
+#: ui_admin.radio_field
+msgctxt "ui_admin.radio_field"
+msgid "Radio Buttons Field"
+msgstr "Campo de Botóns de Opción"
+
+#: ui_admin.checkbox_field
+msgctxt "ui_admin.checkbox_field"
+msgid "Checkboxes Field"
+msgstr "Campo de Caixas de Verificación"
+
+#: ui_admin.dropdown_field
+msgctxt "ui_admin.dropdown_field"
+msgid "Dropdown Field"
+msgstr "Campo de Listado de Opcións"
+
+#: ui_admin.from
+msgctxt "ui_admin.from"
+msgid "From"
+msgstr "De"
+
+#: ui_admin.from_date
+msgctxt "ui_admin.from_date"
+msgid "From"
+msgstr "De"
+
+#: ui_admin.geonames_timeout
+msgctxt "ui_admin.geonames_timeout"
+msgid "Geonames Timeout Error"
+msgstr "Erro no Tempo de Espera en Geonames"
+
+#: ui_admin.get_help
+msgctxt "ui_admin.get_help"
+msgid "Get Help"
+msgstr "Obteña Axuda"
+
+#: ui_admin.get_more_themes
+msgctxt "ui_admin.get_more_themes"
+msgid "Get more themes"
+msgstr "Obteña máis Temas"
+
+#: ui_admin.get_more_plugins
+msgctxt "ui_admin.get_more_plugins"
+msgid "Get more plugins"
+msgstr "Obteña máis plugins"
+
+#: ui_admin.header_actions
+msgctxt "ui_admin.header_actions"
+msgid "Actions"
+msgstr "Accións"
+
+#: ui_admin.header_add_edit
+msgctxt "ui_admin.header_add_edit"
+msgid "Add/Edit"
+msgstr "Engadir/Editar"
+
+#: ui_admin.header_email
+msgctxt "ui_admin.header_email"
+msgid "Email"
+msgstr "Email"
+
+#: ui_admin.header_manage_users
+msgctxt "ui_admin.header_manage_users"
+msgid "Manage Users"
+msgstr "Xestión de Usuarias/os"
+
+#: ui_admin.header_role
+msgctxt "ui_admin.header_role"
+msgid "Role"
+msgstr "Rol"
+
+#: ui_admin.header_user
+msgctxt "ui_admin.header_user"
+msgid "User"
+msgstr "Usuaria/o"
+
+#: ui_admin.help
+msgctxt "ui_admin.help"
+msgid "help"
+msgstr "axuda"
+
+#: ui_admin.hourly
+msgctxt "ui_admin.hourly"
+msgid "Hourly"
+msgstr "A cada hora"
+
+#: ui_admin.incident_feed
+msgctxt "ui_admin.incident_feed"
+msgid "Incident feed for"
+msgstr "Feed de Incidente para"
+
+#: ui_admin.installer_info
+msgctxt "ui_admin.installer_info"
+msgid ""
+"The installer folder still exists. Delete the installer folder. It is a "
+"potential security vulnerability."
+msgstr "O directorio de instalación ainda existe. Bórreo, é un burato potencial na seguridade!"
+
+#: ui_admin.instance
+msgctxt "ui_admin.instance"
+msgid "Instance"
+msgstr "Instancia"
+
+#: ui_admin.instances
+msgctxt "ui_admin.instances"
+msgid "Instances"
+msgstr "Instancias"
+
+#: ui_admin.instance_details
+msgctxt "ui_admin.instance_details"
+msgid "Instance Details"
+msgstr "Detalles da Instancia"
+
+#: ui_admin.invalid_parameter
+msgctxt "ui_admin.invalid_parameter"
+msgid "Invalid Parameter"
+msgstr "Parámetro non válido"
+
+#: ui_admin.ip_address
+msgctxt "ui_admin.ip_address"
+msgid "IP Address"
+msgstr "Enderezo IP"
+
+#: ui_admin.is_date
+msgctxt "ui_admin.is_date"
+msgid "Is this a Date Field?"
+msgstr "É un Campo de Data?"
+
+#: ui_admin.ispublic_visible
+msgctxt "ui_admin.ispublic_visible"
+msgid "Who Can View Answers"
+msgstr "Quén pode visualizar respostas"
+
+#: ui_admin.ispublic_submit
+msgctxt "ui_admin.ispublic_submit"
+msgid "Who Can Submit Answers"
+msgstr "Quén pode enviar respostas"
+
+#: ui_admin.keyword
+msgctxt "ui_admin.keyword"
+msgid "Keyword"
+msgstr "Palabra Chave"
+
+#: ui_admin.keywords
+msgctxt "ui_admin.keywords"
+msgid "Keywords"
+msgstr "Palabras Chave"
+
+#: ui_admin.label_email
+msgctxt "ui_admin.label_email"
+msgid "Email Address:"
+msgstr "Enderezo de Correo:"
+
+#: ui_admin.label_full_name
+msgctxt "ui_admin.label_full_name"
+msgid "Full Name:"
+msgstr "Nome Completo"
+
+#: ui_admin.label_password
+msgctxt "ui_admin.label_password"
+msgid "Password:"
+msgstr "Contrasinal:"
+
+#: ui_admin.label_role
+msgctxt "ui_admin.label_role"
+msgid "Role:"
+msgstr "Rol"
+
+#: ui_admin.label_username
+msgctxt "ui_admin.label_username"
+msgid "Username:"
+msgstr "Nome de Usuaria/o:"
+
+#: ui_admin.layers
+msgctxt "ui_admin.layers"
+msgid "Layers"
+msgstr "Capas"
+
+#: ui_admin.login_role
+msgctxt "ui_admin.login_role"
+msgid "Moderator"
+msgstr "Moderador/a"
+
+#: ui_admin.logout
+msgctxt "ui_admin.logout"
+msgid "Logout"
+msgstr "Saír"
+
+#: ui_admin.logs
+msgctxt "ui_admin.logs"
+msgid "Logs"
+msgstr "Logs"
+
+#: ui_admin.manage
+msgctxt "ui_admin.manage"
+msgid "Manage"
+msgstr "Xestión"
+
+#: ui_admin.manage_roles
+msgctxt "ui_admin.manage_roles"
+msgid "Manage Roles & Permissions"
+msgstr "Xestión de Roles e Permisos"
+
+#: ui_admin.manage_users
+msgctxt "ui_admin.manage_users"
+msgid "View Users"
+msgstr "Visualizar Usuarias/os"
+
+#: ui_admin.manage_users_edit
+msgctxt "ui_admin.manage_users_edit"
+msgid "Add/Edit Users"
+msgstr "Engadir/Editar Usuarias/os"
+
+#: ui_admin.manage_public_listing
+msgctxt "ui_admin.manage_public_listing"
+msgid "Manage Your Public Listing"
+msgstr "Xestione a súa Lista Pública"
+
+#: ui_admin.mark_as
+msgctxt "ui_admin.mark_as"
+msgid "Mark As"
+msgstr "Marcar Como"
+
+#: ui_admin.marked_as_not_spam
+msgctxt "ui_admin.marked_as_not_spam"
+msgid "marked as not spam"
+msgstr "marcado como non-spam"
+
+#: ui_admin.marked_as_spam
+msgctxt "ui_admin.marked_as_spam"
+msgid "marked as spam"
+msgstr "marcado como spam"
+
+#: ui_admin.match_no_documents
+msgctxt "ui_admin.match_no_documents"
+msgid "did not match any documents"
+msgstr "non se atoparon coincidencias nos documentos"
+
+#: ui_admin.message
+msgctxt "ui_admin.message"
+msgid "Message"
+msgstr "Mensaxe"
+
+#: ui_admin.messages
+msgctxt "ui_admin.messages"
+msgid "Messages"
+msgstr "Mensaxes"
+
+#: ui_admin.messages_laconica
+msgctxt "ui_admin.messages_laconica"
+msgid "Laconica Messages"
+msgstr "Mensaxes de Laconica"
+
+#: ui_admin.messages_twitter
+msgctxt "ui_admin.messages_twitter"
+msgid "Twitter Messages"
+msgstr "Mensaxes de Twiter"
+
+#: ui_admin.message_sent
+msgctxt "ui_admin.message_sent"
+msgid "Your message has been sent!"
+msgstr "A súa mensaxe foi enviada!"
+
+#: ui_admin.mhi
+msgctxt "ui_admin.mhi"
+msgid "MHI"
+msgstr "MHI"
+
+#: ui_admin.minute
+msgctxt "ui_admin.minute"
+msgid "Minute"
+msgstr "Minuto"
+
+#: ui_admin.minutes
+msgctxt "ui_admin.minutes"
+msgid "Minutes"
+msgstr "Minutos"
+
+#: ui_admin.missing_parameter
+msgctxt "ui_admin.missing_parameter"
+msgid "Missing Parameter"
+msgstr "Parámetro Faltante"
+
+#: ui_admin.moderator
+msgctxt "ui_admin.moderator"
+msgid "Moderator"
+msgstr "Moderador/a"
+
+#: ui_admin.modified
+msgctxt "ui_admin.modified"
+msgid "modified"
+msgstr "modificado"
+
+#: ui_admin.modify_timezone
+msgctxt "ui_admin.modify_timezone"
+msgid "Modify Timezone Setting"
+msgstr "Modificar Configuracións do Timezone"
+
+#: ui_admin.move_down_action
+msgctxt "ui_admin.move_down_action"
+msgid "move down"
+msgstr "mover abaixo"
+
+#: ui_admin.move_up_action
+msgctxt "ui_admin.move_up_action"
+msgid "move up"
+msgstr "mover arriba"
+
+#: ui_admin.multiple_hosted_instances
+msgctxt "ui_admin.multiple_hosted_instances"
+msgid "Multiple Hosted Instances"
+msgstr "Instancias Múltiples Hospedadas"
+
+#: ui_admin.my_alerts
+msgctxt "ui_admin.my_alerts"
+msgid "My Alerts"
+msgstr "As miñas Alertas"
+
+#: ui_admin.my_checkins
+msgctxt "ui_admin.my_checkins"
+msgid "My Checkins"
+msgstr "Os meus Chekins"
+
+#: ui_admin.my_profile
+msgctxt "ui_admin.my_profile"
+msgid "My Profile"
+msgstr "O meu Perfil"
+
+#: ui_admin.my_reports
+msgctxt "ui_admin.my_reports"
+msgid "My Reports"
+msgstr "Os meus Informes"
+
+#: ui_admin.my_votes
+msgctxt "ui_admin.my_votes"
+msgid "Votes Cast"
+msgstr "Votos Repartidos"
+
+#: ui_admin.my_votes_up
+msgctxt "ui_admin.my_votes_up"
+msgid "Positive"
+msgstr "Positivo"
+
+#: ui_admin.my_votes_down
+msgctxt "ui_admin.my_votes_down"
+msgid "Negative"
+msgstr "Negativo"
+
+#: ui_admin.name
+msgctxt "ui_admin.name"
+msgid "Name"
+msgstr "Nome"
+
+#: ui_admin.new_alert
+msgctxt "ui_admin.new_alert"
+msgid "Create New Alert"
+msgstr "Crear Alerta Nova"
+
+#: ui_admin.new_private
+msgctxt "ui_admin.new_private"
+msgid "Create New Message"
+msgstr "Crear Mensaxe Nova"
+
+#: ui_admin.new_password
+msgctxt "ui_admin.new_password"
+msgid "New Password"
+msgstr "Novo Contrasinal"
+
+#: ui_admin.no
+msgctxt "ui_admin.no"
+msgid "No"
+msgstr "Non"
+
+#: ui_admin.none_category_explanation
+msgctxt "ui_admin.none_category_explanation"
+msgid ""
+"This is a special category that will not show up on the report submission "
+"form for users submitting reports. This is used to hold reports left without"
+" categories(uncategorized reports) as a result of category deletion."
+msgstr "Ésta é unha categoría especial que non aparecerá no formulario de envío de informes das/os usuarias/os. Emprégase para gardar informes non categorizados de resultas de ter borrado explícitamente a categoría."
+
+#: ui_admin.notification
+msgctxt "ui_admin.notification"
+msgid "Notification"
+msgstr "Notificación"
+
+#: ui_admin.not_case_sensitive
+msgctxt "ui_admin.not_case_sensitive"
+msgid "This is not case sensitive."
+msgstr "Non diferencia entre maiúsculas e minúsculas."
+
+#: ui_admin.not_found
+msgctxt "ui_admin.not_found"
+msgid "Not Found"
+msgstr "Non Atopado"
+
+#: ui_admin.no_data
+msgctxt "ui_admin.no_data"
+msgid "No data. There are no results to show."
+msgstr "Sen datos. Non hai resultados que amosar."
+
+#: ui_admin.no_error
+msgctxt "ui_admin.no_error"
+msgid "No Error"
+msgstr "Sen Erro"
+
+#: ui_admin.no_result_display_msg
+msgctxt "ui_admin.no_result_display_msg"
+msgid "No Results To Display!"
+msgstr "Non hai resultados!"
+
+#: ui_admin.of
+msgctxt "ui_admin.of"
+msgid "of"
+msgstr "de"
+
+#: ui_admin.on_specific_count
+msgctxt "ui_admin.on_specific_count"
+msgid "On Specific Count"
+msgstr "Nun conteo específico"
+
+#: ui_admin.openids
+msgctxt "ui_admin.openids"
+msgid "OpenID's"
+msgstr "OpenID's"
+
+#: ui_admin.page
+msgctxt "ui_admin.page"
+msgid "page"
+msgstr "páxina"
+
+#: ui_admin.pages
+msgctxt "ui_admin.pages"
+msgid "pages"
+msgstr "páxinas"
+
+#: ui_admin.page_not_found
+msgctxt "ui_admin.page_not_found"
+msgid "Page Not Found"
+msgstr "Páxina Non Topada"
+
+#: ui_admin.page_not_found_message_with_contact
+msgctxt "ui_admin.page_not_found_message_with_contact"
+msgid ""
+"Sorry, the page you are trying to view is not here.<p><strong>Did you follow"
+" a link from somewhere else on our site?</strong><br />If you reached this "
+"page from another part of our site, please <a href=\"%s\">contact us</a> so "
+"that we can correct our mistake.</p><p><strong>Did you follow a link from "
+"another site? </strong><br />Links from other sites can sometimes be "
+"outdated or misspelled. <a href=\"%s\">Tell us</a> where you came from and "
+"we can try to contact the other site in order to fix the "
+"problem.</p><p><strong>Did you type the URL? </strong><br />You may have "
+"typed the address (URL) incorrectly. Check to make sure you have got the "
+"exact right spelling, capitalization, etc. </p>"
+msgstr "A páxina á que está tentando acceder non existe.<p><strong>Premeu nunha ligazóndalgunha páxina do noso site?</strong><br />Se é así, por favor<a href=\"%s\">póñase en contacto connosco</a> para que podamos solucionar o problema.</p><p><strong> Se premeu nunha ligazón doutro site, pode que ésta se atope desactualizada ou mal definida</strong></p><a href=\"%s\">Indíquenos</a> quén a aloxa e entón tentaremos poñernos en contacto con elespara tentar amañar o problema.</p><p><strong>Escribiu a URL?</strong><br />Puidera ser que estea mal escrito o enderezo (URL). Compróbeo para desbotar erros tipográficos emprego de maiúsculas, etc.</p>"
+
+#: ui_admin.page_not_found_message
+msgctxt "ui_admin.page_not_found_message"
+msgid "Sorry, the page you are trying to view is not here."
+msgstr "A páxina que está tentando visualizar non se atopa no site."
+
+#: ui_admin.parameters_used
+msgctxt "ui_admin.parameters_used"
+msgid "Parameters Used"
+msgstr "Parámetros Empregados"
+
+#: ui_admin.password
+msgctxt "ui_admin.password"
+msgid "Password"
+msgstr "Contrasinal"
+
+#: ui_admin.password_reset
+msgctxt "ui_admin.password_reset"
+msgid "Password Reset"
+msgstr "Redefinir Contrasinal"
+
+#: ui_admin.password_reset_message_line_1
+msgctxt "ui_admin.password_reset_message_line_1"
+msgid "Dear"
+msgstr "Estimada/o"
+
+#: ui_admin.password_reset_message_line_2
+msgctxt "ui_admin.password_reset_message_line_2"
+msgid "We received a request to reset the password for"
+msgstr "Recibimos unha solicitude para restaurar o contrasinal de"
+
+#: ui_admin.password_reset_message_line_3
+msgctxt "ui_admin.password_reset_message_line_3"
+msgid ""
+"To change your password, please click on the link below (or copy and paste "
+"it into your browser)."
+msgstr "Para trocar o seu contrasinal, prema na ligazón seguinte (ou cópiea e péguea no seu navegador)."
+
+#: ui_admin.password_reset_message_line_4
+msgctxt "ui_admin.password_reset_message_line_4"
+msgid ""
+"As you requested, your password has now been reset. Your new details are as "
+"follows"
+msgstr "Tal como solicitou, o seu contrasinal foi redefinido. Éstes son agora os novo datos "
+
+#: ui_admin.password_reset_subject
+msgctxt "ui_admin.password_reset_subject"
+msgid "Ushahidi password reset"
+msgstr "Redefinición do contrasinal do Ushahidi"
+
+#: ui_admin.phone
+msgctxt "ui_admin.phone"
+msgid "Phone"
+msgstr "Teléfono"
+
+#: ui_admin.please_select
+msgctxt "ui_admin.please_select"
+msgid "Please Select"
+msgstr "Seleccione"
+
+#: ui_admin.pm
+msgctxt "ui_admin.pm"
+msgid "PM"
+msgstr "PM"
+
+#: ui_admin.post_method_not_used
+msgctxt "ui_admin.post_method_not_used"
+msgid "Data was not sent by post method"
+msgstr "Os datos non foron enviados polo método POST"
+
+#: ui_admin.preview
+msgctxt "ui_admin.preview"
+msgid "Preview"
+msgstr "Visualización Previa"
+
+#: ui_admin.private_message
+msgctxt "ui_admin.private_message"
+msgid "Message"
+msgstr "Mensaxe"
+
+#: ui_admin.private_messages
+msgctxt "ui_admin.private_messages"
+msgid "Private Messages"
+msgstr "Mensaxes Privadas"
+
+#: ui_admin.private_sent
+msgctxt "ui_admin.private_sent"
+msgid "Private Message Sent"
+msgstr "Mensaxe Privada Enviada"
+
+#: ui_admin.private_subject
+msgctxt "ui_admin.private_subject"
+msgid "Subject"
+msgstr "Asunto"
+
+#: ui_admin.private_to
+msgctxt "ui_admin.private_to"
+msgid "To"
+msgstr "Para"
+
+#: ui_admin.public_listing
+msgctxt "ui_admin.public_listing"
+msgid "Public Listing"
+msgstr "Lista Pública"
+
+#: ui_admin.qualifiers
+msgctxt "ui_admin.qualifiers"
+msgid "Qualifiers"
+msgstr "Habilitadores"
+
+#: ui_admin.read
+msgctxt "ui_admin.read"
+msgid "read"
+msgstr "ler"
+
+#: ui_admin.relevance
+msgctxt "ui_admin.relevance"
+msgid "Relevance"
+msgstr "Relevancia"
+
+#: ui_admin.report_title
+msgctxt "ui_admin.report_title"
+msgid "Report Title"
+msgstr "Título do Informe"
+
+#: ui_admin.report_date
+msgctxt "ui_admin.report_date"
+msgid "Report Date"
+msgstr "Data do Informe"
+
+#: ui_admin.reporters
+msgctxt "ui_admin.reporters"
+msgid "Reporters"
+msgstr "Informantes"
+
+#: ui_admin.reporter_levels
+msgctxt "ui_admin.reporter_levels"
+msgid "Reporter Levels"
+msgstr "Nivel da/o Informante"
+
+#: ui_admin.reports
+msgctxt "ui_admin.reports"
+msgid "Reports"
+msgstr "Informes"
+
+#: ui_admin.reputation
+msgctxt "ui_admin.reputation"
+msgid "Reputation Score"
+msgstr "Nivel de Reputación"
+
+#: ui_admin.required
+msgctxt "ui_admin.required"
+msgid "Required"
+msgstr "Obrigado"
+
+#: ui_admin.reset
+msgctxt "ui_admin.reset"
+msgid "Reset"
+msgstr "Reset"
+
+#: ui_admin.response
+msgctxt "ui_admin.response"
+msgid "Response"
+msgstr "Resposta"
+
+#: ui_admin.results
+msgctxt "ui_admin.results"
+msgid "Results"
+msgstr "Resultados"
+
+#: ui_admin.revoke
+msgctxt "ui_admin.revoke"
+msgid "Revoke"
+msgstr "Revogar"
+
+#: ui_admin.riverid_exists_admin
+msgctxt "ui_admin.riverid_exists_admin"
+msgid ""
+"This email already has an account managed by CrowdmapID. The user will need "
+"to use their existing Crowdmap password to login."
+msgstr "Este email xa ten unha conta asociada a CrowdmapID. A/o usuaria/o deberáempregar o seu contrasinal de Crowdmap para acceder."
+
+#: ui_admin.save_settings
+msgctxt "ui_admin.save_settings"
+msgid "Save Settings"
+msgstr "Gardar Configuracións"
+
+#: ui_admin.search
+msgctxt "ui_admin.search"
+msgid "Search"
+msgstr "Procura"
+
+#: ui_admin.search_reports
+msgctxt "ui_admin.search_reports"
+msgid "Search Reports"
+msgstr "Procurar Informes"
+
+#: ui_admin.searching_for
+msgctxt "ui_admin.searching_for"
+msgid "searching for"
+msgstr "procurando por"
+
+#: ui_admin.security_info_encryption_key
+msgctxt "ui_admin.security_info_encryption_key"
+msgid ""
+"The encryption key is still set to the default value. This is insecure and "
+"must be changed."
+msgstr "A chave criptográfica ainda está definida no seu valor predetermiñado.Esto é moi inseguro e débese trocar o antes posible."
+
+#: ui_admin.security_info_https
+msgctxt "ui_admin.security_info_https"
+msgid ""
+"This site being served over HTTP. This should be set to HTTPS for increased "
+"security."
+msgstr "O site traballa con HTTP. Débese redefinir para HTTPS co galo de incrementara seguridade."
+
+#: ui_admin.security_info_instructions
+msgctxt "ui_admin.security_info_instructions"
+msgid "Instructions are available on the wiki: "
+msgstr "Ten instruccións dispoñíbleis na wiki:"
+
+#: ui_admin.select_download_format
+msgctxt "ui_admin.select_download_format"
+msgid "Select your desired reports download format:-"
+msgstr "Seleccione o formato preferido para baixar os informes:-"
+
+#: ui_admin.select_field_type
+msgctxt "ui_admin.select_field_type"
+msgid "--- Select A Field Type ---"
+msgstr "--- Seleccione un Tipo de Campo ---"
+
+#: ui_admin.select_item
+msgctxt "ui_admin.select_item"
+msgid "Please select an item"
+msgstr "Seleccione un Elemento"
+
+#: ui_admin.select_trigger_before_response
+msgctxt "ui_admin.select_trigger_before_response"
+msgid "You must select a Trigger before you can select a Response."
+msgstr "Seleccione un Disparador (Trigger) antes de seleccionar unha Resposta"
+
+#: ui_admin.select_trigger_before_qualifiers
+msgctxt "ui_admin.select_trigger_before_qualifiers"
+msgid "You must select a Trigger before you can define Qualifiers."
+msgstr "Seleccione un Disparador (Trigger) antes de definir Habilitadores."
+
+#: ui_admin.sender
+msgctxt "ui_admin.sender"
+msgid "Sender"
+msgstr "Remitente"
+
+#: ui_admin.send_to
+msgctxt "ui_admin.send_to"
+msgid "Send To"
+msgstr "Enviar a"
+
+#: ui_admin.sent_from_website
+msgctxt "ui_admin.sent_from_website"
+msgid "This message was sent from your website at "
+msgstr "Esta mensaxe foi enviada dende o seu site a "
+
+#: ui_admin.server_time
+msgctxt "ui_admin.server_time"
+msgid "Server Time"
+msgstr "Hora do Servidor"
+
+#: ui_admin.settings
+msgctxt "ui_admin.settings"
+msgid "Settings"
+msgstr "Configuracións"
+
+#: ui_admin.showing_page
+msgctxt "ui_admin.showing_page"
+msgid "Showing page"
+msgstr "Mostrando Páxina"
+
+#: ui_admin.showing_results
+msgctxt "ui_admin.showing_results"
+msgid "Showing results"
+msgstr "Mostrando Resultados"
+
+#: ui_admin.shown
+msgctxt "ui_admin.shown"
+msgid "shown"
+msgstr "Amosar"
+
+#: ui_admin.special_category
+msgctxt "ui_admin.special_category"
+msgid "Special Category"
+msgstr "Categoría Especial"
+
+#: ui_admin.special_category_explanation
+msgctxt "ui_admin.special_category_explanation"
+msgid ""
+"This is a special category that will not show up on the report submission "
+"form for users submitting reports. This is used in conjunction with the "
+"\"Trusted Reporters\" feature."
+msgstr "Esta categoría especial non será presentada no formulario de envío de informesás/aos usuarias/os. Esta categoría emprégase xunto coa opción \"Informantes de Confianza\""
+
+#: ui_admin.specific_area
+msgctxt "ui_admin.specific_area"
+msgid "Specific Area"
+msgstr "Área Específica"
+
+#: ui_admin.state
+msgctxt "ui_admin.state"
+msgid "State"
+msgstr "Estado"
+
+#: ui_admin.statistics
+msgctxt "ui_admin.statistics"
+msgid "Statistics"
+msgstr "Estadísticas"
+
+#: ui_admin.stats
+msgctxt "ui_admin.stats"
+msgid "Stats"
+msgstr "Estadísticas"
+
+#: ui_admin.stats_collection_error
+msgctxt "ui_admin.stats_collection_error"
+msgid "Stat collection failed! Please try again later."
+msgstr "Fallo na recollida de estadísticas! Probe novamente de aí a un cacho."
+
+#: ui_admin.stats_collection_error_short
+msgctxt "ui_admin.stats_collection_error_short"
+msgid "Stat Collection Failed!"
+msgstr "Fallou a recollida de estadísticas!"
+
+#: ui_admin.specific_days
+msgctxt "ui_admin.specific_days"
+msgid "Specific Days"
+msgstr "Días Específicos"
+
+#: ui_admin.subject
+msgctxt "ui_admin.subject"
+msgid "Subject"
+msgstr "Asunto"
+
+#: ui_admin.superadmin_role
+msgctxt "ui_admin.superadmin_role"
+msgid "Super Admin"
+msgstr "Super Admin"
+
+#: ui_admin.task_performed
+msgctxt "ui_admin.task_performed"
+msgid "Task Performed"
+msgstr "Tarefa Executada"
+
+#: ui_admin.text_field
+msgctxt "ui_admin.text_field"
+msgid "Text Field"
+msgstr "Campo de Texto"
+
+#: ui_admin.theme_name
+msgctxt "ui_admin.theme_name"
+msgid "Name"
+msgstr "Nome"
+
+#: ui_admin.title
+msgctxt "ui_admin.title"
+msgid "Manage Users"
+msgstr "Xestión de Usuarias/os"
+
+#: ui_admin.timeout
+msgctxt "ui_admin.timeout"
+msgid "Timeout Error"
+msgstr "Erro no Tempo de Espera"
+
+#: ui_admin.to
+msgctxt "ui_admin.to"
+msgid "to"
+msgstr "a"
+
+#: ui_admin.total_records
+msgctxt "ui_admin.total_records"
+msgid "Total Records"
+msgstr "Rexistros Totáis"
+
+#: ui_admin.to_date
+msgctxt "ui_admin.to_date"
+msgid "to"
+msgstr "a"
+
+#: ui_admin.translate_reports
+msgctxt "ui_admin.translate_reports"
+msgid "Translate Reports"
+msgstr "Traducir Informes"
+
+#: ui_admin.trigger
+msgctxt "ui_admin.trigger"
+msgid "Trigger"
+msgstr "Disparador"
+
+#: ui_admin.triggering_user
+msgctxt "ui_admin.triggering_user"
+msgid "Triggering User"
+msgstr "Usuario/a Disparador/a"
+
+#: ui_admin.triggers
+msgctxt "ui_admin.triggers"
+msgid "Triggers"
+msgstr "Disparadores"
+
+#: ui_admin.unapproved
+msgctxt "ui_admin.unapproved"
+msgid "unapproved"
+msgstr "non aprobado"
+
+#: ui_admin.unknown
+msgctxt "ui_admin.unknown"
+msgid "Unknown"
+msgstr "Descoñecido"
+
+#: ui_admin.unknown_failure
+msgctxt "ui_admin.unknown_failure"
+msgid "Unknown Failure"
+msgstr "Fallo Descoñecido"
+
+#: ui_admin.unread
+msgctxt "ui_admin.unread"
+msgid "unread"
+msgstr "non lido"
+
+#: ui_admin.unsubscribe_message
+msgctxt "ui_admin.unsubscribe_message"
+msgid "You will no longer receive alerts from"
+msgstr "Non recibirá máis alertas de"
+
+#: ui_admin.update_link
+msgctxt "ui_admin.update_link"
+msgid " Click here to upgrade now"
+msgstr " Prema eiquí para actualizar xa"
+
+#: ui_admin.upgrade_ushahidi
+msgctxt "ui_admin.upgrade_ushahidi"
+msgid "Upgrade Ushahidi"
+msgstr "Actualizar Ushahidi"
+
+#: ui_admin.upgrade_ushahidi_status
+msgctxt "ui_admin.upgrade_ushahidi_status"
+msgid "Upgrade Ushahidi Status"
+msgstr "Status de Actualización do Ushahidi"
+
+#: ui_admin.upload_reports
+msgctxt "ui_admin.upload_reports"
+msgid "Upload Reports"
+msgstr "Subir Informes"
+
+#: ui_admin.user
+msgctxt "ui_admin.user"
+msgid "User"
+msgstr "Usuaria/o"
+
+#: ui_admin.users
+msgctxt "ui_admin.users"
+msgid "Users"
+msgstr "Usuarias/os"
+
+#: ui_admin.ushahidi
+msgctxt "ui_admin.ushahidi"
+msgid "Ushahidi"
+msgstr "Ushahidi"
+
+#: ui_admin.verified_unverified
+msgctxt "ui_admin.verified_unverified"
+msgid "Verified/Unverified"
+msgstr "Verificado/Non Verificado"
+
+#: ui_admin.verify_unverify
+msgctxt "ui_admin.verify_unverify"
+msgid "Verify/Unverify"
+msgstr "Verificar/Non Verificar"
+
+#: ui_admin.version
+msgctxt "ui_admin.version"
+msgid "Version"
+msgstr "Versión"
+
+#: ui_admin.version_available
+msgctxt "ui_admin.version_available"
+msgid " is available for upgrade."
+msgstr " está dispoñible para actualizar."
+
+#: ui_admin.video_encoding
+msgctxt "ui_admin.video_encoding"
+msgid "Video Encoding"
+msgstr "Codificación de Video"
+
+#: ui_admin.view_private
+msgctxt "ui_admin.view_private"
+msgid "Private Messages"
+msgstr "Mensaxes Privadas"
+
+#: ui_admin.view_site
+msgctxt "ui_admin.view_site"
+msgid "View Site"
+msgstr "Ver Site"
+
+#: ui_admin.view_report
+msgctxt "ui_admin.view_report"
+msgid "View Report"
+msgstr "Ver Informe"
+
+#: ui_admin.welcome
+msgctxt "ui_admin.welcome"
+msgid "Welcome, "
+msgstr "Benvida/o, "
+
+#: ui_admin.wiki
+msgctxt "ui_admin.wiki"
+msgid "Wiki"
+msgstr "Wiki"
+
+#: ui_admin.xml
+msgctxt "ui_admin.xml"
+msgid "XML"
+msgstr "XML"
+
+#: ui_admin.yes
+msgctxt "ui_admin.yes"
+msgid "Yes"
+msgstr "Sí"
+
+#: ui_admin.your_search_for
+msgctxt "ui_admin.your_search_for"
+msgid "Your search for"
+msgstr "A súa procura por"
+
+#: ui_admin.delete_all_instructions
+msgctxt "ui_admin.delete_all_instructions"
+msgid ""
+"Clicking the button below will delete ALL reports on the database. You "
+"should use this with caution as this operation cannot be undone."
+msgstr "Prema no botón seguinte para borrar TODOS os informes da base de datos.Teña en conta que esta acción NON se pode defacer unha vez realizada!"
+
+#: ui_admin.delete_all_backup
+msgctxt "ui_admin.delete_all_backup"
+msgid "We recommend you backup your database before proceeding"
+msgstr "Recomendámoslle facer unha copia de seguridade da base de datosantes de proceder."
+
+#: ui_admin.delete_all_button
+msgctxt "ui_admin.delete_all_button"
+msgid "I'm sure I want to delete all %s report(s) from the database."
+msgstr "Estou segura/o de que quero borrar o(s) %s informes da base de datos."
+
+#: ui_admin.delete_all_confirm
+msgctxt "ui_admin.delete_all_confirm"
+msgid "Are you sure you want to delete all reports?"
+msgstr "Está segura/o de que quere borrar TODOS os informes?"
+
+#: ui_admin.delete_all_no_reports
+msgctxt "ui_admin.delete_all_no_reports"
+msgid "There are no reports to be deleted."
+msgstr "Non hai informes que borrar."
+
+#: ui_admin.user_no_logins
+msgctxt "ui_admin.user_no_logins"
+msgid "Number of logins"
+msgstr "Número de accesos"
+
+#: ui_admin.user_last_login
+msgctxt "ui_admin.user_last_login"
+msgid "Last login"
+msgstr "Último acceso"
+
+#: ui_admin.user_confirmed_account
+msgctxt "ui_admin.user_confirmed_account"
+msgid "Confirmed account?"
+msgstr "Conta Confirmada?"

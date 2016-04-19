@@ -1,0 +1,861 @@
+# 
+# Translators:
+# Seng Sutha <sutha@open.org.kh>, 2013
+# Sokhem Khoem <sokhem@open.org.kh>, 2014
+# Sok Sophea <sksophea@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-03-12 06:26+0000\n"
+"PO-Revision-Date: 2014-03-19 03:59+0000\n"
+"Last-Translator: Sokhem Khoem <sokhem@open.org.kh>\n"
+"Language-Team: Khmer (http://www.transifex.com/projects/p/ushahidi-v2/language/km/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: settings.allow_comments.between
+msgctxt "settings.allow_comments.between"
+msgid "The allow comments field does not appear to contain a valid value."
+msgstr "អនុញ្ញាត​ឲ្យ​វាល​មតិយោបល់​មិន​មាន​បង្ហាញ​តម្លៃ​ត្រឹមត្រូវ​ឡើយ។"
+
+#: settings.allow_comments.required
+msgctxt "settings.allow_comments.required"
+msgid "The allow comments field is required."
+msgstr "អនុញ្ញាត​ឲ្យ​វាល​មតិយោបល់​ត្រូវ​បាន​ទាមទារ។"
+
+#: settings.allow_feed.between
+msgctxt "settings.allow_feed.between"
+msgid "The include feed field does not appear to contain a valid value."
+msgstr "​រួមបញ្ចូល​វាល​មតិ​ព័ត៌មាន​មិន​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.allow_feed.required
+msgctxt "settings.allow_feed.required"
+msgid "The include feed field is required."
+msgstr "បាន​ទាមទារ​ឲ្យ​ដាក់​បញ្ចូល​វាល​មតិ​យោបល់។"
+
+#: settings.allow_feed_category.between
+msgctxt "settings.allow_feed_category.between"
+msgid ""
+"The include feed category field does not appear to contain a valid value."
+msgstr "ដាក់បញ្ចូល​វាល​ប្រភេទ​អត្ថបទ​ព័ត៌មាន​មិន​បង្ហាញ​ថា​​មាន​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.allow_feed_category.required
+msgctxt "settings.allow_feed_category.required"
+msgid "The include feed category field is required."
+msgstr "ដាក់​បញ្ចូល​វាល​ប្រភេទ​អត្ថបទ​ព័ត៌មាន​ត្រូវ​បាន​ទាមទារ។"
+
+#: settings.allow_alerts.between
+msgctxt "settings.allow_alerts.between"
+msgid "The allow alerts field does not appear to contain a valid value."
+msgstr "អនុញ្ញាត​ឲ្យ​វាល​ជូនដំណឹង​មិន​បង្ហាញ​​​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ។"
+
+#: settings.allow_alerts.required
+msgctxt "settings.allow_alerts.required"
+msgid "The allow alerts field is required."
+msgstr "អនុញ្ញាត​ឲ្យ​វាល​ជូនដំណឹង​ត្រូវ​បាន​ទាមទារ។"
+
+#: settings.allow_reports.between
+msgctxt "settings.allow_reports.between"
+msgid "The allow reports field does not appear to contain a valid value."
+msgstr "អនុញ្ញាត​ឲ្យ​វាល​របាយការណ៍​មិន​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ឡើយ។"
+
+#: settings.allow_reports.required
+msgctxt "settings.allow_reports.required"
+msgid "The allow reports field is required."
+msgstr "បាន​ទាមទារ​វាល​អនុញ្ញាត​របាយការណ៍។"
+
+#: settings.allow_stat_sharing.between
+msgctxt "settings.allow_stat_sharing.between"
+msgid "The stat sharing field does not appear to contain a valid value."
+msgstr "វាល​ចែក​រំលែក​ស្ថានភាព​មិន​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ឡើយ។"
+
+#: settings.allow_stat_sharing.required
+msgctxt "settings.allow_stat_sharing.required"
+msgid "The stat sharing field is required."
+msgstr "បាន​ទាមទារ​វាល​សភាព​ចែករំលែក។"
+
+#: settings.api.default_record_limit
+msgctxt "settings.api.default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "លេខ​លំនាំដើម​នៃ​កំណត់ត្រា​ដែល​បាន​ទៅ​ប្រមូល​យក​ក្នុង​មួយ​សំណើ API"
+
+#: settings.api.maximum_record_limit
+msgctxt "settings.api.maximum_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "ចំនួន​អតិបរមា​នៃ​កំណត់ត្រា​ដែល​បាន​ទៅ​ប្រមូល​យក​ក្នុង​មួយ​សំណើ API"
+
+#: settings.api.maximum_requests_per_ip_address
+msgctxt "settings.api.maximum_requests_per_ip_address"
+msgid "Maximum number of API requests per IP address"
+msgstr "ចំនួន​អតិបរមា​នៃ​សំណើ API ក្នុង​មួយ​អាសយដ្ឋាន IP"
+
+#: settings.api_akismet.alpha_numeric
+msgctxt "settings.api_akismet.alpha_numeric"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "វាល Akismet មិន​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.api_akismet.length
+msgctxt "settings.api_akismet.length"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "វាល Akismet មិន​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.banner_image.type
+msgctxt "settings.banner_image.type"
+msgid ""
+"The Site Banner field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "វាល​បដា​តំបន់​បណ្ដាញ​មិន​បង្ហាញ​ថា​មាន​រូបភាព​ត្រឹមត្រូវ​ទេ ។ ទ្រង់ទ្រាយ​ដែល​ព្រម​ទទួលយក​មាន​តែ .JPG, .PNG and .GIF."
+
+#: settings.banner_image.size
+msgctxt "settings.banner_image.size"
+msgid "Please ensure that \"Banner Image\" size is less than 250 KB."
+msgstr "សូម​ប្រាកដ​ថា​ទំហំ \"រូបភាព​បដា\" ​គឺ​តិច​ជាង ២៥០ គីឡូបៃ។"
+
+#: settings.banner_image.valid
+msgctxt "settings.banner_image.valid"
+msgid "The \"Banner Image\" field does not appear to contain a valid file."
+msgstr "វាល \"រូបភាព​បដា\" ​មិន​បង្ហាញ​​​ថា​មាន​ឯកសារ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.cache_pages.between
+msgctxt "settings.cache_pages.between"
+msgid "The cache pages field is required."
+msgstr "បាន​ទាមទារ​វាល​ទំព័រ​ឃ្លាំង​សម្ងាត់។"
+
+#: settings.cache_pages.required
+msgctxt "settings.cache_pages.required"
+msgid "The cache pages field does not appear to contain a valid value."
+msgstr "វាល​ទំព័រ​ឃ្លាំង​សម្ងាត់​មិន​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.cache_pages_lifetime.in_array
+msgctxt "settings.cache_pages_lifetime.in_array"
+msgid ""
+"The cache pages lifetime field does not appear to contain a valid value."
+msgstr "វាល​ជំនាន់​​​ទំព័រ​ឃ្លាំង​​​សម្ងាត់​​មិន​​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.cache_pages_lifetime.required
+msgctxt "settings.cache_pages_lifetime.required"
+msgid "The cache pages lifetime field is required."
+msgstr "បាន​ទាមទារ​វាល​ជំនាន់​ទំព័រ​ឃ្លាំង​​សម្ងាត់។"
+
+#: settings.cleanurl.clean_url_disabled
+msgctxt "settings.cleanurl.clean_url_disabled"
+msgid ""
+"It looks like your server is not configured to handle clean URLs. You will "
+"need to change the configuration of your server before you can enable clean "
+"URLs. See more info on how to enable clean URLs at <a "
+"href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-"
+"rewrite\" target=\"_blank\">this forum post</a>"
+msgstr "ម៉ាស៊ីន​មេ​របស់​អ្នក​ហាក់​ដូចជា​មិន​បាន​កំណត់​រចនាសម្ព័ន្ធ​ដើម្បី​ប្រើ URLs ​ត្រឹមត្រូវ​។ អ្នក​ចាំបាច់​ត្រូវ​ប្ដូរ​ការ​កំណត់​រចនាសម្ព័ន្ធ​ម៉ាស៊ីន​មេ​របស់​អ្នក​ជាមុន ទើប​អាច​បើក URLs ត្រឹមត្រូវ​បាន។ មើល​ព័ត៌មាន​បន្ថែម​អំពី​របៀប​បើក URLs ត្រឹមត្រូវ​នៅ <a href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite\" target=\"_blank\">សម្រាប់​វេទិកា​ប្រកាស​នេះ</a>"
+
+#: settings.cleanurl.clean_url_enabled
+msgctxt "settings.cleanurl.clean_url_enabled"
+msgid ""
+"This option makes Ushahidi to be accessed via \"clean\" URLs (without "
+"\"index.php\" in the URL)."
+msgstr "ជម្រើស​នេះ​ធ្វើឲ្យ​ Ushahidi​​​ អាច​ចូល​ដំណើរការ​បាន​តាមរយៈ URLs \"ត្រឹមត្រូវ\"  (ដោយ​គ្មាន \"index.php\" នៅ​ក្នុង URL)។"
+
+#: settings.cleanurl.enable_clean_url
+msgctxt "settings.cleanurl.enable_clean_url"
+msgid "Enable Clean URLs"
+msgstr "បើក URLs ត្រឹមត្រូវ"
+
+#: settings.cleanurl.title
+msgctxt "settings.cleanurl.title"
+msgid "Clean URLs"
+msgstr "URLs ត្រឹមត្រូវ"
+
+#: settings.clickatell_api.length
+msgctxt "settings.clickatell_api.length"
+msgid "The Clickatell API number field must be no more 20 characters long."
+msgstr "វាល​លេខ Clickatell API ត្រូវតែ​មិន​មែន​​​ប្រវែង​ច្រើន​​ជាង ​២០ ​តួអក្សរ។"
+
+#: settings.clickatell_api.required
+msgctxt "settings.clickatell_api.required"
+msgid "The Clickatell API number field is required."
+msgstr "បាន​ទាមទារ​វាល​លេខ Clickatell API។"
+
+#: settings.clickatell_password.length
+msgctxt "settings.clickatell_password.length"
+msgid ""
+"The Clickatell Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "វាល​ពាក្យ​សម្ងាត់ Clickatell ត្រូវតែ​មាន​តួអក្សរ​យ៉ាងតិច​ ៥ ហើយ​មិន​ច្រើន​ជាង ៥០ តួ​អក្សរ​ឡើយ។"
+
+#: settings.clickatell_password.required
+msgctxt "settings.clickatell_password.required"
+msgid "The Clickatell Password field is required."
+msgstr "បាន​ទាមទារ​វាល​ពាក្យសម្ងាត់ Clickatell ។"
+
+#: settings.clickatell_username.length
+msgctxt "settings.clickatell_username.length"
+msgid "The Clickatell Username field must be no more 50 characters long."
+msgstr "វាល​អ្នកប្រើ Clickatell ត្រូវតែ​មាន​ប្រវែង​តួអក្សរ​​មិន​ច្រើន​ជាង ៥០ តួ​អក្សរ​ឡើយ។"
+
+#: settings.clickatell_username.required
+msgctxt "settings.clickatell_username.required"
+msgid "The Clickatell Username field is required."
+msgstr "បាន​ទាមទារ​វាល​ឈ្មោះ​អ្នកប្រើ Clickatell ។"
+
+#: settings.configure_map
+msgctxt "settings.configure_map"
+msgid "Configure Map"
+msgstr "កំណត់​​រចនាសម្ព័ន្ធ​ផែនទី"
+
+#: settings.default_location
+msgctxt "settings.default_location"
+msgid "Default Location"
+msgstr "ទីតាំង​លំនាំដើម"
+
+#: settings.default_map_all.alpha_numeric
+msgctxt "settings.default_map_all.alpha_numeric"
+msgid "The color feed field does not appear to contain a valid value."
+msgstr "វាល​មតិ​ព័ត៌មាន​មិន​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.default_map_all.length
+msgctxt "settings.default_map_all.length"
+msgid "The color field must be no more 6 characters long."
+msgstr "វាល​ពណ៌​ត្រូវតែ​មាន​ប្រវែង​តួអក្សរ​មិន​ច្រើនជាង ៦។"
+
+#: settings.default_map_all.required
+msgctxt "settings.default_map_all.required"
+msgid "The color field is required."
+msgstr "បាន​ទាមទារ​វាល​ពណ៌។"
+
+#: settings.default_map_view
+msgctxt "settings.default_map_view"
+msgid "Default Map View"
+msgstr "ទិដ្ឋភាព​ផែន​ទី​លំនាំដើម"
+
+#: settings.default_zoom_level
+msgctxt "settings.default_zoom_level"
+msgid "Default Zoom Level"
+msgstr "កម្រិត​​ពង្រីក​លំនាំដើម"
+
+#: settings.download_city_list
+msgctxt "settings.download_city_list"
+msgid "Retrieve Cities From Geonames"
+msgstr "ទៅ​យក​ទីក្រុង​ពី Geonames"
+
+#: settings.email_host.length
+msgctxt "settings.email_host.length"
+msgid "The Mail server port field is too long."
+msgstr "វាល​ច្រក​ម៉ាស៊ីន​មេ​អ៊ីមែល​គឺ​វែង​ពេក។"
+
+#: settings.email_host.numeric
+msgctxt "settings.email_host.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "វាល​ច្រក​ម៉ាស៊ីន​មេ​អ៊ីមែល​គួរ​មានតែ​លេខ​ប៉ុណ្ណោះ។"
+
+#: settings.email_password.length
+msgctxt "settings.email_password.length"
+msgid ""
+"The Mail Server Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "វាល​ពាក្យសម្ងាត់​ម៉ាស៊ីន​មេ​អ៊ីមែល​ត្រូវតែ​មាន​តួអក្សរ​យ៉ាងតិច ៥ និង​​មិន​ច្រើន​ជាង ៥០ តួ​អក្សរ​ឡើយ។"
+
+#: settings.email_password.required
+msgctxt "settings.email_password.required"
+msgid "The Mail Server Password field is required."
+msgstr "បាន​ទាមទារ​ពាក្យសម្ងាត់​ម៉ាស៊ីន​មេ​អ៊ីមែល។"
+
+#: settings.email_port.length
+msgctxt "settings.email_port.length"
+msgid "The Mail server port field is too long."
+msgstr "វាល​ច្រក​ម៉ាស៊ីន​មេ​អ៊ីមែល​គឺ​វែង​ពេក។"
+
+#: settings.email_port.numeric
+msgctxt "settings.email_port.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "វាល​ច្រក​ម៉ាស៊ីន​មេ​អ៊ីមែល​គួរ​មានតែ​លេខ​ប៉ុណ្ណោះ។"
+
+#: settings.email_servertype.length
+msgctxt "settings.email_servertype.length"
+msgid "The Mail server port field is too long."
+msgstr "វាល​ច្រក​ម៉ាស៊ីន​មេ​អ៊ីមែល​គឺ​វែង​ពេក។"
+
+#: settings.email_servertype.required
+msgctxt "settings.email_servertype.required"
+msgid "The Mail Server Type field is required."
+msgstr "បាន​ទាមទារ​វាល​ប្រភេទ​ម៉ាស៊ីន​មេ​អ៊ីមែល។"
+
+#: settings.email_username.length
+msgctxt "settings.email_username.length"
+msgid "The Mail Server Username field must be no more 50 characters long."
+msgstr "វាល​ឈ្មោះ​អ្នកប្រើ​ម៉ាស៊ីន​មេ​អ៊ីមែល​ត្រូវតែ​មាន​តួអក្សរ​​មិន​ច្រើន​ជាង ៥០ តួ​អក្សរ​ឡើយ។"
+
+#: settings.email_username.required
+msgctxt "settings.email_username.required"
+msgid "The Mail Server Username field is required."
+msgstr "បាន​ទាមទារ​វាល​ឈ្មោះ​អ្នកប្រើ​ម៉ាស៊ីន​មេ​អ៊ីមែល។"
+
+#: settings.facebook.title
+msgctxt "settings.facebook.title"
+msgid "Facebook Setup Options"
+msgstr "ជម្រើស​រៀបចំ Facebook"
+
+#: settings.facebook.description
+msgctxt "settings.facebook.description"
+msgid ""
+"To get the information below you will need to create a new Facebook "
+"application at"
+msgstr "ដើម្បី​ទទួល​បាន​ព័ត៌មាន​ខាងក្រោម អ្នក​ចាំបាច់​ត្រូវ​បង្កើត​កម្មវិធី Facebook ថ្មី​នៅ"
+
+#: settings.facebook.description_2
+msgctxt "settings.facebook.description_2"
+msgid ""
+"These settings allow users to login via Facebook, this <strong>does "
+"not</strong> create a facebook application for your deployment"
+msgstr "ការ​កំណត់​នេះ​អនុញ្ញាត​ឲ្យ​អ្នក​ប្រើ​តាម​រយៈ Facebook  វា <strong>មិន</strong> បង្កើត​កម្មវិធី​ facebook សម្រាប់​ការ​ប្រើប្រាស់​របស់​អ្នក​ឡើយ"
+
+#: settings.facebook.app_id
+msgctxt "settings.facebook.app_id"
+msgid "Facebook App ID"
+msgstr "លេខ​សម្គាល់​កម្មវិធី Facebook"
+
+#: settings.facebook.app_secret
+msgctxt "settings.facebook.app_secret"
+msgid "Facebook App Secret"
+msgstr "ការ​សម្ងាត់​របស់​កម្មវិធី Facebook"
+
+#: settings.google_analytics.length
+msgctxt "settings.google_analytics.length"
+msgid ""
+"The Google Analytics field must contain a valid Web Property ID in the "
+"format UA-XXXXX-XX."
+msgstr "វាល​វិភាគ​របស់ Google ត្រូវតែ​មាន​លេខ​សម្គាល់​លក្ខណសម្បត្តិ​ត្រឹមត្រូវ​នៅ​ក្នុង​ទ្រង់ទ្រាយ UA-XXXXX-XX."
+
+#: settings.https.enable_https
+msgctxt "settings.https.enable_https"
+msgid "Enable HTTPS"
+msgstr "បើក HTTPS"
+
+#: settings.https.https_disabled
+msgctxt "settings.https.https_disabled"
+msgid ""
+"This option makes Ushahidi be accessed in unsecure mode; "
+"<strong>without</strong> \"https://\" in the URL prefix"
+msgstr "ជម្រើស​នេះ​ធ្វើឲ្យ​ Ushahidi ​អាច​ចូល​ដំណើរការ​បាន​ក្នុង​របៀប​មិន​សុវត្ថិភាព <strong>ដោយ​មិន​មាន</strong> \"https://\" នៅ​ក្នុង​បុព្វបទ URL"
+
+#: settings.https.https_enabled
+msgctxt "settings.https.https_enabled"
+msgid ""
+"This option makes Ushahidi be accessed in secure mode; with "
+"<strong>https</strong> in the URL prefix"
+msgstr "ជម្រើស​នេះ​ធ្វើឲ្យ​ Ushahidi ​អាច​ចូល​ដំណើរការ​បាន​ក្នុង​របៀប​មិន​សុវត្ថិភាព​ជាមួយ <strong>https</strong> នៅ​ក្នុង​បុព្វបទ URL"
+
+#: settings.https.title
+msgctxt "settings.https.title"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: settings.items_per_page.between
+msgctxt "settings.items_per_page.between"
+msgid ""
+"The items per page (Frontend) field does not appear to contain a valid "
+"value."
+msgstr "វាល​ធាតុ​ក្នុង​មួយ​ទំព័រ (ផ្នែក​ខាងមុខ) ​មិន​បង្ហាញ​​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.items_per_page.required
+msgctxt "settings.items_per_page.required"
+msgid "The items per page (Frontend) field is required."
+msgstr "បាន​ទាមទារ​វាល​ធាតុ​ក្នុង​មួយ​ទំព័រ (ផ្នែក​ខាងមុខ)។"
+
+#: settings.items_per_page_admin.between
+msgctxt "settings.items_per_page_admin.between"
+msgid ""
+"The items per page (Admin) field does not appear to contain a valid value."
+msgstr "វាល​ធាតុ​ក្នុង​មួយ​ទំព័រ (អ្នក​គ្រប់គ្រង) មិន​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.items_per_page_admin.required
+msgctxt "settings.items_per_page_admin.required"
+msgid "The items per page (Admin) field is required."
+msgstr "បាន​ទាមទារ​វាល​ធាតុ​ក្នុង​មួយ​ទំព័រ (អ្នក​គ្រប់គ្រង)។"
+
+#: settings.map.default_location
+msgctxt "settings.map.default_location"
+msgid ""
+"Setting up your map provider is a straight- forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "​ការ​​រៀបចំ​ក្រុមហ៊ុន​ផ្ដល់​ផែន​ទី​របស់​អ្នក​គឺ​ដំណើរការ​យ៉ាង​ងាយស្រួល​មួយ។ ជ្រើស​ក្រុមហ៊ុន​ផ្ដល់​ដែល​មាន​សោ API ពី​តំបន់​បណ្ដាញ​របស់​ក្រុមហ៊ុន​ផ្ដល់ និង​បញ្ចូល​សោ API ។"
+
+#: settings.map.zoom
+msgctxt "settings.map.zoom"
+msgid "Zoom Level"
+msgstr "កម្រិត​ពង្រីក"
+
+#: settings.map_provider.choose
+msgctxt "settings.map_provider.choose"
+msgid "Select a Map Provider"
+msgstr "ជ្រើស​ក្រុមហ៊ុន​ផ្ដល់​ផែនទី"
+
+#: settings.map_provider.enter_api
+msgctxt "settings.map_provider.enter_api"
+msgid "Enter the new API Key"
+msgstr "ជ្រើស​សោ API ថ្មី"
+
+#: settings.map_provider.get_api
+msgctxt "settings.map_provider.get_api"
+msgid "Get an API Key"
+msgstr "យក​សោ API"
+
+#: settings.map_provider.info
+msgctxt "settings.map_provider.info"
+msgid ""
+"Setting up your map provider is a straight-forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "ការ​រៀបចំ​ក្រុមហ៊ុន​ផ្ដល់​ផែន​ទី​របស់​អ្នក​គឺ​ដំណើរការ​យ៉ាង​ងាយស្រួល​មួយ។ ជ្រើស​ក្រុមហ៊ុន​ផ្ដល់​ដែល​មាន​សោ API ពី​តំបន់​បណ្ដាញ​របស់​ក្រុមហ៊ុន​ផ្ដល់ និង​បញ្ចូល​សោ API ។"
+
+#: settings.map_provider.name
+msgctxt "settings.map_provider.name"
+msgid "Map provider"
+msgstr "ក្រុមហ៊ុន​ផ្ដល់​ផែនទី"
+
+#: settings.map_timeline
+msgctxt "settings.map_timeline"
+msgid "Map Timeline"
+msgstr "បន្ទាត់​ពេលវេលា​ផែនទី"
+
+#: settings.map_settings
+msgctxt "settings.map_settings"
+msgid "Map Settings"
+msgstr "ការ​កំណត់​ផែនទី"
+
+#: settings.multiple_countries
+msgctxt "settings.multiple_countries"
+msgid "Does this Ushahidi Deployment span multiple countries?"
+msgstr "តើ​ការ​ប្រើប្រាស់ Ushahidi ​នេះ​មាន​នៅ​ច្រើន​ប្រទេស​ដែរ​ឬទេ?"
+
+#: settings.select_default_location
+msgctxt "settings.select_default_location"
+msgid "Please select a default country"
+msgstr "សូម​ជ្រើស​ប្រទេស​លំនាំដើម"
+
+#: settings.set_location
+msgctxt "settings.set_location"
+msgid "Click and drag the map to set your exact location"
+msgstr "ចុច រួច​អូស​ផែនទី​ដើម្បី​កំណត់​ទីតាំង​បន្ថែម​របស់​អ្នក"
+
+#: settings.site.allow_clustering
+msgctxt "settings.site.allow_clustering"
+msgid "Cluster Reports on Map"
+msgstr "ប្រមូលផ្ដុំ​របាយការណ៍​នៅ​លើ​ផែនទី"
+
+#: settings.site.allow_comments
+msgctxt "settings.site.allow_comments"
+msgid "Allow Users to Submit Comments to Reports"
+msgstr "អនុញ្ញាត​ឲ្យ​អ្នកប្រើ​ផ្ញើ​សេចក្ដី​អធិប្បាយ​ទៅកាន់​របាយការណ៍"
+
+#: settings.site.allow_feed
+msgctxt "settings.site.allow_feed"
+msgid "Include RSS News Feed on Website"
+msgstr "រួម​ទាំង​មតិ​ព័ត៌មាន RSS នៅ​លើ​តំបន់បណ្ដាញ"
+
+#: settings.site.allow_feed_category
+msgctxt "settings.site.allow_feed_category"
+msgid "Create New Category from Feeds"
+msgstr "បង្ហាញ​ប្រភេទ​ថ្មី​ពីអត្ថបទ​ព័ត៌មាន"
+
+#: settings.site.allow_alerts
+msgctxt "settings.site.allow_alerts"
+msgid "Allow Users To Subscribe For Alerts"
+msgstr "អនុញ្ញាត​អ្នកប្រើ​ឲ្យ​ជាវ​សម្រាប់​ការ​ជូនដំណឹង"
+
+#: settings.site.allow_reports
+msgctxt "settings.site.allow_reports"
+msgid "Allow Users To Submit Reports"
+msgstr "អនុញ្ញាត​ឲ្យ​អ្នកប្រើ​ផ្ញើ​របាយការណ៍"
+
+#: settings.site.api_akismet
+msgctxt "settings.site.api_akismet"
+msgid "Akismet Key"
+msgstr "សោ Akismet"
+
+#: settings.site.banner
+msgctxt "settings.site.banner"
+msgid "Site Banner"
+msgstr "បដា​របស់​តំបន់បណ្ដាញ"
+
+#: settings.site.blocks_per_row
+msgctxt "settings.site.blocks_per_row"
+msgid "Blocks Per Row"
+msgstr "ប្លុក​ក្នុង​មួយ​ជួរដេក"
+
+#: settings.site.cache_pages
+msgctxt "settings.site.cache_pages"
+msgid "Cache Pages"
+msgstr "ទំព័រ​ឃ្លាំង​សម្ងាត់"
+
+#: settings.site.cache_pages_lifetime
+msgctxt "settings.site.cache_pages_lifetime"
+msgid "Cache Pages Lifetime"
+msgstr "រយៈពេល​ទំព័រ​ឃ្លាំង​សម្ងាត់"
+
+#: settings.site.checkins
+msgctxt "settings.site.checkins"
+msgid "Enable Checkins"
+msgstr "បើក​ការ​ពិនិត្យ​ចូល"
+
+#: settings.site.copyright_statement
+msgctxt "settings.site.copyright_statement"
+msgid "Site Copyright Statement"
+msgstr "ឃ្លា​រក្សាសិទ្ធិ​តំបន់បណ្ដាញ"
+
+#: settings.site.default_category_colors
+msgctxt "settings.site.default_category_colors"
+msgid "Default Color For All Categories"
+msgstr "ពណ៌​លំនាំដើម​សម្រាប់​ប្រភេទ​ទាំងអស់"
+
+#: settings.site.default_category_icons
+msgctxt "settings.site.default_category_icons"
+msgid "Default Icon For All Categories"
+msgstr "រូបតំណាង​លំនាំដើម​សម្រាប់​ប្រភេទ​ទាំងអស់"
+
+#: settings.site.delete_banner_image
+msgctxt "settings.site.delete_banner_image"
+msgid "Delete Banner Image"
+msgstr "លុប​រូបភាព​បដា"
+
+#: settings.site.delete_default_map_all_icon
+msgctxt "settings.site.delete_default_map_all_icon"
+msgid "Delete Default Icon"
+msgstr "លុប​រូបតំណាង​លំនាំដើម"
+
+#: settings.site.display_contact_page
+msgctxt "settings.site.display_contact_page"
+msgid "Display Contact Page"
+msgstr "បង្ហាញ​ទំព័រ​ទំនាក់ទំនង"
+
+#: settings.site.display_howtohelp_page
+msgctxt "settings.site.display_howtohelp_page"
+msgid "Display \"How to Help\" Page"
+msgstr "បង្ហាញ​ទំព័រ \"របៀប​ជួយ\""
+
+#: settings.site.email_alerts
+msgctxt "settings.site.email_alerts"
+msgid "Alerts Email Address"
+msgstr "អាសយដ្ឋាន​អ៊ីមែល​ជូនដំណឹង"
+
+#: settings.site.email_notice
+msgctxt "settings.site.email_notice"
+msgid ""
+"<span>In order to receive reports by email, please configure your email "
+"account settings.</span>"
+msgstr "<span>ដើម្បី​អាច​ទទួល​របាយការណ៍​តាម​អ៊ីមែល​បាន​ សូម​កំណត់​រចនាសម្ព័ន្ធ​អ៊ីមែល​ការ​កំណត់​គណនី​របស់​អ្នក</span>"
+
+#: settings.site.email_site
+msgctxt "settings.site.email_site"
+msgid "Site Email Address"
+msgstr "អាសយដ្ឋាន​អ៊ីមែល​របស់​តំបន់​បណ្ដាញ"
+
+#: settings.site.google_analytics
+msgctxt "settings.site.google_analytics"
+msgid "Google Analytics"
+msgstr "ការ​វិភាគ​តាម Google"
+
+#: settings.site.google_analytics_example
+msgctxt "settings.site.google_analytics_example"
+msgid "Web Property ID - Format: UA-XXXXX-XX"
+msgstr "លេខ​សម្គាល់​លក្ខណសម្បត្តិ​តំបន់បណ្ដាញ - ទ្រង់ទ្រាយ៖ UA-XXXXX-XX"
+
+#: settings.site.items_per_page
+msgctxt "settings.site.items_per_page"
+msgid "Items Per Page - Front End"
+msgstr "ធាតុ​ក្នុង​មួយ​ទំព័រ - កម្មវិធី​ខាងមុខ"
+
+#: settings.site.items_per_page_admin
+msgctxt "settings.site.items_per_page_admin"
+msgid "Items Per Page - Admin"
+msgstr "ធាតុ​ក្នុង​មួយ​ទំព័រ - អ្នក​គ្រប់គ្រង"
+
+#: settings.site.kismet_notice
+msgctxt "settings.site.kismet_notice"
+msgid ""
+"Prevent comment spam using <a href=\"http://akismet.com/\" "
+"target=\"_blank\">Akismet</a> from Automattic. <BR />You can get a free API "
+"key by registering for a <a href=\"http://en.wordpress.com/api-keys/\" "
+"target=\"_blank\">WordPress.com user account</a>"
+msgstr "ដើម្បី​ការពារ​សារ​ឥតបានការ សូម​ប្រើ <a href=\"http://akismet.com/\" target=\"_blank\">Akismet</a> ដោយ​ស្វ័យប្រវត្តិ។ <BR />អ្នក​អាច​យក​សោ API បាន​ដោយ​ចុះឈ្មោះ​សម្រាប់​គណនី​អ្នកប្រើ <a href=\"http://en.wordpress.com/api-keys/\" target=\"_blank\">WordPress.com</a>"
+
+#: settings.site.laconica_configuration
+msgctxt "settings.site.laconica_configuration"
+msgid "Laconica Credentials"
+msgstr "ព័ត៌មាន​សម្ងាត់​របស់ Laconica"
+
+#: settings.site.laconica_site
+msgctxt "settings.site.laconica_site"
+msgid "Laconica Site "
+msgstr "តំបន់បណ្ដាញ​របស់ Laconica"
+
+#: settings.site.language
+msgctxt "settings.site.language"
+msgid "Site Language"
+msgstr "ភាសា​តំបន់បណ្ដាញ"
+
+#: settings.site.manually_approve_users
+msgctxt "settings.site.manually_approve_users"
+msgid "Manually Approve Users"
+msgstr "អ្នកប្រើ​ដែល​បាន​អនុម័ត​ដោយ​ដៃ"
+
+#: settings.site.message
+msgctxt "settings.site.message"
+msgid "Site Message"
+msgstr "សារ​របស់​តំបន់បណ្ដាញ"
+
+#: settings.site.name
+msgctxt "settings.site.name"
+msgid "Site Name"
+msgstr "ឈ្មោះ​តំបន់បណ្ដាញ"
+
+#: settings.site.private_deployment
+msgctxt "settings.site.private_deployment"
+msgid "Private Deployment"
+msgstr "ការ​អភិវឌ្ឍ​ឯកជន"
+
+#: settings.site.require_email_confirmation
+msgctxt "settings.site.require_email_confirmation"
+msgid "Require User Email Confirmation"
+msgstr "ទាមទារ​ការ​អះអាង​អ៊ីមែល​របស់​អ្នកប្រើ"
+
+#: settings.site.submit_report_message
+msgctxt "settings.site.submit_report_message"
+msgid "Submit Report Message"
+msgstr "ដាក់​ស្នើ​សារ​របាយការណ៍"
+
+#: settings.site.share_site_stats
+msgctxt "settings.site.share_site_stats"
+msgid "Enable Statistics (Stored on Ushahidi's server)"
+msgstr "បើក​ស្ថិតិ (បាន​ទុក​នៅ​លើ​ម៉ាស៊ីន​មេ​ Ushahidi)"
+
+#: settings.site.tagline
+msgctxt "settings.site.tagline"
+msgid "Site Tagline"
+msgstr "បន្ទាត់​ស្លាក​របស់​តំបន់បណ្ដាញ"
+
+#: settings.site.timezone
+msgctxt "settings.site.timezone"
+msgid "Timezone"
+msgstr "តំបន់​ពេលវេលា"
+
+#: settings.site.title
+msgctxt "settings.site.title"
+msgid "Site Settings"
+msgstr "ការ​កំណត់​តំបន់បណ្ដាញ"
+
+#: settings.site.twitter_configuration
+msgctxt "settings.site.twitter_configuration"
+msgid "Twitter Search Terms"
+msgstr "លក្ខខណ្ឌ​ស្វែងរក​របស់ Twitter"
+
+#: settings.site.twitter_hashtags
+msgctxt "settings.site.twitter_hashtags"
+msgid "Hashtags - Separate with commas "
+msgstr "សញ្ញា (#) បំបែក​ដោយ​សញ្ញា​ក្បៀស (,)"
+
+#: settings.site.feed_geolocation_user
+msgctxt "settings.site.feed_geolocation_user"
+msgid "Feeds geolocation - Geonames username"
+msgstr "Feeds geolocation - ឈ្មោះអ្នកប្រើ Geonames"
+
+#: settings.site_email.email
+msgctxt "settings.site_email.email"
+msgid "The site email field does not appear to contain a valid email address."
+msgstr "វាល​អ៊ីមែល​របស់​តំបន់បណ្ដាញ​មិន​បង្ហាញ​ថា​មាន​អាសយដ្ឋាន​អ៊ីមែល​ត្រឹមត្រូវ​ទេ។"
+
+#: settings.site_email.length
+msgctxt "settings.site_email.length"
+msgid ""
+"The site email field must be at least 4 and no more 100 characters long."
+msgstr "វាល​អាសយដ្ឋាន​អ៊ីមែល​ត្រូវតែ​មាន​អក្សរ​យ៉ាង​តិច ៤ និង​​មិន​ច្រើន​ជាង ១០០ តួ​អក្សរ​ឡើយ។"
+
+#: settings.site_name.length
+msgctxt "settings.site_name.length"
+msgid "The site name field must be at least 3 and no more 50 characters long."
+msgstr "វាល​ឈ្មោះ​តំបន់បណ្ដាញ​ត្រូវតែ​មាន​តួ​​អក្សរ​យ៉ាង​តិច​ ៣ និង​មិន​ច្រើន​ជាង ​៥០ តួ​អក្សរ​ឡើយ។"
+
+#: settings.site_name.required
+msgctxt "settings.site_name.required"
+msgid "The site name field is required."
+msgstr "បាន​ទាមទារ​វាល​ឈ្មោះ​តំបន់បណ្ដាញ។"
+
+#: settings.site_tagline.length
+msgctxt "settings.site_tagline.length"
+msgid "The tagline field must be at least 3 and no more 100 characters long."
+msgstr "វាល​បន្ទាត់​ស្លាក​ត្រូវតែ​មាន​តួ​អក្សរ​យ៉ាងតិច​ ៣ និង​មិន​ច្រើន​ជាង ​១០០ តួ​អក្សរ​ឡើយ។"
+
+#: settings.site_tagline.required
+msgctxt "settings.site_tagline.required"
+msgid "The tagline field is required."
+msgstr "បាន​ទាមទារ​វាល​បន្ទាត់​ស្លាក។"
+
+#: settings.sms.clickatell_api
+msgctxt "settings.sms.clickatell_api"
+msgid "Your Clickatell API Number"
+msgstr "លេខ Clickatell API របស់​អ្នក"
+
+#: settings.sms.clickatell_check_balance
+msgctxt "settings.sms.clickatell_check_balance"
+msgid "Check Your Clickatell Credit Balance"
+msgstr "ពិនិត្យ​សមតុល្យ​ឥណទាន Clickatell របស់​អ្នក"
+
+#: settings.sms.clickatell_load_balance
+msgctxt "settings.sms.clickatell_load_balance"
+msgid "Load Credit Balance"
+msgstr "ផ្ទុក​សមតុល្យ​ឥណទាន"
+
+#: settings.sms.clickatell_password
+msgctxt "settings.sms.clickatell_password"
+msgid "Your Clickatell Password"
+msgstr "ពាក្យសម្ងាត់ Clickatell របស់​អ្នក"
+
+#: settings.sms.clickatell_text_1
+msgctxt "settings.sms.clickatell_text_1"
+msgid ""
+"Sign up for Clickatells service by <a "
+"href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" "
+"target=\"_blank\">clicking here</a>"
+msgstr "ចុះឈ្មោះ​សម្រាប់​សេវាកម្ម Clickatells ដោយ <a href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" target=\"_blank\">ចុច​ទីនេះ</a>"
+
+#: settings.sms.clickatell_text_2
+msgctxt "settings.sms.clickatell_text_2"
+msgid "Enter your Clickatell access information below"
+msgstr "បញ្ចូល​ព័ត៌មាន​ចូល​ដំណើរការ Clickatell របស់​អ្នក​នៅ​ខាងក្រោម"
+
+#: settings.sms.clickatell_username
+msgctxt "settings.sms.clickatell_username"
+msgid "Your Clickatell User Name"
+msgstr "ឈ្មោះ​អ្នកប្រើ Clickatell របស់​អ្នក"
+
+#: settings.sms.flsms_description
+msgctxt "settings.sms.flsms_description"
+msgid ""
+"FrontlineSMS is free and open source software that enables users to send and"
+" receive text messages with large groups of people through mobile phones. "
+"Click on the box below to download the latest version from FrontlineSMS.com."
+msgstr "FrontlineSMS គឺជា​កម្មវិធី​កូដ​ចំហ​ឥត​បង់ថ្លៃ​ដែល​អ្នក​ប្រើ​អាច​ផ្ញើ និង​ទទួល​សារ​អត្ថបទ​ជា​ក្រុម​តាម​រយៈ​ទូរស័ព្ទ​ចល័ត​។ ចុច​នៅ​លើ​ប្រអប់​ខាង​ក្រោម ដើម្បី​ទាញ​យក​កំណែ​ចុងក្រោយ​ពី FrontlineSMS.com។"
+
+#: settings.sms.flsms_download
+msgctxt "settings.sms.flsms_download"
+msgid "Download and install FrontlineSMS"
+msgstr "ទាញ​យក និង​ដំឡើង FrontlineSMS"
+
+#: settings.sms.flsms_instructions
+msgctxt "settings.sms.flsms_instructions"
+msgid ""
+"Detailed instructions on how to send SMS from your FronlineSMS installation "
+"are available <strong><a "
+"href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" "
+"target=\"_blank\">here</a></strong>. The URL and API Key below are required "
+"to set up the sync with FrontlineSMS."
+msgstr "សេចក្ដី​ណែនាំ​លម្អិត​អំពី​របៀប​ផ្ញើ​សារ SMS ពី​ការ​ដំឡើង FronlineSMS របស់​អ្នក​​​​ <strong><a href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" target=\"_blank\">here</a></strong>។  URL និង​សោ API ខាងក្រោម​ត្រូវ​បាន​ទាមទារ​ដើម្បី​រៀបចំ​ធ្វើ​សមកាលកម្ម​​ជាមួយ FrontlineSMS។"
+
+#: settings.sms.flsms_link
+msgctxt "settings.sms.flsms_link"
+msgid "Copy and paste this into the FrontlineSMS \"Address\" field"
+msgstr "ចម្លង និង​បិទភ្ជាប់​វា​ទៅ​កាន់​វាល  \"អាសយដ្ឋាន\" FrontlineSMS"
+
+#: settings.sms.flsms_key
+msgctxt "settings.sms.flsms_key"
+msgid "Copy and paste this into the FrontlineSMS \"Ushahidi API Key\" field"
+msgstr "ចម្លង និង​បិទភ្ជាប់​វា​ទៅកាន់​វាល  FrontlineSMS \"Ushahidi API Key\""
+
+#: settings.sms.flsms_synchronize
+msgctxt "settings.sms.flsms_synchronize"
+msgid "Connecting FrontlineSMS to this Ushahidi deployment"
+msgstr "តភ្ជាប់ FrontlineSMS ទៅ​កាន់​ការ​ប្រើប្រាស់ Ushahidi នេះ"
+
+#: settings.sms.flsms_text_1
+msgctxt "settings.sms.flsms_text_1"
+msgid "Enter phone number(s) connected to Frontline SMS in the field(s) below"
+msgstr "បញ្ចូល​លេខ​ទូរស័ព្ទ​ដើម្បី​តភ្ជាប់​ទៅកាន់ Frontline SMS នៅ​ក្នុង​វាល​ខាងក្រោម"
+
+#: settings.sms.flsms_text_2
+msgctxt "settings.sms.flsms_text_2"
+msgid "Enter the number without any + or dashes below"
+msgstr "បញ្ចូល​លេខ​ខាងក្រោម​ដោយ​មិន​ចាំបាច់​មាន​សញ្ញា + ឬ​សញ្ញា - ឡើយ"
+
+#: settings.sms.option_1
+msgctxt "settings.sms.option_1"
+msgid "Option 1: Use Frontline SMS"
+msgstr "ជម្រើស​ទី ១៖ ប្រើ Frontline SMS"
+
+#: settings.sms.option_2
+msgctxt "settings.sms.option_2"
+msgid "Option 2: Use a Global SMS Gateway"
+msgstr "ជម្រើស​ទី ២៖ ប្រើ​ច្រក SMS សាកល"
+
+#: settings.sms.title
+msgctxt "settings.sms.title"
+msgid "SMS Setup Options"
+msgstr "ជម្រើស​រៀបចំ SMS"
+
+#: settings.sms_no1.length
+msgctxt "settings.sms_no1.length"
+msgid "The phone 1 field does not appear to contain a valid value."
+msgstr "វាល​មួយ​របស់​ទូរស័ព្ទ​បង្ហាញ​ថា​មាន​តម្លៃ​ត្រឹមត្រូវ។ "
+
+#: settings.sms_no1.numeric
+msgctxt "settings.sms_no1.numeric"
+msgid "The phone 1 field should contain numbers only."
+msgstr "វាល​មួយ​របស់​ទូរស័ព្ទ​គួរ​មានតែ​លេខ​ប៉ុណ្ណោះ។"
+
+#: settings.sms_no2.length
+msgctxt "settings.sms_no2.length"
+msgid "The phone 2 field is too long."
+msgstr "វាល​ទី ២ ​របស់​ទូរស័ព្ទ​គឺ​វែង​ពេក។"
+
+#: settings.sms_no2.numeric
+msgctxt "settings.sms_no2.numeric"
+msgid "The phone 2 field should contain numbers only."
+msgstr "វាល​ទី ២ ​របស់​ទូរស័ព្ទ​គួរ​មានតែ​លេខ​ប៉ុណ្ណោះ "
+
+#: settings.sms_no3.length
+msgctxt "settings.sms_no3.length"
+msgid "The phone 3 field is too long."
+msgstr "វាល​ទី ៣​ របស់​ទូរស័ព្ទ​គឺ​វែង​ពេក។"
+
+#: settings.sms_no3.numeric
+msgctxt "settings.sms_no3.numeric"
+msgid "The phone 3 field should contain numbers only."
+msgstr "វាល​ទី ៣ ​របស់​ទូរស័ព្ទ​គួរ​មានតែ​លេខ​ប៉ុណ្ណោះ។"
+
+#: settings.twitter.title
+msgctxt "settings.twitter.title"
+msgid "Twitter Setup Options"
+msgstr "ជម្រើស​រៀបចំ Twitter"
+
+#: settings.twitter.description
+msgctxt "settings.twitter.description"
+msgid ""
+"To get the information below, set up your deployment as a new Twitter "
+"application at"
+msgstr "ដើម្បី​ទទួល​បាន​ព័ត៌មាន​ខាងក្រោម រៀបចំ​ការ​ប្រើប្រាស់​របស់​អ្នកជា​កម្មវិធី​ Twitter ថ្មី​នៅ"
+
+#: settings.twitter.api_key
+msgctxt "settings.twitter.api_key"
+msgid "Consumer Key"
+msgstr "សោ​អ្នក​ប្រើប្រាស់"
+
+#: settings.twitter.api_key_secret
+msgctxt "settings.twitter.api_key_secret"
+msgid "Consumer secret"
+msgstr "សោ​អ្នក​ប្រើប្រាស់"
+
+#: settings.twitter.token
+msgctxt "settings.twitter.token"
+msgid "Access Token"
+msgstr "ចូល​ដំណើរការ​​ថូខឹន"
+
+#: settings.twitter.token_secret
+msgctxt "settings.twitter.token_secret"
+msgid "Access Token Secret"
+msgstr "ចូល​ដំណើរការ​ថូខឹន​សម្ងាត់"
+
+#: settings.test_settings
+msgctxt "settings.test_settings"
+msgid "Test settings"
+msgstr "កំណត់​ការ​សាកល្បង"

@@ -1,0 +1,55 @@
+# 
+# Translators:
+# Thu Hoai <contact@bizover.net>, 2013
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-09-06 15:33+0000\n"
+"Last-Translator: Thu Hoai <contact@bizover.net>\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi_VN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: feeds.date
+msgctxt "feeds.date"
+msgid "DATE"
+msgstr "NGÀY THÁNG"
+
+#: feeds.feed_name.length
+msgctxt "feeds.feed_name.length"
+msgid ""
+"The feed name field must be at least 3 and no more \n"
+"\t\t\t70 characters long."
+msgstr "Phần khung thông tin tên feed phải có ít nhất 3 ký tự \n\t\t\ttối đa 70 ký tự về độ dài."
+
+#: feeds.feed_name.required
+msgctxt "feeds.feed_name.required"
+msgid "Please enter the name of the feed."
+msgstr "hãy nhập tên của nguồn cung cấp dữ liệu."
+
+#: feeds.feed_url.required
+msgctxt "feeds.feed_url.required"
+msgid "Please enter feed's URL."
+msgstr "hãy nhập đường dẫn liên kết của nguồn cung cấp dữ liệu."
+
+#: feeds.feed_url.url
+msgctxt "feeds.feed_url.url"
+msgid "Please enter a valid URL, e.g. http://www.ushahidi.com"
+msgstr "Vui lòng điền vào đường dẫn hợp lệ, ví dụ: http://www.ushahidi.com"
+
+#: feeds.source
+msgctxt "feeds.source"
+msgid "SOURCE"
+msgstr "NGUỒN"
+
+#: feeds.title
+msgctxt "feeds.title"
+msgid "Title"
+msgstr "Tiêu đề"

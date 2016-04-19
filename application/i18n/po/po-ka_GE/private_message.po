@@ -1,0 +1,43 @@
+#. extracted from en_US/private_message.php, ka_GE/private_message.php
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-17 06:26+0000\n"
+"PO-Revision-Date: 2012-08-17 06:26+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: ka_GE\n"
+
+#: private_message.parent_id.numeric
+msgctxt "private_message.parent_id.numeric"
+msgid "Parent ID must be numeric"
+msgstr ""
+
+#: private_message.private_to.required
+msgctxt "private_message.private_to.required"
+msgid "The To field is required"
+msgstr ""
+
+#: private_message.private_to.exists
+msgctxt "private_message.private_to.exists"
+msgid "The user you are try to send a message to does not exist"
+msgstr ""
+
+#: private_message.private_subject.required
+msgctxt "private_message.private_subject.required"
+msgid "The subject field is required"
+msgstr ""
+
+#: private_message.private_subject.length
+msgctxt "private_message.private_subject.length"
+msgid "Subject must be between 3 and 150 characters"
+msgstr ""
+
+#: private_message.private_message.required
+msgctxt "private_message.private_message.required"
+msgid "The message field is required"
+msgstr ""
+

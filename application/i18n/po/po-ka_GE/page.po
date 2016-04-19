@@ -1,0 +1,33 @@
+#. extracted from en_US/page.php, ka_GE/page.php
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-15 04:39+0000\n"
+"PO-Revision-Date: 2012-08-15 04:39+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: ka_GE\n"
+
+#: page.page_title.required
+msgctxt "page.page_title.required"
+msgid "Please enter a Page Title."
+msgstr ""
+
+#: page.page_title.length
+msgctxt "page.page_title.length"
+msgid "Page Title must be at least 3 and no more than 150 characters long."
+msgstr ""
+
+#: page.page_tab.required
+msgctxt "page.page_tab.required"
+msgid "Please enter a Page Tab Name."
+msgstr ""
+
+#: page.page_description.required
+msgctxt "page.page_description.required"
+msgid "Please enter a Page Description."
+msgstr ""
+

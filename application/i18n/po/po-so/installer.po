@@ -1,0 +1,409 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Somali (http://www.transifex.com/ushahidi/ushahidi-v2/language/so/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: so\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: installer.base_path
+msgctxt "installer.base_path"
+msgid "Base Path"
+msgstr "Waddada aasaaska ah"
+
+#: installer.database
+msgctxt "installer.database"
+msgid "Database"
+msgstr "Keydka xogta"
+
+#: installer.database_host
+msgctxt "installer.database_host"
+msgid "Database Host"
+msgstr "Martigeliyaha keydka xogta"
+
+#: installer.database_host_description
+msgctxt "installer.database_host_description"
+msgid ""
+"If you are running Ushahidi on your own computer, this will more than likely"
+" be \"localhost\". If you are running Ushahidi from a web server, you will "
+"get your host information from your web hosting provider."
+msgstr "Haddii Ushahidi aad ka maamulayso computer-kaaga, computer-kaaga waxa uu noqonayaa \"Localhost\". Haddiise Ushahidi aad ka maamulayso computer-ka nooca web serverka, waxaad warbixinnada ka heleysaa shirkadda hosti gareyneysa boggaaga"
+
+#: installer.database_name
+msgctxt "installer.database_name"
+msgid "Database Name"
+msgstr "Magaca keydka xogta"
+
+#: installer.database_name_description
+msgctxt "installer.database_name_description"
+msgid "The name of the database you want to run Ushahidi in"
+msgstr "Magaca keydka xogta ee aad doonayso inaad ku maamusho Ushahidi"
+
+#: installer.db_information_link
+msgctxt "installer.db_information_link"
+msgid ""
+"For more information, please check out <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" "
+"target=\"_blank\">this article</a> on the wiki that talks about databases in"
+" more detail."
+msgstr "Wixii faahfaahin ah, fadlan ku raadi link-gaan <a href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" target=\"_blank\">this article</a> website sida faahfaahsan uga hadlayo keydadka xogta."
+
+#: installer.default_language
+msgctxt "installer.default_language"
+msgid "Default Language (Locale)"
+msgstr "Luuqadda asalka ah"
+
+#: installer.default_language_description
+msgctxt "installer.default_language_description"
+msgid ""
+"Each deployment of Ushahidi comes with a set of built in language "
+"translations. You can also <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\""
+" target=\"_blank\">add your own</a>."
+msgstr "Version kasta oo Ushahidi waxa uu la yimaadaa luuqado ku dhisan gudihiisa oo diyaar u ah in la turjumo. Waxaad <a href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\" target=\"_blank\"> ku dari kartaa luuqadaada hooyo </a>"
+
+#: installer.disable
+msgctxt "installer.disable"
+msgid "Disable"
+msgstr "Awoodda ka xir"
+
+#: installer.enable
+msgctxt "installer.enable"
+msgid "Enable"
+msgstr "Awood sii"
+
+#: installer.error_summary
+msgctxt "installer.error_summary"
+msgid "Listed below is a summary of the errors we encountered."
+msgstr "Waxaa hoos ku xusan warbixin kooban oo ku saabsan cilladaha aanu la kulannay"
+
+#: installer.files_location_text
+msgctxt "installer.files_location_text"
+msgid ""
+"The location on your server where you placed your Ushahidi files. <strong>We"
+" have automatically detected this value, please make sure that it is "
+"correct.</strong> If the field is empty, do not worry, it means ushahidi is "
+"installed at the top level directory."
+msgstr "Halka aad faylasha Ushahidi ka dhigtay Computerka Serverka. <strong> Waxaa noo soo baxay qiimahan, fadlan hubi inuu sax yahay. </strong> Haddii goobtu ay maran tahay, ha welwelin, Ushahidi waxay ku rakiban tahay khaanadda kore"
+
+#: installer.finished
+msgctxt "installer.finished"
+msgid "Finished"
+msgstr "Dhammaystiran"
+
+#: installer.general
+msgctxt "installer.general"
+msgid "General"
+msgstr "Guud ahaan"
+
+#: installer.google_key
+msgctxt "installer.google_key"
+msgid "<span>Google</span> API Key"
+msgstr ""
+
+#: installer.google_key_description
+msgctxt "installer.google_key_description"
+msgid ""
+"Anyone can get an api key. <a id=\"api-link\" "
+"href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Get "
+"yours now</a>"
+msgstr "Qof kasta waa uu heli karaa furaha api. <a id=\"api-link\" href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Hel kaaga hadda</a>"
+
+#: installer.go_back
+msgctxt "installer.go_back"
+msgid "Go Back"
+msgstr "Dib u noqo"
+
+#: installer.index.advanced
+msgctxt "installer.index.advanced"
+msgid "ADVANCED INSTALLATION"
+msgstr "Rakibaad horumarsan"
+
+#: installer.index.advanced_installation_description
+msgctxt "installer.index.advanced_installation_description"
+msgid ""
+"Get all the basic settings completed through this 5-step process.  This "
+"includes server, map, site name and contact details."
+msgstr "Waxaad qaabka loo hagaajiyo ka heli kartaa adigoo raacaya hannaanka 5-ta tallaabo. Waxaa 5-ta hannaan ka mid ah computerka Server-ka, khariidadda, magaca bogga iyo halka lagala xiriirayo"
+
+#: installer.index.basic_installation
+msgctxt "installer.index.basic_installation"
+msgid "BASIC INSTALLATION"
+msgstr "Rakibaadda aasaaska ah"
+
+#: installer.index.basic_installation_description
+msgctxt "installer.index.basic_installation_description"
+msgid ""
+"Simple and fast. All you need is your website's root directory and your "
+"database information. Choose this option if you want to get up and running "
+"quickly, and you can always configure everything else later."
+msgstr "Rakibaaddu waa ay fududdahay, waana deg-deg. Keliya waxaad u baahan tahay waddada lagu galo boggaaga iyo warbixinta keydka xogtaada"
+
+#: installer.index.proceed
+msgctxt "installer.index.proceed"
+msgid "Proceed"
+msgstr " sii wad"
+
+#: installer.index.welcome
+msgctxt "installer.index.welcome"
+msgid ""
+"Welcome to the Ushahidi server install process.  Choose which type of "
+"installation you would like to use below."
+msgstr "Ku soo dhawow hannaanka rakibaadda Ushahidi ee server-ada. Hoos ka dooro nooca rakibaadda aad jeclaan lahayd inaad computer-kaaga ku rakibto"
+
+#: installer.installation_successful
+msgctxt "installer.installation_successful"
+msgid "Installation Successful"
+msgstr "Rakibaaddu si fiican ayay u dhammaatay"
+
+#: installer.mail_server
+msgctxt "installer.mail_server"
+msgid "Mail Server"
+msgstr ""
+
+#: installer.mail_server_host
+msgctxt "installer.mail_server_host"
+msgid "Mail Server Host"
+msgstr "Martigeliyaha mail Server-ka"
+
+#: installer.mail_server_host_description
+msgctxt "installer.mail_server_host_description"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "Tusaaleyaal: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: installer.mail_server_password
+msgctxt "installer.mail_server_password"
+msgid "Mail Server Password"
+msgstr "Password-ka Mail Server-ka"
+
+#: installer.mail_server_password_description
+msgctxt "installer.mail_server_password_description"
+msgid "The password you normally use to login in to your email"
+msgstr "Password-ka aad sida caadiga ah ugu gasho email-kaaga"
+
+#: installer.mail_server_port
+msgctxt "installer.mail_server_port"
+msgid "Mail Server Port"
+msgstr ""
+
+#: installer.mail_server_port_description
+msgctxt "installer.mail_server_port_description"
+msgid "Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "Ports-ka caadiga ah: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: installer.mail_server_type
+msgctxt "installer.mail_server_type"
+msgid "Mail Server Type"
+msgstr " Nooca mail Server-ka"
+
+#: installer.mail_server_type_description
+msgctxt "installer.mail_server_type_description"
+msgid ""
+"Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a "
+"href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" "
+"target=\"_blank\">What is the difference?</a>"
+msgstr "en_US: Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" target=\"_blank\">What is the difference?</a>"
+
+#: installer.mail_server_username
+msgctxt "installer.mail_server_username"
+msgid "Mail Server Username"
+msgstr "Username-ka lagu galo Mail Server-ka"
+
+#: installer.mail_server_username_description
+msgctxt "installer.mail_server_username_description"
+msgid ""
+"If you are using Gmail, Hotmail, or Yahoo Mail, enter a full email address "
+"as a username."
+msgstr "Haddii aad isticmaalayso Gmail, Hotmail, ama Yahoo Mail, u isticmaal Emailkaaga oo dhamaystiran magaca aad ku galayso"
+
+#: installer.map
+msgctxt "installer.map"
+msgid "Map"
+msgstr "Khariidad"
+
+#: installer.map_provider
+msgctxt "installer.map_provider"
+msgid "Map Provider"
+msgstr "Khariidad bixiye"
+
+#: installer.map_provider_description
+msgctxt "installer.map_provider_description"
+msgid ""
+"Ushahidi works equally well with any of these three mapping providers: "
+"Google, Bing or Open Street Map. Choose the one that has the most detail in "
+"your area."
+msgstr "Ushahidi si siman ayay ula shaqeysaa afarta khariidad bixiye: Google, Bing, Yahoo ama Open Street Map. Dooro midda ay ku jirto faahfaahin ku saabsan goobta aad ku sugan tahay"
+
+#: installer.other_steps
+msgctxt "installer.other_steps"
+msgid "Other steps..."
+msgstr "Wadiiqooyin kale..."
+
+#: installer.password
+msgctxt "installer.password"
+msgid "Password"
+msgstr ""
+
+#: installer.password_description
+msgctxt "installer.password_description"
+msgid "Your database password"
+msgstr "Password-ka keydka xogtaada"
+
+#: installer.previous
+msgctxt "installer.previous"
+msgid "Previous"
+msgstr "Hore"
+
+#: installer.restart_apache
+msgctxt "installer.restart_apache"
+msgid "Please restart your Apache Server"
+msgstr "Fadlan dib u soo kici Server-kaaga Apache"
+
+#: installer.select_mail_server_ssl
+msgctxt "installer.select_mail_server_ssl"
+msgid "Enable or disable SSL"
+msgstr "Awood sii ama awoodda ka xir SSL"
+
+#: installer.select_mail_server_ssl_description
+msgctxt "installer.select_mail_server_ssl_description"
+msgid ""
+"Some mail servers give you the option of using <abbr title=\"Secure Sockets "
+"Layer\">SSL</abbr> when making a connection. Using SSL is recommended as it "
+"gives you an added level of security."
+msgstr "Qaar ka mid ah Mail Servers-ku waxay ku siinayaan dookha ah inaad isticmaasho <abbr title=\"Secure Sockets Layer\">SSL</abbr> marka aad sameyneyso xiriirin. Addeegsiga SSL waa uu fiican yahay maadaama uu ku siinayo amni dheeraad ah"
+
+#: installer.setup_sms
+msgctxt "installer.setup_sms"
+msgid "Set up your SMS server"
+msgstr "Rakib Server-kaaga SMS-yada"
+
+#: installer.site_email
+msgctxt "installer.site_email"
+msgid "Site Email Address"
+msgstr "Cinwaanka Emailka ee bogga"
+
+#: installer.site_email_alerts
+msgctxt "installer.site_email_alerts"
+msgid "Site Alert Email Address"
+msgstr "Ciwaanka Email-ka farriimaha ee bogga"
+
+#: installer.site_email_alerts_description
+msgctxt "installer.site_email_alerts_description"
+msgid ""
+"When your site visitors sign up for email alerts, they will receive emails "
+"from this address. This email address does not have to be the same as the "
+"Site Email Address."
+msgstr "Marka booqdaha boggaaga uu iska diiwaangeliyo farrimaha E-mailka, waxay farriimaha ka heli doonaan cinwaankan. Waa inuusan cinwaanka Emailkan la mid noqon cinwaanka Emailka bogga"
+
+#: installer.site_email_description
+msgctxt "installer.site_email_description"
+msgid "Site wide email communication will be funneled through this address"
+msgstr "Email-ka bogga waxaa lagu xiriirin doonaan cinwaankan"
+
+#: installer.site_name
+msgctxt "installer.site_name"
+msgid "Site Name"
+msgstr "Magaca bogga."
+
+#: installer.site_name_description
+msgctxt "installer.site_name_description"
+msgid "The name of your site"
+msgstr "Magaca boggaaga"
+
+#: installer.site_tagline
+msgctxt "installer.site_tagline"
+msgid "Site Tagline"
+msgstr "Tagline-ka bogga"
+
+#: installer.site_tagline_description
+msgctxt "installer.site_tagline_description"
+msgid "Your tagline"
+msgstr "Tagline kaaga"
+
+#: installer.summary.text_1
+msgctxt "installer.summary.text_1"
+msgid ""
+"The files and folders listed below need to be writable by your webserver."
+msgstr "Faylasha iyo galalka hoos ku xusan waxay u baahan yihiin in lagu qoro webserver-kaaga"
+
+#: installer.summary.text_2
+msgctxt "installer.summary.text_2"
+msgid ""
+"<p>Here are instructions for changing file permissions:</p>\n"
+"        <ul>\n"
+"            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n"
+"            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n"
+"        </ul>"
+msgstr "<p>Waxaa halkan ku qoran tilmaamaha marka la beddelayo ogolaashaha faylasha:</p> <ul> <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li> <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li> </ul>\nso_SO: "
+
+#: installer.summary.text_3
+msgctxt "installer.summary.text_3"
+msgid ""
+"Before you get started, you will need to make sure the following files and "
+"folders are writable by your webserver. This involves changing file "
+"permissions."
+msgstr "Ka hor intaadan billaabin, waxaad u baahan tahay inaad xaqiijiso in faylasha iyo galalka soo socda lagu qori karo webserver-kaaga. Waxaa ku jira bedbeddellada ogolaanshaha faylka"
+
+#: installer.summary.text_4
+msgctxt "installer.summary.text_4"
+msgid ""
+"For the installation process, please have the following bits of information "
+"on hand."
+msgstr "Fadlan waa inaad haysataa tilmaamahan marka aad rakibayso"
+
+#: installer.table_prefix
+msgctxt "installer.table_prefix"
+msgid "Table Prefix"
+msgstr "Horgallaha jadwalka"
+
+#: installer.table_prefix_description
+msgctxt "installer.table_prefix_description"
+msgid ""
+"Normally you would not change the table prefix. However, if you want to run "
+"multiple Ushahidi installations from a single database, you can do that by "
+"changing the prefix here."
+msgstr "Ha beddelin horgalaha jadwal-ka. Inkastoo, aad beddeli karto marka aad doonayso inaad hal xog keydiyo kana kiciso dhowr rakabitaan"
+
+#: installer.title
+msgctxt "installer.title"
+msgid "Title"
+msgstr "Mowduuc"
+
+#: installer.to_login
+msgctxt "installer.to_login"
+msgid "To login, go to"
+msgstr "Haddaad rabto inaad gasho, aad"
+
+#: installer.upload_data
+msgctxt "installer.upload_data"
+msgid "Upload report data"
+msgstr "U dir xogta report-ka server-ka"
+
+#: installer.username
+msgctxt "installer.username"
+msgid "Username"
+msgstr ""
+
+#: installer.username_description
+msgctxt "installer.username_description"
+msgid "Your database username"
+msgstr "Username-ka keyd xogeedkaaga"
+
+#: installer.use_credentials
+msgctxt "installer.use_credentials"
+msgid "and use the following credentials"
+msgstr "Isticmaal caddeymaha soo socda"
+
+#: installer.view_site
+msgctxt "installer.view_site"
+msgid "View your website"
+msgstr "Booqo boggaaga"

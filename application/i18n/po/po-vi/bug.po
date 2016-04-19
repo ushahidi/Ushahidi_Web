@@ -1,0 +1,67 @@
+# 
+# Translators:
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-19 16:52+0000\n"
+"Last-Translator: Anh Phan <vietnamesel10n@gmail.com>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: bug.captcha.default
+msgctxt "bug.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Vui lòng điền vào mã an ninh hợp lệ."
+
+#: bug.captcha.required
+msgctxt "bug.captcha.required"
+msgid "Please enter the security code."
+msgstr "Vui lòng điền vào mã an ninh."
+
+#: bug.email.email
+msgctxt "bug.email.email"
+msgid "The Email field does not appear to contain a valid email address?"
+msgstr "Phần thông tin về địa chỉ email không chứa địa chỉ email hợp lệ?"
+
+#: bug.email.length
+msgctxt "bug.email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "Phần khung thông tin email phải chứa ít nhất 4 ký tự và tối đa 64 ký tự về độ dài."
+
+#: bug.email.required
+msgctxt "bug.email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Phần khung thông tin email yêu cầu phần lựa chọn phải được đánh dấu chọn."
+
+#: bug.error.required
+msgctxt "bug.error.required"
+msgid "The error field is required."
+msgstr "Phần khung thông tin về lỗi không được để trống."
+
+#: bug.subject.length
+msgctxt "bug.subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr "Phần khung thông tin chủ đề phải chứa ít nhất 3 ký tự về độ dài."
+
+#: bug.subject.required
+msgctxt "bug.subject.required"
+msgid "The subject field is required."
+msgstr "Phần khung thông tin về chủ đề không được để trống."
+
+#: bug.yourname.length
+msgctxt "bug.yourname.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Phần khung thông tin tên phải chứa ít nhất 3 ký tự về độ dài."
+
+#: bug.yourname.required
+msgctxt "bug.yourname.required"
+msgid "The name field is required."
+msgstr "Phần khung thông tin về tên không được để trống."

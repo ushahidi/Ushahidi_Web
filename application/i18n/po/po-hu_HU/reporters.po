@@ -1,0 +1,73 @@
+# 
+# Translators:
+# orsime <orsime@yahoo.com>, 2013
+# toeri <toeri@freemail.hu>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Hungarian (Hungary) (http://www.transifex.com/ushahidi/ushahidi-v2/language/hu_HU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu_HU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: reporters.latitude.between
+msgctxt "reporters.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "A földrajzi szélesség mező nem tartalmaz valós szélességi fokot."
+
+#: reporters.latitude.required
+msgctxt "reporters.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "A földrajzi szélességi fok megadása kötelező. A pontos helyszínt a térképen tudod megjelölni."
+
+#: reporters.level_id.numeric
+msgctxt "reporters.level_id.numeric"
+msgid "The Reporter Level field does not appear to contain a valid Level."
+msgstr "A Bejelentő szint mező nem tartalmaz valós értéket."
+
+#: reporters.level_id.required
+msgctxt "reporters.level_id.required"
+msgid "The Reporter Level field does not appear to contain a valid Level."
+msgstr "A Bejelentő szint mező nem tartalmaz valós értéket."
+
+#: reporters.location_name.length
+msgctxt "reporters.location_name.length"
+msgid ""
+"The location name field must be at least 3 and no more 200 characters long."
+msgstr "A helyzetmegnevezés mező legalább 3 legfeljebb 200 karaktert tartalmazhat."
+
+#: reporters.location_name.required
+msgctxt "reporters.location_name.required"
+msgid "The location name field is required."
+msgstr "A \"Helyszín pontosítása\" mező kitöltése kötelező."
+
+#: reporters.longitude.between
+msgctxt "reporters.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "A földrajzi hosszúság mező nem tartalmaz érvényes hosszúsági fokot."
+
+#: reporters.longitude.required
+msgctxt "reporters.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "A földrajzi hosszúsági fok megadása kötelező. A pontos helyszínt a térképen tudod megjelölni."
+
+#: reporters.reporter_id.numeric
+msgctxt "reporters.reporter_id.numeric"
+msgid "Invalid Reporter"
+msgstr "Érvénytelen Bejelentő."
+
+#: reporters.reporter_id.required
+msgctxt "reporters.reporter_id.required"
+msgid "Invalid Reporter"
+msgstr "Érvénytelen Bejelentő."

@@ -1,0 +1,300 @@
+# 
+# Translators:
+# mindthecam <mindthecam.gr@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-14 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Greek (http://www.transifex.com/ushahidi/ushahidi-v2/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: upgrade.upgrade.between
+msgctxt "upgrade.upgrade.between"
+msgid "Invalid input data. It can either be 0 for No or 1 for Yes."
+msgstr "Μη έγκυρη εισαγωγή δεδομένων. Μπορεί να είναι είτε 0 για ΟΧΙ, είτε 1 για ΝΑΙ."
+
+#: upgrade.upgrade_automatic
+msgctxt "upgrade.upgrade_automatic"
+msgid "Automatic Upgrade"
+msgstr "Αυτόματη αναβάθμιση"
+
+#: upgrade.upgrade_available
+msgctxt "upgrade.upgrade_available"
+msgid "Available Updates"
+msgstr "Διαθέσιμες ενημερώσεις."
+
+#: upgrade.upgrade_continue_btn_text
+msgctxt "upgrade.upgrade_continue_btn_text"
+msgid "Continue"
+msgstr "Συνέχεια"
+
+#: upgrade.upgrade_db_btn_text
+msgctxt "upgrade.upgrade_db_btn_text"
+msgid "Upgrade"
+msgstr "Αναβάθμιση"
+
+#: upgrade.upgrade_db_text_1
+msgctxt "upgrade.upgrade_db_text_1"
+msgid "So, I'm going to upgrade your database from version"
+msgstr "Θα αναβαθμήσω την βάση δεδομένων σου από την έκδοση"
+
+#: upgrade.upgrade_db_text_2
+msgctxt "upgrade.upgrade_db_text_2"
+msgid "to the newest database version"
+msgstr "στην πιο πρόσφατη έκδοση"
+
+#: upgrade.upgrade_db_text_3
+msgctxt "upgrade.upgrade_db_text_3"
+msgid "Click on the \"Upgrade\" button and just chillax as I perform the magic."
+msgstr "Κάνε κλίκ στο κουμπί \"Αναβάθμιση\" και χαλάρωσε όσο κάνω τα υπόλοιπα."
+
+#: upgrade.upgrade_db_text_4
+msgctxt "upgrade.upgrade_db_text_4"
+msgid ""
+"Oh, also if you want me to backup your database, just tick the check button "
+"below and I will do that for you in a breeze."
+msgstr "Ακόμα, αν θέλεις αντίγραφο ασφαλείας της βάσης δεδομένων σου, απλά τσέκαρε το παρακάτω κουτάκι και θα το κάνω για σένα στο λεπτό."
+
+#: upgrade.upgrade_db_text_5
+msgctxt "upgrade.upgrade_db_text_5"
+msgid ""
+"Backup database before upgrade? (<strong style=\"color:#FF0000;\">Highly "
+"recommended</strong>)"
+msgstr "Να φτιάξω αντίγραφο της βάσης δεδομένων πριν την αναβάθμιση; (<strong style=\"color:#FF0000;\">Συστήνεται εμφατικά!</strong>)"
+
+#: upgrade.upgrade_db_title
+msgctxt "upgrade.upgrade_db_title"
+msgid "Ushahidi database upgrade"
+msgstr "Αναβάθμιση της βάσης δεδομένων του Ushahidi"
+
+#: upgrade.upgrade_db_info
+msgctxt "upgrade.upgrade_db_info"
+msgid ""
+"Ushahidi has been updated! Before you continue, you need to update your "
+"database to the newest version (%s)."
+msgstr "Το Ushahidi αναβαθμίστηκε! Πριν συνεχίσεις, χρειάζεται να αναβαθμίσεις τη βάση δεδομένων στη νεότερη έκδοση (%s)."
+
+#: upgrade.upgrade_db_up_to_date
+msgctxt "upgrade.upgrade_db_up_to_date"
+msgid "Your database version is up to date."
+msgstr "Η βάση δεδομένων σου βρίσκεται στην τελευταία έκδοση."
+
+#: upgrade.upgrade_failed
+msgctxt "upgrade.upgrade_failed"
+msgid "Upgrade failed at some point"
+msgstr "Η αναβάθμιση απέτυχε στην πορεία"
+
+#: upgrade.upgrade_manual
+msgctxt "upgrade.upgrade_manual"
+msgid "Manual Upgrade"
+msgstr "Χειροκίνητη αναβάθμιση"
+
+#: upgrade.upgrade_status
+msgctxt "upgrade.upgrade_status"
+msgid "Ushahidi upgrade status"
+msgstr "Κατάσταση αναβάθμισης Ushahidi"
+
+#: upgrade.upgrade_text_1
+msgctxt "upgrade.upgrade_text_1"
+msgid ""
+"The instructions below detail how to manually upgrade your Ushahidi "
+"deploymentl"
+msgstr "Οι παρακάτω οδηγίες αναλύουν πως να κάνεις χειροκίνητα την αναβάθμιση του Ushahidi σου!"
+
+#: upgrade.upgrade_text_2
+msgctxt "upgrade.upgrade_text_2"
+msgid "<dl><dt><strong>Download</strong></dt>"
+msgstr "<dl><dt><strong>Μεταφόρτωση</strong></dt>"
+
+#: upgrade.upgrade_text_3
+msgctxt "upgrade.upgrade_text_3"
+msgid "<dd>- Download the most recent Ushahidi build from"
+msgstr "<dd>-Μεταφόρτωσε την πιο πρόσφατη έκδοση του Ushahidi από"
+
+#: upgrade.upgrade_text_4
+msgctxt "upgrade.upgrade_text_4"
+msgid ""
+"<dt><strong>Backup</strong></dt><dd>- .htaccess, "
+"./applications/config/config.php, ./applications/config/database.php and "
+"./applications/config/auth.php files. </dd><dd>- Just in case something goes"
+" wrong, it's recommended you make an entire backup of your Ushahidi "
+"deployment.</dd><dt><strong>Copy files</strong></dt><dd>- Extract the "
+"downloaded zip file</dd><dd>- Depending on the operating system running the "
+"web server, use your preferred tool/mode (e.g. Telnet, FTP, SSH) to login to"
+" the webserver and replace the contents of all the folders with the newest "
+"from the recent build.</dd><dt><strong>Upgrde database</strong></dt><dd>- "
+"First determine your database schema version by looking at the "
+"<strong>db_version</strong> value in the settings table or look at the "
+"Ushahidi upgrade information at the top of this page. </dd><dd>- If you are "
+"at version 25, you need to upgrade from 25-26, 26-27, 27-28 and so on up to "
+"the latest SQL file in your <strong>/sql</strong> directory.</dd><dd>- With "
+"your database client, upgrade the database by executing the appropriate "
+"upgradex-x.sql file.</dd></dl>"
+msgstr "dt><strong>Δημιουργία αντιγράφου ασφαλείας</strong></dt><dd>- .htaccess, ./applications/config/config.php, ./applications/config/database.php and ./applications/config/auth.php files. </dd><dd>- Σε περίπτωση που κάτι πάει στραβά, συστήνεται να κάνεις ένα πλήρες αντίγραφο ασφαλείας του Ushahidi σου.</dd><dt><strong>Αντιγραφή αρχείων</strong></dt><dd>- Εξαγωγή του μεταφορτωμένου συμπιεσμένου αρχείου</dd><dd>- Ανάλογα με το λειτουργικό σύστημα που τρέχει ο εξυπηρετητής web, χρησιμοποίησε το εργαλείο που προτιμάς (πχ Telnet, FPT, SSH) για να μπεις στον εξυπηρετητή και να αντικαταστήσεις το περιεχόμενο όλων των φακέλων με τα νεότερα αρχεία από την πρόσφατη αναβάθμιση.</dd><dt><strong>Αναβάθμιση βάσης δεδομένων</strong></dt><dd>- Πρώτα εντόπισε την έκδοση της βάσης δεδομένων σου κοιτάζοντας στην τιμή της μεταβλητής <strong>db_version</strong> στον πίνακα με τις ρυθμίσεις ή κοίτα στις πληροφορίες αναβάθμισης του Ushahidi στην κορυφή αυτής της σελίδας</dd><dd>- Εάν είσαι στην έκδοση 25, πρέπει να αναβαθμίσεις από τις 25-26, 26-27, 27-28 κλπ μέχρι το πιο πρόσφατο αρχείο SQL στο φάκελο <strong>/sql</strong>.</dd><dd>- Με το πρόγραμμα επεξεργασίας βάσης δεδομένων που επιθυμείς αναβάθμισε τη βάση δεδομένων εκτελώντας το κατάλληλο upgradex-x.sql αρχείο.</dd></dl>"
+
+#: upgrade.upgrade_tables
+msgctxt "upgrade.upgrade_tables"
+msgid ""
+"<strong>Step 3:</strong> Look inside the <strong>sql</strong> folder. "
+"Manuall run the upgrade<xx>-<xx>.sql file starting from the current db "
+"version of your install through to the final sql upgrade file."
+msgstr "<strong>Βήμα 3:</strong> Κοίτα μέσα στο φάκελο <strong>sql</strong>. Εκτέλεσε χειροκίνητα το αρχείο upgrade<xx>-<xx>.sql ξεκινώντας από την τρέχουσα έκδοση της βδ της εγκατάστασής σου, μέχρι το τελικό αρχείο αναβάθμισης της sql."
+
+#: upgrade.upgrade_text_5
+msgctxt "upgrade.upgrade_text_5"
+msgid ""
+"<strong>Step 4:</strong> Click on the <strong>\"Continue\"</strong> button "
+"to upgrade the necessary tables."
+msgstr "<strong>Βήμα 4:</strong> Κάνε κλίκ στο κουμπί <strong>\"Συνέχεια\"</strong> για να αναβαθμίσεις τους απαραίτητους πίνακες."
+
+#: upgrade.upgrade_text_6
+msgctxt "upgrade.upgrade_text_6"
+msgid "For automatic upgrade, click on the button below."
+msgstr "Για αυτόματη αναβάθμιση, πάτησε το παρακάτω κουμπί."
+
+#: upgrade.upgrade_title_text
+msgctxt "upgrade.upgrade_title_text"
+msgid ""
+"You are currently using Ushahidi v%1$s with database version %2$d running on"
+" %3$s"
+msgstr "Χρησιμοποιείς το Ushahidi v%1$s με έκδοση βάσης δεδομένων %2$d η οποία τρέχει σε %3$s"
+
+#: upgrade.upgrading
+msgctxt "upgrade.upgrading"
+msgid "Upgrading"
+msgstr "Αναβαθμίζεται"
+
+#: upgrade.upgrade_ftp_text
+msgctxt "upgrade.upgrade_ftp_text"
+msgid ""
+"To continue with the easy upgrade, the following information is required for"
+" the FTP server that your website is hosted on."
+msgstr "Για να συνεχίσεις με την εύκολη αναβάθμιση απαιτούνται οι ακόλουθες πληροφορίες για τον εξυπηρετητή FTP, πάνω στον οποίο φιλοξενείται το site σου."
+
+#: upgrade.upgrade_ftp_hostname
+msgctxt "upgrade.upgrade_ftp_hostname"
+msgid "FTP Hostname: <span>Example: \"localhost\"</span>"
+msgstr "Όνομα διακομιστή FTP: <span>Παράδειγμα: \"localhost\"</span>"
+
+#: upgrade.upgrade_ftp_password
+msgctxt "upgrade.upgrade_ftp_password"
+msgid "FTP Password:"
+msgstr "FTP κωδικός πρόσβασης:"
+
+#: upgrade.upgrade_ftp_username
+msgctxt "upgrade.upgrade_ftp_username"
+msgid "FTP User Name:"
+msgstr "FTP όνομα χρήστη:"
+
+#: upgrade.upgrade_status_info
+msgctxt "upgrade.upgrade_status_info"
+msgid "You have the latest version of Ushahidi."
+msgstr "Έχετε την τελευταία έκδοση του Ushahidi."
+
+#: upgrade.upgrade_status_info_2
+msgctxt "upgrade.upgrade_status_info_2"
+msgid "You do not need to upgrade."
+msgstr "Δεν χρειάζεσαι αναβάθμιση."
+
+#: upgrade.upgrade_db_version
+msgctxt "upgrade.upgrade_db_version"
+msgid "Database version: %d"
+msgstr "Έκδοση βάσης δεδομένων: %d"
+
+#: upgrade.upgrade_warning_software_version
+msgctxt "upgrade.upgrade_warning_software_version"
+msgid "Warning: Software version in version.php and database do not match."
+msgstr "Προσοχή: η έκδοση λογισμικού στο version.php και στη βάση δεδομένων δεν είναι συμβατή."
+
+#: upgrade.upgrade_warning_db_version
+msgctxt "upgrade.upgrade_warning_db_version"
+msgid "Warning: Database version in version.php and database do not match."
+msgstr "Προσοχή: η έκδοση βάσης δεδομένων στο version.php και στη βάση δεδομένων δεν είναι συμβατή"
+
+#: upgrade.upgrade_database
+msgctxt "upgrade.upgrade_database"
+msgid "Database:"
+msgstr "Βάση δεδομένων"
+
+#: upgrade.ushahidi_release_version
+msgctxt "upgrade.ushahidi_release_version"
+msgid "Ushahidi %s"
+msgstr "Ushahidi %s"
+
+#: upgrade.beta
+msgctxt "upgrade.beta"
+msgid "BETA!"
+msgstr "BETA!"
+
+#: upgrade.download
+msgctxt "upgrade.download"
+msgid "Downloading latest version of ushahidi..."
+msgstr "Μεταφορτώνεται η τελευταία έκδοση του ushahidi..."
+
+#: upgrade.log_file
+msgctxt "upgrade.log_file"
+msgid "Log File"
+msgstr "Μεγάλο αρχείο."
+
+#: upgrade.successfully_downloaded
+msgctxt "upgrade.successfully_downloaded"
+msgid "Successfully Downloaded. Unpacking..."
+msgstr "Επιτυχής μεταφόρτωση. Αποσυμπιέζω..."
+
+#: upgrade.failed_downloading
+msgctxt "upgrade.failed_downloading"
+msgid "Failed downloading."
+msgstr "Αποτυχία μεταφόρτωσης."
+
+#: upgrade.successfully_unpacked
+msgctxt "upgrade.successfully_unpacked"
+msgid "Successfully Unpacked. Copying files..."
+msgstr "Επιτυχής αποσυμπίεση των αρχείων. Αντιγράφω τα αρχεία..."
+
+#: upgrade.failed_unpacking
+msgctxt "upgrade.failed_unpacking"
+msgid "Failed unpacking."
+msgstr "Απέτυχε η αποσυμπίεση."
+
+#: upgrade.successfully_copied
+msgctxt "upgrade.successfully_copied"
+msgid "Successfully Copied. Upgrading Database..."
+msgstr "Επιτυχής αντιγραφή αρχείων. Αναβαθμίζω τη βάση δεδομένων..."
+
+#: upgrade.failed_copying
+msgctxt "upgrade.failed_copying"
+msgid "Failed copying files."
+msgstr "Αποτυχία αντιγραφής αρχείων."
+
+#: upgrade.backup_success
+msgctxt "upgrade.backup_success"
+msgid "Database backup and upgrade successful."
+msgstr "Επιτυχής αναβάθμιση και αντιγραφή ασφαλείας της βάσης δεδομένων."
+
+#: upgrade.backup_failed
+msgctxt "upgrade.backup_failed"
+msgid "Failed backing up database."
+msgstr "Αποτυχής αναβάθμιση της βάσης δεδομένων."
+
+#: upgrade.dbupgrade_success
+msgctxt "upgrade.dbupgrade_success"
+msgid "Database upgrade successful."
+msgstr "Επιτυχής αναβάθμιση της βάσης δεδομένων."
+
+#: upgrade.deleting_files
+msgctxt "upgrade.deleting_files"
+msgid "Deleting downloaded files..."
+msgstr "Διαγραφή μεταφορτωμένων αρχείων..."
+
+#: upgrade.upgrade_success
+msgctxt "upgrade.upgrade_success"
+msgid "UPGRADE SUCCESSFUL. View <a href=\"%s\" target=\"_blank\">Log File</a>"
+msgstr "Η ΑΝΑΒΑΘΜΙΣΗ ΗΤΑΝ ΕΠΙΤΥΧΗΣ. Δες το <a href=\"%s\" target=\"_blank\">Αρχείο καταγραφής συμβάντων</a>"

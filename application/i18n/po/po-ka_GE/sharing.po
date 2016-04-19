@@ -1,0 +1,71 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Georgian (Georgia) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ka_GE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ka_GE\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: sharing.date
+msgctxt "sharing.date"
+msgid "Ingress date"
+msgstr "თარიღში შესვლა"
+
+#: sharing.date_added
+msgctxt "sharing.date_added"
+msgid "Date Added"
+msgstr "თარიღის დამატება"
+
+#: sharing.last_access
+msgctxt "sharing.last_access"
+msgid "Last Access"
+msgstr "ბოლო შესვლა"
+
+#: sharing.sharing_color.length
+msgctxt "sharing.sharing_color.length"
+msgid "The color field must be 6 characters long."
+msgstr "ფერის ველი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს."
+
+#: sharing.sharing_color.required
+msgctxt "sharing.sharing_color.required"
+msgid "The color field is required."
+msgstr "ფერის ველი სავალდებულოა."
+
+#: sharing.sharing_name.length
+msgctxt "sharing.sharing_name.length"
+msgid "The Sharing name does not appear to be valid."
+msgstr "სახელის გაზიარება მოქმედია?"
+
+#: sharing.sharing_name.required
+msgctxt "sharing.sharing_name.required"
+msgid "A Sharing name is required."
+msgstr "სახელის გაზიარება სავალდებულოა."
+
+#: sharing.sharing_url.exists
+msgctxt "sharing.sharing_url.exists"
+msgid "The site URL already exists."
+msgstr "ეს საიტი მისამართი (url) უკვე არსებობს"
+
+#: sharing.sharing_url.length
+msgctxt "sharing.sharing_url.length"
+msgid "The site URL does not appear to be valid."
+msgstr "ეს საიტი მისამართი (url) მოქმედია?"
+
+#: sharing.sharing_url.required
+msgctxt "sharing.sharing_url.required"
+msgid "The site URL is required."
+msgstr "საიტი მისამართი (url) სავალდებულოა."
+
+#: sharing.sharing_url.url
+msgctxt "sharing.sharing_url.url"
+msgid "The site URL field does not appear to contain a valid URL."
+msgstr "ამ საიტის მისამართი (url) სწორია?"

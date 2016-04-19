@@ -1,0 +1,61 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: French (France) (http://www.transifex.com/ushahidi/ushahidi-v2/language/fr_FR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: message.captcha.default
+msgctxt "message.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Veuillez taper un code de sécurité valide"
+
+#: message.captcha.required
+msgctxt "message.captcha.required"
+msgid "Please enter the security code."
+msgstr "Veuillez taper le code de sécurité"
+
+#: message.email.email
+msgctxt "message.email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "Adress email invalide"
+
+#: message.email.length
+msgctxt "message.email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "L'adresse email doit comporter entre 4 et 64 caractères."
+
+#: message.email.required
+msgctxt "message.email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Une adresse email est requise si la case est cochée."
+
+#: message.message.required
+msgctxt "message.message.required"
+msgid "The comments field is required."
+msgstr "Veuillez entrer un commentaire."
+
+#: message.name.length
+msgctxt "message.name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Le nom doit comporter plus de 3 caractères."
+
+#: message.name.required
+msgctxt "message.name.required"
+msgid "The name field is required."
+msgstr "Veuillez indiquer un nom."
+
+#: message.phone.length
+msgctxt "message.phone.length"
+msgid "The phone field is not valid."
+msgstr "Numéro de téléphone invalide."

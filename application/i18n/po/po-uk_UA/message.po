@@ -1,0 +1,62 @@
+# 
+# Translators:
+# Андрій Бандура <andriykopanytsia@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-06-26 04:29+0000\n"
+"Last-Translator: Андрій Бандура <andriykopanytsia@gmail.com>\n"
+"Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/ushahidi/ushahidi-v2/language/uk_UA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uk_UA\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: message.captcha.default
+msgctxt "message.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Будь ласка, введіть правильний код безпеки"
+
+#: message.captcha.required
+msgctxt "message.captcha.required"
+msgid "Please enter the security code."
+msgstr "Будь ласка, введіть код безпеки"
+
+#: message.email.email
+msgctxt "message.email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "Поле email містить неправильну електронну адресу."
+
+#: message.email.length
+msgctxt "message.email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "Поле електронної пошти повинно бути довжиною не менше 4 і не більше 64 символів."
+
+#: message.email.required
+msgctxt "message.email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Поле електронної пошти є обов'язковим, якщо встановлений прапорець."
+
+#: message.message.required
+msgctxt "message.message.required"
+msgid "The comments field is required."
+msgstr "Поле коментарів є обов'язковим."
+
+#: message.name.length
+msgctxt "message.name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Поле назви має бути довжиною не менше 3 символів."
+
+#: message.name.required
+msgctxt "message.name.required"
+msgid "The name field is required."
+msgstr "Назва є обов'язковою."
+
+#: message.phone.length
+msgctxt "message.phone.length"
+msgid "The phone field is not valid."
+msgstr "Номер телефона неправильний"

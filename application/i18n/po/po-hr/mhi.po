@@ -1,0 +1,49 @@
+#. extracted from en_US/mhi.php, hr/mhi.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-25 00:10+0000\n"
+"PO-Revision-Date: 2012-09-25 00:10+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: hr\n"
+
+#: mhi.contact_captcha.default
+msgctxt "mhi.contact_captcha.default"
+msgid "Please enter a valid security code."
+msgstr ""
+
+#: mhi.contact_captcha.required
+msgctxt "mhi.contact_captcha.required"
+msgid "Please enter the security code."
+msgstr ""
+
+#: mhi.contact_email.email
+msgctxt "mhi.contact_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr ""
+
+#: mhi.contact_email.required
+msgctxt "mhi.contact_email.required"
+msgid "Please provide a valid email address."
+msgstr ""
+
+#: mhi.contact_message.required
+msgctxt "mhi.contact_message.required"
+msgid "The message field is required."
+msgstr ""
+
+#: mhi.contact_subject.length
+msgctxt "mhi.contact_subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr ""
+
+#: mhi.contact_subject.required
+msgctxt "mhi.contact_subject.required"
+msgid "The subject field is required."
+msgstr ""
+

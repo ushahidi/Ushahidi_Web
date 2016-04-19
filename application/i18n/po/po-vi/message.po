@@ -1,0 +1,62 @@
+# 
+# Translators:
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-07-10 08:59+0000\n"
+"Last-Translator: Anh Phan <vietnamesel10n@gmail.com>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: message.captcha.default
+msgctxt "message.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Vui lòng điền vào mã an ninh hợp lệ."
+
+#: message.captcha.required
+msgctxt "message.captcha.required"
+msgid "Please enter the security code."
+msgstr "Vui lòng điền vào mã an ninh."
+
+#: message.email.email
+msgctxt "message.email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "Phần khung thông tin email dường như chứa địa chỉ email không hợp lệ."
+
+#: message.email.length
+msgctxt "message.email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "Phần thông tin email phải chứa ít nhất 4 và không được nhiều hơn 64 ký tự."
+
+#: message.email.required
+msgctxt "message.email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Phần thông tin email được yêu cầu nếu phần lựa chọn được chọn."
+
+#: message.message.required
+msgctxt "message.message.required"
+msgid "The comments field is required."
+msgstr "Phần khung thông tin về bình luận không được để trống."
+
+#: message.name.length
+msgctxt "message.name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Phần khung thông tin tên phải chứa ít nhất 3 ký tự về độ dài."
+
+#: message.name.required
+msgctxt "message.name.required"
+msgid "The name field is required."
+msgstr "Phần khung thông tin tên không được để trống."
+
+#: message.phone.length
+msgctxt "message.phone.length"
+msgid "The phone field is not valid."
+msgstr "Phần khung thông tin về số điện thoại không hợp lệ."

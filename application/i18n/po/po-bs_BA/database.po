@@ -1,0 +1,29 @@
+# 
+# Translators:
+# Fikret Muratović <fikretmuratovic@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Bosnian (Bosnia and Herzegovina) (http://www.transifex.com/ushahidi/ushahidi-v2/language/bs_BA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bs_BA\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: database.error
+msgctxt "database.error"
+msgid "Database error: %s"
+msgstr "Greška baze podataka. %s"
+
+#: database.table_not_found
+msgctxt "database.table_not_found"
+msgid ""
+"Table \"%s\" cannot be found in the database. Please make sure you are using"
+" the latest version of the database for this version of Ushahidi."
+msgstr "Tabla \"%s\" nemože biti nađena u bazi podataka. Molimo Vas provjerite da koristite poslednju verziju baze podataka za ovo izdanje Ushahidi."

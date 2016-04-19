@@ -1,0 +1,58 @@
+#. extracted from en_US/roles.php, hy_AM/roles.php
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-15 04:39+0000\n"
+"PO-Revision-Date: 2012-08-15 04:39+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: hy_AM\n"
+
+#: roles.description.length
+msgctxt "roles.description.length"
+msgid "The Description field must be at least 3 and no more 100 characters long."
+msgstr ""
+
+#: roles.description.required
+msgctxt "roles.description.required"
+msgid "The Description field is required."
+msgstr ""
+
+#: roles.name.alpha_numeric
+msgctxt "roles.name.alpha_numeric"
+msgid "The Name field must only contain letters or numbers."
+msgstr ""
+
+#: roles.name.length
+msgctxt "roles.name.length"
+msgid "The Name field must be at least 2 and no more than 30 characters long."
+msgstr ""
+
+#: roles.name.nomodify
+msgctxt "roles.name.nomodify"
+msgid "SuperAdmin Role Cannot Be Modified."
+msgstr ""
+
+#: roles.name.required
+msgctxt "roles.name.required"
+msgid "The Name field is required."
+msgstr ""
+
+#: roles.access_level.numeric
+msgctxt "roles.access_level.numeric"
+msgid "Access Level field must be a number between 0 - 100."
+msgstr ""
+
+#: roles.access_level.required
+msgctxt "roles.access_level.required"
+msgid "Access Level field must be a number between 0 - 100."
+msgstr ""
+
+#: roles.permissions.numeric
+msgctxt "roles.permissions.numeric"
+msgid "Permissions field must be a number between 0 - 100."
+msgstr ""
+

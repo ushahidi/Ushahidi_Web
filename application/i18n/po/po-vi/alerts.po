@@ -1,0 +1,231 @@
+# 
+# Translators:
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-20 11:56+0000\n"
+"Last-Translator: Anh Phan <vietnamesel10n@gmail.com>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: alerts.alert_email.email
+msgctxt "alerts.alert_email.email"
+msgid "The Email field does not appear to contain a valid email address?"
+msgstr "Phần khung thông tin email dường như chứa địa chỉ email không hợp lệ?"
+
+#: alerts.alert_email.email_check
+msgctxt "alerts.alert_email.email_check"
+msgid ""
+"That Email address has already been registered to receive alerts for that "
+"location."
+msgstr "Phần địa chỉ email đã được đăng ký và nhận cảnh báo từ địa điểm đó."
+
+#: alerts.alert_email.length
+msgctxt "alerts.alert_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "Phần khung thông tin email phải chứa ít nhất 4 và không được nhiều hơn 64 ký tự."
+
+#: alerts.alert_email.required
+msgctxt "alerts.alert_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Phần khung thông tin email được yêu cầu nếu phần lựa chọn được chọn."
+
+#: alerts.alert_country.single_country
+msgctxt "alerts.alert_country.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the alert "
+"location is within the country %s."
+msgstr "Việc thi hành này chỉ gói gọn trong một quốc gia. Hãy chắc rằng địa điểm cảnh báo nằm trong quốc gia %s."
+
+#: alerts.alert_lat.between
+msgctxt "alerts.alert_lat.between"
+msgid "You have not selected a valid location on the map."
+msgstr "Bạn vẫn chưa chọn một địa điểm hợp lệ trên bản đồ"
+
+#: alerts.alert_lat.required
+msgctxt "alerts.alert_lat.required"
+msgid "You have not selected a valid location on the map."
+msgstr "Bạn vẫn chưa chọn một địa điểm hợp lệ trên bản đồ"
+
+#: alerts.alert_lon.between
+msgctxt "alerts.alert_lon.between"
+msgid "You have not selected a valid location on the map."
+msgstr "Bạn vẫn chưa chọn một địa điểm hợp lệ trên bản đồ"
+
+#: alerts.alert_lon.required
+msgctxt "alerts.alert_lon.required"
+msgid "You have not selected a valid location on the map."
+msgstr "Bạn vẫn chưa chọn một địa điểm hợp lệ trên bản đồ"
+
+#: alerts.alert_mobile.length
+msgctxt "alerts.alert_mobile.length"
+msgid ""
+"The Mobile Phone field does not seem to contain the right amount of digits."
+msgstr "Phần khung thông tin di động dường như không chứa các chữ số hợp với yêu cầu."
+
+#: alerts.alert_mobile.mobile_check
+msgctxt "alerts.alert_mobile.mobile_check"
+msgid ""
+"That Mobile Phone Number has already been registered to receive alerts for "
+"that location."
+msgstr "Số di động này đã được đăng ký và nhận thông tin từ địa điểm đó."
+
+#: alerts.alert_mobile.numeric
+msgctxt "alerts.alert_mobile.numeric"
+msgid ""
+"The Mobile Phone field does not appear to contain a valid phone. Please "
+"input numbers only including Country Code."
+msgstr "Phần khung thông tin về điện thoại di động chứa dữ liệu không hợp lệ. Xin vui lòng nhập vào số liệu kèm theo mã quốc gia."
+
+#: alerts.alert_mobile.one_required
+msgctxt "alerts.alert_mobile.one_required"
+msgid "You must enter either your Mobile Phone Number or your Email Address."
+msgstr "Bạn phải điền vào hoặc phần số di động của bạn hoặc địa chỉ email"
+
+#: alerts.alert_mobile.required
+msgctxt "alerts.alert_mobile.required"
+msgid "The Mobile Phone field is required if the checkbox is checked."
+msgstr "Khung thông tin điện thoại di động cần được đánh dấu chọn."
+
+#: alerts.alert_radius.in_array
+msgctxt "alerts.alert_radius.in_array"
+msgid "You have not set a valid radius on the map."
+msgstr "Bạn vẫn chưa thiết lập bán kính hợp lệ trên bản đồ."
+
+#: alerts.alert_radius.required
+msgctxt "alerts.alert_radius.required"
+msgid "You have not set your radius on the map."
+msgstr "Bạn vẫn chưa chọn bán kính trên bản đồ."
+
+#: alerts.alert_recipient.required
+msgctxt "alerts.alert_recipient.required"
+msgid "You have not set a recipient for alerts."
+msgstr "Bạn vẫn chưa chỉnh cảnh báo về người gửi."
+
+#: alerts.alerts_subscribed
+msgctxt "alerts.alerts_subscribed"
+msgid "You have subscribed for alerts with the following categories"
+msgstr "Bạn đã đăng ký phần cảnh báo cho các phần mục sau"
+
+#: alerts.code_already_verified
+msgctxt "alerts.code_already_verified"
+msgid "This code has been verified before!"
+msgstr "Mã đã được xác nhận trước đó!"
+
+#: alerts.code_not_found
+msgctxt "alerts.code_not_found"
+msgid ""
+"This verification code was not found! Please confirm that you have the "
+"correct URL."
+msgstr "Không tìm thấy mã xác nhận! Xin vui lòng xác nhận rằng bạn đã điền vào đúng đường dẫn liên kết."
+
+#: alerts.code_verified
+msgctxt "alerts.code_verified"
+msgid ""
+" Your code was verified correctly. You will now receive alerts about "
+"incidents as they happen."
+msgstr "Mã của bạn không được xác nhận chính xác. Bạn sẽ nhận được cảnh báo về vấn đề này ngay lập tức."
+
+#: alerts.confirm_request
+msgctxt "alerts.confirm_request"
+msgid "To confirm your alert request, please go to "
+msgstr "Để xác nhận yêu cầu về cảnh báo của bạn, vui lòng truy cập"
+
+#: alerts.create_more_alerts
+msgctxt "alerts.create_more_alerts"
+msgid "Return to the Alerts page to create more alerts"
+msgstr "Quay trở về trang cảnh báo để tạo các cảnh báo khác"
+
+#: alerts.email_alert_request_created
+msgctxt "alerts.email_alert_request_created"
+msgid ""
+"Your Email Alert request has been created and verification message has been "
+"sent to "
+msgstr "Yêu cầu nhận cảnh báo bằng email của bạn đã được tạo và tin nhắn xác nhận đã được gửi đến"
+
+#: alerts.email_code
+msgctxt "alerts.email_code"
+msgid "Please enter the Email confirmation code you received below: "
+msgstr "Xin điền vào mã xác nhận từ email mà bạn nhận được ở phần bên dưới:"
+
+#: alerts.email_error_head
+msgctxt "alerts.email_error_head"
+msgid "Your Email Alert Request Has NOT Been Saved!"
+msgstr "Yêu cầu gửi email cảnh báo của bạn VẪN CHƯA được lưu!"
+
+#: alerts.email_ok_head
+msgctxt "alerts.email_ok_head"
+msgid "Your Email Alert Request Has Been Saved!"
+msgstr "Yêu cầu nhận email cảnh báo của bạn đã được lưu!"
+
+#: alerts.error
+msgctxt "alerts.error"
+msgid "The system was not able to process your confirmation request!"
+msgstr "Hiện hệ thống không thể xử lý yêu cầu xác nhận của bạn!"
+
+#: alerts.mobile_alert_request_created
+msgctxt "alerts.mobile_alert_request_created"
+msgid ""
+"Your Mobile Alert request has been created and verification message has been"
+" sent to "
+msgstr "Yêu cầu nhận cảnh báo bằng điện thoại của bạn đã được tạo và tin nhắn xác nhận đã được gửi đến"
+
+#: alerts.mobile_code
+msgctxt "alerts.mobile_code"
+msgid ""
+"Please enter the SMS confirmation code you received on your mobile phone "
+"below: "
+msgstr "Xin điền vào mã xác nhận từ SMS mà bạn nhận được trên điện thoại ở phần bên dưới:"
+
+#: alerts.mobile_error_head
+msgctxt "alerts.mobile_error_head"
+msgid "Your Mobile Alert Request Has NOT Been Saved!"
+msgstr "Yêu cầu gửi tin nhắn cảnh báo đến điện thoại của bạn VẪN CHƯA được lưu!"
+
+#: alerts.mobile_ok_head
+msgctxt "alerts.mobile_ok_head"
+msgid "Your Mobile Alert Request Has Been Saved!"
+msgstr "Yêu cầu nhận tin nhắn cảnh báo trên điện thoại của bạn đã được lưu!"
+
+#: alerts.settings_error
+msgctxt "alerts.settings_error"
+msgid "This deployment is not set up to correctly process alerts"
+msgstr "Việc triển khai này vẫn chưa được thiết lập chính xác trong việc xử lý các cảnh báo"
+
+#: alerts.unsubscribe
+msgctxt "alerts.unsubscribe"
+msgid ""
+"You have received this email because you subscribed to receive alerts. If "
+"you do not wish to receive future alerts go to "
+msgstr "Bạn nhận được email này vì bạn đã đăng ký theo dõi việc nhận các cảnh báo. Nếu bạn không muốn nhận các cảnh báo trong thời gian tới hãy truy cập"
+
+#: alerts.unsubscribed
+msgctxt "alerts.unsubscribed"
+msgid "You will no longer receive alerts from "
+msgstr "Bạn sẽ không còn nhận các cảnh báo từ"
+
+#: alerts.unsubscribe_failed
+msgctxt "alerts.unsubscribe_failed"
+msgid ""
+"We were not able to unsubscribe you. Please confirm that you have the "
+"correct URL."
+msgstr "Hiện chúng tôi không thể gỡ bỏ chế độ đăng ký từ bạn. Xin vui lòng xác nhận là bạn đã truy cập vào liên kết đúng cú pháp."
+
+#: alerts.verification_email_subject
+msgctxt "alerts.verification_email_subject"
+msgid "alerts - verification"
+msgstr "cảnh báo - xác nhận"
+
+#: alerts.verify_code
+msgctxt "alerts.verify_code"
+msgid ""
+"You will not receive alerts on this location until you confirm your request."
+msgstr "Bạn sẽ không còn nhận được các cảnh báo về địa điểm này cho tới khi bạn xác nhận yêu cầu của mình."

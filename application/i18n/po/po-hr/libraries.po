@@ -1,0 +1,109 @@
+#. extracted from en_US/libraries.php, hr/libraries.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-25 00:10+0000\n"
+"PO-Revision-Date: 2012-09-25 00:10+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: hr\n"
+
+#: libraries.akismet_cannot_connect
+msgctxt "libraries.akismet_cannot_connect"
+msgid "Could not connect to Akismet server."
+msgstr ""
+
+#: libraries.akismet_cannot_retrieve
+msgctxt "libraries.akismet_cannot_retrieve"
+msgid "The response from Akismet could not be retrieved."
+msgstr ""
+
+#: libraries.api_library_not_found
+msgctxt "libraries.api_library_not_found"
+msgid "The API library: <strong>%s</strong> for the <strong>%s</strong> class could not be found. Please check your API task routing table."
+msgstr ""
+
+#: libraries.askimet_invalid_apikey
+msgctxt "libraries.askimet_invalid_apikey"
+msgid "Your Akismet API key is not valid."
+msgstr ""
+
+#: libraries.clickatell_fopen_error
+msgctxt "libraries.clickatell_fopen_error"
+msgid "Error while executing fopen sending method!<br>Please check whether PHP has OpenSSL support and whether the PHP version is greater than 5.2."
+msgstr ""
+
+#: libraries.clickatell_message_too_long
+msgctxt "libraries.clickatell_message_too_long"
+msgid "Your unicode message is too long! (Current length="
+msgstr ""
+
+#: libraries.clickatell_no_destination_address
+msgctxt "libraries.clickatell_no_destination_address"
+msgid "Please specify a destination address (TO)!"
+msgstr ""
+
+#: libraries.clickatell_no_sender_address
+msgctxt "libraries.clickatell_no_sender_address"
+msgid "Please specify source address (FROM)!"
+msgstr ""
+
+#: libraries.clickatell_unicode_message_too_long
+msgctxt "libraries.clickatell_unicode_message_too_long"
+msgid "Your unicode message is too long! (Current length="
+msgstr ""
+
+#: libraries.clickatell_unsupported_method
+msgctxt "libraries.clickatell_unsupported_method"
+msgid "Unsupported sending method!"
+msgstr ""
+
+#: libraries.invalid_api_library
+msgctxt "libraries.invalid_api_library"
+msgid "The API library %s is invalid. All API libraries must be subclasses of %s."
+msgstr ""
+
+#: libraries.upgrade_directory_not_deleted
+msgctxt "libraries.upgrade_directory_not_deleted"
+msgid "Directory <code>%s</coded> could not be deleted."
+msgstr ""
+
+#: libraries.upgrade_extracting_error
+msgctxt "libraries.upgrade_extracting_error"
+msgid "Error while extracting: <code>%s</code>"
+msgstr ""
+
+#: libraries.upgrade_failed
+msgctxt "libraries.upgrade_failed"
+msgid "Downloading the latest Ushahidi failed. HTTP status code"
+msgstr ""
+
+#: libraries.upgrade_file_not_copied
+msgctxt "libraries.upgrade_file_not_copied"
+msgid "File <code>%s</coded> could not be copied."
+msgstr ""
+
+#: libraries.upgrade_file_not_deleted
+msgctxt "libraries.upgrade_file_not_deleted"
+msgid "File <code>%s</coded> could not be deleted."
+msgstr ""
+
+#: libraries.upgrade_title
+msgctxt "libraries.upgrade_title"
+msgid "Ushahidi upgrade script"
+msgstr ""
+
+#: libraries.upgrade_zip_error
+msgctxt "libraries.upgrade_zip_error"
+msgid "The downloaded Ushahidi zip file <code>%s</code>, could not be written."
+msgstr ""
+
+#: libraries.riverid_variable_not_available
+msgctxt "libraries.riverid_variable_not_available"
+msgid "%s is not available in the RiverID class."
+msgstr ""
+

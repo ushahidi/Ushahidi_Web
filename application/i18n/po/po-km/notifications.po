@@ -1,0 +1,92 @@
+# 
+# Translators:
+# Sokhem Khoem <sokhem@open.org.kh>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Khmer (http://www.transifex.com/ushahidi/ushahidi-v2/language/km/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: notifications.admin_footer
+msgctxt "notifications.admin_footer"
+msgid "This message was sent from your website."
+msgstr "សារ​នេះ​ត្រូវ​បាន​ផ្ញើ​ពី​តំបន់​បណ្ដាញ​របស់​អ្នក។"
+
+#: notifications.admin_login_url
+msgctxt "notifications.admin_login_url"
+msgid "Administrator Login"
+msgstr "ចូល​ជា​អ្នក​គ្រប់គ្រង"
+
+#: notifications.admin_new_comment.message
+msgctxt "notifications.admin_new_comment.message"
+msgid "A new comment has been submitted to your website in response to:"
+msgstr "បាន​ដាក់ស្នើ​មតិយោបល់​ថ្មី​ទៅ​តំបន់​​បណ្ដាញ​របស់​អ្នក​​ជា​ការ​ឆ្លើយតប​នឹង៖"
+
+#: notifications.admin_new_comment.subject
+msgctxt "notifications.admin_new_comment.subject"
+msgid "New Comment"
+msgstr "មតិយោបល់​ថ្មី"
+
+#: notifications.admin_new_email.message
+msgctxt "notifications.admin_new_email.message"
+msgid "A new email message has been submitted to your website."
+msgstr "បាន​ដាក់​ស្នើ​សារ​អ៊ីមែល​ថ្មី​​ទៅ​តំបន់​បណ្ដាញ​របស់​អ្នក។"
+
+#: notifications.admin_new_email.subject
+msgctxt "notifications.admin_new_email.subject"
+msgid "New Email Message"
+msgstr "សារ​អ៊ីមែល​ថ្មី"
+
+#: notifications.admin_new_report.message
+msgctxt "notifications.admin_new_report.message"
+msgid "A new report has been submitted to your website."
+msgstr "បាន​ដាក់​ស្នើ​របាយការណ៍​ថ្មី​ទៅ​តំបន់បណ្ដាញ​របស់​អ្នក។"
+
+#: notifications.admin_new_report.subject
+msgctxt "notifications.admin_new_report.subject"
+msgid "New Report"
+msgstr "របាយការណ៍​ថ្មី"
+
+#: notifications.admin_new_sms.message
+msgctxt "notifications.admin_new_sms.message"
+msgid "A new text message has been submitted to your website."
+msgstr "បាន​ដាក់​ស្នើ​សារ​អត្ថបទ​ថ្មីទៅ​តំបន់​បណ្ដាញ​របស់​អ្នក។"
+
+#: notifications.admin_new_sms.subject
+msgctxt "notifications.admin_new_sms.subject"
+msgid "New Text Message"
+msgstr "សារ​អត្ថបទ​ថ្មី"
+
+#: notifications.member_new_alert.message
+msgctxt "notifications.member_new_alert.message"
+msgid "You Have Received a New Alert"
+msgstr "អ្នក​បាន​ទទួល​ការ​ជូន​ដំណឹង​ថ្មី"
+
+#: notifications.member_new_alert.subject
+msgctxt "notifications.member_new_alert.subject"
+msgid "New Alert!"
+msgstr "ការ​ជូន​ដំណឹង​ថ្មី!"
+
+#: notifications.member_new_message.message
+msgctxt "notifications.member_new_message.message"
+msgid "You Have Received a Private Message"
+msgstr "អ្នក​បាន​ទទួល​សារ​ឯកជន"
+
+#: notifications.member_new_message.subject
+msgctxt "notifications.member_new_message.subject"
+msgid "New Private Message"
+msgstr "សារ​ឯកជន​ថ្មី"
+
+#: notifications.member_new_message.footer
+msgctxt "notifications.member_new_message.footer"
+msgid "To Reply Please Go To: "
+msgstr "ដើម្បី​ឆ្លើយតប សូម​ចូល​ទៅ៖"

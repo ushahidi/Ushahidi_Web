@@ -1,0 +1,860 @@
+# 
+# Translators:
+# Boripat Lebel <inactive+boripatlebel@transifex.com>, 2014
+# Ngamnet_review <ngamnetaektasaeng@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-03-12 06:26+0000\n"
+"PO-Revision-Date: 2014-09-12 14:35+0000\n"
+"Last-Translator: Ngamnet_review <ngamnetaektasaeng@gmail.com>\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/projects/p/ushahidi-v2/language/th_TH/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th_TH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: settings.allow_comments.between
+msgctxt "settings.allow_comments.between"
+msgid "The allow comments field does not appear to contain a valid value."
+msgstr "ฟิล์ดแสดงความคิดเห็นไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.allow_comments.required
+msgctxt "settings.allow_comments.required"
+msgid "The allow comments field is required."
+msgstr "จำเป็นต้องใส่แสดงความคิด"
+
+#: settings.allow_feed.between
+msgctxt "settings.allow_feed.between"
+msgid "The include feed field does not appear to contain a valid value."
+msgstr "ช่องฟีดไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.allow_feed.required
+msgctxt "settings.allow_feed.required"
+msgid "The include feed field is required."
+msgstr "จำเป็นต้องใส่ฟีด"
+
+#: settings.allow_feed_category.between
+msgctxt "settings.allow_feed_category.between"
+msgid ""
+"The include feed category field does not appear to contain a valid value."
+msgstr "ช่องมวดหมู่ของฟีดไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.allow_feed_category.required
+msgctxt "settings.allow_feed_category.required"
+msgid "The include feed category field is required."
+msgstr "จำเป็นต้องใส่หมวดหมู่ฟีด"
+
+#: settings.allow_alerts.between
+msgctxt "settings.allow_alerts.between"
+msgid "The allow alerts field does not appear to contain a valid value."
+msgstr "ช่องแจ้งเตือนไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.allow_alerts.required
+msgctxt "settings.allow_alerts.required"
+msgid "The allow alerts field is required."
+msgstr "จำเป็นต้องใส่แจ้งเตือนที่อนุญาต"
+
+#: settings.allow_reports.between
+msgctxt "settings.allow_reports.between"
+msgid "The allow reports field does not appear to contain a valid value."
+msgstr "ช่องรายงานข้อมูลไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.allow_reports.required
+msgctxt "settings.allow_reports.required"
+msgid "The allow reports field is required."
+msgstr "จำเป็นต้องใส่รายงานที่อนุญาต"
+
+#: settings.allow_stat_sharing.between
+msgctxt "settings.allow_stat_sharing.between"
+msgid "The stat sharing field does not appear to contain a valid value."
+msgstr "ฟิล์ดสถิติไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.allow_stat_sharing.required
+msgctxt "settings.allow_stat_sharing.required"
+msgid "The stat sharing field is required."
+msgstr "จำเป็นต้องเพิ่มข้อมูลในฟิล์ดสถิติ"
+
+#: settings.api.default_record_limit
+msgctxt "settings.api.default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "หมายเลขเริ่มต้นของระเบียนที่จะเรียกตามคำขอ API"
+
+#: settings.api.maximum_record_limit
+msgctxt "settings.api.maximum_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "จำนวนสูงสุดของบันทึกที่จะเรียกตามคำขอ API"
+
+#: settings.api.maximum_requests_per_ip_address
+msgctxt "settings.api.maximum_requests_per_ip_address"
+msgid "Maximum number of API requests per IP address"
+msgstr "จำนวนสูงสุดของการร้องขอ API ต่อที่อยู่ IP"
+
+#: settings.api_akismet.alpha_numeric
+msgctxt "settings.api_akismet.alpha_numeric"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "ฟิล์ด Akismet ไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.api_akismet.length
+msgctxt "settings.api_akismet.length"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "ฟิล์ด Akismet ไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.banner_image.type
+msgctxt "settings.banner_image.type"
+msgid ""
+"The Site Banner field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "ช่องเว็บไซต์แบนเนอร์ไม่ปรากฏภาพที่ถูกต้องตามรูปแบบที่ได้รับการยอมรับซึ่งคือ .JPG, .PNG และ .GIF"
+
+#: settings.banner_image.size
+msgctxt "settings.banner_image.size"
+msgid "Please ensure that \"Banner Image\" size is less than 250 KB."
+msgstr "โปรดตรวจสอบว่า \"ภาพแบนเนอร์\" มีขนาดน้อยกว่า 250 KB"
+
+#: settings.banner_image.valid
+msgctxt "settings.banner_image.valid"
+msgid "The \"Banner Image\" field does not appear to contain a valid file."
+msgstr "ช่อง \"ภาพแบนเนอร์\" ไม่ปรากฏไฟล์ที่ถูกต้อง"
+
+#: settings.cache_pages.between
+msgctxt "settings.cache_pages.between"
+msgid "The cache pages field is required."
+msgstr "จำเป็นต้องใส่ข้อมูลหน้าแคช"
+
+#: settings.cache_pages.required
+msgctxt "settings.cache_pages.required"
+msgid "The cache pages field does not appear to contain a valid value."
+msgstr "แคชไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.cache_pages_lifetime.in_array
+msgctxt "settings.cache_pages_lifetime.in_array"
+msgid ""
+"The cache pages lifetime field does not appear to contain a valid value."
+msgstr "ฟิล์ดอายุใช้งานในหน้าสำแคชไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.cache_pages_lifetime.required
+msgctxt "settings.cache_pages_lifetime.required"
+msgid "The cache pages lifetime field is required."
+msgstr "จำเป็นต้องใส่ฟิล์ดอายุใช้งานในหน้าแคช"
+
+#: settings.cleanurl.clean_url_disabled
+msgctxt "settings.cleanurl.clean_url_disabled"
+msgid ""
+"It looks like your server is not configured to handle clean URLs. You will "
+"need to change the configuration of your server before you can enable clean "
+"URLs. See more info on how to enable clean URLs at <a "
+"href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-"
+"rewrite\" target=\"_blank\">this forum post</a>"
+msgstr "ดูเหมือนว่าเซิร์ฟเวอร์ของคุณไม่ได้กำหนดค่า URL ที่สะอาดได้ คุณจะต้องเปลี่ยนการตั้งค่าของเซิร์ฟเวอร์ของคุณก่อนที่คุณจะ สามารถเปิดใช้งาน URL ที่สะอาด ดูข้อมูลเพิ่มเติมเกี่ยวกับ วิธีการเปิดใช้ URL <a href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite\" target=\"_blank\">this forum post</a>"
+
+#: settings.cleanurl.clean_url_enabled
+msgctxt "settings.cleanurl.clean_url_enabled"
+msgid ""
+"This option makes Ushahidi to be accessed via \"clean\" URLs (without "
+"\"index.php\" in the URL)."
+msgstr "ตัวเลือกนี้จะทำให้ Ushahidi ที่จะเข้าถึงได้ผ่านทาง URL ที่ \"สะอาด\" (โดยไม่ต้อง \"index.php\" ใน URL)"
+
+#: settings.cleanurl.enable_clean_url
+msgctxt "settings.cleanurl.enable_clean_url"
+msgid "Enable Clean URLs"
+msgstr "เปิดใช้งาน คลีน URLs "
+
+#: settings.cleanurl.title
+msgctxt "settings.cleanurl.title"
+msgid "Clean URLs"
+msgstr "คลีน URLs"
+
+#: settings.clickatell_api.length
+msgctxt "settings.clickatell_api.length"
+msgid "The Clickatell API number field must be no more 20 characters long."
+msgstr "ฟิล์ดหมายเลขของ Clickatell API จะต้องไม่เกิน 20 ตัวอักษร"
+
+#: settings.clickatell_api.required
+msgctxt "settings.clickatell_api.required"
+msgid "The Clickatell API number field is required."
+msgstr "จำเป็นต้องใส่ตัวเลขในฟิล์ด Clickatell API"
+
+#: settings.clickatell_password.length
+msgctxt "settings.clickatell_password.length"
+msgid ""
+"The Clickatell Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "ฟิล์ดรหัสผ่าน Clickatell ต้องมีอย่างน้อย 5 และไม่มากกว่า 50 ตัวอักษร"
+
+#: settings.clickatell_password.required
+msgctxt "settings.clickatell_password.required"
+msgid "The Clickatell Password field is required."
+msgstr "จำเป็นต้องใส่รหัสผ่านฟิล์ด Clickatell"
+
+#: settings.clickatell_username.length
+msgctxt "settings.clickatell_username.length"
+msgid "The Clickatell Username field must be no more 50 characters long."
+msgstr "ฟิล์ดชื่อผู้ใช้งาน Clickatell จะต้องไม่เกิน 50 ตัวอักษร"
+
+#: settings.clickatell_username.required
+msgctxt "settings.clickatell_username.required"
+msgid "The Clickatell Username field is required."
+msgstr "จำเป็นต้องใส่ฟิล์ดชื่อผู้ใช้งาน Clickatell"
+
+#: settings.configure_map
+msgctxt "settings.configure_map"
+msgid "Configure Map"
+msgstr "กำหนดค่าแผนที่"
+
+#: settings.default_location
+msgctxt "settings.default_location"
+msgid "Default Location"
+msgstr "เริ่มต้นที่"
+
+#: settings.default_map_all.alpha_numeric
+msgctxt "settings.default_map_all.alpha_numeric"
+msgid "The color feed field does not appear to contain a valid value."
+msgstr "ฟิล์ดสีไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.default_map_all.length
+msgctxt "settings.default_map_all.length"
+msgid "The color field must be no more 6 characters long."
+msgstr "ฟิล์ดสีจะต้องไม่มากกว่า 6 ตัวอักษรยาว"
+
+#: settings.default_map_all.required
+msgctxt "settings.default_map_all.required"
+msgid "The color field is required."
+msgstr "จำเป็นต้องใส่ฟิล์ดสี"
+
+#: settings.default_map_view
+msgctxt "settings.default_map_view"
+msgid "Default Map View"
+msgstr "ค่าเริ่มต้นมุมมองแผนที"
+
+#: settings.default_zoom_level
+msgctxt "settings.default_zoom_level"
+msgid "Default Zoom Level"
+msgstr "ตั้งการซูมที่ค่าเริ่มต้น"
+
+#: settings.download_city_list
+msgctxt "settings.download_city_list"
+msgid "Retrieve Cities From Geonames"
+msgstr "เรียกเมืองจาก Geonames"
+
+#: settings.email_host.length
+msgctxt "settings.email_host.length"
+msgid "The Mail server port field is too long."
+msgstr "ฟิล์ดพอร์ตของเซิร์ฟเวอร์จดหมายยาวเกินไป"
+
+#: settings.email_host.numeric
+msgctxt "settings.email_host.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "ฟิล์ดพอร์ตของเซิร์ฟเวอร์จดหมายควรมีตัวเลขเท่านั้น"
+
+#: settings.email_password.length
+msgctxt "settings.email_password.length"
+msgid ""
+"The Mail Server Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "รหัสผ่านเมล์เซิร์ฟเวอร์ต้องมีอย่างน้อย 5 และไม่มากกว่า 50 ตัวอักษร"
+
+#: settings.email_password.required
+msgctxt "settings.email_password.required"
+msgid "The Mail Server Password field is required."
+msgstr "จำเป็นต้องใส่ฟิล์ดรหัสผ่านเมลเซิร์ฟเวอร์"
+
+#: settings.email_port.length
+msgctxt "settings.email_port.length"
+msgid "The Mail server port field is too long."
+msgstr "ฟิล์ดพอร์ตของเซิร์ฟเวอร์จดหมายยาวเกินไป"
+
+#: settings.email_port.numeric
+msgctxt "settings.email_port.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "ฟิล์ดพอร์ตของเซิร์ฟเวอร์จดหมายควรมีตัวเลขเท่านั้น"
+
+#: settings.email_servertype.length
+msgctxt "settings.email_servertype.length"
+msgid "The Mail server port field is too long."
+msgstr "ฟิล์ดพอร์ตของเซิร์ฟเวอร์จดหมายยาวเกินไป"
+
+#: settings.email_servertype.required
+msgctxt "settings.email_servertype.required"
+msgid "The Mail Server Type field is required."
+msgstr "จำเป็นต้องใส่ฟิล์ดเซิร์ฟเวอร์จดหมาย"
+
+#: settings.email_username.length
+msgctxt "settings.email_username.length"
+msgid "The Mail Server Username field must be no more 50 characters long."
+msgstr "ฟิล์ดชื่อผู้ใช้เซิร์ฟเวอร์อีเมลจะต้องไม่มากกว่า 50 ตัวอักษร"
+
+#: settings.email_username.required
+msgctxt "settings.email_username.required"
+msgid "The Mail Server Username field is required."
+msgstr "จำเป็นต้องใส่ฟิล์ดชื่อผู้ใช้เซิร์ฟเวอร์อีเมล์"
+
+#: settings.facebook.title
+msgctxt "settings.facebook.title"
+msgid "Facebook Setup Options"
+msgstr "ตัวเลือกการตั้งค่า Facebook"
+
+#: settings.facebook.description
+msgctxt "settings.facebook.description"
+msgid ""
+"To get the information below you will need to create a new Facebook "
+"application at"
+msgstr "เพื่อจะเอาข้อมูลด้านล่างนี้ คุณจะต้องสร้าง Facebook ใหม่"
+
+#: settings.facebook.description_2
+msgctxt "settings.facebook.description_2"
+msgid ""
+"These settings allow users to login via Facebook, this <strong>does "
+"not</strong> create a facebook application for your deployment"
+msgstr "การตั้งค่าให้ผู้ใช้ระบบสามารถเข้าสู่ระบบผ่านทาง Facebook, นี้ <strong> ไม่ </ strong> สร้าง โปรแกรม Facebookสำหรับใช้งาน"
+
+#: settings.facebook.app_id
+msgctxt "settings.facebook.app_id"
+msgid "Facebook App ID"
+msgstr "Facebook App ID"
+
+#: settings.facebook.app_secret
+msgctxt "settings.facebook.app_secret"
+msgid "Facebook App Secret"
+msgstr "Facebook App Secret"
+
+#: settings.google_analytics.length
+msgctxt "settings.google_analytics.length"
+msgid ""
+"The Google Analytics field must contain a valid Web Property ID in the "
+"format UA-XXXXX-XX."
+msgstr "ฟิล์ด Google Analytics จะต้องมี Web Property ID ในรูปแบบ UA-XXXXX-XX"
+
+#: settings.https.enable_https
+msgctxt "settings.https.enable_https"
+msgid "Enable HTTPS"
+msgstr "เปิดใช้งาน HTTPS"
+
+#: settings.https.https_disabled
+msgctxt "settings.https.https_disabled"
+msgid ""
+"This option makes Ushahidi be accessed in unsecure mode; "
+"<strong>without</strong> \"https://\" in the URL prefix"
+msgstr "ตัวเลือกนี้จะทำให้ Ushahidi เข้าถึงได้ในโหมด unsecure; <strong> โดยไม่ต้อง </strong> \"https://\" ในคำนำหน้า URL "
+
+#: settings.https.https_enabled
+msgctxt "settings.https.https_enabled"
+msgid ""
+"This option makes Ushahidi be accessed in secure mode; with "
+"<strong>https</strong> in the URL prefix"
+msgstr "ตัวเลือกนี้จะทำให้ Ushahidi เข้าถึงได้ในโหมด unsecure; <strong> โดยไม่ต้อง </strong> \"https://\" ในคำนำหน้า URL "
+
+#: settings.https.title
+msgctxt "settings.https.title"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: settings.items_per_page.between
+msgctxt "settings.items_per_page.between"
+msgid ""
+"The items per page (Frontend) field does not appear to contain a valid "
+"value."
+msgstr "ช่องรายการต่อหน้า(ส่วนหน้า)ไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.items_per_page.required
+msgctxt "settings.items_per_page.required"
+msgid "The items per page (Frontend) field is required."
+msgstr "จำเป็นต้องใส่รายการต่อหน้า(ส่วนหน้า)"
+
+#: settings.items_per_page_admin.between
+msgctxt "settings.items_per_page_admin.between"
+msgid ""
+"The items per page (Admin) field does not appear to contain a valid value."
+msgstr "ช่องรายการต่อหน้า(ผู้ดูแลระบบ)ไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.items_per_page_admin.required
+msgctxt "settings.items_per_page_admin.required"
+msgid "The items per page (Admin) field is required."
+msgstr "จำเป็นต้องใส่ายการต่อหน้า(ผู้ดูแลระบบ)"
+
+#: settings.map.default_location
+msgctxt "settings.map.default_location"
+msgid ""
+"Setting up your map provider is a straight- forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "การตั้งค่าผู้ให้บริการแผนที่ของคุณกำลังดำเนินการ  เลือกผู้ให้บริการได้รับโดยการใส่ค่า API คีย์ที่ได้รับมาจากผู้ให้บริการ "
+
+#: settings.map.zoom
+msgctxt "settings.map.zoom"
+msgid "Zoom Level"
+msgstr "ระดับซูม"
+
+#: settings.map_provider.choose
+msgctxt "settings.map_provider.choose"
+msgid "Select a Map Provider"
+msgstr "เลือกผู้ให้บริการแผนที่"
+
+#: settings.map_provider.enter_api
+msgctxt "settings.map_provider.enter_api"
+msgid "Enter the new API Key"
+msgstr "ใส่คีย์ API ใหม่"
+
+#: settings.map_provider.get_api
+msgctxt "settings.map_provider.get_api"
+msgid "Get an API Key"
+msgstr "รับคีย์ API "
+
+#: settings.map_provider.info
+msgctxt "settings.map_provider.info"
+msgid ""
+"Setting up your map provider is a straight-forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "การตั้งค่าผู้ให้บริการแผนที่ของคุณ เป็นกระบวนการที่ ตรงไปข้างหน้า เลือกผู้ให้บริการได้รับคีย์ APIจากเว็บไซต์ของผู้ให้บริการ และ ใส่ คีย์ API"
+
+#: settings.map_provider.name
+msgctxt "settings.map_provider.name"
+msgid "Map provider"
+msgstr "ผู้ให้บริการแผนที่"
+
+#: settings.map_timeline
+msgctxt "settings.map_timeline"
+msgid "Map Timeline"
+msgstr "ไทม์ไลน์แผนที่"
+
+#: settings.map_settings
+msgctxt "settings.map_settings"
+msgid "Map Settings"
+msgstr "ตั้งค่าแผนที่"
+
+#: settings.multiple_countries
+msgctxt "settings.multiple_countries"
+msgid "Does this Ushahidi Deployment span multiple countries?"
+msgstr "การใช้งาน Ushahidi นี้คลอบคลุมหลายประเทศหรือไม่?"
+
+#: settings.select_default_location
+msgctxt "settings.select_default_location"
+msgid "Please select a default country"
+msgstr "กรุณาเลือกประเทศเริ่มต้น"
+
+#: settings.set_location
+msgctxt "settings.set_location"
+msgid "Click and drag the map to set your exact location"
+msgstr "คลิกและลากแผนที่เพื่อกำหนดตำแหน่งที่แน่นอนของคุณ"
+
+#: settings.site.allow_clustering
+msgctxt "settings.site.allow_clustering"
+msgid "Cluster Reports on Map"
+msgstr "กลุ่มรายงานบนแผนที่"
+
+#: settings.site.allow_comments
+msgctxt "settings.site.allow_comments"
+msgid "Allow Users to Submit Comments to Reports"
+msgstr "อนุญาตให้ผู้ใช้ส่งความเห็นไปยังรายงาน"
+
+#: settings.site.allow_feed
+msgctxt "settings.site.allow_feed"
+msgid "Include RSS News Feed on Website"
+msgstr "รวม RSS ฟีดข่าวบนเว็บไซต์"
+
+#: settings.site.allow_feed_category
+msgctxt "settings.site.allow_feed_category"
+msgid "Create New Category from Feeds"
+msgstr "สร้างหมวดหมู่ใหม่จากฟีด"
+
+#: settings.site.allow_alerts
+msgctxt "settings.site.allow_alerts"
+msgid "Allow Users To Subscribe For Alerts"
+msgstr "ให้ผู้ใช้สามารถสมัครรับการแจ้งเตือน"
+
+#: settings.site.allow_reports
+msgctxt "settings.site.allow_reports"
+msgid "Allow Users To Submit Reports"
+msgstr "ให้ผู้ใช้ส่งรายงานได้"
+
+#: settings.site.api_akismet
+msgctxt "settings.site.api_akismet"
+msgid "Akismet Key"
+msgstr "คีย์ Akismet "
+
+#: settings.site.banner
+msgctxt "settings.site.banner"
+msgid "Site Banner"
+msgstr "เว็บไซต์แบนเนอร์"
+
+#: settings.site.blocks_per_row
+msgctxt "settings.site.blocks_per_row"
+msgid "Blocks Per Row"
+msgstr "บล็อกต่อแถว"
+
+#: settings.site.cache_pages
+msgctxt "settings.site.cache_pages"
+msgid "Cache Pages"
+msgstr "หน้าแคช"
+
+#: settings.site.cache_pages_lifetime
+msgctxt "settings.site.cache_pages_lifetime"
+msgid "Cache Pages Lifetime"
+msgstr "ช่วงอายุของหน้าแคช"
+
+#: settings.site.checkins
+msgctxt "settings.site.checkins"
+msgid "Enable Checkins"
+msgstr "เปิดใช้งานการเช็คอิน"
+
+#: settings.site.copyright_statement
+msgctxt "settings.site.copyright_statement"
+msgid "Site Copyright Statement"
+msgstr "แถลงเป็นเว็บไซต์ Copyright"
+
+#: settings.site.default_category_colors
+msgctxt "settings.site.default_category_colors"
+msgid "Default Color For All Categories"
+msgstr "ตั้งสีเริ่มต้นสำหรับทุกหมวดหมู่"
+
+#: settings.site.default_category_icons
+msgctxt "settings.site.default_category_icons"
+msgid "Default Icon For All Categories"
+msgstr "ตั้งไอคอนเริ่มต้นสำหรับทุกหมวดหมู่"
+
+#: settings.site.delete_banner_image
+msgctxt "settings.site.delete_banner_image"
+msgid "Delete Banner Image"
+msgstr "ลบภาพแบนเนอร์"
+
+#: settings.site.delete_default_map_all_icon
+msgctxt "settings.site.delete_default_map_all_icon"
+msgid "Delete Default Icon"
+msgstr "ลบไอคอนเริ่มต้น"
+
+#: settings.site.display_contact_page
+msgctxt "settings.site.display_contact_page"
+msgid "Display Contact Page"
+msgstr "แสดงหน้าติดต่อ"
+
+#: settings.site.display_howtohelp_page
+msgctxt "settings.site.display_howtohelp_page"
+msgid "Display \"How to Help\" Page"
+msgstr "แสดงหน้า \"วิธีการช่วยเหลือ\" "
+
+#: settings.site.email_alerts
+msgctxt "settings.site.email_alerts"
+msgid "Alerts Email Address"
+msgstr "ที่อยู่อีเมล์สำหรับแจ้งเตือน"
+
+#: settings.site.email_notice
+msgctxt "settings.site.email_notice"
+msgid ""
+"<span>In order to receive reports by email, please configure your email "
+"account settings.</span>"
+msgstr "<span>เพื่อที่จะได้รับรายงานทางอีเมลกรุณาตั้งค่าบัญชีในอีเมลของคุณ</ span>"
+
+#: settings.site.email_site
+msgctxt "settings.site.email_site"
+msgid "Site Email Address"
+msgstr "อีเมล์เว็บไซต์"
+
+#: settings.site.google_analytics
+msgctxt "settings.site.google_analytics"
+msgid "Google Analytics"
+msgstr "Google Analytics"
+
+#: settings.site.google_analytics_example
+msgctxt "settings.site.google_analytics_example"
+msgid "Web Property ID - Format: UA-XXXXX-XX"
+msgstr "รหัสคุณสมบัติเว็บ - รูปแบบ: UA-XXXXX-XX"
+
+#: settings.site.items_per_page
+msgctxt "settings.site.items_per_page"
+msgid "Items Per Page - Front End"
+msgstr "รายการต่อหน้า - Front End"
+
+#: settings.site.items_per_page_admin
+msgctxt "settings.site.items_per_page_admin"
+msgid "Items Per Page - Admin"
+msgstr "รายการต่อหน้า - ผู้ดูแลระบบ"
+
+#: settings.site.kismet_notice
+msgctxt "settings.site.kismet_notice"
+msgid ""
+"Prevent comment spam using <a href=\"http://akismet.com/\" "
+"target=\"_blank\">Akismet</a> from Automattic. <BR />You can get a free API "
+"key by registering for a <a href=\"http://en.wordpress.com/api-keys/\" "
+"target=\"_blank\">WordPress.com user account</a>"
+msgstr "ป้องกัน สแปมความคิดเห็น โดยใช้ <a href=\"http://akismet.com/\" target=\"_blank\">Akismet</a> from Automattic. <BR />You can get a free API key by registering for a <a href=\"http://en.wordpress.com/api-keys/\" target=\"_blank\">WordPress.com user account</a>"
+
+#: settings.site.laconica_configuration
+msgctxt "settings.site.laconica_configuration"
+msgid "Laconica Credentials"
+msgstr "ข้อมูลประจำตัว Laconica"
+
+#: settings.site.laconica_site
+msgctxt "settings.site.laconica_site"
+msgid "Laconica Site "
+msgstr "เว็บไซต์ Laconica "
+
+#: settings.site.language
+msgctxt "settings.site.language"
+msgid "Site Language"
+msgstr "ไซต์ภาษา"
+
+#: settings.site.manually_approve_users
+msgctxt "settings.site.manually_approve_users"
+msgid "Manually Approve Users"
+msgstr "อนุมัติผู้ใช้ด้วยตนเอง"
+
+#: settings.site.message
+msgctxt "settings.site.message"
+msgid "Site Message"
+msgstr "ข้อความในเว็บไซต์"
+
+#: settings.site.name
+msgctxt "settings.site.name"
+msgid "Site Name"
+msgstr "ชื่อเว็บไซต์"
+
+#: settings.site.private_deployment
+msgctxt "settings.site.private_deployment"
+msgid "Private Deployment"
+msgstr "การใช้งานส่วนตัว"
+
+#: settings.site.require_email_confirmation
+msgctxt "settings.site.require_email_confirmation"
+msgid "Require User Email Confirmation"
+msgstr "ผู้ใช้จำเป็นต้องมีการยืนยันอีเมล์"
+
+#: settings.site.submit_report_message
+msgctxt "settings.site.submit_report_message"
+msgid "Submit Report Message"
+msgstr "ส่งข้อความรายงาน"
+
+#: settings.site.share_site_stats
+msgctxt "settings.site.share_site_stats"
+msgid "Enable Statistics (Stored on Ushahidi's server)"
+msgstr "เปิดใช้งานสถิติ (เก็บไว้บนเซิร์ฟเวอร์ของ Ushahidi)"
+
+#: settings.site.tagline
+msgctxt "settings.site.tagline"
+msgid "Site Tagline"
+msgstr "Tagline เว็บไซต์"
+
+#: settings.site.timezone
+msgctxt "settings.site.timezone"
+msgid "Timezone"
+msgstr "โซนเวลา"
+
+#: settings.site.title
+msgctxt "settings.site.title"
+msgid "Site Settings"
+msgstr "ตั้งค่าไซต์"
+
+#: settings.site.twitter_configuration
+msgctxt "settings.site.twitter_configuration"
+msgid "Twitter Search Terms"
+msgstr "เงื่อนไขการค้นหาของ Twitter"
+
+#: settings.site.twitter_hashtags
+msgctxt "settings.site.twitter_hashtags"
+msgid "Hashtags - Separate with commas "
+msgstr "# - แยกด้วยเครื่องหมายจุลภาค"
+
+#: settings.site.feed_geolocation_user
+msgctxt "settings.site.feed_geolocation_user"
+msgid "Feeds geolocation - Geonames username"
+msgstr "ฟีด geolocation - ชื่อผู้ใช้ Geonames"
+
+#: settings.site_email.email
+msgctxt "settings.site_email.email"
+msgid "The site email field does not appear to contain a valid email address."
+msgstr "ช่องอีเมล์เว็บไซต์ไม่ปรากฏที่อยู่อีเมลที่ถูกต้อง"
+
+#: settings.site_email.length
+msgctxt "settings.site_email.length"
+msgid ""
+"The site email field must be at least 4 and no more 100 characters long."
+msgstr "ช่องอีเมล์เว็บไซต์ต้องมีอย่างน้อย 4 และรไม่มากกว่า 100 ตัวอักษร"
+
+#: settings.site_name.length
+msgctxt "settings.site_name.length"
+msgid "The site name field must be at least 3 and no more 50 characters long."
+msgstr "ช่องชื่อเว็บไซต์ต้องมีอย่างน้อย 3 และไม่มากกว่า 50 ตัวอักษร"
+
+#: settings.site_name.required
+msgctxt "settings.site_name.required"
+msgid "The site name field is required."
+msgstr "จำเป็นต้องใส่ชื่อเว็บไซต์"
+
+#: settings.site_tagline.length
+msgctxt "settings.site_tagline.length"
+msgid "The tagline field must be at least 3 and no more 100 characters long."
+msgstr "ช่อง tagline ต้องมีอย่างน้อย 3 และไม่มากกว่า 100 ตัวอักษร"
+
+#: settings.site_tagline.required
+msgctxt "settings.site_tagline.required"
+msgid "The tagline field is required."
+msgstr "จำเป็นต้องใส่ tagline"
+
+#: settings.sms.clickatell_api
+msgctxt "settings.sms.clickatell_api"
+msgid "Your Clickatell API Number"
+msgstr "ตัวเลข Clickatell API ของคุณ"
+
+#: settings.sms.clickatell_check_balance
+msgctxt "settings.sms.clickatell_check_balance"
+msgid "Check Your Clickatell Credit Balance"
+msgstr "ตรวจสอบ Clickatell เครดิตยอดคงเหลือของคุณ"
+
+#: settings.sms.clickatell_load_balance
+msgctxt "settings.sms.clickatell_load_balance"
+msgid "Load Credit Balance"
+msgstr "โหลดเครดิตบาลานซ์"
+
+#: settings.sms.clickatell_password
+msgctxt "settings.sms.clickatell_password"
+msgid "Your Clickatell Password"
+msgstr "รหัสผ่าน Clickatell ของคุณ "
+
+#: settings.sms.clickatell_text_1
+msgctxt "settings.sms.clickatell_text_1"
+msgid ""
+"Sign up for Clickatells service by <a "
+"href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" "
+"target=\"_blank\">clicking here</a>"
+msgstr "สมัครใช้บริการ Clickatells โดย <a target=\"_blank\"> href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" คลิกที่นี่ </ a>"
+
+#: settings.sms.clickatell_text_2
+msgctxt "settings.sms.clickatell_text_2"
+msgid "Enter your Clickatell access information below"
+msgstr "ใส่ข้อมูล Clickatell ของคุณด้านล่าง"
+
+#: settings.sms.clickatell_username
+msgctxt "settings.sms.clickatell_username"
+msgid "Your Clickatell User Name"
+msgstr "ชื่อผู้ใช้งาน Clickatell ของคูณ"
+
+#: settings.sms.flsms_description
+msgctxt "settings.sms.flsms_description"
+msgid ""
+"FrontlineSMS is free and open source software that enables users to send and"
+" receive text messages with large groups of people through mobile phones. "
+"Click on the box below to download the latest version from FrontlineSMS.com."
+msgstr "Frontline SMS เป็นซอฟต์แวร์ฟรีและเปิดแหล่ง ที่ช่วยให้ ผู้ใช้สามารถส่ง และรับข้อความ กับกลุ่ม ใหญ่ของผู้คน ผ่านโทรศัพท์มือถือ คลิกที่กล่องด้านล่างเพื่อ ดาวน์โหลดรุ่นล่าสุด จาก FrontlineSMS.com"
+
+#: settings.sms.flsms_download
+msgctxt "settings.sms.flsms_download"
+msgid "Download and install FrontlineSMS"
+msgstr "ดาวน์โหลดและติดตั้ง FrontlineSMS"
+
+#: settings.sms.flsms_instructions
+msgctxt "settings.sms.flsms_instructions"
+msgid ""
+"Detailed instructions on how to send SMS from your FronlineSMS installation "
+"are available <strong><a "
+"href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" "
+"target=\"_blank\">here</a></strong>. The URL and API Key below are required "
+"to set up the sync with FrontlineSMS."
+msgstr "คำแนะนำโดยละเอียด เกี่ยวกับวิธีการ ส่ง SMS จากการติดตั้ง FronlineSMS ของคุณมีอยู่ <strong><a href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" target=\"_blank\">here</a></strong> คีย์ URL และ API ด้านล่าง จะต้องตั้งค่าการซิงค์ กับ FrontlineSMS"
+
+#: settings.sms.flsms_link
+msgctxt "settings.sms.flsms_link"
+msgid "Copy and paste this into the FrontlineSMS \"Address\" field"
+msgstr "คัดลอกและวางลงในช่อง FrontlineSMS \"ที่อยู่\""
+
+#: settings.sms.flsms_key
+msgctxt "settings.sms.flsms_key"
+msgid "Copy and paste this into the FrontlineSMS \"Ushahidi API Key\" field"
+msgstr "คัดลอกและวางลงในช่อง FrontlineSMS \"Ushahidi API คีย์\""
+
+#: settings.sms.flsms_synchronize
+msgctxt "settings.sms.flsms_synchronize"
+msgid "Connecting FrontlineSMS to this Ushahidi deployment"
+msgstr "เชื่อมต่อ FrontlineSMS กับที่จะใช้งาน Ushahidi "
+
+#: settings.sms.flsms_text_1
+msgctxt "settings.sms.flsms_text_1"
+msgid "Enter phone number(s) connected to Frontline SMS in the field(s) below"
+msgstr "ใส่หมายเลขโทรศัพท์ที่เชื่อมต่อกับ Frontline SMS ด้านล่าง"
+
+#: settings.sms.flsms_text_2
+msgctxt "settings.sms.flsms_text_2"
+msgid "Enter the number without any + or dashes below"
+msgstr "ใส่จำนวนโดยไม่ใช้ + หรือขีดกลางด้านล่าง"
+
+#: settings.sms.option_1
+msgctxt "settings.sms.option_1"
+msgid "Option 1: Use Frontline SMS"
+msgstr "ตัวเลือกที่ 1: ใช้ Frontline SMS"
+
+#: settings.sms.option_2
+msgctxt "settings.sms.option_2"
+msgid "Option 2: Use a Global SMS Gateway"
+msgstr "ตัวเลือกที่ 2: ใช้ทั่วโลก SMS เกตเวย์"
+
+#: settings.sms.title
+msgctxt "settings.sms.title"
+msgid "SMS Setup Options"
+msgstr "ตัวเลือกการตั้งค่า SMS"
+
+#: settings.sms_no1.length
+msgctxt "settings.sms_no1.length"
+msgid "The phone 1 field does not appear to contain a valid value."
+msgstr "ช่องโทรศัพท์ 1 ไม่ปรากฏค่าที่ถูกต้อง"
+
+#: settings.sms_no1.numeric
+msgctxt "settings.sms_no1.numeric"
+msgid "The phone 1 field should contain numbers only."
+msgstr "ช่องโทรศัพท์ 1 ควรมีตัวเลขเท่านั้น"
+
+#: settings.sms_no2.length
+msgctxt "settings.sms_no2.length"
+msgid "The phone 2 field is too long."
+msgstr "ช่องโทรศัพท์ 2 ยาวเกินไป"
+
+#: settings.sms_no2.numeric
+msgctxt "settings.sms_no2.numeric"
+msgid "The phone 2 field should contain numbers only."
+msgstr "ช่องโทรศัพท์ 2 ควรมีตัวเลขเท่านั้น"
+
+#: settings.sms_no3.length
+msgctxt "settings.sms_no3.length"
+msgid "The phone 3 field is too long."
+msgstr "ช่องโทรศัพท์ 3 ยาวเกินไป"
+
+#: settings.sms_no3.numeric
+msgctxt "settings.sms_no3.numeric"
+msgid "The phone 3 field should contain numbers only."
+msgstr "ช่องโทรศัพท์ 3 ควรที่จะมีแต่ตัวเลข"
+
+#: settings.twitter.title
+msgctxt "settings.twitter.title"
+msgid "Twitter Setup Options"
+msgstr "ตัวเลือกการตั้งค่าของทวิตเตอร์"
+
+#: settings.twitter.description
+msgctxt "settings.twitter.description"
+msgid ""
+"To get the information below, set up your deployment as a new Twitter "
+"application at"
+msgstr "เพื่อที่จะได้รับข้อมูลด้านล่างโปรดตั้งค่าการใช้งานของคุณเป็นโปรแกรมทวิตเตอร์ใหม่ที่"
+
+#: settings.twitter.api_key
+msgctxt "settings.twitter.api_key"
+msgid "Consumer Key"
+msgstr "คีย์ของผู้บริโภค"
+
+#: settings.twitter.api_key_secret
+msgctxt "settings.twitter.api_key_secret"
+msgid "Consumer secret"
+msgstr "ข้อมูลส่วนตัวผู้ใช้"
+
+#: settings.twitter.token
+msgctxt "settings.twitter.token"
+msgid "Access Token"
+msgstr "เข้าสู่โทเค็น"
+
+#: settings.twitter.token_secret
+msgctxt "settings.twitter.token_secret"
+msgid "Access Token Secret"
+msgstr "เข้าสู่โทเค็นลับ"
+
+#: settings.test_settings
+msgctxt "settings.test_settings"
+msgid "Test settings"
+msgstr "ตั้งค่าการทดสอบ"
