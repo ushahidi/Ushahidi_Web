@@ -38,11 +38,4 @@ a2enmod rewrite > /dev/null 2>&1
 echo -e "\n--- Restarting Apache ---\n"
 service apache2 restart > /dev/null 2>&1
 
-echo -e "\n--- Set permissions on folders ---\n"
-chown -R www-data: /vagrant/application/config
-chown -R www-data: /vagrant/application/cache
-chown -R www-data: /vagrant/application/logs
-chown -R www-data: /vagrant/media/uploads
-chown -R www-data: /vagrant/.htaccess
-
 echo -e "\n--- All done! :) ---\n"
