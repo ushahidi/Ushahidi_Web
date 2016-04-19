@@ -22,8 +22,8 @@ $(function(){
 
 </script>
 <!-- main body -->
-<div id="main" class="clearingfix">
-	<div id="mainmiddle">
+<div id="main" class="clearingfix container">
+	<div id="mainmiddle" class="row">
 
 		<!-- right column -->
 		<div id="report-map-filter-box" class="clearingfix">
@@ -249,7 +249,7 @@ $(function(){
 		<!-- / right column -->
 
 		<!-- content column -->
-		<div id="content" class="clearingfix">
+		<div id="main-content" class="clearingfix col-xs-12">
 				<?php
 				// Map and Timeline Blocks
 				echo $div_map;

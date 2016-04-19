@@ -81,23 +81,25 @@ Event::run('ushahidi_action.header_scripts');
     <?php } ?>
 
     <!-- mainmenu -->
-    <nav id="myNavbar" class="navbar navbar-default navbar-inverse" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainmenu">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+    <div class="container">
+        <nav id="myNavbar" class="navbar navbar-default navbar-inverse" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainmenu">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="mainmenu">
+                    <ul class="nav navbar-nav">
+                        <?php nav::main_tabs($this_page); ?>
+                    </ul>
+                </div>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="mainmenu">
-                <ul class="nav navbar-nav">
-                    <?php nav::main_tabs($this_page); ?>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
     <!-- / mainmenu -->

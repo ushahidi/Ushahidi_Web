@@ -131,7 +131,6 @@ div.submit-incident a, .btn_submit {
 /* primary nav */
 div#mainmenu { background:none; border:none; height: auto; padding: 0 10px 0 10px; }
 div#mainmenu ul {
-  background: #5c5c5c;
   padding: 7px 0 7px 0;
 }
 div#mainmenu ul li {
@@ -364,6 +363,18 @@ span.btn-icon { display:block; position:absolute; height:16px; width:16px; overf
     #footer .row > div {
         float: none;
         margin-bottom: 10px;
+    }
+
+    div.map.timeline-enabled {
+        height: 240px;
+    }
+
+    #how-to-report-menu-toggle {
+        left: 340px;
+    }
+
+    div.wrapper, div.rapidxwpr {
+        width: 100%;
     }
 
     /* login */
