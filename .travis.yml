@@ -9,5 +9,6 @@ before_deploy:
 deploy:
   provider: script
   script: ./config/deploy/travis.sh
+  skip_cleanup: true
   on:
     branch: develop
