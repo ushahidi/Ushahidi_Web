@@ -51,9 +51,9 @@ set :deploy_to, '/var/www/deploys/www/mapa.desastre.ec'
 #
 
 set :ssh_options, {
+    keys: %w(~/.ssh/id_rsa),
     forward_agent: false,
-    auth_methods: %w(password),
-    password: 'user_deployers_password',
+    auth_methods: %w(publickey),
     user: 'deployer',
 }
 
