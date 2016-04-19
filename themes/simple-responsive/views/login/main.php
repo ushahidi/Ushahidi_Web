@@ -13,14 +13,14 @@ echo html::script(url::file_loc('js').'media/js/openid/openid-jquery', TRUE);
 echo html::script(url::file_loc('js').'media/js/openid/openid-jquery-en', TRUE);
 echo html::script(url::file_loc('js').'media/js/global', TRUE);
 ?>
-<script type="text/javascript">
-	<?php echo $js; ?>
-</script>
 <link rel="stylesheet" type="text/css" href="<?php print URL::base() ?>themes/simple-responsive/css/_default.css">
 <link rel="stylesheet" type="text/css" href="<?php print URL::base() ?>themes/simple-responsive/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="<?php print URL::base() ?>themes/simple-responsive/assets/bootstrap/css/bootstrap-theme.min.css">
 <script type="text/javascript" src="<?php print URL::base() ?>themes/simple-responsive/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php print URL::base() ?>themes/simple-responsive/js/jquery.browser.js"></script>
+<script type="text/javascript">
+	<?php echo $js; ?>
+</script>
 </head>
 
 <body>
