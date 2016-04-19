@@ -2,14 +2,19 @@
 $(function(){
 
 	// show/hide report filters and layers boxes on home page map
-	$("a.toggle").toggle(
-		function() {
-			$($(this).attr("href")).show();
-			$(this).addClass("active-toggle");
-		},
-		function() {
-			$($(this).attr("href")).hide();
-			$(this).removeClass("active-toggle");
+	$("a.toggle").click(
+		function(e) {
+			var $e = $(e.currentTarget);
+			e.preventDefault();
+
+			if ($e.hasClass("active-toggle")) {
+				$($(this).attr("href")).hide();
+				$(this).removeClass("active-toggle");
+			} else {
+				$($(this).attr("href")).show();
+				$(this).addClass("active-toggle");
+			}
+			return false;
 		}
 	);
 
