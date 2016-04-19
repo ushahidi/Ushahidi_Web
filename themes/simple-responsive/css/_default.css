@@ -343,4 +343,16 @@ span.btn-icon { display:block; position:absolute; height:16px; width:16px; overf
         display: block;
         text-align: center;
     }
+
+    /* login */
+    #openid_login_container .row {
+        margin: 0;
+    }
+
+    #openid_login_container,
+    #openid_login,
+    #create_account {
+        width: 100%;
+        margin-bottom: 20px;
+    }
 }
