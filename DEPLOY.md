@@ -13,9 +13,9 @@ Hacer deploys a beta y a producción
 
 Para hacer un deploy a beta, deberas ejecutar en el directorio root del proyecto:
 
-  `$ capistrano staging deploy`
+  `$ cap staging deploy`
 
 Para hacer un deploy a producción, deberas ejecutar:
 
-  `$ capistrano production deploy`
+  `$ cap production deploy`
 
