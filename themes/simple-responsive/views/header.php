@@ -40,7 +40,7 @@ Event::run('ushahidi_action.header_scripts');
     <div id="header">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <!-- logo -->
                     <?php if ($banner == NULL): ?>
                     <div id="logo">
@@ -52,7 +52,7 @@ Event::run('ushahidi_action.header_scripts');
                     <?php endif; ?>
                     <!-- / logo -->
                 </div>
-                <div class="col-md-6 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <!-- submit incident -->
                     <?php echo $submit_btn; ?>
                     <!-- / submit incident -->
