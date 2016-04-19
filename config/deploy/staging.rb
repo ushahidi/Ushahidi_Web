@@ -7,7 +7,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
-
+server 'mapa.desastre.ec', user: 'deployer', roles: %{app}
 
 # role-based syntax
 # ==================
@@ -21,7 +21,7 @@
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
-
+role :app, %w{deployer@mapa.desastre.ec}
 
 # Configuration
 # =============
@@ -31,7 +31,8 @@
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
-
+set :branch , 'staging'
+set :deploy_to, '/var/www/deploys/www/beta.mapa.desastre.ec'
 
 # Custom SSH Options
 # ==================
@@ -46,7 +47,14 @@
 #    forward_agent: false,
 #    auth_methods: %w(password)
 #  }
-#
+
+set :ssh_options, {
+    forward_agent: false,
+    auth_methods: %w(password),
+    password: 'user_deployers_password',
+    user: 'deployer',
+}
+
 # The server-based syntax can be used to override options:
 # ------------------------------------
 # server 'example.com',
