@@ -1,5 +1,5 @@
 language: ruby
 rvm:
-  - 2.3
+  - 2.2
 install: gem install capistrano
 script: cap staging deploy
