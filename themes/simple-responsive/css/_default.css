@@ -42,7 +42,7 @@ h5, h4 {
 }
 
 /* structural divs */
-body#page { background:#e4e1dd url(../images/bg_transparent-lines.png) repeat; }
+/*body#page { background:#e4e1dd url(../images/bg_transparent-lines.png) repeat; }*/
 
 div#middle { background:transparent url(../images/bg_top-cap.png) top no-repeat; }
 
@@ -223,7 +223,7 @@ div.additional-content { display:none; }
 div.content-container { background:transparent; padding:10px; }
 
 div.content-block { position:relative; margin:0 18px; background:#eeedea; }
-div.content-block h5 { float:left; position:absolute; top:-18px; left:-18px; padding:5px; border:7px solid #fff; background:#529bf5; }
+div.content-block h5 { color:#fff; float:left; position:absolute; top:-18px; left:-18px; padding:5px; border:7px solid #424242; background:#424242; }
 div.content-block h5 span { display:none; }
 div.content-block .table-list { margin-top:18px; }
 table.table-list thead th.date { width:20%; }
@@ -258,7 +258,7 @@ div.report-additional-reports h5 { font-family: Arial, sans-serif;  }
 }
 /* footer */
 div#footer {
-  background: #000;
+  background: #424242;
 }
 div#underfooter { background:transparent; }
 
@@ -319,7 +319,7 @@ span.btn-icon { display:block; position:absolute; height:16px; width:16px; overf
 
 
 body {
-    background: none;
+    background: #fff;
 }
 
 .content-blocks {
@@ -487,4 +487,9 @@ ul.link-toggle li a.next {
     .step-2-holder {
         width: 100%;
     }
+}
+
+
+.margin-top-20{
+  margin-top: 20px;
 }

@@ -30,7 +30,7 @@ $(function(){
 <!-- main body -->
 <div id="main" class="clearingfix container">
 	<div id="mainmiddle" class="row">
-
+		<div class="container margin-top-20">
 		<!-- right column -->
 		<div id="report-map-filter-box" class="clearingfix">
 			<a class="btn toggle" id="filter-menu-toggle" class="" href="#the-filters"><?php echo Kohana::lang('ui_main.filter_reports_by'); ?><span class="btn-icon ic-right">&raquo;</span></a>
@@ -263,10 +263,10 @@ $(function(){
 				?>
 			</div>
 		</div>
+		</div>
 		<!-- / content column -->
 
 	</div>
-</div>
 <!-- / main body -->
 
 
