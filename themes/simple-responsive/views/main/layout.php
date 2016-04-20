@@ -2,23 +2,34 @@
 $(function(){
 
 	// show/hide report filters and layers boxes on home page map
-	$("a.toggle").toggle(
-		function() {
-			$($(this).attr("href")).show();
-			$(this).addClass("active-toggle");
-		},
-		function() {
-			$($(this).attr("href")).hide();
-			$(this).removeClass("active-toggle");
+	$("a.toggle").click(
+		function(e) {
+			var $e = $(e.currentTarget);
+			e.preventDefault();
+
+			if ($e.hasClass("active-toggle")) {
+				$($(this).attr("href")).hide();
+				$(this).removeClass("active-toggle");
+			} else {
+				$($(this).attr("href")).show();
+				$(this).addClass("active-toggle");
+			}
+			return false;
 		}
 	);
 
+	var $blockContent = $('.content-block-column'),
+		$blocks = $blockContent.find('li'),
+		count = 12 / $blocks.length;
+
+	if (count < 3) count = 3;
+	$blocks.addClass("col-sm-"+count+" col-xs-12");
 });
 
 </script>
 <!-- main body -->
-<div id="main" class="clearingfix">
-	<div id="mainmiddle">
+<div id="main" class="clearingfix container">
+	<div id="mainmiddle" class="row">
 
 		<!-- right column -->
 		<div id="report-map-filter-box" class="clearingfix">
@@ -244,7 +255,7 @@ $(function(){
 		<!-- / right column -->
 
 		<!-- content column -->
-		<div id="content" class="clearingfix">
+		<div id="main-content" class="clearingfix col-xs-12">
 				<?php
 				// Map and Timeline Blocks
 				echo $div_map;
