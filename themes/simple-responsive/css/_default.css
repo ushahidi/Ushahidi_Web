@@ -324,6 +324,41 @@ body {
     list-style: none;
 }
 
+#openid_login_container,
+#openid_login,
+#create_account {
+    width: 100%;
+}
+
+.pager li>a, .pager li>span {
+    padding: initial;
+    background: initial;
+    border: initial;
+    border-radius: initial;
+}
+
+ul.link-toggle li a.prev,
+ul.link-toggle li a.next {
+    width: 22px;
+}
+
+#reports-box {
+    width: auto;
+}
+
+.rb_nav-controls .container {
+    width: 100%;
+}
+
+.rb_nav-controls .row > div {
+    text-align: center;
+    padding-top: 5px;
+}
+
+.report_row div.olMap {
+    width: auto;
+}
+
 @media (max-width: 767px) {
     div#header {
         height: auto;
@@ -374,12 +409,12 @@ body {
         margin-bottom: 10px;
     }
 
-    div.map.timeline-enabled {
+    div.map {
         height: 240px;
     }
 
     #how-to-report-menu-toggle {
-        left: 340px;
+        left: 220px;
     }
 
     div.wrapper, div.rapidxwpr {
@@ -396,5 +431,18 @@ body {
     #create_account {
         width: 100%;
         margin-bottom: 20px;
+    }
+
+    /* list reports */
+    #reports-box {
+        width: 100%;
+    }
+
+    .rb_nav-controls {
+        height: auto;
+    }
+
+    .rb_nav-controls .row > div {
+        height: 35px;
     }
 }

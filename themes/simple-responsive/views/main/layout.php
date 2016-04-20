@@ -274,8 +274,8 @@ $(function(){
 <div class="content-container">
 
 	<!-- content blocks -->
-	<div class="content-blocks clearingfix">
-		<ul class="content-column">
+	<div class="content-blocks clearingfix container">
+		<ul class="content-block-column row">
 			<?php blocks::render(); ?>
 		</ul>
 	</div>

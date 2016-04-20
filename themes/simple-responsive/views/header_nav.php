@@ -1,7 +1,7 @@
 <div id="header_nav">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-6">
+			<div class="col-xs-8">
 	<ul id="header_nav_left">
 		<li><span class="bignext">&raquo;</span><a href="<?php echo url::site();?>"><?php echo $site_name; ?></a></li>
 		<?php
@@ -12,7 +12,7 @@
 			</div>
 	<?php Event::run('ushahidi_action.header_nav_bar'); ?>
 
-			<div class="col-xs-6">
+			<div class="col-xs-4">
 	<ul id="header_nav_right">
 		<li class="header_nav_user header_nav_has_dropdown">
 		<?php if($loggedin_user != FALSE){ ?>
