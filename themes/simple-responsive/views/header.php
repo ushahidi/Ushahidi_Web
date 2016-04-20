@@ -62,6 +62,9 @@ Event::run('ushahidi_action.header_scripts');
                         <a class="page-scroll" href="#page-top"></a>
                     </li>
                     <?php nav::main_tabs($this_page); ?>
+                    <li style="float: right;">
+                        <a href="/login">Ingresar</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
