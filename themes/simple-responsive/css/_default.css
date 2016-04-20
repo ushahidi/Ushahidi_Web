@@ -15,7 +15,7 @@ Author Email: caleb@ushahidi.com
   table.table-list tbody tr td a,
   .hover .r_details h3 a.r_title,
   div.footermenu ul li a,
-  div.search-form input.text  { color: #d24836; }
+  div.search-form input.text  { color: #2C62AB; }
   div.search-form input.text:focus { border-color: #d24836; }
   div.submit-incident a, .btn_submit,
   div.filters ul li a:hover, div.filters ul li a.active,
@@ -247,7 +247,7 @@ div#main { padding:15px 10px; }
 .report_detail .r_verified { position:absolute; top:10px; right:18px;  }
 
 div.report-additional-reports { background:#EEEDEA; position:relative; padding:35px 10px 10px; margin-left:18px; }
-div.report-additional-reports h4 { position:absolute; float:left; top:-18px; left:-18px; padding:5px; border:7px solid #fff; background:#529bf5; color:#fff; }
+div.report-additional-reports h4 { position:absolute; float:left; top:-18px; left:-18px; padding:5px; border:7px solid #424242; background: #424242; color:#fff; }
 div.report-additional-reports h5 { font-family: Arial, sans-serif;  }
 
 /* reports page */
@@ -491,7 +491,14 @@ ul.link-toggle li a.next {
     }
 }
 
-
 .margin-top-20{
   margin-top: 20px;
+}
+
+#footer a {
+  color: #fff;
+}
+
+#quienessomos a {
+  color: #fff;
 }
