@@ -101,7 +101,14 @@ div.search-form input.searchbtn {
 }
 
 /* header */
-div#header { height:auto; margin:18px 0; }
+div#header {
+  height:220px;
+  background-image: url('/media/img/hug.jpg');
+  background-size: cover;
+  text-align: center;
+}
+
+
 
 /* logo box */
 div#logo {
@@ -370,6 +377,20 @@ ul.link-toggle li a.next {
 .step-1 .map-wrapper,
 .step-1 .map-wrapper .map-holder {
     width: 100%;
+}
+
+.quienessomos-section {
+    padding: 10px 0;
+    text-align: center;
+    background: #424242;
+    color: #FFF;
+    font-size: 16px;
+}
+
+.big_white {
+    color: #FFF;
+    font-size: 140px;
+    font-size: 8vw;
 }
 
 @media (max-width: 767px) {

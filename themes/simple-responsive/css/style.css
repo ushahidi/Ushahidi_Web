@@ -283,7 +283,6 @@ div.submit-incident a, div.submit-incident a:hover{
     font-weight: bold;
     font-size: 14px;
     text-decoration: none;
-    float: right;
 }
 
 
@@ -389,7 +388,7 @@ div.map {
 }
 /* Change map height when timeline is enabled */
 div.map.timeline-enabled {
-	height:366px;
+  height:366px;
 }
 
 #mapStatus {
@@ -523,7 +522,7 @@ ul.category-filters li.child{
     display:none;
 }
 ul.category-filters li li {
-	padding-left:20px;
+  padding-left:20px;
 }
 
 div.layers-filters{
@@ -543,7 +542,7 @@ div.additional-content ol {
 }
 
 div.how-to-report-methods div{
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 /* content blocks */
@@ -648,7 +647,7 @@ div.footer-credits{
 }
 
 div.footer-credits .footer-logo{
-	vertical-align:middle;
+  vertical-align:middle;
 }
 
 /* Reports */
@@ -1022,7 +1021,7 @@ div.incident-notation ul li{
     padding-left: 0;
 }
 .category-icon img {
-	float:left;padding-right:5px;
+  float:left;padding-right:5px;
 }
 
 /* Stylized Forms */
@@ -1424,8 +1423,8 @@ a.show-more {
     padding:0 0 0 10px;
 }
 .find-location{
-	float:left;
-	margin:9px 0 0 5px;
+  float:left;
+  margin:9px 0 0 5px;
 }
 
 /*-- pager --*/
@@ -1649,7 +1648,7 @@ div.green-box ul, div.red-box ul{
 }
 
 .page-reports-submit div.green-box {
-	margin: 25px 25px 0px 25px;
+  margin: 25px 25px 0px 25px;
 }
 
 /*--Alerts Messages--*/
@@ -1674,7 +1673,7 @@ span.required {
   color: #CC1830;
 }
 span.private {
-	color:gray;font-size:70%
+  color:gray;font-size:70%
 }
 
 /* Rounded Corners */
@@ -2082,33 +2081,33 @@ a.filter-button:hover { text-decoration:none; background:#707070;  }
 
 /*----- Checkins -----*/
 div.ci_imgblock {
-	width:59px;
-	height:59px;
-	overflow:hidden;
-	float:left;
-	margin:0px;
+  width:59px;
+  height:59px;
+  overflow:hidden;
+  float:left;
+  margin:0px;
 }
 div.ci_shorterblock {
-	height:16px;
+  height:16px;
 }
 div.ci_tallerblock {
-	height:59px;
+  height:59px;
 }
 div.ci_colorblock {
-	width:69px;
-	float:left;
-	margin:0px 10px 0px 0px;
+  width:69px;
+  float:left;
+  margin:0px 10px 0px 0px;
 }
 div.ci_colorfade {
-	width:59px;
-	height:20px;
-	float:left;
-	margin:0px;
-	background-color:#FFFFFF;
-	opacity:.5;
+  width:59px;
+  height:20px;
+  float:left;
+  margin:0px;
+  background-color:#FFFFFF;
+  opacity:.5;
 }
 div.ci_checkin {
-	border-bottom:1px solid #B3B3B3;
+  border-bottom:1px solid #B3B3B3;
 }
 
 .page-profile .content-bg { padding:25px; }
@@ -2120,8 +2119,8 @@ div.ci_checkin {
 .badge img { margin:5px; }
 
 .allowed-html {
-	font-weight: normal;
-	font-size: 10px;
-	line-height: 12px;
-	color: #a1a1a1;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #a1a1a1;
 }
