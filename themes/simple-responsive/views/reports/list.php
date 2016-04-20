@@ -22,13 +22,13 @@
 							<li><a href="#rb_map-view" class="map"><?php echo Kohana::lang('ui_main.map'); ?></a></li>
 						</ul>
 					</div>
-					<div class="col-xs-6 col-sm-3">
+					<div class="col-xs-6 col-sm-4">
 						<?php echo $pagination; ?>
 					</div>
 					<div class="col-xs-6 col-sm-3">
 						<?php echo $stats_breadcrumb; ?>
 					</div>
-					<div class="col-xs-6 col-sm-3">
+					<div class="col-xs-6 col-sm-2">
 						<ul class="link-toggle lt-icons-only">
 							<?php //@todo Toggle the status of these links depending on the current page ?>
 							<li><a href="#page_<?php echo $previous_page; ?>" class="prev"><?php echo Kohana::lang('ui_main.previous'); ?></a></li>
@@ -165,13 +165,13 @@
 							<li><a href="#rb_map-view" class="map"><?php echo Kohana::lang('ui_main.map'); ?></a></li>
 						</ul>
 					</div>
-					<div class="col-xs-6 col-sm-3">
+					<div class="col-xs-6 col-sm-4">
 						<?php echo $pagination; ?>
 					</div>
 					<div class="col-xs-6 col-sm-3">
 						<?php echo $stats_breadcrumb; ?>
 					</div>
-					<div class="col-xs-6 col-sm-3">
+					<div class="col-xs-6 col-sm-2">
 						<ul class="link-toggle lt-icons-only">
 							<?php //@todo Toggle the status of these links depending on the current page ?>
 							<li><a href="#page_<?php echo $previous_page; ?>" class="prev"><?php echo Kohana::lang('ui_main.previous'); ?></a></li>
