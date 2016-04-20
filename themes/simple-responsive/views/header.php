@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<meta property="og:url" content="https://mapa.desastre.ec">
 <meta property="og:site_name" content="AyudaEcuador - Mapa">
 <meta property="og:title" content="Reporta tu emergencia, daño o pedido de ayuda">
 <meta property="og:description" content="Una plataforma para el mapeo de los informes sobre los daños ocurridos por el terremoto que afectó a las costas ecuatorianas el 16 de abril del 2016.">
