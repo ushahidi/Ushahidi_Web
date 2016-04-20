@@ -270,9 +270,6 @@ div.search-form input.searchbtn{
 /* submit incident */
 div.submit-incident{
     margin: 80px 0 0 0;
-    position:absolute;
-    top:0; right:0;
-    width: 300px;
 }
 
 div.submit-incident a, div.submit-incident a:hover{
