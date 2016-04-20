@@ -4,12 +4,14 @@ set -exuo pipefail
 
 case "$TRAVIS_BRANCH" in
   develop)
-    bundle exec cap staging deploy
+    deploy_environment=staging
     ;;
   master)
-    bundle exec cap staging deploy
+    deploy_environment=production
     ;;
   *)
     echo Branch not recognized for deployment
-    ;;
+    exit 0
 esac
+
+bundle exec cap "$deploy_environment" deploy
