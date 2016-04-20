@@ -133,6 +133,7 @@ div.submit-incident a, .btn_submit {
   text-shadow: 1px 1px 0 #424242;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+  margin-bottom: 15px;
 }
 
 /* primary nav */
@@ -389,8 +390,8 @@ ul.link-toggle li a.next {
 
 .big_white {
     color: #FFF;
-    font-size: 140px;
-    font-size: 8vw;
+    font-size: 100px;
+    font-size: 6vw;
 }
 
 @media (max-width: 767px) {
@@ -419,6 +420,7 @@ ul.link-toggle li a.next {
         float: none;
         display: block;
         text-align: center;
+        margin-bottom: 15px;
     }
 
     #main .left-col {
