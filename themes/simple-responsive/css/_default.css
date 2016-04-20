@@ -355,6 +355,10 @@ ul.link-toggle li a.next {
     padding-top: 5px;
 }
 
+.report_row div.olMap {
+    width: auto;
+}
+
 @media (max-width: 767px) {
     div#header {
         height: auto;
