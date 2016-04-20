@@ -324,6 +324,12 @@ body {
     list-style: none;
 }
 
+#openid_login_container,
+#openid_login,
+#create_account {
+    width: 100%;
+}
+
 @media (max-width: 767px) {
     div#header {
         height: auto;

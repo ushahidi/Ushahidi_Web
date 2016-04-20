@@ -32,12 +32,14 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 
 	<div class="row">
 
-	<div id="ushahidi_site_name" class="ui-corner-all col-xs-12">
+	<div class="ui-corner-all col-xs-12">
+	<div id="ushahidi_site_name">
     	<div id="logo">
 			<h1><?php echo $site_name; ?></h1>
 			<span><?php echo $site_tagline; ?></span>
 		</div>
-    </div>
+	</div>
+	</div>
 
     <?php if ($message): ?>
 		<div class="<?php echo $message_class; ?> ui-corner-all col-xs-12">&#8226;&nbsp;<?php echo $message; ?></div>
@@ -84,7 +86,8 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 	</div>
 	<?php endif; ?>
 
-	<div id="openid_login" class="ui-corner-all col-md-6 col-xs-12">
+	<div class="ui-corner-all col-sm-6 col-xs-12">
+	<div id="openid_login">
 
 		<?php if ($new_confirm_email_form): ?>
 			<h2><?php echo Kohana::lang('ui_main.resend_confirm_email'); ?>:</h2>
@@ -171,8 +174,10 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 		</div>
 		<?php endif; ?>
 	</div>
+	</div>
 
-	<div id="create_account" class="ui-corner-all col-md-6 col-xs-12">
+	<div class="ui-corner-all col-sm-6 col-xs-12">
+	<div id="create_account">
 
 		<h2><a href="javascript:toggle('signin_new');"><?php echo Kohana::lang('ui_main.login_signup_click'); ?></a></h2>
 
@@ -211,6 +216,7 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 			<?php echo form::close(); ?>
 		</div>
 
+	</div>
 	</div>
 
 	<?php if (kohana::config('riverid.enable') == TRUE): ?>
