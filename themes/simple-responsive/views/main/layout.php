@@ -18,6 +18,12 @@ $(function(){
 		}
 	);
 
+	var $blockContent = $('.content-block-column'),
+		$blocks = $blockContent.find('li'),
+		count = 12 / $blocks.length;
+
+	if (count < 3) count = 3;
+	$blocks.addClass("col-sm-"+count+" col-xs-12");
 });
 
 </script>
