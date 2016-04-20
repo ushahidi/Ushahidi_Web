@@ -424,8 +424,14 @@
 		};
 
 		// toggle highlighting on the filter lists
-		$(".filter-list li a").toggle(
-			function(){
+		$(".filter-list li a").click(
+		function(e) {
+			var $e = $(e.currentTarget);
+			e.preventDefault();
+
+			if (!$(this).hasClass("selected"))
+			{
+
 				$(this).addClass("selected");
 
 				// Check if the element is in the list of de-selected items and remove it
@@ -442,8 +448,7 @@
 
 					deSelectedFilters = temp;
 				}
-			},
-			function(){
+			} else {
 				if ($(this).hasClass("selected"))
 				{
 					elementId = $(this).attr("id");
@@ -460,6 +465,7 @@
 
 				$(this).removeClass("selected");
 			}
+		}
 		);
 	}
 
