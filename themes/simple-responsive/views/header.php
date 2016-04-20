@@ -51,7 +51,7 @@ Event::run('ushahidi_action.header_scripts');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top" style="font-weight: bold;">Ayuda Ecuador</a>
+                <a class="navbar-brand page-scroll" href="http://www.desastre.ec/" style="font-weight: bold;">Ayuda Ecuador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
