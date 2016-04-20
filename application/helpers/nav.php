@@ -34,16 +34,6 @@ class nav_Core {
 			);
 		}
 
-                // Ayuda Ecuador más información
-		if( ! in_array('home',$dontshow))
-		{
-			$menu_items[] = array( 
-				'page' => 'more_information',
-				'url' => 'http://desastre.ec',
-				'name' => Kohana::lang('ui_main.more_information')
-			);
-		}
-
 		// Reports List
 		if( ! in_array('reports',$dontshow))
 		{
