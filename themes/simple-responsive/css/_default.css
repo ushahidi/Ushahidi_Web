@@ -355,6 +355,10 @@ ul.link-toggle li a.next {
     padding-top: 5px;
 }
 
+#rb_list-view {
+    width: 100%;
+}
+
 .report_row div.olMap {
     width: auto;
 }
