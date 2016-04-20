@@ -89,7 +89,7 @@ Event::run('ushahidi_action.header_scripts');
       <div class="container">
       <div class="row">
 
-          <div class="col-sm-12 col-xs-12" style="margin-top: 10px;">
+          <div class="col-sm-12 col-xs-12 custom-submit-button">
               <!-- submit incident -->
               <?php echo $submit_btn; ?>
               <!-- / submit incident -->
