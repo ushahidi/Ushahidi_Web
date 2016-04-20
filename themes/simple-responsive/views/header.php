@@ -48,7 +48,7 @@ Event::run('ushahidi_action.header_scripts');
                         <span><?php echo $site_tagline; ?></span>
                     </div>
                     <?php else: ?>
-                    <a href="<?php echo url::site();?>"><img src="media/img/banner.jpg" class="img-responsive" alt="<?php echo $site_name; ?>" /></a>
+                    <a href="<?php echo url::site();?>"><img src="/media/img/banner.jpg" class="img-responsive" alt="<?php echo $site_name; ?>" /></a>
                     <?php endif; ?>
                     <!-- / logo -->
 		</div>
