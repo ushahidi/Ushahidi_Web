@@ -367,6 +367,11 @@ ul.link-toggle li a.next {
     width: auto;
 }
 
+.step-1 .map-wrapper,
+.step-1 .map-wrapper .map-holder {
+    width: 100%;
+}
+
 @media (max-width: 767px) {
     div#header {
         height: auto;
@@ -457,10 +462,7 @@ ul.link-toggle li a.next {
     /* alerts */
     .step-1,
     .step-1 .map-wrapper,
-    .step-1 .map-wrapper .map-holder {
-        width: 100%;
-    }
-
+    .step-1 .map-wrapper .map-holder,
     .step-2-holder {
         width: 100%;
     }
