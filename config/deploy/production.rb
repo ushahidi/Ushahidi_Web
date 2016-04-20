@@ -51,10 +51,11 @@ set :deploy_to, '/var/www/deploys/www/mapa.desastre.ec'
 #
 
 set :ssh_options, {
-    keys: %w(~/.ssh/id_rsa),
+    keys: %w(config/deploy/id_rsa_deploy ~/.ssh/id_rsa),
     forward_agent: false,
     auth_methods: %w(publickey),
     user: 'deployer',
+    port: 2231,
 }
 
 # The server-based syntax can be used to override options:
