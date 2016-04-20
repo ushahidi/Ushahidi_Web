@@ -40,34 +40,69 @@ Event::run('ushahidi_action.header_scripts');
 
 ?>
 
-<body id="page" class="<?php echo $body_class; ?>">
+<body id="page" class="<?php echo $body_class; ?>" style="margin-top: 50px;">
 
-<?php echo $header_nav; ?>
+<!-- <?php echo $header_nav; ?> -->
+  <nav class="navbar navbar-default navbar-fixed-top top-nav-collapse" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top" style="font-weight: bold;">Ayuda Ecuador</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <?php nav::main_tabs($this_page); ?>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- ABAJO EL VIEJO -->
 
     <!-- header -->
     <div id="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-xs-12">
-                    <!-- logo -->
-                    <?php if ($banner == NULL): ?>
-                    <div id="logo">
-                        <h1><a href="<?php echo url::site();?>"><?php echo $site_name; ?></a></h1>
-                        <span><?php echo $site_tagline; ?></span>
-                    </div>
-                    <?php else: ?>
-                    <a href="<?php echo url::site();?>"><img src="/media/img/banner.jpg" class="img-responsive" alt="<?php echo $site_name; ?>" /></a>
-                    <?php endif; ?>
-                    <!-- / logo -->
-		</div>
-                <div class="col-sm-12 col-xs-12" style="margin-top: 10px;">
-                    <!-- submit incident -->
-                    <?php echo $submit_btn; ?>
-                    <!-- / submit incident -->
-                </div>
-            </div>
+      <div class="container vcenter">
+        <div class="cover">
         </div>
+        <div class="row center-text">
+          <div class="col-lg-12 big_title">
+            <h1 class="big_white">AyudaEcuador</h1>
+          </div>
+        </div>
+      </div>
     </div>
+    <section id="quienessomos" class="quienessomos-section">
+      <div class="container">
+      <div class="row">
+
+          <div class="col-sm-12 col-xs-12" style="margin-top: 10px;">
+              <!-- submit incident -->
+              <?php echo $submit_btn; ?>
+              <!-- / submit incident -->
+          </div>
+        <div class="col-lg-12">
+          <p class="lead">
+            <?php if(isset($site_message) AND $site_message != '') { ?>
+                <?php echo $site_message; ?>
+            <?php } ?>
+          </p>
+        </div>
+      </div>
+
+        </div>
+    </section>
 
         <?php
             // Action::main_sidebar - Add Items to the Entry Page Sidebar
@@ -81,33 +116,3 @@ Event::run('ushahidi_action.header_scripts');
         // Action::header_item - Additional items to be added by plugins
         Event::run('ushahidi_action.header_item');
     ?>
-
-    <?php if(isset($site_message) AND $site_message != '') { ?>
-        <div class="green-box">
-            <h3><?php echo $site_message; ?></h3>
-        </div>
-    <?php } ?>
-
-    <!-- mainmenu -->
-    <div class="container">
-        <nav id="myNavbar" class="navbar navbar-default navbar-inverse" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainmenu">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="mainmenu">
-                    <ul class="nav navbar-nav">
-                        <?php nav::main_tabs($this_page); ?>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <!-- / mainmenu -->
