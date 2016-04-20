@@ -346,6 +346,10 @@ ul.link-toggle li a.next {
     width: auto;
 }
 
+.btn.toggle {
+    white-space: normal;
+}
+
 .rb_nav-controls .container {
     width: 100%;
 }
