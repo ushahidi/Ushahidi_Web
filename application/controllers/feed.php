@@ -15,7 +15,7 @@
  */
 
 class Feed_Controller extends Controller {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -27,7 +27,7 @@ class Feed_Controller extends Controller {
 		{
 			throw new Kohana_404_Exception();
 		}
-		
+
 		if ($feedtype != 'atom' AND $feedtype != 'rss2')
 		{
 			throw new Kohana_404_Exception();
@@ -39,9 +39,9 @@ class Feed_Controller extends Controller {
 
 		// Start at which page?
 		$page = ( isset($_GET['p']) AND ! empty($_GET['p']) AND (int) $_GET['p'] >= 1 )
-			? (int) $_GET['p'] 
+			? (int) $_GET['p']
 			: 1;
-			
+
 		$page_position = ($page == 1) ? 0 : ( $page * $limit ) ; // Query position
 
 		$site_url = url::base();
@@ -56,7 +56,7 @@ class Feed_Controller extends Controller {
 
 		$cache = Cache::instance();
 		$feed_items = $cache->get($subdomain.'_feed_'.$limit.'_'.$page);
-		
+
 		if ($feed_items == NULL)
 		{ // Cache is Empty so Re-Cache
 			$incidents = ORM::factory('incident')
@@ -72,8 +72,8 @@ class Feed_Controller extends Controller {
 				{
 					$categories[] = (string)$category->category_title;
 				}
-			  
-			  
+
+
 				$item = array();
 				$item['id'] = $incident->id;
 				$item['title'] = $incident->incident_title;
@@ -81,7 +81,7 @@ class Feed_Controller extends Controller {
 				$item['description'] = $incident->incident_description;
 				$item['date'] = $incident->incident_date;
 				$item['categories'] = $categories;
-				
+
 				if
 				(
 					$incident->location_id != 0 AND
@@ -97,7 +97,7 @@ class Feed_Controller extends Controller {
 				}
 			}
 
-			$cache->set($subdomain.'_feed_'.$limit.'_'.$page, $items, array('feed'), 3600); // 1 Hour
+			$cache->set($subdomain.'_feed_'.$limit.'_'.$page, $items, array('feed'), 300); // 5 minutes
 			$feed_items = $items;
 		}
 
