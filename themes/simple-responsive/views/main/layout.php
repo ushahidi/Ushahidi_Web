@@ -351,8 +351,9 @@ $(function(){
 			if (Kohana::config('settings.allow_reports'))
 			{
 				?>
-
-				<?php echo Kohana::lang('ui_main.how_to_report'); ?>
+					<h3>
+				    <?php echo Kohana::lang('ui_main.how_to_report'); ?>
+				    </h3>
 					<!-- / additional content -->
 					<div class="how-to-report-methods">
 
