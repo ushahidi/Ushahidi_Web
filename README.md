@@ -10,6 +10,7 @@ Hay muchas formas:
 
 - Reportando _bugs_ o sugiriendo mejoras a través de los [issues del repo en GitHub](https://github.com/desastre-ecuador/mapa.desastre.ec/issues).
 - Resolviendo alguno de esos _issues_. Están priorizados y asignados en [este tablero de Waffle](https://waffle.io/desastre-ecuador/mapa.desastre.ec/join). Por favor, sigue [estas recomendaciones acerca de cómo contribuir](https://github.com/desastre-ecuador/mapa.desastre.ec/blob/master/CONTRIBUTING.md).
+- Participando en la [lista de discusión de desarrollo](http://listas.desastre.ec/listinfo.cgi/desarrollo-desastre.ec).
 - Participando o haciendo preguntas en el [chat del equipo técnico en Telegram](https://telegram.me/joinchat/AbmN-wcPvovTZcL0Lpr14Q).
 - Moderando y verificando reportes. Más información en el [chat general en Telegram](https://telegram.me/joinchat/CV6MEghFJudTwP-hP64xVw).
 - Ayudando en otras tareas menos técnicas, disponibles en [este tablero de Trello](https://trello.com/b/EVxI6km1).
