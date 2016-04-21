@@ -32,6 +32,7 @@ after :finishing, :clear_cache do
   on roles(:web), in: :groups, limit: 3, wait: 10 do
     within release_path do
       execute :rm, ' -r installer/ '
+      execute :rm, ' -r application/cache/*'
     end
   end
 end
