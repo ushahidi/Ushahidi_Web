@@ -28,12 +28,13 @@ set :linked_files, %w{
 }
 set :linked_dirs, %w{application/logs application/cache media/uploads}
 
-namespace :deploy do 
+namespace :deploy do
   desc "Clean installer and cache"
   task :clean_install do
     on roles(:app) do
       within release_path do
         execute :sudo, ' rm -rf installer/ application/cache/*'
+        execute :sudo, ' service apache2 reload'
       end
     end
   end
