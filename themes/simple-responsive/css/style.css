@@ -2170,6 +2170,16 @@ div.ci_checkin {
         display: block !important;
     }
 
+    #the-filters {
+        top: auto !important;
+        z-index:9999;
+    }
+
+    #how-to-report-box {
+        top: auto !important;
+        z-index:9999;
+    }
+
     .map {
         height: 300px !important;
     }
