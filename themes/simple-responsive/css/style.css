@@ -2124,3 +2124,60 @@ div.ci_checkin {
   line-height: 12px;
   color: #a1a1a1;
 }
+
+
+/* DESKTOPS*/
+@media all and (min-width:640px) and (max-width: 9999px) {
+    .main-responsive-desktop {
+        float:left;
+        width: 20%;
+        padding: 15px;
+    }
+
+    .divmap{
+        float:left;
+        width: 80%;
+    }
+
+    .main-responsive-mobile{
+        display: none;
+    }
+
+    .custom-submit-button{
+        margin-bottom: 0px !important;
+    }
+}
+
+/* MOBILE */
+@media all and (min-width:0px) and (max-width: 640px) {
+
+    .main-responsive-desktop {
+        display: none;
+    }
+
+    .custom-submit-button{
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+
+    .responsive-menu{
+        width: auto !important;
+        margin-bottom: 15px;
+        top: 5px !important;
+        left: 5px !important;
+
+        position: relative !important;
+        display: block !important;
+    }
+
+    .map {
+        height: 300px !important;
+    }
+
+    .divmap {
+        margin-right: 10px;
+        z-index: 0;
+    }
+
+
+}
