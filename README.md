@@ -25,4 +25,4 @@ Luego, en tu navegador, ve a <http://localhost:8080> y sigue el proceso de insta
 
 ## Licencia
 
-[GPL versión 3](https://github.com/desastre-ecuador/mapa.desastre.ec/blob/master/License.txt).
+[LGPL versión 3](https://github.com/desastre-ecuador/mapa.desastre.ec/blob/master/License.txt).
