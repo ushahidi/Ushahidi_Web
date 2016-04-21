@@ -28,11 +28,15 @@ set :linked_files, %w{
 }
 set :linked_dirs, %w{application/logs application/cache media/uploads}
 
-after :finishing, :clear_cache do
-  on roles(:web), in: :groups, limit: 3, wait: 10 do
-    within release_path do
-      execute :rm, ' -r installer/ '
-      execute :rm, ' -r application/cache/*'
+namespace :deploy do 
+  desc "Clean installer and cache"
+  task :clean_install do
+    on roles(:app) do
+      within release_path do
+        execute :sudo, ' rm -rf installer/ application/cache/*'
+      end
     end
   end
 end
+
+after 'deploy:finished', 'deploy:clean_install'
