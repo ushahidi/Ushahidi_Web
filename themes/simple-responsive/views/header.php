@@ -89,12 +89,12 @@ Event::run('ushahidi_action.header_scripts');
       <div class="container">
       <div class="row">
 
-          <div class="col-sm-12 col-xs-12 custom-submit-button">
+          <div class="col-xs-12 custom-submit-button">
               <!-- submit incident -->
               <?php echo $submit_btn; ?>
               <!-- / submit incident -->
           </div>
-        <div class="col-lg-12">
+        <div class="col-xs-12">
           <p class="lead">
             <?php if(isset($site_message) AND $site_message != '') { ?>
                 <?php echo $site_message; ?>
