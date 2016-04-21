@@ -21,7 +21,7 @@ class category_block { // CHANGE THIS FOR OTHER BLOCKS
 		$content = new View('category_block'); // CHANGE THIS IF YOU WANT A DIFFERENT VIEW
 
 		// ID of the category we're looking for
-		$category_id = 14; // CHANGE THIS
+		$category_id = 8; // CHANGE THIS
 		$ids = array();
 		$ids[] = $category_id;
 
