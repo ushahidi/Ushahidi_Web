@@ -15,7 +15,7 @@ Author Email: caleb@ushahidi.com
   table.table-list tbody tr td a,
   .hover .r_details h3 a.r_title,
   div.footermenu ul li a,
-  div.search-form input.text  { color: #d24836; }
+  div.search-form input.text  { color: #2C62AB; }
   div.search-form input.text:focus { border-color: #d24836; }
   div.submit-incident a, .btn_submit,
   div.filters ul li a:hover, div.filters ul li a.active,
@@ -42,7 +42,7 @@ h5, h4 {
 }
 
 /* structural divs */
-body#page { background:#e4e1dd url(../images/bg_transparent-lines.png) repeat; }
+/*body#page { background:#e4e1dd url(../images/bg_transparent-lines.png) repeat; }*/
 
 div#middle { background:transparent url(../images/bg_top-cap.png) top no-repeat; }
 
@@ -133,6 +133,7 @@ div.submit-incident a, .btn_submit {
   text-shadow: 1px 1px 0 #424242;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+  margin-bottom: 15px;
 }
 
 /* primary nav */
@@ -167,7 +168,7 @@ div#right { position:absolute; z-index:1000; }
 #the-filters {
   top:49px; left:59px;
   width:300px;
-
+  z-index: 10000;
   display:none; }
 
 #the-filters h3 { font-size:10px; color:#605f5d; text-transform:uppercase; margin-bottom:5px;; }
@@ -196,13 +197,13 @@ div#right { position:absolute; z-index:1000; }
   /*toggle buttons */
   #layers-menu-toggle { position:absolute; top:20px; left:220px; width:60px; }
   #other-deployments-menu-toggle { position:absolute; top:20px; left:322px; width:130px; }
-  #how-to-report-menu-toggle { position:absolute; top:20px; left:780px; width:100px; }
+  #how-to-report-menu-toggle { position:absolute; top:70px; left:58px; width:120px; }
 
   #kml_switch,
   #sharing_switch,
-  #how-to-report-box { display:none; position:absolute; top:49px; padding:5px; left:220px; background:#f9f7f8; width:175px;}
+  #how-to-report-box { display:none; position:absolute; top:110px; padding:5px; left:220px; background:#f9f7f8; width:175px;}
   #sharing_switch { left:322px; }
-  #how-to-report-box { left:724px; padding-top:10px; }
+  #how-to-report-box { left:58px; padding-top:10px; }
     #how-to-report-box ol { margin-left:22px; }
     #how-to-report-box ol li { margin-bottom:5px; }
 
@@ -223,7 +224,7 @@ div.additional-content { display:none; }
 div.content-container { background:transparent; padding:10px; }
 
 div.content-block { position:relative; margin:0 18px; background:#eeedea; }
-div.content-block h5 { float:left; position:absolute; top:-18px; left:-18px; padding:5px; border:7px solid #fff; background:#529bf5; }
+div.content-block h5 { color:#fff; float:left; position:absolute; top:-18px; left:-18px; padding:5px; border:7px solid #424242; background:#424242; }
 div.content-block h5 span { display:none; }
 div.content-block .table-list { margin-top:18px; }
 table.table-list thead th.date { width:20%; }
@@ -246,7 +247,7 @@ div#main { padding:15px 10px; }
 .report_detail .r_verified { position:absolute; top:10px; right:18px;  }
 
 div.report-additional-reports { background:#EEEDEA; position:relative; padding:35px 10px 10px; margin-left:18px; }
-div.report-additional-reports h4 { position:absolute; float:left; top:-18px; left:-18px; padding:5px; border:7px solid #fff; background:#529bf5; color:#fff; }
+div.report-additional-reports h4 { position:absolute; float:left; top:-18px; left:-18px; padding:5px; border:7px solid #424242; background: #424242; color:#fff; }
 div.report-additional-reports h5 { font-family: Arial, sans-serif;  }
 
 /* reports page */
@@ -258,7 +259,7 @@ div.report-additional-reports h5 { font-family: Arial, sans-serif;  }
 }
 /* footer */
 div#footer {
-  background: #000;
+  background: #424242;
 }
 div#underfooter { background:transparent; }
 
@@ -319,7 +320,7 @@ span.btn-icon { display:block; position:absolute; height:16px; width:16px; overf
 
 
 body {
-    background: none;
+    background: #fff;
 }
 
 .content-blocks {
@@ -389,8 +390,13 @@ ul.link-toggle li a.next {
 
 .big_white {
     color: #FFF;
-    font-size: 140px;
-    font-size: 8vw;
+    font-size: 100px;
+    font-size: 6vw;
+}
+
+.custom-submit-button {
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 @media (max-width: 767px) {
@@ -419,6 +425,7 @@ ul.link-toggle li a.next {
         float: none;
         display: block;
         text-align: center;
+        margin-bottom: 15px;
     }
 
     #main .left-col {
@@ -448,7 +455,7 @@ ul.link-toggle li a.next {
     }
 
     #how-to-report-menu-toggle {
-        left: 220px;
+        left: 58px;
     }
 
     div.wrapper, div.rapidxwpr {
@@ -487,4 +494,16 @@ ul.link-toggle li a.next {
     .step-2-holder {
         width: 100%;
     }
+}
+
+.margin-top-20{
+  margin-top: 20px;
+}
+
+#footer a {
+  color: #fff;
+}
+
+#quienessomos a {
+  color: #fff;
 }

@@ -179,7 +179,7 @@ div#footer{
     clear: both;
     color: #fff;
     background-color: #A8A8A8;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
 }
 
 div#underfooter{
@@ -275,7 +275,7 @@ div.submit-incident{
 div.submit-incident a, div.submit-incident a:hover{
     padding: 8px 10px 8px 35px;
     background-color: #368C00;
-    background-image: url(../images/submit-incident.png);
+    background-image: url(/media/img/submit-incident.jpg);
     background-position:10px 8px;
     background-repeat:no-repeat;
     color: #FFF;

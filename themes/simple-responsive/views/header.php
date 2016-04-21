@@ -51,7 +51,7 @@ Event::run('ushahidi_action.header_scripts');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top" style="font-weight: bold;">Ayuda Ecuador</a>
+                <a class="navbar-brand page-scroll" href="http://www.desastre.ec/" style="font-weight: bold;">Ayuda Ecuador</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -62,6 +62,9 @@ Event::run('ushahidi_action.header_scripts');
                         <a class="page-scroll" href="#page-top"></a>
                     </li>
                     <?php nav::main_tabs($this_page); ?>
+                    <li style="float: right;">
+                        <a href="/login">Ingresar</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -86,7 +89,7 @@ Event::run('ushahidi_action.header_scripts');
       <div class="container">
       <div class="row">
 
-          <div class="col-sm-12 col-xs-12" style="margin-top: 10px;">
+          <div class="col-sm-12 col-xs-12 custom-submit-button">
               <!-- submit incident -->
               <?php echo $submit_btn; ?>
               <!-- / submit incident -->
