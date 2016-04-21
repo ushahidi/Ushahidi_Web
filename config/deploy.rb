@@ -27,3 +27,15 @@ set :linked_files, %w{
   application/config/encryption.php
 }
 set :linked_dirs, %w{application/logs application/cache media/uploads}
+
+namespace :deploy do
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      within release_path do
+        execute :rm, ' -r installer/ '
+      end
+    end
+  end
+
+end
