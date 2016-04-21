@@ -5,14 +5,14 @@
  * Handles javascript stuff related to reporter function.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     Reporters Javascript
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
 // Reporter JS
@@ -32,16 +32,16 @@ function fillFields(id, level_id, service_name, service_account, location_id, lo
 {
 	show_addedit();
 	$('#add_edit_form').show();
-	$("#reporter_id").attr("value", decodeURIComponent(id));
-	$("#level_id").attr("value", decodeURIComponent(level_id));
-	$("#service_name").attr("value", decodeURIComponent(service_name));
+	$("#reporter_id").val(decodeURIComponent(id));
+	$("#level_id").val(decodeURIComponent(level_id));
+	$("#service_name").val(decodeURIComponent(service_name));
 	$("#reporter_service").text(decodeURIComponent(service_name));
-	$("#service_account").attr("value", decodeURIComponent(service_account));
+	$("#service_account").val(decodeURIComponent(service_account));
 	$("#reporter_account").text(decodeURIComponent(service_account));
-	$("#location_id").attr("value", decodeURIComponent(location_id));
-	$("#location_name").attr("value", decodeURIComponent(location_name));
-	$("#latitude").attr("value", decodeURIComponent(latitude));
-	$("#longitude").attr("value", decodeURIComponent(longitude));
+	$("#location_id").val(decodeURIComponent(location_id));
+	$("#location_name").val(decodeURIComponent(location_name));
+	$("#latitude").val(decodeURIComponent(latitude));
+	$("#longitude").val(decodeURIComponent(longitude));
 	showMap();
 }
 
@@ -52,9 +52,9 @@ function reporterAction ( action, confirmAction, id )
 	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 	if (answer){
 		// Set Reporter ID
-		$("#rptr_id_action").attr("value", id);
+		$("#rptr_id_action").val(id);
 		// Set Submit Type
-		$("#action").attr("value", action);		
+		$("#action").val(action);
 		// Submit Form
 		$("#rptrListing").submit();
 	}
@@ -69,33 +69,33 @@ function reportersAction ( action, confirmAction, reporter_id, level_id )
 {
 	var statusMessage;
 	if( !isChecked( "reporter" ) && reporter_id=='' )
-	{ 
+	{
 		alert('Please select at least one reporter.');
 	} else {
 		var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 		if (answer){
-			
+
 			// Set Submit Type
-			$("#reporter_action").attr("value", action);
-			
+			$("#reporter_action").val(action);
+
 			// Set Level ID
-			$("#level_id_main").attr("value", level_id);
-			
-			if (reporter_id != '') 
+			$("#level_id_main").val(level_id);
+
+			if (reporter_id != '')
 			{
 				// Submit Form For Single Item
-				$("#reporter_single").attr("value", reporter_id);
+				$("#reporter_single").val(reporter_id);
 				$("#reporterMain").submit();
 			}
 			else
 			{
 				// Set Hidden form item to 000 so that it doesn't return server side error for blank value
-				$("#reporter_single").attr("value", "000");
-				
+				$("#reporter_single").val("000");
+
 				// Submit Form For Multiple Items
 				$("#reporterMain").submit();
 			}
-		
+
 		} else {
 			return false;
 		}
@@ -111,12 +111,12 @@ var markers;
 function showMap()
 {
 	$("#ReporterMap").html('');
-	
+
 	if (markers) {
 		markers.destroy();
 		markers = null;
 	}
-	
+
 	// Now initialise the map
 	var options = {
 	units: "dd"
@@ -127,23 +127,23 @@ function showMap()
 	maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
 	maxResolution: 156543.0339
 	};
-	
+
 	map = new OpenLayers.Map('ReporterMap', options);
-	
+
 	<?php echo map::layers_js(FALSE); ?>
 	map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-	
+
 	map.addControl(new OpenLayers.Control.Navigation());
 	map.addControl(new OpenLayers.Control.Zoom());
 	map.addControl(new OpenLayers.Control.MousePosition({
-		formatOutput: Ushahidi.convertLongLat	
+		formatOutput: Ushahidi.convertLongLat
 	}));
 	map.addControl(new OpenLayers.Control.LayerSwitcher());
-	
+
 	// Create the markers layer
 	markers = new OpenLayers.Layer.Markers("Markers");
 	map.addLayer(markers);
-	
+
 	// create a lat/lon object
 	var latitude, longitude;
 	if ($("#latitude").val() != "" && $("#longitude").val() != "") {
@@ -155,14 +155,14 @@ function showMap()
 	}
 	var myPoint = new OpenLayers.LonLat(longitude, latitude);
 	myPoint.transform(proj_4326, map.getProjectionObject());
-	
+
 	// create a marker positioned at a lon/lat
 	var marker = new OpenLayers.Marker(myPoint);
 	markers.addMarker(marker);
-	
+
 	// display the map centered on a latitude and longitude (Google zoom levels)
 	map.setCenter(myPoint, <?php echo $default_zoom; ?>);
-	
+
 	// Detect Map Clicks
 	map.events.register("click", map, function(e){
 		var lonlat = map.getLonLatFromViewPortPx(e.xy);
@@ -170,13 +170,13 @@ function showMap()
 	    m = new OpenLayers.Marker(lonlat);
 		markers.clearMarkers();
     	markers.addMarker(m);
-		
-		lonlat2.transform(proj_900913,proj_4326);	
+
+		lonlat2.transform(proj_900913,proj_4326);
 		// Update form values (jQuery)
-		$("#latitude").attr("value", lonlat2.lat);
-		$("#longitude").attr("value", lonlat2.lon);
+		$("#latitude").val(lonlat2.lat);
+		$("#longitude").val(lonlat2.lon);
 	});
-	
+
 	// Event on Latitude/Longitude Typing Change
 	$('#latitude, #longitude').bind("change keyup", function() {
 		var newlat = $("#latitude").val();

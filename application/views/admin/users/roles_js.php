@@ -2,10 +2,10 @@
 function fillFields(id, name, description, access_level, permissions) {
 
 	show_addedit();
-	$("#role_id").attr("value", decodeURIComponent(id));
-	$("#name").attr("value", decodeURIComponent(name));
-	$("#description").attr("value", decodeURIComponent(description));
-	$("#access_level").attr("value", decodeURIComponent(access_level));
+	$("#role_id").val(decodeURIComponent(id));
+	$("#name").val(decodeURIComponent(name));
+	$("#description").val(decodeURIComponent(description));
+	$("#access_level").val(decodeURIComponent(access_level));
 
 	for (i = 0; i < permissions.length; i++)
 	{
@@ -20,9 +20,9 @@ function rolesAction ( action, confirmAction, id )
 	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction)
 	if (answer){
 		// Set Role ID
-		$("#role_id_main").attr("value", id);
+		$("#role_id_main").val(id);
 		// Set Submit Type
-		$("#role_action_main").attr("value", action);		
+		$("#role_action_main").val(action);
 		// Submit Form
 		$("#roleListing").submit();
 	}

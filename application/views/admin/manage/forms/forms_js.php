@@ -4,14 +4,14 @@
  * Handles javascript stuff related to forms function.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 
@@ -27,11 +27,11 @@ function fillFields(id, form_title, form_description,
  form_visible )
 {
 	show_addedit();
-	$("#form_id").attr("value", decodeURIComponent(id));
-	$("#form_title").attr("value", decodeURIComponent(form_title));
-	$("#form_description").attr("value", decodeURIComponent(form_description));
-	$("#form_active").attr("value", decodeURIComponent(form_active));
-	
+	$("#form_id").val(decodeURIComponent(id));
+	$("#form_title").val(decodeURIComponent(form_title));
+	$("#form_description").val(decodeURIComponent(form_description));
+	$("#form_active").val(decodeURIComponent(form_active));
+
 }
 
 // Form Submission
@@ -39,15 +39,15 @@ function formAction ( action, confirmAction, id )
 {
 	var statusMessage;
 	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?');
-		
+
 	if (answer){
 		// Set Submit Type
-		$("#action_" + id).attr("value", action);		
-		
+		$("#action_" + id).val(action);
+
 		// Submit Form
-		$("#form_action_" + id).submit();			
-	
-	} 
+		$("#form_action_" + id).submit();
+
+	}
 }
 
 // Show Function
@@ -84,7 +84,7 @@ function showFormSelected(id, form_id, field_id, select_disable)
 					$('#form_field_' + form_id +' [name=field_name]').focus();
 				}
 		  	}, "json");
-	};	
+	};
 }
 
 // Modify Individual Form Fields
@@ -95,7 +95,7 @@ function fieldAction( action, confirmAction, field_id, form_id, field_type )
 	"background-position" : "center center",
 	"background-repeat" : "no-repeat"
 	});
-	
+
 	switch(action)
 	{
 	case 'e':

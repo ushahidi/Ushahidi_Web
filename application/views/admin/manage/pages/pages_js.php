@@ -5,14 +5,14 @@
  * Handles javascript stuff related to pages function.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     Pages Javascript
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
 // Pages JS
@@ -21,13 +21,13 @@
 function fillFields(id, page_title, page_tab,
  page_description )
 {
-	$("#page_id").attr("value", decodeURIComponent(id));
+	$("#page_id").val(decodeURIComponent(id));
 	page_title = decodeURIComponent(escape($.base64.decode(page_title)));
-	$("#page_title").attr("value", decodeURIComponent(page_title));
+	$("#page_title").val(decodeURIComponent(page_title));
 	page_tab = decodeURIComponent(escape($.base64.decode(page_tab)));
-	$("#page_tab").attr("value", decodeURIComponent(page_tab));
+	$("#page_tab").val(decodeURIComponent(page_tab));
 	page_description = decodeURIComponent(escape($.base64.decode(page_description)));
-	$("#page_description").attr("value", decodeURIComponent(page_description));
+	$("#page_description").val(decodeURIComponent(page_description));
 	$("#page_description").wysiwyg("setContent",decodeURIComponent(page_description));
 }
 
@@ -38,9 +38,9 @@ function pageAction ( action, confirmAction, id )
 	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 	if (answer){
 		// Set Category ID
-		$("#page_id_action").attr("value", id);
+		$("#page_id_action").val(id);
 		// Set Submit Type
-		$("#action").attr("value", action);		
+		$("#action").val(action);
 		// Submit Form
 		$("#pageListing").submit();
 	}
@@ -51,28 +51,28 @@ var hb_full ;
 $(document).ready(function(){
 	hb_full = $("#page_description").wysiwyg({
 		resizeOptions: {},
-		
+
 		controls: {
 			bold: { visible : true, groupIndex: 0 },
 			italic: { visible : true, groupIndex: 0 },
 			underline: { visible: false },
 			strikeThrough: { visible: false },
-			
+
 			justifyLeft:{ visible: true },
 			justifyCenter: { visible: true },
 			justifyRight: { visible: true },
 			justifyFull: { visible: false },
-			
+
 			subscript: { visible: false },
 			superscript: { visible: false },
-			
+
 			undo: { visible: false },
 			redo: { visible: false },
-			
+
 			insertOrderedList    : { visible : true },
 			insertUnorderedList  : { visible : true },
 			insertHorizontalRule : { visible : false },
-			
+
 			h1: {
 				visible: true,
 				className: 'h1',
@@ -119,8 +119,8 @@ $(document).ready(function(){
 				groupIndex: 7
 			},
 			paragraph: { visible: true },
-			
-			fileManager: { 
+
+			fileManager: {
 				visible: false,
 				groupIndex: 12,
 				tooltip: "File Manager",
@@ -130,11 +130,11 @@ $(document).ready(function(){
 					});
 				}
 			},
-			
+
 			cut   : { visible : false },
 			copy  : { visible : false },
 			paste : { visible : false },
-			
+
 			html: { visible: true },
 			code: { visible: false },
 			fullscreen: {
@@ -151,4 +151,3 @@ $(document).ready(function(){
 	});
 	$.wysiwyg.fileManager.setAjaxHandler("<?php echo url::site('admin/jwysiwyg/filemanager') ?>");
 });
-
