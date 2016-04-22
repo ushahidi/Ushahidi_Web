@@ -40,7 +40,7 @@ class category_block { // CHANGE THIS FOR OTHER BLOCKS
 			->with('location')
 			->join('incident_category', 'incident.id', 'incident_category.incident_id')
 			->where('incident_active', '1')
-			->where('category_id', 'IN', $ids)
+			->in('category_id', $ids)
 			->limit('10')
 			->orderby('incident_date', 'desc')
 			->find_all();
