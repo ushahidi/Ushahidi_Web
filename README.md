@@ -1,6 +1,7 @@
 # mapa.desastre.ec
 
-[![Build Status](https://travis-ci.org/desastre-ecuador/mapa.desastre.ec.svg?branch=develop)](https://travis-ci.org/desastre-ecuador/mapa.desastre.ec)
+[![Tareas listas para desarrollo](https://badge.waffle.io/desastre-ecuador/mapa.desastre.ec.svg?label=ready&title=Tareas%20listas%20para%20desarrollo)](http://waffle.io/desastre-ecuador/mapa.desastre.ec) 
+[![Build Status](https://travis-ci.org/desastre-ecuador/mapa.desastre.ec.svg?branch=master)](https://travis-ci.org/desastre-ecuador/mapa.desastre.ec)
 
 Este es un fork de Ushahidi v2, una plataforma para el mapeo de los informes sobre los daños ocurridos por el terremoto que afectó a las costas ecuatorianas el 16 de abril del 2016. La instancia en vivo se puede acceder en <https://mapa.desastre.ec/>.
 
