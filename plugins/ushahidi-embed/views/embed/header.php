@@ -11,5 +11,4 @@
 
 </head>
 
-<body id="page">
-
+<body id="page" class="map-embed">
