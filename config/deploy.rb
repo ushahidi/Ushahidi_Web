@@ -40,4 +40,18 @@ namespace :deploy do
   end
 end
 
+namespace :db do
+  desc "Make a database dump"
+  task :dump do
+    on roles(:app) do |host|
+      db_name = fetch(:db_name)
+      ask(:db_password, db_name, echo: false)
+      file_name = "/tmp/#{Time.now.to_i}.#{db_name}.sql.gz"
+      execute "set -o pipefail && mysqldump --force --opt -u #{db_name} -p --databases #{db_name} | gzip -9 > #{file_name}",
+        interaction_handler: { /Enter password/ => "#{fetch(:db_password)}\n" }
+      puts "Database dumped in #{file_name} in the remote host"
+    end
+  end
+end
+
 after 'deploy:finished', 'deploy:clean_install'
