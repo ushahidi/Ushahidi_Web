@@ -2147,6 +2147,14 @@ div.ci_checkin {
     .custom-submit-button{
         margin-bottom: 0px !important;
     }
+
+    #embed-filter-map div ul li a span {
+      font-size: 14px;
+    }
+
+    #embed-filter-map {
+      font-size: 16px;
+    }
 }
 
 /* MOBILE */
@@ -2190,15 +2198,10 @@ div.ci_checkin {
         z-index: 0;
     }
 
-}
+    #embed-filter-map {
+      font-size: 12px;
+    }
 
-#embed-filter-map {
-  position: absolute;
-  float:left; width: 270px;
-  z-index: 10000;
-  left: 60px;
-  font-size: 1vw;
-  background-color: transparent;
 }
 
 #embed-filter-map ul {
@@ -2229,8 +2232,15 @@ div.ci_checkin {
   margin: 1px;
 }
 
+#embed-filter-map {
+  position: absolute;
+  float:left; width: 270px;
+  z-index: 10000;
+  left: 60px;
+  background-color: transparent;
+}
+
 #embed-filter-map div ul li a span{
-    font-size: 1vw;
     text-transform: capitalize;
     font-weight:lighter;
     border-color: transparent;
