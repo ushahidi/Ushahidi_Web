@@ -2155,6 +2155,13 @@ div.ci_checkin {
     #embed-filter-map {
       font-size: 16px;
     }
+
+    #mobile-category {
+      display: none;
+    }
+
+    #the-filters-embeded {
+}
 }
 
 /* MOBILE */
@@ -2179,9 +2186,10 @@ div.ci_checkin {
         display: block !important;
     }
 
-    #the-filters {
+    #the-filters-embeded {
         top: auto !important;
         z-index:9999;
+	display: none;
     }
 
     #how-to-report-box {
@@ -2200,6 +2208,19 @@ div.ci_checkin {
 
     #embed-filter-map {
       font-size: 12px;
+      margin-top: 40px;
+    }
+
+    #mobile-category {
+      z-index: 100000;
+      position: absolute;
+      left:57px;
+      top:20px;
+
+    }
+
+    #text-title {
+      display: none;
     }
 
 }

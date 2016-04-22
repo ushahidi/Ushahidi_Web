@@ -1,4 +1,6 @@
 <!-- main body -->
+</script>
+		       	
 <div id="main" class="clearingfix">
 	<div id="mainmiddle" class="floatbox">
 
@@ -7,9 +9,11 @@
 			<div class="floatbox">
 
 				<!-- filters -->
-				<div class="filters clearingfix" id="embed-filter-map">
-					<div id="report-category-filter">
-						<h3 style="text-transform: capitalize"><?php echo Kohana::lang('ui_main.category');?></h3>
+				<a class="btn toggle responsive menu" id="mobile-category" href="#the-filters-embeded"><?php echo Kohana::lang('ui_main.category');?></a>
+				<div id="the-filters-embeded">
+                                <div class="filters clearingfix" id="embed-filter-map">
+					<div id="report-category-filter"> 
+						<h3 style="text-transform: capitalize" id="text-title"><?php echo Kohana::lang('ui_main.category');?></h3>
 
 						<ul id="category_switch" class="category-filters">
 						<?php
@@ -95,6 +99,7 @@
 					Event::run('ushahidi_action.map_main_filters');
 					?>
 				</div>
+</div>
 				<!-- / filters -->
 
 				<?php
@@ -108,4 +113,20 @@
 
 	</div>
 </div>
-<!-- / main body -->
+
+<script type="text/javascript">
+	$("#mobile-category").click(
+		function(e){
+			var $e = $(e.currentTarget);
+			if ($e.hasClass("active-toggle")) {
+				$($(this).attr("href")).hide();
+				$(this).removeClass("active-toggle");
+			}
+			else {
+				$($(this).attr("href")).show();
+				$(this).addClass("active-toggle");
+			}
+		return false;}
+		);
+			</script>
+
