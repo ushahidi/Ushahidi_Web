@@ -1054,6 +1054,7 @@ label.error {
 .text {
     padding:3px 7px;
     border:1px #ccc solid;
+    width: 72%;
 }
 .textarea {
     padding:7px 7px 3px 7px;
@@ -1147,7 +1148,7 @@ ul.treeview li.lastCollapsable,
 ul.treeview li.lastExpandable { width:155px; }
 
 .report_optional{
-    padding:15px;
+    padding:0px !important;
     background-color:#eee;
     width:80%;
 }
