@@ -35,6 +35,6 @@
 		?>
 	</tbody>
 </table>
-<a class="more" href="<?php echo url::site() . 'reports/' ?>"><?php echo Kohana::lang('ui_main.view_more'); ?></a>
+<a class="more" href="<?php echo url::site() . 'reports/' ?>?c=<?php print $category; ?>"><?php echo Kohana::lang('ui_main.view_more'); ?></a>
 <div style="clear:both;"></div>
 <?php blocks::close();?>
