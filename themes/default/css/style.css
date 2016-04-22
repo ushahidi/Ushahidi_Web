@@ -1147,7 +1147,6 @@ ul.treeview li.lastCollapsable,
 ul.treeview li.lastExpandable { width:155px; }
 
 .report_optional{
-    padding:15px;
     background-color:#eee;
     width:80%;
 }
