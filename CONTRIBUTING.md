@@ -1,6 +1,6 @@
 # Cómo contribuir a este repositorio
 
-Haz un _fork_ del repositorio en GitHub y aplica tus cambios en ese _fork_. Cuando tengas algo listo, envíanos un _Pull Request_.
+Haz un _fork_ del repositorio en GitHub y aplica tus cambios en ese _fork_, basándote en la rama (_branch_) `develop`. Cuando tengas algo listo, envíanos un _Pull Request_ sobre la misma rama.
 
 Puedes ofrecerte a colaborar en cualquiera de los [_issues_ del proyecto](https://github.com/desastre-ecuador/mapa.desastre.ec/issues). Si no sabes cuál tomar, fíjate en lo priorizado en [el tablero de Waffle](https://waffle.io/desastre-ecuador/mapa.desastre.ec/join). También puedes unirte al [chat del equipo técnico en Telegram](https://telegram.me/joinchat/AbmN-wcPvovTZcL0Lpr14Q).
 
