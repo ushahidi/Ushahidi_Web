@@ -1,6 +1,6 @@
 <?php blocks::open("reports");?>
 <!--<?php blocks::title(Kohana::lang('ui_main.reports_listed'));?>-->
-<h5>Emergencia</h5>
+<h5>Infraestructura</h5>
 <table class="table-list">
 	<thead>
 		<tr>
