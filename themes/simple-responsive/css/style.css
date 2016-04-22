@@ -2189,5 +2189,48 @@ div.ci_checkin {
         z-index: 0;
     }
 
+}
 
+#embed-filter-map {
+  position: absolute;
+  float:left; width: 270px;
+  z-index: 10000;
+  left: 60px;
+  font-size: 1vw;
+  background-color: transparent;
+}
+
+#embed-filter-map ul {
+  background-color: transparent;
+  border: none;
+  padding-top: 0px;
+  padding-left: 2px;
+}
+
+#embed-filter-map div ul li {
+  display: block;
+}
+
+#embed-filter-map div ul li a {
+  display: block;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 3px;
+}
+
+#embed-filter-map div ul li a.active {
+  background-color: #7e7e7e;
+  color: #f1f1f1;
+  margin: 1px;
+}
+
+#embed-filter-map div ul li a:hover {
+  margin: 1px;
+}
+
+#embed-filter-map div ul li a span{
+    font-size: 1vw;
+    text-transform: capitalize;
+    font-weight:lighter;
+    border-color: transparent;
 }

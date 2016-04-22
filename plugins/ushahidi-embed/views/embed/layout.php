@@ -7,11 +7,10 @@
 			<div class="floatbox">
 
 				<!-- filters -->
-				<div class="filters clearingfix">
-					<div class="media-filters">
-						<strong><?php echo Kohana::lang('ui_main.filters'); ?></strong>
+				<div class="filters clearingfix" id="embed-filter-map">
+					<div id="report-category-filter">
+						<h3 style="text-transform: capitalize"><?php echo Kohana::lang('ui_main.category');?></h3>
 
-						<!-- category filters -->
 						<ul id="category_switch" class="category-filters">
 						<?php
 						$color_css = 'class="category-icon swatch" style="background-color:#'.$default_map_all.'"';
