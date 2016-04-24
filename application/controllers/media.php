@@ -90,8 +90,8 @@ class Media_Controller extends Controller {
         if (isset($mtime))
         {
           header('ETag: '.$mtime);
+          header("Last-Modified: ".gmdate("D, d M Y H:i:s", $mtime)." GMT");
         }
-        header("Last-Modified: ".gmdate("D, d M Y H:i:s", $mtime)." GMT");
 
         $oldetag = isset($_SERVER['HTTP_IF_NONE_MATCH'])?trim($_SERVER['HTTP_IF_NONE_MATCH']):'';
         $oldmtime = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])?$_SERVER['HTTP_IF_MODIFIED_SINCE']:'';
