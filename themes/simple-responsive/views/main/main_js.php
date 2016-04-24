@@ -34,6 +34,11 @@ var intervalTime = ''; // HT: manual time interval
 // To hold the Ushahidi.Map reference
 var map = null;
 
+// language
+Ushahidi.lang.more_information = '<?php echo Kohana::lang('ui_main.more_information'); ?>';
+Ushahidi.lang.zoom_in = '<?php echo Kohana::lang('ui_main.zoom_in'); ?>';
+Ushahidi.lang.zoom_out = '<?php echo Kohana::lang('ui_main.zoom_out'); ?>';
+
 
 /**
  * Toggle Layer Switchers
