@@ -399,6 +399,10 @@ ul.link-toggle li a.next {
   margin-bottom: 15px;
 }
 
+.navbar-nav > li > a {
+    padding: 15px 10px;
+}
+
 @media (min-width: 767px) {
     #kml_switch {
         top: auto;
