@@ -2126,6 +2126,14 @@ div.ci_checkin {
   color: #a1a1a1;
 }
 
+.how-report {
+    margin: 40px auto;
+}
+
+.how-report h2 {
+    font-size: 200%;
+    margin-bottom: 20px;
+}
 
 /* DESKTOPS*/
 @media all and (min-width:640px) and (max-width: 9999px) {
@@ -2141,6 +2149,7 @@ div.ci_checkin {
     }
 
     .main-responsive-mobile{
+        margin: 20px auto;
         display: none;
     }
 
@@ -2169,6 +2178,10 @@ div.ci_checkin {
 
     .main-responsive-desktop {
         display: none;
+    }
+
+    .main-responsive-mobile{
+        margin: 20px auto;
     }
 
     .custom-submit-button{

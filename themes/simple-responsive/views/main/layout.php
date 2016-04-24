@@ -164,9 +164,9 @@ $(function(){
 				{
 					?>
 					<div id="layers-box">
-						<a class="btn toggle categorias-mobile-responsive" id="layers-menu-toggle" class="" href="#kml_switch"><?php echo Kohana::lang('ui_main.layers');?> <span class="btn-icon ic-right">&raquo;</span></a>
+						<a class="btn toggle responsive-menu" id="layers-menu-toggle" class="" href="#kml_switch"><?php echo Kohana::lang('ui_main.layers');?> <span class="btn-icon ic-right">&raquo;</span></a>
 						<!-- Layers (KML/KMZ) -->
-						<ul id="kml_switch" class="category-filters map-menu-box">
+						<ul id="kml_switch" class="layers-filters category-filters map-menu-box">
 							<?php
 							foreach ($layers as $layer => $layer_info)
 							{
@@ -188,71 +188,17 @@ $(function(){
 					<?php
 				}
 				?>
-
-
-				<!-- additional content -->
-				<?php
-				if (Kohana::config('settings.allow_reports'))
-				{
-					?>
-					<a class="btn toggle responsive-menu" id="how-to-report-menu-toggle" class="" href="#how-to-report-box"><?php echo Kohana::lang('ui_main.how_to_report'); ?> <span class="btn-icon ic-question">&raquo;</span></a>
-					<div id="how-to-report-box" class="map-menu-box">
-
-						<div class="how-to-report-methods categorias-mobile-responsive">
-
-							<!-- Phone -->
-							<?php if (!empty($phone_array)) { ?>
-							<div>
-								<strong><?php echo Kohana::lang('ui_main.report_option_1'); ?></strong>
-								<?php foreach ($phone_array as $phone) { ?>
-									<?php echo $phone; ?><br/>
-								<?php } ?>
-							</div>
-							<?php } ?>
-
-							<!-- External Apps -->
-							<?php if (count($external_apps) > 0) { ?>
-							<div>
-								<strong><?php echo Kohana::lang('ui_main.report_option_external_apps'); ?>:</strong><br/>
-								<?php foreach ($external_apps as $app) { ?>
-									<a href="<?php echo $app->url; ?>"><?php echo $app->name; ?></a><br/>
-								<?php } ?>
-							</div>
-							<?php } ?>
-
-							<!-- Email -->
-							<?php if (!empty($report_email)) { ?>
-							<div>
-								<strong><?php echo Kohana::lang('ui_main.report_option_2'); ?>:</strong><br/>
-								<a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a>
-							</div>
-							<?php } ?>
-
-							<!-- Twitter -->
-							<?php if (!empty($twitter_hashtag_array)) { ?>
-							<div>
-								<strong><?php echo Kohana::lang('ui_main.report_option_3'); ?>:</strong><br/>
-								<?php foreach ($twitter_hashtag_array as $twitter_hashtag) { ?>
-									<span>#<?php echo $twitter_hashtag; ?></span>
-									<?php if ($twitter_hashtag != end($twitter_hashtag_array)) { ?>
-										<br />
-									<?php } ?>
-								<?php } ?>
-							</div>
-							<?php } ?>
-
-							<!-- Web Form -->
-							<div>
-								<a href="<?php echo url::site() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a>
-							</div>
-
-						</div>
-
-					</div>
-				<?php } ?>
-				<!-- / additional content -->
 			</div>
 			<!-- / right column -->
+		</div>
+
+
+		<div class="divmap">
+			<?php
+			// Map and Timeline Blocks
+			echo $div_map;
+			echo $div_timeline;
+			?>
 		</div>
 
 		<!-- menu para desktops -->
@@ -365,91 +311,15 @@ $(function(){
 						<!-- / report type filters -->
 			</div>
 
-			
-			<!-- additional content -->
-			<?php
-			if (Kohana::config('settings.allow_reports'))
-			{
-				?>
-					<h3>
-				    <?php echo Kohana::lang('ui_main.how_to_report'); ?>
-				    </h3>
-					<!-- / additional content -->
-					<div class="how-to-report-methods">
-
-						<!-- Phone -->
-						<?php if (!empty($phone_array)) { ?>
-						<div>
-							<strong><?php echo Kohana::lang('ui_main.report_option_1'); ?></strong>
-							<?php foreach ($phone_array as $phone) { ?>
-								<?php echo $phone; ?><br/>
-							<?php } ?>
-						</div>
-						<?php } ?>
-
-						<!-- External Apps -->
-						<?php if (count($external_apps) > 0) { ?>
-						<div>
-							<strong><?php echo Kohana::lang('ui_main.report_option_external_apps'); ?>:</strong><br/>
-							<?php foreach ($external_apps as $app) { ?>
-								<a href="<?php echo $app->url; ?>"><?php echo $app->name; ?></a><br/>
-							<?php } ?>
-						</div>
-						<?php } ?>
-
-						<!-- Email -->
-						<?php if (!empty($report_email)) { ?>
-						<div>
-							<strong><?php echo Kohana::lang('ui_main.report_option_2'); ?>:</strong><br/>
-							<a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a>
-						</div>
-						<?php } ?>
-
-						<!-- Twitter -->
-						<?php if (!empty($twitter_hashtag_array)) { ?>
-						<div>
-							<strong><?php echo Kohana::lang('ui_main.report_option_3'); ?>:</strong><br/>
-							<?php foreach ($twitter_hashtag_array as $twitter_hashtag) { ?>
-								<span>#<?php echo $twitter_hashtag; ?></span>
-								<?php if ($twitter_hashtag != end($twitter_hashtag_array)) { ?>
-									<br />
-								<?php } ?>
-							<?php } ?>
-						</div>
-						<?php } ?>
-
-						<!-- Web Form -->
-						<div>
-							<a href="<?php echo url::site() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a>
-						</div>
-
-					</div>
-
-
-			<?php } ?>
-
-		</div>
-
-		<div class="divmap">
-			<?php
-			// Map and Timeline Blocks
-			echo $div_map;
-			echo $div_timeline;
-			?>
-		</div>
-
-
-		<div class="container margin-top-20">
-		<!-- right column -->
-
+			<!-- layers -->
 			<?php
 			if ($layers)
 			{
 				?>
 				<div id="layers-box">
-					<a class="btn toggle" id="layers-menu-toggle" class="" href="#kml_switch"><?php echo Kohana::lang('ui_main.layers');?> <span class="btn-icon ic-right">&raquo;</span></a>
+					<?php echo Kohana::lang('ui_main.layers');?>
 					<!-- Layers (KML/KMZ) -->
-					<ul id="kml_switch" class="category-filters map-menu-box">
+					<ul id="kml_switch" class="layers-filters category-filters">
 						<?php
 						foreach ($layers as $layer => $layer_info)
 						{
@@ -472,14 +342,81 @@ $(function(){
 			}
 			?>
 
-
-
 		</div>
-		<!-- / right column -->
-
 
 		</div>
 		<!-- / content column -->
+
+		<div class="row how-report">
+		<!-- additional content -->
+		<?php
+		if (Kohana::config('settings.allow_reports'))
+		{
+			?>
+			<div class="col-xs-12 text-center">
+				<h2>
+					<?php echo Kohana::lang('ui_main.how_to_report'); ?>
+				</h2>
+			</div>
+				<!-- / additional content -->
+				<div class="how-to-report-methods">
+
+					<!-- Phone -->
+					<?php if (!empty($phone_array)) { ?>
+					<div class="col-xs-12 col-sm-6 col-md-4 text-center">
+						<strong><?php echo Kohana::lang('ui_main.report_option_1'); ?></strong><br/>
+						<?php foreach ($phone_array as $phone) { ?>
+							<!-- <?php echo $phone; ?><br/> -->
+							<a href="<?php echo url::site() . 'reports/submit/'; ?>"><img src="<?php print URL::base() ?>themes/simple-responsive/images/home/sms.png"></a><br/>
+						<?php } ?>
+					</div>
+					<?php } ?>
+
+					<!-- External Apps -->
+					<?php if (count($external_apps) > 0) { ?>
+						<?php foreach ($external_apps as $app) { ?>
+						<div class="col-xs-12 col-sm-6 col-md-4 text-center">
+							<strong><?php echo Kohana::lang('ui_main.report_option_external_apps'); ?>:</strong><br/>
+								<a href="<?php echo $app->url; ?>"><img src="<?php print URL::base() ?>themes/simple-responsive/images/home/<?php echo strtolower($app->name); ?>.png"></a>
+						</div>
+						<?php } ?>
+					<?php } ?>
+
+					<!-- Email -->
+					<?php if (!empty($report_email)) { ?>
+					<div class="col-xs-12 col-sm-6 col-md-4 text-center">
+						<strong><?php echo Kohana::lang('ui_main.report_option_2'); ?>:</strong><br/>
+						<a href="mailto:<?php echo $report_email?>"><img src="<?php print URL::base() ?>themes/simple-responsive/images/home/email.png"></a>
+					</div>
+					<?php } ?>
+
+					<!-- Twitter -->
+					<?php if (!empty($twitter_hashtag_array)) { ?>
+					<div class="col-xs-12 col-sm-6 col-md-4 text-center">
+						<strong><?php echo Kohana::lang('ui_main.report_option_3'); ?>:</strong><br/>
+						<img src="<?php print URL::base() ?>themes/simple-responsive/images/home/twitter.png">
+						<br />
+						<?php foreach ($twitter_hashtag_array as $twitter_hashtag) { ?>
+							<span>#<?php echo $twitter_hashtag; ?></span>
+							<?php if ($twitter_hashtag != end($twitter_hashtag_array)) { ?>
+								<br />
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<?php } ?>
+
+					<!-- Web Form -->
+					<div class="col-xs-12 col-sm-6 col-md-4 text-center">
+						<strong><?php echo Kohana::lang('ui_main.report_option_4'); ?></strong><br/>
+						<a href="<?php echo url::site() . 'reports/submit/'; ?>"><img src="<?php print URL::base() ?>themes/simple-responsive/images/home/webform.png"></a>
+					</div>
+
+				</div>
+
+
+		<?php } ?>
+		<!-- additional content -->
+		</div>
 
 	</div>
 <!-- / main body -->
