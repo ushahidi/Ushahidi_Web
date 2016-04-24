@@ -1,0 +1,243 @@
+.analysis-about{
+	padding:10px;
+	background-color:#F2F8FA;
+	border:1px solid #f0f0f0;
+	margin-bottom:15px;
+}
+	.analysis-about h4{
+		margin:0;
+		padding:0;
+		color:#9b0000;
+	}
+
+.analysis-filter{
+	float:left;
+	width:450px;
+	border: 3px solid #f0f0f0;
+	
+}
+	.analysis-filter .analysis-btn-search,
+	.analysis-filter .analysis-btn-reset,
+	#analysis-assess .analysis-btn-assess {
+		font-weight:bold;
+		color:#fff;
+	}
+	.analysis-filter .analysis-btn-search,
+	#analysis-assess .analysis-btn-assess{
+		background-color:#368c00;
+	}
+	.analysis-filter .analysis-btn-reset{
+		background-color:#666;
+	}
+	.analysis-filter-title{
+		padding:3px;
+		background-color:#f0f0f0;
+		font-weight:bold;
+	}
+	.analysis-filter-items{
+		padding:15px 15px 0 15px;
+	}
+		.analysis-filter-items h4{
+			margin:0 0 10px 0;
+			padding:0 0 3px 0;
+			font-size:18px;
+			font-weight:bold;
+			border-bottom:2px dotted #ccc;
+		}
+		.analysis-filter-block{
+			padding-bottom:5px;
+			margin-bottom:25px;
+			border-bottom:2px dotted #ccc;
+		}
+			.analysis-map{
+				width:416px;
+				height:250px;
+				border:2px solid #f0f0f0;
+			}
+			.analysis-slider{
+				padding:15px 15px 20px 15px;
+				background-color:#fff;
+			}
+				.analysis-slider .ui-slider span.ui-slider-label{
+					font-size:10px;
+					text-align:center;
+				}
+			.analysis-date{
+				float:left;
+				margin-right:15px;
+			}
+
+.analysis-report{
+	float:left;
+	width:380px;
+	margin-right:23px;
+}
+	.analysis-original{
+		margin-bottom:15px;
+	}
+		.analysis-original h4{
+			margin:0;
+			padding:0;
+		}
+	.analysis-results{
+		background-color:#333;
+		padding:4px 4px 4px 10px;
+		color:#fff;
+	}
+	.analysis-results a{
+		font-size:0.8em;
+		color:#eee;
+	}
+	.analysis-generated{
+		border-bottom:2px solid #333;
+		border-top:2px solid #333;
+		padding:15px 0 15px 0;
+		height:450px;
+		overflow:auto;
+	}
+		.analysis-generated h4{
+			margin:0 0 10px 0;
+			padding:0 0 0 10px;
+		}
+		.analysis-generated ul{
+			list-style-type:none;
+			padding:0;
+			margin:0;
+		}
+			.analysis-generated ul li{
+				margin-bottom:5px;
+				padding:5px 0 5px 0;
+			}
+				.analysis-generated ul li a{
+					font-size:14px;
+					font-weight:bold;
+				}
+				.analysis-generated ul li span.date{
+					margin-left:22px;
+					font-size:0.9em;
+					font-style:italic;
+					color:#666;
+				}
+				span.qual{
+					font-size:0.9em;
+					padding:2px 4px 2px 4px;
+					margin-left:5px;
+					background-color:#ccc;
+					color:#000;
+				}
+		.analysis-highlight{
+			background-color:#ffffcc;
+		}
+	.analysis-window-title{
+		font-size:16px;
+		font-weight:bold;
+		margin:10px 0 15px 0;
+	}
+	.analysis-window-date{
+		font-size:10px;
+		font-style:italic;
+	}
+	.analysis-window-desc{
+		margin:10px 0 15px 0;
+		border:1px dotted #ccc;
+		padding:15px;
+	}
+	.analysis-window-cats{
+		font-size:10px;
+	}
+		
+#assessment-form{
+
+}
+
+.grid-wrapper{
+	width:260px;
+	margin:auto;
+	margin-top:15px;
+}
+	.grid-row{
+		clear:both;
+		margin-bottom:10px;
+	}
+		.grid-row .selected{
+			width:16px;
+			margin:auto;
+			height:16px;
+			margin-top:8px;
+			background-color:#000;
+		}
+		.grid-row .left1,
+		.grid-row .left2,
+		.grid-row .left3,
+		.grid-row .left4,
+		.grid-row .left5,
+		.grid-row .right{
+			border:2px solid #000;
+		}
+		.grid-row .left1{
+		   position: relative;
+		   float: left;
+		   left: 0px;
+		   width: 31px;
+		   height: 31px;
+		   background-color: #828282;
+		}
+		.grid-row .left2{
+		   position: relative;
+		   float: left;
+		   left: 10px;
+		   width: 31px;
+		   height: 31px;
+		   background-color: #828282;
+		}
+		.grid-row .left3{
+		   position: relative;
+		   float: left;
+		   left: 20px;
+		   width: 31px;
+		   height: 31px;
+		   background-color: #828282;
+		}
+		.grid-row .left4{
+		   position: relative;
+		   float: left;
+		   left: 30px;
+		   width: 31px;
+		   height: 31px;
+		   background-color: #828282;
+		}
+		.grid-row .left5{
+		   position: relative;
+		   float: left;
+		   left: 40px;
+		   width: 31px;
+		   height: 31px;
+		   background-color: #828282;
+		}
+		.grid-row .right{
+		   position: relative;
+		   float: right;
+		   right: 0px;
+		   width: 31px;
+		   height: 31px;
+		   background-color: #828282;
+		}
+.grid-key{
+	clear:both;
+	margin-top:15px;
+}
+	.grid-key h4{
+		margin-bottom:10px;
+	}
+	.grid-key-row{
+		clear:both;
+		margin-bottom:10px;
+	}
+		.grid-key-swatch{
+			float:left;
+			height:16px;
+			width:16px;
+			margin-right:15px;
+			border:1px solid #000;
+		}
+		

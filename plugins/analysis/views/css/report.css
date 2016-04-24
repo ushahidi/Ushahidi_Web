@@ -1,0 +1,40 @@
+.analysis-assessment-list{
+	padding:10px;
+	background-color:#F2F8FA;
+	border:1px solid #f0f0f0;
+	height:100px;
+	overflow:auto;
+}
+	.analysis-assessment-list h4{
+		margin:0;
+		padding:0;
+		color:#9b0000;
+	}
+	.analysis-assessment-list .analysis-mapme{
+		font-size:10px;
+		color:#999;
+	}
+		.analysis-assessment-list .analysis-mapme a{
+			color:#999;
+		}
+		
+#analysis_report_details{
+	clear:both;
+	display:none;
+	padding:10px;
+	background-color:#FDFEE7;
+	border:1px solid #f0f0f0;
+}
+	#analysis_report_details .detail{
+		margin-bottom:10px;
+	}
+	#analysis_report_details h4{
+		font-size:12px;
+		margin:0 0 5px 0;
+		padding:0;
+	}
+	#analysis_report_details .desc{
+		padding:5px;
+		background-color:#fff;
+		font-style:italic;
+	}
