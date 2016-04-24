@@ -367,7 +367,7 @@ $(function(){
 						<strong><?php echo Kohana::lang('ui_main.report_option_1'); ?></strong><br/>
 						<?php foreach ($phone_array as $phone) { ?>
 							<!-- <?php echo $phone; ?><br/> -->
-							<a href="<?php echo url::site() . 'reports/submit/'; ?>"><img src="<?php print URL::base() ?>themes/simple-responsive/images/home/sms.png"></a><br/>
+							<img src="<?php print URL::base() ?>themes/simple-responsive/images/home/sms.png">
 						<?php } ?>
 					</div>
 					<?php } ?>
