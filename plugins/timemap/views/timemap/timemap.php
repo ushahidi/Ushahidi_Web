@@ -23,7 +23,7 @@
 			$(function() {
 				tm = TimeMap.init({
 					mapId: "map",               // Id of map div element (required)
-					timelineId: "timeline",     // Id of timeline div element (required) 
+					timelineId: "timeline",     // Id of timeline div element (required)
 					options: {
 						eventIconPath: "<?php echo url::base(); ?>plugins/timemap/media/timemap/images/"
 					},
@@ -34,14 +34,14 @@
 							type: "progressive",
 							options: {
 								// Data to be loaded in JSON from a remote URL
-								type: "json", 
+								type: "json",
 								// url with start/end placeholders
 								url: "<?php echo url::base(); ?>timemap/json?start=[start]&end=[end]&callback=?",
 								start: "<?php echo $start_date; ?>",
 								// lower cutoff date for data
 								dataMinDate: "<?php echo $start_date; ?>",
 								// four months in milliseconds
-								interval: 86400000,   
+								interval: 86400000,
 								// function to turn date into string appropriate for service
 								formatDate: function(d) {
 									return TimeMap.util.formatDate(d, 1);
@@ -71,7 +71,7 @@
 			</td>
 		</tr>
 		<tr style="height:100%;" valign="top">
-			<td>
+			<td style="height:100%;">
 				<div id="timelinecontainer">
 					<div id="timeline"></div>
 				</div>
