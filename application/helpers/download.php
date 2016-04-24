@@ -96,6 +96,7 @@ class download_Core {
 			}
 		}
 
+		$csv_headers[] = 'SUBMITED BY (SMS)';
 		$csv_headers[] = 'APPROVED';
 		$csv_headers[] = 'VERIFIED';
 
@@ -181,6 +182,7 @@ class download_Core {
 				}
 			}
 
+			$csv_line[] = $incident->message->message_from;
 			$csv_line[] = $incident->incident_active ? 'YES' : 'NO';
 			$csv_line[] = $incident->incident_verified ? 'YES' : 'NO';
 			
