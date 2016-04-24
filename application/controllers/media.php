@@ -97,7 +97,7 @@ class Media_Controller extends Controller {
         $oldmtime = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])?$_SERVER['HTTP_IF_MODIFIED_SINCE']:'';
         $accencoding = isset($_SERVER['HTTP_ACCEPT_ENCODING'])?$_SERVER['HTTP_ACCEPT_ENCODING']:'';
 
-        if (($oldmtime AND strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $oldmtime) OR $oldetag == $mtime)
+        if (($oldmtime AND strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $oldmtime) OR (isset($mtime) && $oldetag == $mtime))
         {
             header($_SERVER['SERVER_PROTOCOL'] . ' 304 Not Modified');
         }
