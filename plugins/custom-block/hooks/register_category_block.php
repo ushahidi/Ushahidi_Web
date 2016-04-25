@@ -21,13 +21,26 @@ class category_block { // CHANGE THIS FOR OTHER BLOCKS
 		$content = new View('category_block'); // CHANGE THIS IF YOU WANT A DIFFERENT VIEW
 
 		// ID of the category we're looking for
-		$category_id = 14; // CHANGE THIS
+		$category_id = 1; // CHANGE THIS
+		$ids = array();
+		$ids[] = $category_id;
+
+		$categories = ORM::factory('category')
+			->where('parent_id', $category_id)
+			->find_all();
+
+		foreach ($categories as $category) {
+	        $ids[] = $category->id;
+	    }
+
+		$content->category = $category_id;
+
 		// Get Reports
 		$content->incidents = ORM::factory('incident')
 			->with('location')
 			->join('incident_category', 'incident.id', 'incident_category.incident_id')
 			->where('incident_active', '1')
-			->where('category_id', $category_id)
+			->in('category_id', $ids)
 			->limit('10')
 			->orderby('incident_date', 'desc')
 			->find_all();

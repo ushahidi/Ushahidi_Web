@@ -399,6 +399,20 @@ ul.link-toggle li a.next {
   margin-bottom: 15px;
 }
 
+.navbar-nav > li > a {
+    padding: 15px 10px;
+}
+
+@media (min-width: 767px) {
+    #kml_switch {
+        top: auto;
+        left: auto;
+        position: relative;
+        display: block;
+        background: transparent;
+    }
+}
+
 @media (max-width: 767px) {
     div#header {
         height: auto;
@@ -492,6 +506,25 @@ ul.link-toggle li a.next {
     .step-1 .map-wrapper,
     .step-1 .map-wrapper .map-holder,
     .step-2-holder {
+        width: 100%;
+    }
+
+    #the-filters,
+    #kml_switch {
+        top: auto;
+        left: auto;
+        width: 100%;
+        position: relative;
+        margin-left: 7px;
+        margin-bottom: 10px;
+    }
+
+    #filter-menu-toggle,
+    #layers-menu-toggle {
+        margin-top: 10px;
+        margin-bottom: 0;
+        top: auto;
+        left: auto;
         width: 100%;
     }
 }

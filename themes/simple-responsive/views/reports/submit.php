@@ -7,6 +7,7 @@
 			</div>
 		<?php endif; ?>
 
+
 		<!-- start report form block -->
 		<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm', 'class' => 'gen_forms')); ?>
 		<input type="hidden" name="latitude" id="latitude" value="<?php echo $form['latitude']; ?>">
@@ -204,7 +205,7 @@
 						</div>
 						<div style="clear:both;"></div>
 						<?php print form::input('location_find', '', ' title="'.Kohana::lang('ui_main.location_example').'" class="findtext"'); ?>
-						<input type="button" name="button" id="button" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" />
+						<input type="button" name="button" id="button_location_find" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" />
 						<div id="find_loading" class="report-find-loading"></div>
 						<div style="clear:both;" id="find_text"><?php echo Kohana::lang('ui_main.pinpoint_location'); ?>.</div>
 					</div>
@@ -336,3 +337,18 @@
 		<!-- end report form block -->
 	</div>
 </div>
+
+<script>
+
+	if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(updatePosition);
+    } else {
+        //browser no soporta geolocation.
+    }
+
+	function updatePosition(position) {
+		document.getElementById('location_find').value = position.coords.latitude+","+position.coords.longitude;
+		$('#button_location_find').trigger('click');
+	}
+
+</script>

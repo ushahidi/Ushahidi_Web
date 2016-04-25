@@ -1,0 +1,124 @@
+/**
+ * Halmat Ferello
+ * Licensed under GPL and MIT.
+ */
+
+.analyse-button{
+	margin-top:10px;
+}
+
+.pcb, .pcb span {
+	background: url('../images/secondary.png') no-repeat;
+	height: 23px;
+	line-height: 23px;
+	padding: 3px 0 7px 0;
+}
+
+.pcb, a.pcb:link, a.pcb:visited {
+	color: #333;
+	font-size: 11px;
+	padding-left: 14px;
+	text-decoration: none !important;
+}
+/* ie 6 hack */
+* html div#frame .pcb {
+	color: #333;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	text-decoration: none;
+}
+/* ie 7 hack */
+*:first-child+html .pcb {
+	color: #333;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	text-decoration: none;
+}
+
+.pcb span {
+	background-position: right -326px;
+	padding-right: 14px;
+}
+
+a.green-button, a.green-button:link, a.green-button:visited, .green-active-button, .green-disabled-button {
+	color: #fff !important;
+	font-size: 12px;
+	font-weight: bold;
+}
+a.green-button:hover {
+	background-position: left -27px;
+}
+a.green-button:hover span {
+	background-position: right -353px;
+}
+a.green-button:active, .green-active-button {
+	background-position: left -54px;
+}
+a.green-button:active span, .green-active-button span {
+	background-position: right -380px;
+}
+body .green-disabled-button {
+	color: #A8BE69 !important;
+	background-position: left -81px !important;
+}
+body .green-disabled-button span {
+	background-position: right -407px;
+}
+
+a.grey-button {
+	background-position: left -219px;
+	padding-top: 3px;
+}
+a.grey-button span {
+	background-position: right -545px;
+	padding-top: 3px;
+}
+a.grey-button:hover {
+	background-position: left -246px;
+}
+a.grey-button:hover span {
+	background-position: right -572px;
+}
+a.grey-button:active, .grey-active-button {
+	background-position: left -273px;
+}
+a.grey-button:active span, .grey-active-button span {
+	background-position: right -599px;
+}
+body .grey-disabled-button {
+	background-position: left -300px;
+	color: #bbb !important;
+}
+body .grey-disabled-button span {
+	background-position: right -626px;
+}
+
+a.red-button, .red-active-button, .red-disabled-button {
+	background-position: left -109px;
+	color: #fff !important;
+	padding-top: 3px;
+	font-weight: bold;
+}
+a.red-button span {
+	background-position: right -435px;
+	padding-top: 3px;
+}
+a.red-button:hover {
+	background-position: left -137px;
+}
+a.red-button:hover span {
+	background-position: right -463px;
+}
+a.red-button:active, .red-active-button {
+	background-position: left -165px;
+}
+a.red-button:active span, .red-active-button span {
+	background-position: right -491px;
+}
+body .red-disabled-button {
+	background-position: left -192px;
+	color: #DC4143 !important;
+}
+body .red-disabled-button span {
+	background-position: right -518px;
+}

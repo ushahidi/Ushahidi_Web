@@ -252,8 +252,8 @@
 			fetchReports();
 		});
 
-		$("#accordion").accordion({change: function(event, ui){
-			if ($(ui.newContent).hasClass("f-location-box"))
+		$("#accordion").accordion({activate: function(event, ui){
+			if ($(ui.newPanel).hasClass("f-location-box"))
 			{
 				if (typeof radiusMap == 'undefined' || radiusMap == null)
 				{

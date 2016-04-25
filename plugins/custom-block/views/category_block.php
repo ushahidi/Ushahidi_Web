@@ -1,6 +1,6 @@
 <?php blocks::open("reports");?>
 <!--<?php blocks::title(Kohana::lang('ui_main.reports_listed'));?>-->
-Logística
+<h5>Infraestructura</h5>
 <table class="table-list">
 	<thead>
 		<tr>
@@ -35,6 +35,6 @@ Logística
 		?>
 	</tbody>
 </table>
-<a class="more" href="<?php echo url::site() . 'reports/' ?>"><?php echo Kohana::lang('ui_main.view_more'); ?></a>
+<a class="more" href="<?php echo url::site() . 'reports/' ?>?c=<?php print $category; ?>"><?php echo Kohana::lang('ui_main.view_more'); ?></a>
 <div style="clear:both;"></div>
 <?php blocks::close();?>
