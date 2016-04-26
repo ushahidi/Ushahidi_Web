@@ -15,21 +15,26 @@
 class actionable {
 
 	private $media_filter;
-	private $media_values;
+
+	private static $media_values = array(
+		101 => 'All',
+		102 => 'Actionable',
+		103 => 'Urgent',
+		104 => 'Action taken',
+		105 => 'Closed'
+	);
+
 	/**
 	 * Registers the main event add method
 	 */
 	public function __construct()
 	{
 		$this->actionable = "";
+		$this->action_urgent = "";
 		$this->action_taken = "";
 		$this->action_summary = "";
-		$this->media_values = array(
-			101 => Kohana::lang('ui_main.all'),
-			102 => Kohana::lang('actionable.actionable'),
-			103 => Kohana::lang('actionable.urgent'),
-			104 => Kohana::lang('actionable.action_taken')
-		);
+		$this->action_closed = "";
+
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
 	}
@@ -98,6 +103,8 @@ class actionable {
 			{
 				Router::$method = 'index';
 			}
+		} elseif(Router::$controller == 'export_reports' && Router::$method == 'index') {
+            Event::add('ushahidi_filter.fetch_incidents_set_params', array($this, '_fetch_incidents_set_params_export'));
 		}
 	}
 
@@ -119,15 +126,19 @@ class actionable {
 				->find();
 			if ($action_item->loaded)
 			{
-				$this->actionable = $action_item->actionable;
-				$this->action_taken = $action_item->action_taken;
+				$this->actionable     = $action_item->actionable;
+				$this->action_urgent  = $action_item->action_urgent;
+				$this->action_taken   = $action_item->action_taken;
 				$this->action_summary = $action_item->action_summary;
+				$this->action_closed  = $action_item->action_closed;
 			}
 		}
 
-		$form->actionable = $this->actionable;
-		$form->action_taken = $this->action_taken;
+		$form->actionable     = $this->actionable;
+		$form->action_urgent  = $this->action_urgent;
+		$form->action_taken   = $this->action_taken;
 		$form->action_summary = $this->action_summary;
+		$form->action_closed  = $this->action_closed;
 		$form->render(TRUE);
 	}
 
@@ -146,9 +157,13 @@ class actionable {
 			$action_item->incident_id = $incident->id;
 			$action_item->actionable = isset($_POST['actionable']) ?
 				$_POST['actionable'] : "";
+		   $action_item->action_urgent = isset($_POST['action_urgent']) ?
+				   $_POST['action_urgent'] : "";
 			$action_item->action_taken = isset($_POST['action_taken']) ?
 				$_POST['action_taken'] : "";
 			$action_item->action_summary = $_POST['action_summary'];
+			$action_item->action_closed = isset($_POST['action_closed']) ?
+				$_POST['action_closed'] : "";
 			$action_item->save();
 
 		}
@@ -172,8 +187,10 @@ class actionable {
 				{
 					$report = View::factory('actionable_report');
 					$report->actionable = $actionable->actionable;
+					$report->action_urgent  = $actionable->action_urgent;
 					$report->action_taken = $actionable->action_taken;
 					$report->action_summary = $actionable->action_summary;
+					$report->action_closed = $actionable->action_closed;
 					$report->render(TRUE);
 				}
 			}
@@ -202,34 +219,37 @@ class actionable {
 				->find();
 			if ($action_item->loaded)
 			{
-				if ($action_item->actionable == 1)
-				{
+				if ($action_item->actionable == 1) {
 					echo "<actionable>YES</actionable>\n";
-					echo "<urgent>NO</urgent>\n";
+			    } else {
+					   echo "<actionable>NO</actionable>\n";
+
 				}
-				elseif ($action_item->actionable == 2)
-				{
-					echo "<actionable>YES</actionable>\n";
+				if ($action_item->action_urgent == 1) {
 					echo "<urgent>YES</urgent>\n";
-				}
-				else
-				{
-					echo "<actionable>NO</actionable>\n";
+				} else {
 					echo "<urgent>NO</urgent>\n";
 				}
 
-				if ($action_item->action_taken)
-				{
+				if ($action_item->action_taken) {
 					echo "<actiontaken>YES</actiontaken>\n";
 				} else {
 					echo "<actiontaken>NO</actiontaken>\n";
 				}
+
+				if ($action_item->action_closed == 1) {
+					echo "<actionclosed>YES</actionclosed>\n";
+				} else {
+					echo "<actionclosed>NO</actionclosed>\n";				
+				}
+
 			}
 			else
 			{
 				echo "<actionable>NO</actionable>\n";
 				echo "<urgent>NO</urgent>\n";
 				echo "<actiontaken>NO</actiontaken>\n";
+				echo "<actionclosed>NO</actionclosed>\n";				
 			}
 		}
 	}
@@ -240,7 +260,7 @@ class actionable {
 	public function _map_main_filters()
 	{
 		echo '</div><h3>'.Kohana::lang('actionable.actionable').'</h3><ul>';
-		foreach ($this->media_values as $k => $val) {
+		foreach (self::$media_values as $k => $val) {
 			echo "<li><a id=\"media_$k\" href=\"#\"><span>$val</span></a></li>";
 		}
 		echo '</ul><div>';
@@ -282,7 +302,134 @@ class actionable {
 		$filter_js->render(TRUE);
 	}
 
+	/*
+	* Perform the filtering of reports
+	*//*
+	public function _fetch_incidents_set_params($params)
+	{
+		echo '<pre>';
+		var_dump($params);
+		die();
+	}*/
 
+		/*
+	 * Filter incidents for main map based on actionable status
+	 */
+	public function _fetch_incidents_set_params_export()
+	{
+		$params = Event::$data;
+
+		// ---------- BEGIN HACKY IMPLEMENTATION (used on homepage map)
+		if(!isset($_GET['plugin_actionable_filter']) OR !is_array($_GET['plugin_actionable_filter'])) {
+			if(isset($_GET['plugin_actionable_filter']) && !is_array($_GET['plugin_actionable_filter'])) {
+				// Fetch the URL data into a local variable
+				$url_data = $_GET;
+			
+				// Split selected parameters on ","
+				// For simplicity, always turn them into arrays even theres just one value
+				$exclude_params = array('plugin_actionable_filter');
+				foreach ($url_data as $key => $value)
+				{
+					if (in_array($key, $exclude_params) AND ! is_array($value))
+					{
+						$url_data[$key] = explode(",", $value);
+					}
+				}
+				
+			} else {
+				// If we're doing the hacky fake media trick, run this.
+				// Look for fake media type
+				if ($filters = $this->_check_media_type())
+				{
+					// Remove media type filter based on fake actionable media type
+					// @todo make this work with normal media filters too
+					$sql = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'media WHERE media_type IN ('.implode(',',$this->_check_media_type()).'))';
+					$key = array_search($sql, $params);
+	
+					if ($key !== FALSE)
+					{
+						unset($params[$key]);
+					}
+	
+					$actionable_sql = array();
+					foreach ($filters as $filter)
+					{
+						// Cast the $filter to int just in case
+						$filter = intval($filter);
+	
+						// Add filter based on actionable status.
+						switch ($filter)
+						{
+							case '102':
+								$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+									WHERE actionable = 1 AND action_closed = 0)';
+								break;
+							case '103':
+								$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+									WHERE action_urgent = 1 AND action_closed = 0)';
+								break;
+							case '104':
+								$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+									WHERE action_taken = 1 AND action_closed = 0)';
+								break;
+							case '105':
+								$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+									WHERE action_closed = 1)';
+								break;
+						}
+					}
+	
+					if (count($actionable_sql) > 0)
+					{
+						$actionable_sql = '('.implode(' OR ',$actionable_sql).')';
+						$params[] = $actionable_sql;
+					}
+				}
+			Event::$data = $params;
+			return;
+			}
+		
+		}
+		// ---------- END HACKY IMPLEMENTATION (used on homepage map)
+
+		// This is the Non-hacky way of filtering reports
+
+		$actionable_ids = isset($url_data['plugin_actionable_filter']) ? $url_data['plugin_actionable_filter'] : $_GET['plugin_actionable_filter']; 
+		//$actionable_ids = $_GET['plugin_actionable_filter'];
+		$actionable_sql = array();
+		foreach($actionable_ids AS $id) {
+			switch ($id) {
+				case '5': //NotActionable
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE actionable = 0 AND action_closed = 0)';
+					break;
+				case '1': //Actionable
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE actionable = 1 AND action_closed = 0)';
+					break;
+				case '2': //Urgent
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE action_urgent = 1 AND action_closed = 0)';
+					break;
+				case '3': //Closed
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE action_closed = 1)';
+					break;
+				case '4': //ActionTaken
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE action_taken = 1 AND action_closed = 0)';
+					break;
+			}
+		}
+		
+		if (count($actionable_sql) > 0)
+		{
+			$actionable_sql = '('.implode(' OR ',$actionable_sql).')';	
+			$params[] = $actionable_sql;			
+		}
+
+		Event::$data = $params;
+	}
 
 	/*
 	 * Filter incidents for main map based on actionable status
@@ -290,7 +437,6 @@ class actionable {
 	public function _fetch_incidents_set_params()
 	{
 		$params = Event::$data;
-
 		// ---------- BEGIN HACKY IMPLEMENTATION (used on homepage map)
 		if(!isset($_GET['plugin_actionable_filter']) OR !is_array($_GET['plugin_actionable_filter'])) {
 			// If we're doing the hacky fake media trick, run this.
@@ -318,15 +464,19 @@ class actionable {
 					{
 						case '102':
 							$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
-								WHERE actionable = 1 AND action_taken = 0)';
+								WHERE actionable = 1 AND action_closed = 0)';
 							break;
 						case '103':
 							$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
-								WHERE actionable = 2 AND action_taken = 0)';
+								WHERE action_urgent = 1 AND action_closed = 0)';
 							break;
 						case '104':
 							$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
-								WHERE actionable = 1 AND action_taken = 1)';
+								WHERE action_taken = 1 AND action_closed = 0)';
+							break;
+						case '105':
+							$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+								WHERE action_closed = 1)';
 							break;
 					}
 				}
@@ -337,7 +487,6 @@ class actionable {
 					$params[] = $actionable_sql;
 				}
 			}
-
 			Event::$data = $params;
 			return;
 		}
@@ -347,9 +496,31 @@ class actionable {
 
 		$actionable_ids = $_GET['plugin_actionable_filter'];
 		$actionable_sql = array();
+		
 		foreach($actionable_ids AS $id) {
-			$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
-						WHERE actionable = '.intval($id).' AND action_taken = 0)';
+			
+			switch ($id) {
+				case '5': //NotActionable
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE actionable = 0 AND action_closed = 0)';
+					break;
+				case '1': //Actionable
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE actionable = 1 AND action_closed = 0)';
+					break;
+				case '2': //Urgent
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE action_urgent = 1 AND action_closed = 0)';
+					break;
+				case '3': //Closed
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE action_closed = 1)';
+					break;
+				case '4': //ActionTaken
+					$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+						WHERE action_taken = 1 AND action_closed = 0)';
+					break;
+			}
 		}
 
 		if (count($actionable_sql) > 0)
@@ -412,7 +583,7 @@ class actionable {
 					$this->media_filter = explode(',',$this->media_filter);
 				}
 				// Keep only the
-				$this->media_filter = array_intersect(array_keys($this->media_values), $this->media_filter);
+				$this->media_filter = array_intersect(array_keys(self::$media_values), $this->media_filter);
 			}
 		}
 
