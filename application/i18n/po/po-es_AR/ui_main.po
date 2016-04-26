@@ -880,7 +880,7 @@ msgstr "Contáctenos"
 #: ui_main.feedback_reports
 msgctxt "ui_main.feedback_reports"
 msgid "Please give us feedback about your experience by sending an email to "
-msgstr ""
+msgstr "Por favor cuéntanos tu experiencia, envíanos un correo a "
 
 #: ui_main.feeds
 msgctxt "ui_main.feeds"
