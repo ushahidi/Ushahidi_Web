@@ -821,9 +821,13 @@
 			image += "</div>";
 		}
 
+		var stringLink = event.feature.attributes.name;
+		var objLink = $(stringLink);
+		objLink.attr('target','_blank')
+
 		var content = "<div class=\"infowindow\">" + image +
 		    "<div class=\"infowindow_content\">"+
-		    "<div class=\"infowindow_list\">"+event.feature.attributes.name+"</div>\n" +
+		    "<div class=\"infowindow_list\">"+objLink.prop('outerHTML')+"</div>\n" +
 		    "<div class=\"infowindow_meta\">";
 
 		if (typeof(event.feature.attributes.link) != 'undefined' &&
