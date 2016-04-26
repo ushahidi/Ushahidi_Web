@@ -19,21 +19,9 @@
 			</a>
 		</li>
 		<li>
-			<a href="#" id="filter_actionable_5">
+			<a href="#" id="filter_actionable_0">
 				<!--span class="item-icon ic-unverified">&nbsp;</span-->
 				<span class="item-title"><?php echo Kohana::lang('actionable.not_actionable'); ?></span>
-			</a>
-		</li>
-		<li>
-			<a href="#" id="filter_actionable_4">
-				<!--span class="item-icon ic-unverified">&nbsp;</span-->
-				<span class="item-title"><?php echo Kohana::lang('actionable.action_taken'); ?></span>
-			</a>
-		</li>
-		<li>
-			<a href="#" id="filter_actionable_3">
-				<!--span class="item-icon ic-unverified">&nbsp;</span-->
-				<span class="item-title"><?php echo Kohana::lang('actionable.action_closed'); ?></span>
 			</a>
 		</li>
 	</ul>
