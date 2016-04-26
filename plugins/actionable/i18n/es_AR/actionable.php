@@ -8,7 +8,6 @@
 		'action_summary_description' => 'Ha sido tomada alguna acción? Resumir la acción tomada o requerida',
 		'summary' => 'Resumen',
 		'action_needed' => 'Acción necesaria',
-		'action_urgent' => 'Es necesario actuar urgentemente',
-		'action_closed' => 'Cerrado'
+		'action_urgent' => 'Es necesario actuar urgentemente'
 	);
 ?>

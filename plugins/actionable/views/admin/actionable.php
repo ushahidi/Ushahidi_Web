@@ -216,7 +216,9 @@
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.location');?>: 
 													<strong><?php echo $incident->location_name; ?></strong>, <strong><?php echo $country_name; ?></strong>
 												</li>
-												<li><?php echo Kohana::lang('ui_main.submitted_by', array($submit_by, $submit_mode));?></li>
+												<li><?php echo Kohana::lang('ui_main.submitted_by');?> 
+													<strong><?php echo $submit_by; ?></strong> via <strong><?php echo $submit_mode; ?></strong>
+												</li>
 											</ul>
 											<ul class="links">
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.categories');?>:

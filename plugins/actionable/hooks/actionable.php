@@ -15,7 +15,14 @@
 class actionable {
 
 	private $media_filter;
-	private $media_values;
+
+	private static $media_values = array(
+		101 => 'All',
+		102 => 'Actionable',
+		103 => 'Urgent',
+		104 => 'Action taken',
+		105 => 'Closed'
+	);
 
 	/**
 	 * Registers the main event add method
@@ -27,13 +34,7 @@ class actionable {
 		$this->action_taken = "";
 		$this->action_summary = "";
 		$this->action_closed = "";
-		$this->media_values = array(
-			101 => Kohana::lang('ui_main.all'),
-			102 => Kohana::lang('actionable.actionable'),
-			103 => Kohana::lang('actionable.urgent'),
-			104 => Kohana::lang('actionable.action_taken'),
-			105 => Kohana::lang('actionable.action_closed')
-		);
+
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
 	}
@@ -259,7 +260,7 @@ class actionable {
 	public function _map_main_filters()
 	{
 		echo '</div><h3>'.Kohana::lang('actionable.actionable').'</h3><ul>';
-		foreach ($this->media_values as $k => $val) {
+		foreach (self::$media_values as $k => $val) {
 			echo "<li><a id=\"media_$k\" href=\"#\"><span>$val</span></a></li>";
 		}
 		echo '</ul><div>';
@@ -582,7 +583,7 @@ class actionable {
 					$this->media_filter = explode(',',$this->media_filter);
 				}
 				// Keep only the
-				$this->media_filter = array_intersect(array_keys($this->media_values), $this->media_filter);
+				$this->media_filter = array_intersect(array_keys(self::$media_values), $this->media_filter);
 			}
 		}
 
