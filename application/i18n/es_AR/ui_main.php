@@ -169,6 +169,7 @@ $lang = array(
 	'facebook' => 'Facebook',
 	'feed' => 'Boletín',
 	'feedback' => 'Contáctenos',
+	'feedback_reports' => 'Por favor cuéntanos tu experiencia, envíanos un correo a ',
 	'feeds' => 'Boletines',
 	'feed_has_been' => 'Este boletín ha sido',
 	'feed_items' => 'Boletines',
