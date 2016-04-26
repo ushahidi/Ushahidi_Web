@@ -17,10 +17,10 @@ class actionable {
 	private $media_filter;
 
 	private static $media_values = array(
-		101 => Kohana::lang('ui_main.all'),
-		102 => Kohana::lang('actionable.actionable'),
-		103 => Kohana::lang('actionable.urgent'),
-		104 => Kohana::lang('actionable.action_taken')
+		101 => 'All',
+		102 => 'Actionable',
+		103 => 'Urgent',
+		104 => 'Action taken'
 	);
 
 	/**
