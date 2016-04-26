@@ -8,6 +8,7 @@
 		'action_summary_description' => 'Vérifier si l\'action aété entreprise et résumer les mesures retenues',
 		//'summary' => 'Summary',
 		'action_needed' => 'Requiert une intervention',
-		'action_urgent' => 'Requiert une urgent intervention'
+		'action_urgent' => 'Requiert une urgent intervention',
+		'action_closed' => 'Fermee'
 	);
 ?>

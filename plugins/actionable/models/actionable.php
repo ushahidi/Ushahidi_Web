@@ -27,9 +27,9 @@ class Actionable_Model extends ORM
 			{
 				return Kohana::lang('actionable.action_taken');
 			}
-			elseif ($this->actionable == 2)
+			elseif ($this->action_urgent)
 			{
-				return Kohana::lang('actionable.urgent');
+				return Kohana::lang('actionable.action_urgent');
 			}
 			else
 			{
@@ -49,7 +49,7 @@ class Actionable_Model extends ORM
 			{
 				return '33ff33';
 			}
-			elseif ($this->actionable == 2)
+			elseif ($this->action_urgent)
 			{
 				return 'ff0000';
 			}
