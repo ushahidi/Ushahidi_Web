@@ -363,7 +363,7 @@ $(function(){
 
 					<!-- Phone -->
 					<?php if (!empty($phone_array)) { ?>
-					<div class="col-xs-12 col-sm-6 col-md-4 text-center">
+					<div class="col-xs-12 col-sm-6 col-md-3 text-center">
 						<strong><?php echo Kohana::lang('ui_main.report_option_1'); ?></strong><br/>
 						<?php foreach ($phone_array as $phone) { ?>
 							<!-- <?php echo $phone; ?><br/> -->
@@ -375,8 +375,8 @@ $(function(){
 					<!-- External Apps -->
 					<?php if (count($external_apps) > 0) { ?>
 						<?php foreach ($external_apps as $app) { ?>
-						<div class="col-xs-12 col-sm-6 col-md-4 text-center">
-							<strong><?php echo Kohana::lang('ui_main.report_option_external_apps'); ?>:</strong><br/>
+						<div class="col-xs-12 col-sm-6 col-md-3 text-center">
+							<strong><?php echo Kohana::lang('ui_main.report_option_external_apps'); ?></strong><br/>
 								<a href="<?php echo $app->url; ?>"><img src="<?php print URL::base() ?>themes/simple-responsive/images/home/<?php echo strtolower($app->name); ?>.png"></a>
 						</div>
 						<?php } ?>
@@ -384,16 +384,16 @@ $(function(){
 
 					<!-- Email -->
 					<?php if (!empty($report_email)) { ?>
-					<div class="col-xs-12 col-sm-6 col-md-4 text-center">
-						<strong><?php echo Kohana::lang('ui_main.report_option_2'); ?>:</strong><br/>
+					<div class="col-xs-12 col-sm-6 col-md-3 text-center">
+						<strong><?php echo Kohana::lang('ui_main.report_option_2'); ?></strong><br/>
 						<a href="mailto:<?php echo $report_email?>"><img src="<?php print URL::base() ?>themes/simple-responsive/images/home/email.png"></a>
 					</div>
 					<?php } ?>
 
 					<!-- Twitter -->
 					<?php if (!empty($twitter_hashtag_array)) { ?>
-					<div class="col-xs-12 col-sm-6 col-md-4 text-center">
-						<strong><?php echo Kohana::lang('ui_main.report_option_3'); ?>:</strong><br/>
+					<div class="col-xs-12 col-sm-6 col-md-3 text-center">
+						<strong><?php echo Kohana::lang('ui_main.report_option_3'); ?></strong><br/>
 						<img src="<?php print URL::base() ?>themes/simple-responsive/images/home/twitter.png">
 						<br />
 						<?php foreach ($twitter_hashtag_array as $twitter_hashtag) { ?>
@@ -406,7 +406,7 @@ $(function(){
 					<?php } ?>
 
 					<!-- Web Form -->
-					<div class="col-xs-12 col-sm-6 col-md-4 text-center">
+					<div class="col-xs-12 col-sm-6 col-md-3 text-center">
 						<strong><?php echo Kohana::lang('ui_main.report_option_4'); ?></strong><br/>
 						<a href="<?php echo url::site() . 'reports/submit/'; ?>"><img src="<?php print URL::base() ?>themes/simple-responsive/images/home/webform.png"></a>
 					</div>

@@ -2283,7 +2283,7 @@ msgstr "Completando un Formulario"
 #: ui_main.report_option_external_apps
 msgctxt "ui_main.report_option_external_apps"
 msgid "By using an app"
-msgstr "Con aplicación externa"
+msgstr "Con la Aplicación Móvil"
 
 #: ui_main.report_saved
 msgctxt "ui_main.report_saved"
