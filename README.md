@@ -28,6 +28,17 @@ Hay muchas formas:
 
 Luego, en tu navegador, ve a <http://localhost:8080> y sigue el proceso de instalación.
 
+## Cómo levantar el ambiente local utilizando Docker Compose
+
+1. Instalar Git: http://git-scm.com/downloads (o GitHub para Windows si quieres una interfaz gráfica)
+2. Instalar Docker Compose: `https://docs.docker.com/compose/install/`
+3. Abrir una terminal
+4. Clonar el proyecto: `git clone https://github.com/desastre-ecuador/mapa.desastre.ec`
+5. Entrar al directorio del proyecto: `cd mapa.desastre.ec`
+6. Iniciar docker compose: `docker-compose up -d`
+
+Luego, en tu navegador, ve a <http://localhost:8080> y sigue el proceso de instalación.
+
 ## Licencia
 
 [LGPL versión 3](https://github.com/desastre-ecuador/mapa.desastre.ec/blob/master/License.txt).
