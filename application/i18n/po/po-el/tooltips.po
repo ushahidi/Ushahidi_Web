@@ -1,0 +1,584 @@
+# 
+# Translators:
+# mindthecam <mindthecam.gr@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Greek (http://www.transifex.com/ushahidi/ushahidi-v2/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: tooltips.actions.add_to_category
+msgctxt "tooltips.actions.add_to_category"
+msgid ""
+"This adds the report to additional categories. If you select Category 1 here"
+" and the report already has Category 2 attached to it, the report will then "
+"have both Category 1 and Category 2."
+msgstr "Αυτό προσθέτει την αναφορά σε επιπλέον κατηγορίες. Εάν επιλέξεις εδώ την Κατηγορία 1 και η αναφορά ανήκει ήδη στην Κατηγορία 2, η αναφορά θα καταλήξει να ανήκει και στις δύο Κατηγορίες."
+
+#: tooltips.actions.approve
+msgctxt "tooltips.actions.approve"
+msgid "Approves a report or not. If approved, it will show up publicly."
+msgstr "Εγκρίνει ή όχι μια αναφορά. Εάν η αναφορά εγκριθεί θα είναι ορατή δημόσια."
+
+#: tooltips.actions.assign_badge
+msgctxt "tooltips.actions.assign_badge"
+msgid ""
+"You will be able to assign a badge to the triggering user. Pick the badge "
+"that gets assigned here."
+msgstr "Θα μπορείς να αναθέτεις κάποιο σήμα στο χρήστη που έχει ενεργοποιήσει το γεγονός (triggering user). Διάλεξε εδώ το σήμα που θα ανατεθεί."
+
+#: tooltips.actions.between_times
+msgctxt "tooltips.actions.between_times"
+msgid ""
+"This is a range of hours and/or minutes between two times in 24 hour format."
+" If you input an earlier time in the second field, it will be flipped with "
+"the first. These times must be within a single day. Also, this time is "
+"checked against the time you have configured on your site in site settings "
+"and <strong>not</strong> necessarily the timezone of the user interacting "
+"with your deployment. Leave this at 00:00 to 00:00 to ignore this qualifier."
+msgstr "Αυτό είναι ένα χρονικό διάστημα σε ώρες ή/και λεπτά μεταξύ δύο ωρών σε μορφή 24ώρου. Εάν δώσεις προθύστερο χρόνο στο δεύτερο πεδίο, οι τιμές θα αντιστραφούν με το πρώτο. Το χρονικό διάστημα θα πρέπει να εμπίπτει σε μία ημέρα. Επίσης αυτό το χρονικό διάστημα ελέγχεται με το χρόνο που έχεις ρυθμίσει για το site σου στις \"ρυθμίσεις του site\" και <strong>όχι</strong> απαραίτητα με βάση τη ζώνη χρόνου του επισκέπτη του site σου. Άφησε τις προκαθορισμένες ρυθμίσεις για να αγνοήσεις αυτό τον qualifier."
+
+#: tooltips.actions.category
+msgctxt "tooltips.actions.category"
+msgid ""
+"If you would like to activate triggers only when a certain category is being"
+" used, you can set that here. This will allow a trigger to be activated if "
+"only one of the categories is used. For instace, if you select Category 1 "
+"and Category 2 here and a report is submitted using Category 2 and Category "
+"3, it will pass the test."
+msgstr "Εάν θέλεις να ενεργοποιείται ένα γεγονός μόνο όταν χρησιμοποιείται μια συγκεκριμένη κατηγορία, μπορείς να το ρυθμίσεις εδώ. Αυτό θα επιτρέψει την ενεργοποίηση ενός γεγονότος μόνο όταν χρησιμοποιείται η συγκεκριμένη κατηγορία. Για παράδειγμα, εάν επιλέξεις εδώ τις Κατηγορίες 1 και 2 και η αναφορά που υποβάλλεται χρησιμοποιεί τις Κατηγορίες 2 και 3, θα γίνει η ενεργοποίηση του γεγονότος."
+
+#: tooltips.actions.days_of_the_week
+msgctxt "tooltips.actions.days_of_the_week"
+msgid ""
+"If these actions happen on certain days of the week, set that here. Keep in "
+"mind the day is determined by the timezone configured on your deployment. "
+"Hold shift, command, or control for multiple day selection."
+msgstr "Εάν αυτές οι δράσεις συμβαίνουν σε συγκεκριμένες ημέρες της εβδομάδας, ρύθμισέ το εδώ. Έχε στο νου σου ότι η ημέρα καθορίζεται από τις ρυθμίσεις ζώνης χρόνου που έχεις κάνει στο site σου. Κράτησε πατημένο το shift, το command ή το control για περισσότερες επιλογές."
+
+#: tooltips.actions.email_body
+msgctxt "tooltips.actions.email_body"
+msgid "Body of the email that will be sent."
+msgstr "Το σώμα του email που θα αποσταλεί."
+
+#: tooltips.actions.email_subject
+msgctxt "tooltips.actions.email_subject"
+msgid "Subject of email that will be sent."
+msgstr "Το θέμα του email που θα αποσταλεί."
+
+#: tooltips.actions.feed_id
+msgctxt "tooltips.actions.feed_id"
+msgid ""
+"The feed can be all feeds or a specific feeds. If you would only like "
+"specific feeds to activate a trigger, you will want to select them here. "
+"Otherwise, you will want to leave this as \"all\""
+msgstr "Το feed μπορεί να είναι γενικό ή να αφορά συγκεκριμένα feeds. Εάν επιθυμείς το trigger να ενεργοποιείται μόνο από συγκεκριμένα feeds θα πρέπει να τα επιλέξεις εδώ. Διαφορετικά άφησε την τιμή \"όλα\"."
+
+#: tooltips.actions.from
+msgctxt "tooltips.actions.from"
+msgid ""
+"Twitter author username (or multiple usernames separated by commas). If you "
+"would like to activate triggers only for twitter messages from a particular "
+"user, enter their username here (not including @)"
+msgstr "Όνομα χρήστη του twitter (ή πολλαπλά ονόματα χωριζόμενα με κόμμα). Εάν επιθυμείς το trigger να ενεργοποιείται μόνο για tweets συγκεκριμένων χρηστών, βάλε εδώ τα ονόματά τους (χωρίς το @)."
+
+#: tooltips.actions.keywords
+msgctxt "tooltips.actions.keywords"
+msgid ""
+"You can choose to leave this blank if you do not want to check against "
+"keywords. If you add words here, you will need to separate them with a comma"
+" (,). For example, if you want to activate a trigger when someone mentions "
+"\"love\" or \"peace\" in their message, you will want to add \"love, peace\""
+" in the keywords box."
+msgstr "Μπορείς να το αφήσεις κενό, εάν δε θέλεις να κάνεις κάποιο έλεγχο με βάση συγκεκριμένες λέξεις - κλειδιά. Εάν προσθέσεις κάποιες λέξεις εδώ, χώρισέ τις με κόμμα (,). Για παράδειγμα, εάν θέλεις να ενεργοποιήσεις ένα trigger όταν κάποιος αναφέρει τη λέξη \"αγάπη\" ή \"ειρήνη\" στο μήνυμά του, θα πρέπει να κάνεις την προσθήκη \"αγάπη, ειρήνη\" (χωρίς εισαγωγικά)."
+
+#: tooltips.actions.location
+msgctxt "tooltips.actions.location"
+msgid ""
+"You can either select anywhere or a specific location. If you select a "
+"specific location, you will be asked to draw a box around the area that "
+"qualifies an action. For example, if you want this trigger to be activated "
+"when someone submits a report in Brazil, you will select \"specific area\" "
+"and then draw the box around Brazil. You can make these boxes as small or as"
+" large as you would like. You can also draw multiple boxes."
+msgstr "Μπορείς να επιλέξεις είτε \"οπουδήποτε\" ή κάποια συγκεκριμένη τοποθεσία. Εάν επιλέξεις μια συγκεκριμένη τοποθεσία θα σου ζητηθεί να σχηματίσεις ένα πλαίσιο γύρω από την περιοχή ενδιαφέροντος. Για παράδειγμα, εάν θέλεις να ενεργοποιηθεί ένα γεγονός όταν κάποιος υποβάλλει μια αναφορά στη Βραζιλία, θα πρέπει να επιλέξεις \"συγκεκριμένη τοποθεσία\" και να σχηματίσεις ένα πλαίσιο γύρω από τη Βραζιλία. Μπορείς να κάνεις αυτά τα πλαίσια όσο μεγάλα ή όσο μικρά επιθυμείς. Μπορείς επίσης να σχηματίσεις πολλαπλά πλαίσια."
+
+#: tooltips.actions.on_specific_count
+msgctxt "tooltips.actions.on_specific_count"
+msgid ""
+"This qualifier will activate the trigger on the N-th count either for the "
+"entire collective user base or for each individual user. Leave this blank to"
+" ignore it."
+msgstr "Αυτός ο qualifier θα ενεργοποιήσει κάποιο γεγονός τη ν-οστή φορά είτε για το συνολικό αριθμό αναφορών, είτε για κάποιο συγκεκριμένο χρήστη. Άφησέ το κενό για να την αγνοήσεις."
+
+#: tooltips.actions.report_title
+msgctxt "tooltips.actions.report_title"
+msgid "This is the default title to add to the report."
+msgstr "Αυτός είναι ο προκαθορισμένος τίτλος που θα μπαίνει στην αναφορά."
+
+#: tooltips.actions.response
+msgctxt "tooltips.actions.response"
+msgid ""
+"If all of the qualifiers above are passed, the trigger will initiate a "
+"response. This can range from approving a report to emailing a user. Select "
+"the response here to activate additional options for the specific responses."
+msgstr "Εάν όλοι οι παραπάνω qualifiers επιτύχουν, θα ενεργοποιηθεί κάποια απόκριση. Αυτή μπορεί να είναι η έγκριση κάποιας αναφοράς ή η αποστολή email σε κάποιο χρήστη. Επίλεξε εδώ την απόκριση για να ενεργοποιήσεις περισσότερες επιλογές για τις συγκεκριμένες αποκρίσεις."
+
+#: tooltips.actions.send_to
+msgctxt "tooltips.actions.send_to"
+msgid ""
+"If you select \"Triggering User\", the email will be sent to the user who "
+"performed the action. If you select the radio button next to the input box, "
+"you will be able to enter a custom email address. This is useful if you are "
+"setting up triggers to notify people when certain parts of the map are "
+"seeing reports, check ins or some other activity."
+msgstr "Εάν επιλέξεις \"Triggering user\" το email θα αποσταλεί στο χρήστη που έκανε τη δράση. Εάν επιλέξεις το κουμπί δίπλα από το κουτί καταχώρησης θα μπορείς να βάλεις μια προσαρμοσμένη διεύθυνση email. Αυτό είναι χρήσιμο εάν ρυθμίζεις κάποια triggers για να ειδοποιείς τους χρήστες σχετικά με αναφορές που γίνονται σε συγκεκριμένα σημεία του χάρτη, ή άλλες δραστηριότητες."
+
+#: tooltips.actions.specific_days
+msgctxt "tooltips.actions.specific_days"
+msgid ""
+"You can select multiple days here. Dates are determined by your deployment "
+"timezone setting. In order to default to all dates, do not select any dates."
+msgstr "Μπορείς να επιλέξεις πολλαπλές ημέρες εδώ. Οι ημερομηνίες καθορίζονται από τη ζώνη χρόνου του site σου. Για να αφήσεις τις προκαθορισμένες τιμές, μην επιλέξεις καμία ημερομηνία."
+
+#: tooltips.actions.trigger
+msgctxt "tooltips.actions.trigger"
+msgid ""
+"The trigger is the core component of setting up your Action Triggers. This "
+"is where you determine if you would like something to happen when someone "
+"submits a report, performs a check in, etc. You will be able to filter "
+"responses to these actions after selecting one."
+msgstr "Το trigger είναι το βασικό στοιχείο της ρύθμισης των Action Triggers. Εδώ καθορίζεις εάν θέλεις να ενεργοποιείται ένα γεγονός όταν κάποιος υποβάλει μια αναφορά, μπαίνει στο σύστημα κλπ. Θα μπορείς να φιλτράρεις τις αποκρίσεις σε αυτές τις δράσεις μετά την επιλογή."
+
+#: tooltips.actions.user
+msgctxt "tooltips.actions.user"
+msgid ""
+"The user can be anyone or a specific user. If you would only like specific "
+"users to activate a trigger, you will want to select them here. Otherwise, "
+"you will want to leave this as \"anyone\" since most triggers are set up for"
+" all users interacting with the system"
+msgstr "Ο χρήστης μπορεί να είναι οποιοσδήποτε ή κάποιος συγκεκριμένος. Εάν θέλεις να ενεργοποιείται το trigger μόνο από συγκεκριμένους χρήστες, θα πρέπει να τους επιλέξεις εδώ. Διαφορετικά μπορείς να αφήσεις την τιμή \"οποιοσδήποτε\", καθώς τα περισσότερα triggers αφορούν την αλληλεπίδραση οποιουδήποτε χρήστη με το σύστημα."
+
+#: tooltips.actions.verify
+msgctxt "tooltips.actions.verify"
+msgid "Marks a report as verified or not."
+msgstr "Μαρκάρει μια αναφορά ως επιβεβαιωμένη ή όχι."
+
+#: tooltips.change_picture
+msgctxt "tooltips.change_picture"
+msgid ""
+"Profile pages on this site use Gravatar. By clicking on your image, you will"
+" be taken to the Gravatar website where you can change your profile picture."
+msgstr "Οι σελίδες προφίλ σε αυτό το site χρησιμοποιούν το Gravatar. Κάνοντας κλικ πάνω στην εικόνα σου θα μεταφερθείς στο site του Gravatar όπου μπορείς να αλλάξεις την εικόνα του προφίλ σου."
+
+#: tooltips.default_value
+msgctxt "tooltips.default_value"
+msgid "Separate each value with a comma, e.g. value1, value2."
+msgstr "Χώρισε την κάθε τιμή με κόμμα, πχ τιμή1, τιμή2."
+
+#: tooltips.radio_choices
+msgctxt "tooltips.radio_choices"
+msgid ""
+"Separate each value with a comma, e.g. value1, value2. In case you want to "
+"set a default value, end your list of options with :: e.g If you want to "
+"make value3 the default, it will be value1, value2, value3::value3"
+msgstr "Χώρισε την κάθε τιμή με κόμμα, πχ τιμή1, τιμή2. Σε περίπτωση που θέλεις να ορίσεις μια προεπιλεγμένη τιμή, πρόσθεσε στο τέλος :: πχ εάν θέλεις να είναι η τιμή3 η προεπιλεγμένη θα βάλεις τιμή1, τιμή2, τιμή3::τιμή3"
+
+#: tooltips.dropdown_choices
+msgctxt "tooltips.dropdown_choices"
+msgid "Separate each choice item with a comma, e.g. Item 1, Item 2 etc."
+msgstr "Χώρισε κάθε επιλογή με κόμμα, πχ Αντικείμενο 1, Αντικείμενο 2 κλπ"
+
+#: tooltips.private_to
+msgctxt "tooltips.private_to"
+msgid "Start typing to list members."
+msgstr "Ξεκίνα να πληκτρολογήσεις για να δεις τη λίστα με τα μέλη"
+
+#: tooltips.private_subject
+msgctxt "tooltips.private_subject"
+msgid "Private message subject"
+msgstr "Θέμα ατομικού μηνύματος"
+
+#: tooltips.private_message
+msgctxt "tooltips.private_message"
+msgid "Private message"
+msgstr "Ατομικό μήνυμα"
+
+#: tooltips.profile_color
+msgctxt "tooltips.profile_color"
+msgid ""
+"You can select a color that will show up under your profile picture on your "
+"public profile. This color will also be the color dot that shows up on the "
+"map for your checkins."
+msgstr "Μπορείς να επιλέξεις το χρώμα που θα φαίνεται κάτω από τη φωτογραφία του προφίλ σου στη σελίδα \"δημόσιο προφίλ\". Αυτό το χρώμα θα είναι επίσης το χρώμα της κουκίδας που θα φαίνεται στο χάρτη για τα δικά σου chekcins."
+
+#: tooltips.profile_email
+msgctxt "tooltips.profile_email"
+msgid "Your email address"
+msgstr "Η διεύθυνση email σου."
+
+#: tooltips.profile_name
+msgctxt "tooltips.profile_name"
+msgid ""
+"This is one of the ways that you are identified on the website. Keep in mind"
+" that this is public!"
+msgstr "Αυτός είναι ένας από τους τρόπους που προσδιορίζεσαι μέσα στο site. Έχε στο νου σου ότι φαίνεται δημόσια!"
+
+#: tooltips.profile_new_password
+msgctxt "tooltips.profile_new_password"
+msgid ""
+"If set, this will be your new password. Leave this field blank if you wish "
+"to keep your current password."
+msgstr "Εάν βάλεις κάποια τιμή, αυτός θα είναι ο νέος σου κωδικός. Άφησέ το κενό εάν επιθυμείς να διατηρήσεις τον κωδικό σου."
+
+#: tooltips.profile_new_users_password
+msgctxt "tooltips.profile_new_users_password"
+msgid ""
+"This is a requirement when creating a new user and will be the users "
+"password. You should inform your new user to change their password after "
+"logging in for the first time."
+msgstr "Αυτό απαιτείται όταν δημιουργείς ένα νέο χρήστη και θα είναι ο κωδικός του χρήστη. Θα πρέπει να ενημερώσεις το νέο χρήστη να αλλάξει τον κωδικό του όταν μπει στο σύστημα για πρώτη φορά."
+
+#: tooltips.profile_notify
+msgctxt "tooltips.profile_notify"
+msgid ""
+"Selecting YES lets you get alerts via email when new reports or comments are"
+" posted on your website."
+msgstr "Επιλέγοντας ΝΑΙ θα λαμβάνεις ειδοποιήσεις μέσω email όταν αναρτώνται νέα σχόλια ή αναφορές στο site σου."
+
+#: tooltips.profile_password
+msgctxt "tooltips.profile_password"
+msgid ""
+"Your current password. We require you enter your password to prevent any "
+"unauthorized changes to your account."
+msgstr "Ο τρέχων κωδικός σου. Απαιτείται προκειμένου να εμποδιστεί μη εγκεκριμένη απόπειρα αλλαγής του λογαριασμού σου."
+
+#: tooltips.profile_public
+msgctxt "tooltips.profile_public"
+msgid ""
+"Your profile can be viewed by anyone on the Internet if you check this "
+"option. This is also the easiest way to show off the reports you've "
+"submitted, your checkins, badges, etc all on one page."
+msgstr "Εάν τσεκάρεις αυτή την επιλογή, το προφίλ σου θα είναι ορατό σε οποιονδήποτε στο διαδίκτυο. Αυτός είναι ο ευκολότερος τρόπος για να δημοσιοποιήσεις τις αναφορές που έχεις υποβάλει."
+
+#: tooltips.profile_public_url
+msgctxt "tooltips.profile_public_url"
+msgid "This is the address where your public profile can be found."
+msgstr "Αυτή είναι η διεύθυνση στην οποία μπορεί να βρεθεί το δημόσιο προφίλ σου."
+
+#: tooltips.profile_username
+msgctxt "tooltips.profile_username"
+msgid "Your username cannot be changed."
+msgstr "Το όνομα χρήστη δεν μπορεί να αλλαχθεί."
+
+#: tooltips.settings_access_level
+msgctxt "tooltips.settings_access_level"
+msgid ""
+"Access Levels are used to restrict access to custom form field data. Higher "
+"access levels can access fields from lower levels. Superadmin has the "
+"highest access level (100). Public data is displayed at the lowest access "
+"level (0). Members have access level 10. Admin is access level 90 by "
+"default."
+msgstr "Τα επίπεδα πρόσβασης χρησιμοποιούνται για να περιορίσουν την πρόσβαση σε προσαρμοσμένα πεδία δεδομένων. Τα υψηλότερα επίπεδα πρόσβασης έχουν πρόσβαση σε πεδία που έχουν δημιουργηθεί από χαμηλότερα επίπεδα πρόσβασης. Ο Superadmin έχει το υψηλότερο επίπεδο πρόσβασης (100). Τα δημόσια δεδομένα απεικονίζονται με το χαμηλότερο επίπεδο πρόσβασης (0). Τα μέλη έχουν επίπεδο πρόσβασης 10. Ο διαχειριστής έχει προκαθορισμένο επίπεδο πρόσβασης 90."
+
+#: tooltips.settings_alert_email
+msgctxt "tooltips.settings_alert_email"
+msgid "This is the email address that will be used to send email alerts."
+msgstr "Αυτή είναι η διεύθυνση email που θα χρησιμοποιηθεί για να αποστέλλονται οι ειδοποιήσεις μέσω email."
+
+#: tooltips.settings_allow_alerts
+msgctxt "tooltips.settings_allow_alerts"
+msgid "Allow users to subscribe for alerts via the web."
+msgstr "Ενεργοποίησε τη δυνατότητα για τους χρήστες να μπορούν να λαμβάνουν ειδοποιήσεις μέσω του διαδικτύου."
+
+#: tooltips.settings_allow_clustering
+msgctxt "tooltips.settings_allow_clustering"
+msgid "This allows bundling of similar reports into a single dot on the map"
+msgstr "Αυτό επιτρέπει τη συγκέντρωση παρόμοιων αναφορών σε μία μόνο κουκκίδα στο χάρτη."
+
+#: tooltips.settings_allow_comments
+msgctxt "tooltips.settings_allow_comments"
+msgid "Allow users to comment on reports on the main site."
+msgstr "Ενεργοποίησε τη δυνατότητα για τους χρήστες να μπορούν να σχολιάζουν τις αναφορές στο κεντρικό site."
+
+#: tooltips.settings_allow_feed
+msgctxt "tooltips.settings_allow_feed"
+msgid "This allows RSS News feeds to be displayed on the main site."
+msgstr "Αυτό επιτρέπει στα RSS News feeds να απεικονίζονται στο κεντρικό site."
+
+#: tooltips.settings_allow_feed_category
+msgctxt "tooltips.settings_allow_feed_category"
+msgid "This allows creating new Category from RSS News feeds."
+msgstr ""
+
+#: tooltips.settings_allow_reports
+msgctxt "tooltips.settings_allow_reports"
+msgid "Allow users to submit information via the web form."
+msgstr "Ενεργοποίησε τη δυνατότητα για τους χρήστες να υποβάλλουν πληροφορίες μέσω της διαδικτυακής φόρμας."
+
+#: tooltips.settings_api_default_record_limit
+msgctxt "tooltips.settings_api_default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "Προκαθορισμένος αριθμός εγγραφών που θα λαμβάνονται για κάθε API request."
+
+#: tooltips.settings_api_max_record_limit
+msgctxt "tooltips.settings_api_max_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "Μέγιστος αριθμός εγγραφών που θα λαμβάνονται για κάθε API request."
+
+#: tooltips.settings_api_max_requests_per_ip
+msgctxt "tooltips.settings_api_max_requests_per_ip"
+msgid "Maximum number of API requests per IP address"
+msgstr "Μέγιστος αριθμός API request ανά διεύθυνση IP."
+
+#: tooltips.settings_banner
+msgctxt "tooltips.settings_banner"
+msgid ""
+"The site banner shows up at the top of the front end of your website if the "
+"theme you are using supports it. The recommended size for this banner will "
+"depend on the theme you are using. Keep in mind that this will replace the "
+"site title and tagline at the top of the page."
+msgstr "To banner του site απεικονίζεται στην κορυφή της σελίδας του site σου, εάν υποστηρίζεται από το θέμα που χρησιμοποιείς. Το συνιστώμενο μέγεθος για το banner εξαρτάται από το εκάστοτε θέμα. Έχε στο νου σου ότι το banner θα αντικαταστήσει τον τίτλο του site και το tagline στην κορυφή της σελίδας."
+
+#: tooltips.settings_blocks_per_row
+msgctxt "tooltips.settings_blocks_per_row"
+msgid "Number of Block columns that will be displayed on each row."
+msgstr "Ο αριθμός των στηλών block που θα απεικονίζονται σε κάθε σειρά."
+
+#: tooltips.settings_cache_pages
+msgctxt "tooltips.settings_cache_pages"
+msgid ""
+"Enable or disable page caching. This makes pages display faster by cutting "
+"response times. We recommend using caching on high traffic sites. **Remember"
+" that reports will be populated on the front end based on the schedule you "
+"set below (Cache Lifetime)."
+msgstr "Ενεργοποίησε ή απενεργοποίησε το page caching. Αυτό θα κάνει τις σελίδες να απεικονίζονται ταχύτερα, μειώνοντας τους χρόνους απόκρισης. Συνιστούμε να χρησιμοποιείς caching σε site μεγάλης κυκλοφορίας. **Θυμήσου ότι οι αναφορές θα συμπληρώνονται πάνω στο site με βάση το χρονοδιάγραμμα που ορίζεις ακολούθως (Cache lifetime)."
+
+#: tooltips.settings_cache_pages_lifetime
+msgctxt "tooltips.settings_cache_pages_lifetime"
+msgid "Set the lifetime of the cache."
+msgstr "Όρισε το χρόνο ζωής του cache."
+
+#: tooltips.settings_checkins
+msgctxt "tooltips.settings_checkins"
+msgid ""
+"This setting enables checkins on your deployment. This is a simplified "
+"report type that is not moderated before it goes on the homepage and "
+"requires your site to be configured a certain way. When you enable this, "
+"make sure your timezone setting is on UTC and your theme supports checkins. "
+"When you enable this, checkin-only themes will become enabled under your "
+"addons/themes settings page."
+msgstr "Αυτή η ρύθμιση επιτρέπει την είσοδο χρηστών στο σύστημα. Αυτή είναι ένας απλοποιημένος τύπος αναφοράς, η οποία δεν ελέγχεται προτού δημοσιευτεί στην κεντρική σελίδα και απαιτεί συγκεκριμένες ρυθμίσεις για το site σου. Όταν το ενεργοποιήσεις, βεβαιώσου ότι η ζώνη ώρας είναι σε UTC και ότι το θέμα σου υποστηρίζει τα checkins. Όταν είναι ενεργοποιημένο θα μπορείς να βλέπεις μόνο τα θέματα που υποστηρίζουν checkins στη σελίδα addons/thems."
+
+#: tooltips.settings_configure_map
+msgctxt "tooltips.settings_configure_map"
+msgid "Set the map to cover a specific location."
+msgstr "Όρισε συγκεκριμένη περιοχή για το χάρτη."
+
+#: tooltips.settings_default_category_colors
+msgctxt "tooltips.settings_default_category_colors"
+msgid "Set one color code for all the categories on the site."
+msgstr "Όρισε συγκεκριμένο χρώμα για όλες τις κατηγορίες του χάρτη."
+
+#: tooltips.settings_default_category_icons
+msgctxt "tooltips.settings_default_category_icons"
+msgid "Set one icon for all the categories on the site."
+msgstr "Όρισε ένα εικονίδιο για όλες τις κατηγορίες του χάρτη."
+
+#: tooltips.settings_default_location
+msgctxt "tooltips.settings_default_location"
+msgid "This is the country the site is being deployed."
+msgstr "Αυτή είναι η χώρα στην οποία είναι ενεργός αυτός ο χάρτης."
+
+#: tooltips.settings_display_contact
+msgctxt "tooltips.settings_display_contact"
+msgid "Turn the Contact Tab on or off on the main site."
+msgstr "Ενεργοποίησε ή απενεργοποίησε τη φόρμα επικοινωνίας στο κεντρικό site."
+
+#: tooltips.settings_display_howtohelp
+msgctxt "tooltips.settings_display_howtohelp"
+msgid "Turn the How to Help Tab on or off on the main site."
+msgstr "Ενεργοποίησε ή απενεργοποίησε το tab \"How to help\" στην κεντρική σελίδα."
+
+#: tooltips.settings_display_items_per_page
+msgctxt "tooltips.settings_display_items_per_page"
+msgid "This is the number of reports displayed per page on the main site."
+msgstr "Αυτός είναι ο αριθμός των αναφορών που φαίνονται ανά σελίδα στο κεντρικό site."
+
+#: tooltips.settings_display_items_per_page_admin
+msgctxt "tooltips.settings_display_items_per_page_admin"
+msgid ""
+"This is the number of reports displayed per page on the admin Back End."
+msgstr "Αυτός είναι ο αριθμός των αναφορών που φαίνονται ανά σελίδα στο χώρο διαχείρισης του site."
+
+#: tooltips.settings_flsms_download
+msgctxt "tooltips.settings_flsms_download"
+msgid "This is the hub for incoming messages."
+msgstr "Αυτό είναι το κεντρικό σημείο για τα εισερχόμενα μηνύματα."
+
+#: tooltips.settings_flsms_synchronize
+msgctxt "tooltips.settings_flsms_synchronize"
+msgid "This synchronizes the messages in the hub with the Ushahidi platform."
+msgstr "Αυτό συγχρονίζει τα μηνύματα του κεντρικού σημείου με την πλατφόρμα Ushahidi."
+
+#: tooltips.settings_flsms_text_1
+msgctxt "tooltips.settings_flsms_text_1"
+msgid "Phone numbers through which the text messages are received."
+msgstr "Αριθμοί τηλεφώνου μέσω των οποίων λαμβάνονται τα μηνύματα κειμένου."
+
+#: tooltips.settings_google_analytics
+msgctxt "tooltips.settings_google_analytics"
+msgid "Tracks visitors of your site. Get detailed visitor statistics."
+msgstr "Ανίχνευσε τους επισκέπτες του site σου. Δες αναλυτικά στατιστικά για τους επισκέπτες."
+
+#: tooltips.settings_locale
+msgctxt "tooltips.settings_locale"
+msgid "Sets the language that will be used in the site."
+msgstr "Όρισε τη γλώσσα στην οποία θα χρησιμοποιείται αυτό το site."
+
+#: tooltips.settings_manually_approve_users
+msgctxt "tooltips.settings_manually_approve_users"
+msgid ""
+"If you set this option to yes, you must approve every individual user who "
+"creates an account on your site by assigning them roles (ie. Member, Admin, "
+"Superadmin)."
+msgstr "Εάν επιλέξεις ναι, θα πρέπει να εγκρίνεις κάθε χρήστη που δημιουργεί ένα λογαριασμό σε αυτό το site, δίνοντάς του κάποιο ρόλο (πχ Μέλος, Διαχειριστής, Υπερ-Διαχειριστής)."
+
+#: tooltips.settings_map_provider
+msgctxt "tooltips.settings_map_provider"
+msgid "This defines which map is to be used on the site."
+msgstr "Αυτό καθορίζει ποιος χάρτης θα χρησιμοποιηθεί σε αυτό το site."
+
+#: tooltips.settings_map_timeline
+msgctxt "tooltips.settings_map_timeline"
+msgid ""
+"This shows the timeline based on the date and time reports were submitted"
+msgstr "Αυτό δείχνει το timeline με βάση την ημερομηνία και ώρα που δημιουργούνται οι αναφορές."
+
+#: tooltips.settings_private_deployment
+msgctxt "tooltips.settings_private_deployment"
+msgid ""
+"Setting this value to true or yes will make your deployment private so only "
+"users with accounts that you specify will be able to access the deployment."
+msgstr "Ορίζοντας αυτή την τιμή ως true ή ναι θα μετατρέψει το site σου σε μη δημόσιο, ώστε μόνο οι χρήστες με λογαριασμό που καθορίζεις εσύ να μπορούν να έχουν πρόσβαση."
+
+#: tooltips.settings_require_email_confirmation
+msgctxt "tooltips.settings_require_email_confirmation"
+msgid ""
+"Users will be emailed with a confirmation link to click before they are "
+"allowed to log into the deployment if this is set to yes. If you enable this"
+" after your deployment has accepted users, they will be prompted to confirm "
+"their account before they will be allowed to continue using it."
+msgstr "Στους χρήστες θα αποστέλλεται ένα email επιβεβαίωσης με ένα σύνδεσμο που θα πρέπει να επισκεφτούν προτού τους επιτραπεί η δυνατότητα εισόδου στο σύστημα, εάν επιλέξεις \"ναι\". Εάν το επιλέξεις αφότου έχεις ήδη δεχτεί κάποιους χρήστες, θα σταλθεί και σε εκείνους κάποιο email επιβεβαίωσης."
+
+#: tooltips.settings_server_host
+msgctxt "tooltips.settings_server_host"
+msgid "This is where the emails reside"
+msgstr "Εδώ βρίσκονται τα emails."
+
+#: tooltips.settings_server_password
+msgctxt "tooltips.settings_server_password"
+msgid "This is the password for the email address that receives reports."
+msgstr "Αυτός είναι ο κωδικός για τη διεύθυνση email που λαμβάνει τις αναφορές."
+
+#: tooltips.settings_server_port
+msgctxt "tooltips.settings_server_port"
+msgid ""
+"This is required to accept incoming connections from the email address."
+msgstr "Αυτό απαιτείται προκειμένου να γίνονται δεχτές οι συνδέσεις από τη διεύθυνση email."
+
+#: tooltips.settings_server_ssl_support
+msgctxt "tooltips.settings_server_ssl_support"
+msgid "This is required to enhance a secure connection."
+msgstr "Αυτό απαιτείται για την ενίσχυση της ασφάλειας της σύνδεσης."
+
+#: tooltips.settings_server_type
+msgctxt "tooltips.settings_server_type"
+msgid "This is required to retrieve e-mails from the host server."
+msgstr "Αυτό απαιτείται για να μπορεί το σύστημα να λαμβάνει emails από το host server."
+
+#: tooltips.settings_server_username
+msgctxt "tooltips.settings_server_username"
+msgid "This is the email address that receives reports."
+msgstr "Αυτή είναι η διεύθυνση email που λαμβάνει τις αναφορές."
+
+#: tooltips.settings_share_site_stats
+msgctxt "tooltips.settings_share_site_stats"
+msgid ""
+"Hit statistics are stored on a server controlled by Ushahidi. By enabling "
+"this option, you gain access to hit statistics directly in your admin panel."
+" By disabling it, you will stop collecting statistics and will be unable to "
+"recover traffic stats collected while this is turned off."
+msgstr "Τα στατιστικά των επισκέψεων διατηρούνται σε ένα διακομιστή που ελέγχεται από το Ushahidi. Ενεργοποιώντας αυτή την επιλογή μπορείς να δεις τα σχετικά στατιστικά στο admini panel. Απενεργοποιώντας την θα παύσει η συλλογή στατιστικών και δε θα μπορείς να τα ανακτήσεις για την περίοδο που είναι απενεργοποιημένη."
+
+#: tooltips.settings_site_copyright_statement
+msgctxt "tooltips.settings_site_copyright_statement"
+msgid ""
+"Do others have the right to republish text, images, video and/or design "
+"themes that you and your users create? Go to "
+"https://creativecommons.org/choose/ if you are interested in specifying what"
+" others are able to do with your work. And remember to be specific about "
+"what elements of the site you are licensing!"
+msgstr "Έχουν άλλοι το δικαίωμα να αναδημοσιεύσουν κείμενο, φωτογραφίες, βίντεο ή/και σχεδιαστικά θέματα που φτιάχνεις εσύ και οι χρήστες σου; Πήγαινε στο https://creativecommons.org/choose/ εάν επιθυμείς να προσδιορίσεις τι μπορούν να κάνουν οι άλλοι με τη δουλειά σου. Και να θυμάσαι να είσαι συγκεκριμένος σε σχέση με το σε ποια στοιχεία του site σου αφορά η άδεια!"
+
+#: tooltips.settings_site_email
+msgctxt "tooltips.settings_site_email"
+msgid ""
+"This is the email address that will receive email reports and messages from "
+"the contact form."
+msgstr "Αυτή είναι η διεύθυνση email που θα λαμβάνει τις αναφορές μέσω email και τα μηνύματα από τη φόρμα επικοινωνίας."
+
+#: tooltips.settings_site_message
+msgctxt "tooltips.settings_site_message"
+msgid ""
+"This is text that will appear above the map on the homepage. This is useful "
+"for giving important information to visitors on the site. To remove the box,"
+" simply delete the message here."
+msgstr "Αυτό είναι το κείμενο που θα εμφανίζεται πάνω από το χάρτη στην αρχική σελίδα. Είναι χρήσιμο για να δώσεις σημαντικές πληροφορίες στους επισκέπτες του site. Για να αφαιρέσεις το κουτί απλά διάγραψε το μήνυμα εδώ."
+
+#: tooltips.settings_site_name
+msgctxt "tooltips.settings_site_name"
+msgid "This is the name of the site that appears at the top of the main site."
+msgstr "Αυτό είναι το όνομα του site που εμφανίζεται στην κορυφή του κεντρικού site."
+
+#: tooltips.settings_site_submit_report_message
+msgctxt "tooltips.settings_site_submit_report_message"
+msgid ""
+"This is a message that will show up on the submit report page. This is good "
+"for disclaimers or further instructions for your visitors who are reporting."
+msgstr "Αυτό είναι ένα μήνυμα που θα φαίνεται στη σελίδα υποβολής αναφοράς. Είναι χρήσιμο για disclaimers ή περαιτέρω οδηγίες για τους ανταποκριτές."
+
+#: tooltips.settings_site_tagline
+msgctxt "tooltips.settings_site_tagline"
+msgid "In a few words, explain what this site is about."
+msgstr "Με λίγα λόγια εξήγησε το σκοπό αυτού του site."
+
+#: tooltips.settings_site_timezone
+msgctxt "tooltips.settings_site_timezone"
+msgid ""
+"This is the timezone that your site will operate on. This has an impact on "
+"any actions you have set up that utilize time and date, as well as the "
+"default current time for reports on the front and back end of the site."
+msgstr "Αυτή είναι η ζώνη ώρας στην οποία θα λειτουργεί το site σου. Η ρύθμιση αυτή επιδρά σε τυχόν δράσεις που έχεις ρυθμίσει, οι οποίες χρησιμοποιούν ώρα και ημερομηνία, καθώς και στην προκαθορισμένη ώρα για τις αναφορές που υποβάλλονται."
+
+#: tooltips.settings_twitter_configuration
+msgctxt "tooltips.settings_twitter_configuration"
+msgid "Set the twitter hashtag that will be used on a tweet"
+msgstr "Όρισε το twitter hashtag που θα χρησιμοποιηθεί σε κάποιο tweet που αφορά σε αυτό το χάρτη."
+
+#: tooltips.feed_geolocation_user
+msgctxt "tooltips.feed_geolocation_user"
+msgid ""
+"If you want to geocode your feed entries, grab a user http://geonames.org, "
+"enable the free webservices and enter it here. Leave empty to disable this "
+"function.<br /><br />Beware of the the use limits!"
+msgstr ""

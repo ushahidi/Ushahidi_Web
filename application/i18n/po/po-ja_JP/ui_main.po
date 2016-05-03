@@ -1,0 +1,3170 @@
+# 
+# Translators:
+# Kouju Tanabe <tanatakax@gmail.com>, 2013
+# Reiko Kunisada, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ja_JP/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_main.about
+msgctxt "ui_main.about"
+msgid "About "
+msgstr "概略"
+
+#: ui_main.access
+msgctxt "ui_main.access"
+msgid "Access"
+msgstr "アクセス"
+
+#: ui_main.access_limits
+msgctxt "ui_main.access_limits"
+msgid "Access Limits"
+msgstr "アクセス制限"
+
+#: ui_main.account_name
+msgctxt "ui_main.account_name"
+msgid "Account Name"
+msgstr "アカウント名"
+
+#: ui_main.actions
+msgctxt "ui_main.actions"
+msgid "Actions"
+msgstr "アクション"
+
+#: ui_main.action_confirm
+msgctxt "ui_main.action_confirm"
+msgid "This action cannot be undone. Are you sure you want to continue?"
+msgstr "このアクションは停止する事が出来ません。本当に実行しますか？"
+
+#: ui_main.activate
+msgctxt "ui_main.activate"
+msgid "Activate"
+msgstr "有効化する"
+
+#: ui_main.active
+msgctxt "ui_main.active"
+msgid "Active"
+msgstr "有効"
+
+#: ui_main.add
+msgctxt "ui_main.add"
+msgid "Add"
+msgstr "追加"
+
+#: ui_main.added_by
+msgctxt "ui_main.added_by"
+msgid "Added By"
+msgstr "追加者"
+
+#: ui_main.additional_data
+msgctxt "ui_main.additional_data"
+msgid "Additional Data"
+msgstr "備考"
+
+#: ui_main.additional_reports
+msgctxt "ui_main.additional_reports"
+msgid "Additional Reports"
+msgstr "追加レポート"
+
+#: ui_main.add_edit
+msgctxt "ui_main.add_edit"
+msgid "Add/Edit"
+msgstr "追加/編集"
+
+#: ui_main.add_field
+msgctxt "ui_main.add_field"
+msgid "Add a Field"
+msgstr "フィールド追加"
+
+#: ui_main.add_language
+msgctxt "ui_main.add_language"
+msgid "Add Language"
+msgstr "言語の追加"
+
+#: ui_main.add_new
+msgctxt "ui_main.add_new"
+msgid "Add New"
+msgstr "新規追加"
+
+#: ui_main.add_new_category
+msgctxt "ui_main.add_new_category"
+msgid "Add New Category"
+msgstr "新規カテゴリ追加"
+
+#: ui_main.add_translation
+msgctxt "ui_main.add_translation"
+msgid "Add Translation"
+msgstr "翻訳追加"
+
+#: ui_main.admin
+msgctxt "ui_main.admin"
+msgid "Administration"
+msgstr "管理"
+
+#: ui_main.alerts
+msgctxt "ui_main.alerts"
+msgid "Get Alerts"
+msgstr "お知らせ取得"
+
+#: ui_main.alerts_alert_me
+msgctxt "ui_main.alerts_alert_me"
+msgid "Alert me if a report is filed in, or around:"
+msgstr "レポートが提出されたらお知らせを送る"
+
+#: ui_main.alerts_btn_send
+msgctxt "ui_main.alerts_btn_send"
+msgid "Save My Alert"
+msgstr "お知らせを保存する"
+
+#: ui_main.alerts_email
+msgctxt "ui_main.alerts_email"
+msgid "Email address:"
+msgstr "メールアドレス"
+
+#: ui_main.alerts_enter_email
+msgctxt "ui_main.alerts_enter_email"
+msgid "enter email address"
+msgstr "メールアドレスを入力する"
+
+#: ui_main.alerts_enter_mobile
+msgctxt "ui_main.alerts_enter_mobile"
+msgid "enter mobile number with country code"
+msgstr "国番号から携帯番号を入力する"
+
+#: ui_main.alerts_get
+msgctxt "ui_main.alerts_get"
+msgid "Get Alerts"
+msgstr "お知らせ取得"
+
+#: ui_main.alert_has_been
+msgctxt "ui_main.alert_has_been"
+msgid "Alert has been"
+msgstr "によって警告が発生しています"
+
+#: ui_main.alerts_mobile_phone
+msgctxt "ui_main.alerts_mobile_phone"
+msgid "Mobile phone:"
+msgstr "携帯番号:"
+
+#: ui_main.alerts_place_spot
+msgctxt "ui_main.alerts_place_spot"
+msgid ""
+"Or place a spot on the map below, and we will alert you when a report is "
+"submitted within 20 kilometers."
+msgstr "もしくは、以下の地図を選択する事で、20キロ範囲内でレポートが提出されたらアラームをお送りします。"
+
+#: ui_main.alerts_place_spot2
+msgctxt "ui_main.alerts_place_spot2"
+msgid ""
+"If you can't find your location, please click on the map to pinpoint the "
+"correct location."
+msgstr "もし場所を見つけられない場合は、地図上の正しい場所をクリックして修正してください。"
+
+#: ui_main.alerts_rss
+msgctxt "ui_main.alerts_rss"
+msgid "RSS Feeds (copy the URL below)"
+msgstr "RSSフィード(以下のurlをコピーしてください)"
+
+#: ui_main.alerts_select_city
+msgctxt "ui_main.alerts_select_city"
+msgid "Select a city"
+msgstr "市町村を選択してください。"
+
+#: ui_main.alerts_step1_select_city
+msgctxt "ui_main.alerts_step1_select_city"
+msgid "<strong>Step 1:</strong> Select your city or location:"
+msgstr "<strong>ステップ 1:</strong>街か場所を選択してください:"
+
+#: ui_main.alerts_step2_send_alerts
+msgctxt "ui_main.alerts_step2_send_alerts"
+msgid "<strong>Step 2:</strong> Send alerts to my:"
+msgstr "<strong>ステップ 2:</strong> お知らせの送り先:"
+
+#: ui_main.alerts_step3_select_catgories
+msgctxt "ui_main.alerts_step3_select_catgories"
+msgid "<strong>Step 3 (Optional):</strong> Select Categories"
+msgstr "<strong>ステップ 3 (Optional):</strong> カテゴリ選択"
+
+#: ui_main.alert_confirm_previous
+msgctxt "ui_main.alert_confirm_previous"
+msgid "Confirm A Previous Alert Request"
+msgstr "前回のお知らせリクエストを確認してください。"
+
+#: ui_main.alert_saved
+msgctxt "ui_main.alert_saved"
+msgid "Your Alert Has Been Saved!"
+msgstr "お知らせが保存されました。"
+
+#: ui_main.all
+msgctxt "ui_main.all"
+msgid "All"
+msgstr "すべて"
+
+#: ui_main.allowed
+msgctxt "ui_main.allowed"
+msgid "Allowed"
+msgstr "許可"
+
+#: ui_main.allowed_tags
+msgctxt "ui_main.allowed_tags"
+msgid "Allowed HTML tags: \"%s\"."
+msgstr "許可されているHTMlタグは以下のとおりです: \"%s\""
+
+#: ui_main.allowed_iframes
+msgctxt "ui_main.allowed_iframes"
+msgid "Iframes are only allowed from: %s."
+msgstr ""
+
+#: ui_main.all_categories
+msgctxt "ui_main.all_categories"
+msgid "All Categories"
+msgstr "全カテゴリ"
+
+#: ui_main.all_time
+msgctxt "ui_main.all_time"
+msgid "All Time"
+msgstr "常に"
+
+#: ui_main.and
+msgctxt "ui_main.and"
+msgid "and"
+msgstr "と"
+
+#: ui_main.api
+msgctxt "ui_main.api"
+msgid "API"
+msgstr "API"
+
+#: ui_main.approve
+msgctxt "ui_main.approve"
+msgid "Approve"
+msgstr "承認"
+
+#: ui_main.approved
+msgctxt "ui_main.approved"
+msgid "Approved"
+msgstr "承認済み"
+
+#: ui_main.approved_reports
+msgctxt "ui_main.approved_reports"
+msgid "Approved Reports"
+msgstr "承認済みレポート"
+
+#: ui_main.approve_this_report
+msgctxt "ui_main.approve_this_report"
+msgid "Approve this Report"
+msgstr "このレポートを承認する"
+
+#: ui_main.approximate
+msgctxt "ui_main.approximate"
+msgid "Approximate"
+msgstr "おおよその"
+
+#: ui_main.archive
+msgctxt "ui_main.archive"
+msgid "Archive"
+msgstr "アーカイブ"
+
+#: ui_main.archived
+msgctxt "ui_main.archived"
+msgid "Archived"
+msgstr "アーカイブ済み"
+
+#: ui_main.ascending
+msgctxt "ui_main.ascending"
+msgid "Ascending"
+msgstr "昇順"
+
+#: ui_main.at
+msgctxt "ui_main.at"
+msgid "at"
+msgstr "に"
+
+#: ui_main.author
+msgctxt "ui_main.author"
+msgid "Author"
+msgstr "著者"
+
+#: ui_main.auto_checkin
+msgctxt "ui_main.auto_checkin"
+msgid "Auto Checkin"
+msgstr "自動チェックイン"
+
+#: ui_main.Auto
+msgctxt "ui_main.Auto"
+msgid "Auto"
+msgstr ""
+
+#: ui_main.avg_reports_per_day
+msgctxt "ui_main.avg_reports_per_day"
+msgid "Avg Reports Per Day"
+msgstr "一日のレポート平均数"
+
+#: ui_main.awaiting_approval
+msgctxt "ui_main.awaiting_approval"
+msgid "Awaiting Approval"
+msgstr "承認待ち"
+
+#: ui_main.awaiting_verification
+msgctxt "ui_main.awaiting_verification"
+msgid "Awaiting Verification"
+msgstr "認証待ち"
+
+#: ui_main.badge
+msgctxt "ui_main.badge"
+msgid "Badge"
+msgstr "バッジ"
+
+#: ui_main.badges
+msgctxt "ui_main.badges"
+msgid "Badges"
+msgstr "バッジ"
+
+#: ui_main.badge_image
+msgctxt "ui_main.badge_image"
+msgid "Badge Image"
+msgstr "バッジ画像"
+
+#: ui_main.badge_image_upload_your_own
+msgctxt "ui_main.badge_image_upload_your_own"
+msgid "Or you can upload your own badge image instead."
+msgstr "もしくは代わりにご自身のバッジ画像をアップロードする事もできます。"
+
+#: ui_main.badge_pack
+msgctxt "ui_main.badge_pack"
+msgid "Badge Pack"
+msgstr ""
+
+#: ui_main.badge_select
+msgctxt "ui_main.badge_select"
+msgid "Select a Badge"
+msgstr "バッジを選択する"
+
+#: ui_main.blog
+msgctxt "ui_main.blog"
+msgid "Blog"
+msgstr "ブログ"
+
+#: ui_main.browse_profiles
+msgctxt "ui_main.browse_profiles"
+msgid "Browse Profiles"
+msgstr "プロファイルを見る"
+
+#: ui_main.cancel
+msgctxt "ui_main.cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: ui_main.categories
+msgctxt "ui_main.categories"
+msgid "Categories"
+msgstr "カテゴリー"
+
+#: ui_main.category
+msgctxt "ui_main.category"
+msgid "Category"
+msgstr "カテゴリー"
+
+#: ui_main.category_filter
+msgctxt "ui_main.category_filter"
+msgid "Category Filter"
+msgstr "カテゴリーフィルター"
+
+#: ui_main.category_has_been
+msgctxt "ui_main.category_has_been"
+msgid "The category has been "
+msgstr "カテゴリーは"
+
+#: ui_main.category_name
+msgctxt "ui_main.category_name"
+msgid "Category Name"
+msgstr "カテゴリー名"
+
+#: ui_main.change_date_range
+msgctxt "ui_main.change_date_range"
+msgid "Change Date Range"
+msgstr "期間を変更する"
+
+#: ui_main.change_password
+msgctxt "ui_main.change_password"
+msgid "Change Password"
+msgstr "パスワードを変更する"
+
+#: ui_main.change_picture
+msgctxt "ui_main.change_picture"
+msgid "Change My Picture"
+msgstr "自分の画像を変更する"
+
+#: ui_main.choose
+msgctxt "ui_main.choose"
+msgid "Choose a"
+msgstr "選択"
+
+#: ui_main.choose_data_points
+msgctxt "ui_main.choose_data_points"
+msgid "Choose data points to download"
+msgstr "ダウンロードの為にデータポイントを選択してください。"
+
+#: ui_main.choose_date_range
+msgctxt "ui_main.choose_date_range"
+msgid "Or choose your own date range"
+msgstr "もしくは指定したい期間を選択して下さい"
+
+#: ui_main.choose_field_type
+msgctxt "ui_main.choose_field_type"
+msgid "Choose field type"
+msgstr "フィールドタイプを選択してください。"
+
+#: ui_main.cleanurl
+msgctxt "ui_main.cleanurl"
+msgid "Clean URLs"
+msgstr "URLをクリアにする"
+
+#: ui_main.clear
+msgctxt "ui_main.clear"
+msgid "Clear"
+msgstr "消去する"
+
+#: ui_main.clear_map
+msgctxt "ui_main.clear_map"
+msgid "Clear Map"
+msgstr "地図をクリアにする"
+
+#: ui_main.close
+msgctxt "ui_main.close"
+msgid "Close"
+msgstr "閉じる"
+
+#: ui_main.clusters
+msgctxt "ui_main.clusters"
+msgid "clusters"
+msgstr "クラスター"
+
+#: ui_main.color
+msgctxt "ui_main.color"
+msgid "Color"
+msgstr "色"
+
+#: ui_main.comment
+msgctxt "ui_main.comment"
+msgid "Comment"
+msgstr "コメント"
+
+#: ui_main.comments
+msgctxt "ui_main.comments"
+msgid "Comments"
+msgstr "コメント"
+
+#: ui_main.comment_details
+msgctxt "ui_main.comment_details"
+msgid "Comment Details"
+msgstr "コメント詳細"
+
+#: ui_main.configuration_saved
+msgctxt "ui_main.configuration_saved"
+msgid "Your Settings Have Been Saved!"
+msgstr "設定が保存されました！"
+
+#: ui_main.configure
+msgctxt "ui_main.configure"
+msgid "Configure"
+msgstr "設定"
+
+#: ui_main.confirm_email_successful
+msgctxt "ui_main.confirm_email_successful"
+msgid ""
+"You have successfully confirmed your email address! Please login below."
+msgstr "あなたのメールアドレスは認証されました。以下からログインして下さい。"
+
+#: ui_main.confirm_email_successful_and_approval
+msgctxt "ui_main.confirm_email_successful_and_approval"
+msgid ""
+"You have successfully confirmed your email address! An administrator must "
+"approve your account before you login"
+msgstr ""
+
+#: ui_main.confirm_email_failed
+msgctxt "ui_main.confirm_email_failed"
+msgid ""
+"Email confirmation failed! You can request a new email confirmation below."
+msgstr "メールによる確認に失敗しました。以下で、確認メールの再送信を要請できます。"
+
+#: ui_main.contact
+msgctxt "ui_main.contact"
+msgid "Contact Us"
+msgstr "お問合せ"
+
+#: ui_main.contact_code
+msgctxt "ui_main.contact_code"
+msgid "Security Code"
+msgstr "セキュリティコード"
+
+#: ui_main.contact_email
+msgctxt "ui_main.contact_email"
+msgid "Your Email Address"
+msgstr "あなたのメールアドレス"
+
+#: ui_main.contact_message
+msgctxt "ui_main.contact_message"
+msgid "Message"
+msgstr "メッセージ"
+
+#: ui_main.contact_message_has_send
+msgctxt "ui_main.contact_message_has_send"
+msgid "Your Message Has Been Sent!"
+msgstr "メッセージが送られました"
+
+#: ui_main.contact_name
+msgctxt "ui_main.contact_name"
+msgid "Your Name"
+msgstr "名前"
+
+#: ui_main.contact_phone
+msgctxt "ui_main.contact_phone"
+msgid "Your Phone Number"
+msgstr "電話番号"
+
+#: ui_main.contact_send
+msgctxt "ui_main.contact_send"
+msgid "Send Message"
+msgstr "メッセージを送る"
+
+#: ui_main.contact_subject
+msgctxt "ui_main.contact_subject"
+msgid "Message Subject"
+msgstr "メッセージタイトル"
+
+#: ui_main.copyright
+msgctxt "ui_main.copyright"
+msgid "Copyright ©"
+msgstr "Copyright c"
+
+#: ui_main.create
+msgctxt "ui_main.create"
+msgid "Create"
+msgstr "作成"
+
+#: ui_main.create_edit
+msgctxt "ui_main.create_edit"
+msgid "Create/Edit"
+msgstr "追加/編集"
+
+#: ui_main.create_new
+msgctxt "ui_main.create_new"
+msgid "Create New"
+msgstr "新規追加"
+
+#: ui_main.create_new_password
+msgctxt "ui_main.create_new_password"
+msgid "Create New Password"
+msgstr "新しいパスワードを作成する"
+
+#: ui_main.create_report
+msgctxt "ui_main.create_report"
+msgid "Create Report"
+msgstr "レポートを追加"
+
+#: ui_main.credibility
+msgctxt "ui_main.credibility"
+msgid "Credibility"
+msgstr "信頼"
+
+#: ui_main.current_password
+msgctxt "ui_main.current_password"
+msgid "Current Password"
+msgstr "現在のパスワード"
+
+#: ui_main.custom_fields
+msgctxt "ui_main.custom_fields"
+msgid "Custom Fields"
+msgstr ""
+
+#: ui_main.data
+msgctxt "ui_main.data"
+msgid "Information"
+msgstr "情報"
+
+#: ui_main.date
+msgctxt "ui_main.date"
+msgid "Date"
+msgstr "日付"
+
+#: ui_main.date_format
+msgctxt "ui_main.date_format"
+msgid "(mm/dd/yyyy)"
+msgstr "(yyyy/mm/dd)"
+
+#: ui_main.date_time
+msgctxt "ui_main.date_time"
+msgid "Date & Time"
+msgstr "日付&時間"
+
+#: ui_main.day
+msgctxt "ui_main.day"
+msgid "day"
+msgstr "日"
+
+#: ui_main.Daily
+msgctxt "ui_main.Daily"
+msgid "Daily"
+msgstr ""
+
+#: ui_main.deactivate
+msgctxt "ui_main.deactivate"
+msgid "Deactivate"
+msgstr "無効化する"
+
+#: ui_main.default_location_name
+msgctxt "ui_main.default_location_name"
+msgid "Nairobi, Kenya"
+msgstr "ナイロビ、ケニヤ"
+
+#: ui_main.delete
+msgctxt "ui_main.delete"
+msgid "Delete"
+msgstr "削除"
+
+#: ui_main.deleted
+msgctxt "ui_main.deleted"
+msgid "Deleted"
+msgstr "削除済み"
+
+#: ui_main.deletes
+msgctxt "ui_main.deletes"
+msgid "Deletes"
+msgstr "削除"
+
+#: ui_main.delete_disabled
+msgctxt "ui_main.delete_disabled"
+msgid "Delete Disabled"
+msgstr "無効化を削除"
+
+#: ui_main.delete_last
+msgctxt "ui_main.delete_last"
+msgid "Delete Last"
+msgstr "最後の投稿を削除"
+
+#: ui_main.delete_report
+msgctxt "ui_main.delete_report"
+msgid "Delete this Report"
+msgstr "このレポートを削除する"
+
+#: ui_main.delete_selected
+msgctxt "ui_main.delete_selected"
+msgid "Delete Selected"
+msgstr "選択されたものを削除"
+
+#: ui_main.delete_spam
+msgctxt "ui_main.delete_spam"
+msgid "Delete Spam"
+msgstr "スパムを削除"
+
+#: ui_main.demo
+msgctxt "ui_main.demo"
+msgid "Demo"
+msgstr "デモ"
+
+#: ui_main.description
+msgctxt "ui_main.description"
+msgid "Description"
+msgstr "説明"
+
+#: ui_main.descending
+msgctxt "ui_main.descending"
+msgid "Descending"
+msgstr "降順"
+
+#: ui_main.detailed_location_example
+msgctxt "ui_main.detailed_location_example"
+msgid "Example: Corner of City Market, 5th Street & 4th Avenue, Johannesburg"
+msgstr "例: シティーマーケット通りの角、５番＆４番通り、ジョナサンバーク"
+
+#: ui_main.details
+msgctxt "ui_main.details"
+msgid "Details"
+msgstr "詳細"
+
+#: ui_main.direct_report
+msgctxt "ui_main.direct_report"
+msgid "Direct Report"
+msgstr "レポートへの直リンク"
+
+#: ui_main.disabled
+msgctxt "ui_main.disabled"
+msgid "Disabled"
+msgstr "無効済み"
+
+#: ui_main.disapprove
+msgctxt "ui_main.disapprove"
+msgid "Unapprove"
+msgstr "未承認"
+
+#: ui_main.download_reports
+msgctxt "ui_main.download_reports"
+msgid "Download Reports"
+msgstr "レポートをダウンロードする"
+
+#: ui_main.download
+msgctxt "ui_main.download"
+msgid "Download"
+msgstr "ダウンロード"
+
+#: ui_main.edit
+msgctxt "ui_main.edit"
+msgid "Edit"
+msgstr "編集"
+
+#: ui_main.edit_form_fields
+msgctxt "ui_main.edit_form_fields"
+msgid "Edit Form Fields"
+msgstr "フォームのフィールドを編集"
+
+#: ui_main.edit_report
+msgctxt "ui_main.edit_report"
+msgid "Edit Report"
+msgstr "レポートを編集"
+
+#: ui_main.email
+msgctxt "ui_main.email"
+msgid "Email"
+msgstr "メール"
+
+#: ui_main.email_address
+msgctxt "ui_main.email_address"
+msgid "Email Address"
+msgstr "メールアドレス"
+
+#: ui_main.email_configuration
+msgctxt "ui_main.email_configuration"
+msgid "Mail Server Settings"
+msgstr "メールサーバー設定"
+
+#: ui_main.email_server_host
+msgctxt "ui_main.email_server_host"
+msgid "Mail Server Host"
+msgstr "メールサーバーホスト"
+
+#: ui_main.email_server_password
+msgctxt "ui_main.email_server_password"
+msgid "Mail Server Password"
+msgstr "メールサーバーパスワード"
+
+#: ui_main.email_server_port
+msgctxt "ui_main.email_server_port"
+msgid "Mail Server Port"
+msgstr "メールサーバーポート"
+
+#: ui_main.email_server_ssl_support
+msgctxt "ui_main.email_server_ssl_support"
+msgid "Mail Server SSL support"
+msgstr "メールサーバーSSLサポート"
+
+#: ui_main.email_server_type
+msgctxt "ui_main.email_server_type"
+msgid "Mail Server Type"
+msgstr "メールサーバータイプ"
+
+#: ui_main.email_server_username
+msgctxt "ui_main.email_server_username"
+msgid "Mail Server Username"
+msgstr "メールサーバーユーザー名"
+
+#: ui_main.email_settings_comment_0
+msgctxt "ui_main.email_settings_comment_0"
+msgid "so your settings have to be associated with this email address"
+msgstr "このメールアドレスはあなたの設定に関連ついている必要があります。"
+
+#: ui_main.email_settings_comment_00
+msgctxt "ui_main.email_settings_comment_00"
+msgid ""
+"In order to receive reports by email, please input your email account "
+"settings below. Please note that emails will be received at your"
+msgstr "レポートをメールで受け取る胃は、以下のアカウント設定にメールアドレスを入力する必要があります。メールは以下のメールアドレスに送信されます。"
+
+#: ui_main.email_settings_comment_1
+msgctxt "ui_main.email_settings_comment_1"
+msgid "Some servers require a complete email address"
+msgstr "メールアドレスは全部入力してください。"
+
+#: ui_main.email_settings_comment_2
+msgctxt "ui_main.email_settings_comment_2"
+msgid "Email account password"
+msgstr "メールアカウントパスワード"
+
+#: ui_main.email_settings_comment_3
+msgctxt "ui_main.email_settings_comment_3"
+msgid "Common ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "一般的なポート: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: ui_main.email_settings_comment_4
+msgctxt "ui_main.email_settings_comment_4"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "例: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: ui_main.email_settings_comment_5
+msgctxt "ui_main.email_settings_comment_5"
+msgid "Examples: pop3, imap"
+msgstr "例: pop3, imap"
+
+#: ui_main.email_settings_comment_6
+msgctxt "ui_main.email_settings_comment_6"
+msgid "Enable or disable SSL connections"
+msgstr "SSL接続の有効化/無効化"
+
+#: ui_main.empty
+msgctxt "ui_main.empty"
+msgid "---EMPTY---"
+msgstr ""
+
+#: ui_main.end_point
+msgctxt "ui_main.end_point"
+msgid "to"
+msgstr "と"
+
+#: ui_main.error
+msgctxt "ui_main.error"
+msgid "Error!"
+msgstr "エラー！"
+
+#: ui_main.example
+msgctxt "ui_main.example"
+msgid "Example"
+msgstr "例"
+
+#: ui_main.example_country
+msgctxt "ui_main.example_country"
+msgid "Kenya"
+msgstr "ケニヤ"
+
+#: ui_main.external_apps
+msgctxt "ui_main.external_apps"
+msgid "External Apps"
+msgstr "外部アプリ"
+
+#: ui_main.external_video_link
+msgctxt "ui_main.external_video_link"
+msgid "External Video Link"
+msgstr "外部のビデオへのリンク"
+
+#: ui_main.facebook
+msgctxt "ui_main.facebook"
+msgid "Facebook"
+msgstr "フェイスブック"
+
+#: ui_main.feed
+msgctxt "ui_main.feed"
+msgid "Feed"
+msgstr "フィード"
+
+#: ui_main.feedback
+msgctxt "ui_main.feedback"
+msgid "Provide Feedback"
+msgstr "フィードバックを提供"
+
+#: ui_main.feedback_reports
+msgctxt "ui_main.feedback_reports"
+msgid "Please give us feedback about your experience by sending an email to "
+msgstr ""
+
+#: ui_main.feeds
+msgctxt "ui_main.feeds"
+msgid "Feeds"
+msgstr "フィード"
+
+#: ui_main.feed_has_been
+msgctxt "ui_main.feed_has_been"
+msgid "The feed has been"
+msgstr "フィードは"
+
+#: ui_main.feed_items
+msgctxt "ui_main.feed_items"
+msgid "Feed Items"
+msgstr "フィードアイテム"
+
+#: ui_main.feed_name
+msgctxt "ui_main.feed_name"
+msgid "Feed Name"
+msgstr "フィード名"
+
+#: ui_main.feed_url
+msgctxt "ui_main.feed_url"
+msgid "Feed URL"
+msgstr "フィードURL"
+
+#: ui_main.field_unused
+msgctxt "ui_main.field_unused"
+msgid "Unused field"
+msgstr "未使用のフィード"
+
+#: ui_main.file
+msgctxt "ui_main.file"
+msgid "File"
+msgstr "ファイル"
+
+#: ui_main.file_over_max_allowed
+msgctxt "ui_main.file_over_max_allowed"
+msgid "Your file is over the maximum allowed filesize."
+msgstr "ファイル容量が大き過ぎます。"
+
+#: ui_main.filters
+msgctxt "ui_main.filters"
+msgid "Filters"
+msgstr "フィルター"
+
+#: ui_main.filter_reports
+msgctxt "ui_main.filter_reports"
+msgid "Filter Reports"
+msgstr "レポートを選別する"
+
+#: ui_main.filter_reports_by
+msgctxt "ui_main.filter_reports_by"
+msgid "Filter Reports By"
+msgstr "レポートを以下の基準で選別する:"
+
+#: ui_main.filter_reports_contain
+msgctxt "ui_main.filter_reports_contain"
+msgid "Filter reports that contain"
+msgstr "以下を含むレポートのみを取り出す:"
+
+#: ui_main.find
+msgctxt "ui_main.find"
+msgid "Find"
+msgstr "見つける"
+
+#: ui_main.find_location
+msgctxt "ui_main.find_location"
+msgid "Find Location"
+msgstr "ロケーションを探す"
+
+#: ui_main.first_name
+msgctxt "ui_main.first_name"
+msgid "First Name"
+msgstr "名前"
+
+#: ui_main.force_run_scheduler
+msgctxt "ui_main.force_run_scheduler"
+msgid "Force Run Scheduler"
+msgstr "スケジュールを強制的には知らせる"
+
+#: ui_main.forgot_password
+msgctxt "ui_main.forgot_password"
+msgid "Forgot your password?"
+msgstr "パスワードを忘れてしまいましたか？"
+
+#: ui_main.form
+msgctxt "ui_main.form"
+msgid "Form"
+msgstr "フォーム"
+
+#: ui_main.forms
+msgctxt "ui_main.forms"
+msgid "Forms"
+msgstr "フォーム"
+
+#: ui_main.form_description
+msgctxt "ui_main.form_description"
+msgid "Form Description"
+msgstr "フォーム説明"
+
+#: ui_main.form_edit
+msgctxt "ui_main.form_edit"
+msgid "Edit this Form"
+msgstr "このフォームを編集する"
+
+#: ui_main.form_has_been
+msgctxt "ui_main.form_has_been"
+msgid "The form has been"
+msgstr "このフォームは"
+
+#: ui_main.form_title
+msgctxt "ui_main.form_title"
+msgid "Form Title"
+msgstr "フォームタイトル"
+
+#: ui_main.from
+msgctxt "ui_main.from"
+msgid "From"
+msgstr "から"
+
+#: ui_main.full_name
+msgctxt "ui_main.full_name"
+msgid "Full Name"
+msgstr "氏名"
+
+#: ui_main.geolocation_available
+msgctxt "ui_main.geolocation_available"
+msgid "GeoLocation Available"
+msgstr "可能なジオロケーション"
+
+#: ui_main.geometry_color
+msgctxt "ui_main.geometry_color"
+msgid "Color"
+msgstr "色"
+
+#: ui_main.geometry_comments
+msgctxt "ui_main.geometry_comments"
+msgid "Comments"
+msgstr "コメント"
+
+#: ui_main.geometry_label
+msgctxt "ui_main.geometry_label"
+msgid "Label"
+msgstr "ラベル"
+
+#: ui_main.geometry_strokewidth
+msgctxt "ui_main.geometry_strokewidth"
+msgid "Stroke Width"
+msgstr "幅"
+
+#: ui_main.go
+msgctxt "ui_main.go"
+msgid "Go"
+msgstr "移動する"
+
+#: ui_main.hashtag
+msgctxt "ui_main.hashtag"
+msgid "Hashtag"
+msgstr "ハッシュタグ"
+
+#: ui_main.has_been
+msgctxt "ui_main.has_been"
+msgid "Has Been"
+msgstr "であった"
+
+#: ui_main.help
+msgctxt "ui_main.help"
+msgid "How to Help"
+msgstr "助ける方法"
+
+#: ui_main.hidden
+msgctxt "ui_main.hidden"
+msgid "Hidden"
+msgstr "隠す"
+
+#: ui_main.hide
+msgctxt "ui_main.hide"
+msgid "Hide"
+msgstr "隠す"
+
+#: ui_main.hide_this_message
+msgctxt "ui_main.hide_this_message"
+msgid "hide this message"
+msgstr "このメッセージを隠す"
+
+#: ui_main.home
+msgctxt "ui_main.home"
+msgid "Home"
+msgstr "ホーム"
+
+#: ui_main.Hourly
+msgctxt "ui_main.Hourly"
+msgid "Hourly"
+msgstr ""
+
+#: ui_main.how_to_report
+msgctxt "ui_main.how_to_report"
+msgid "How to Report"
+msgstr "レポートする方法"
+
+#: ui_main.https
+msgctxt "ui_main.https"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: ui_main.id
+msgctxt "ui_main.id"
+msgid "ID"
+msgstr "ID"
+
+#: ui_main.identify_you
+msgctxt "ui_main.identify_you"
+msgid "Used to identify you on the site to other users."
+msgstr ""
+
+#: ui_main.image
+msgctxt "ui_main.image"
+msgid "Image"
+msgstr "イメージ"
+
+#: ui_main.images
+msgctxt "ui_main.images"
+msgid "Images"
+msgstr "イメージ"
+
+#: ui_main.image_icon
+msgctxt "ui_main.image_icon"
+msgid "Image/Icon"
+msgstr "イメージ/アイコン"
+
+#: ui_main.inactive
+msgctxt "ui_main.inactive"
+msgid "Inactive"
+msgstr "無効"
+
+#: ui_main.inbox
+msgctxt "ui_main.inbox"
+msgid "Inbox"
+msgstr "インボックス"
+
+#: ui_main.incident
+msgctxt "ui_main.incident"
+msgid "Incident"
+msgstr "出来事"
+
+#: ui_main.incidents_nearby
+msgctxt "ui_main.incidents_nearby"
+msgid "Incidents Nearby"
+msgstr "近くの出来事"
+
+#: ui_main.incident_location
+msgctxt "ui_main.incident_location"
+msgid "Incident Location"
+msgstr "発生場所"
+
+#: ui_main.include
+msgctxt "ui_main.include"
+msgid "Include"
+msgstr "含む"
+
+#: ui_main.include_categories
+msgctxt "ui_main.include_categories"
+msgid "Include Categories"
+msgstr "カテゴリーを含む"
+
+#: ui_main.include_custom_fields
+msgctxt "ui_main.include_custom_fields"
+msgid "Include Custom Fields"
+msgstr ""
+
+#: ui_main.include_description
+msgctxt "ui_main.include_description"
+msgid "Include Description"
+msgstr "説明を含む"
+
+#: ui_main.include_detail
+msgctxt "ui_main.include_detail"
+msgid "Include as much detail as possible"
+msgstr "含めれるすべての詳細を含む"
+
+#: ui_main.include_latitude
+msgctxt "ui_main.include_latitude"
+msgid "Include Latitude"
+msgstr "緯度を含む"
+
+#: ui_main.include_location_information
+msgctxt "ui_main.include_location_information"
+msgid "Include Location Information"
+msgstr "ロケーション情報を含む"
+
+#: ui_main.include_longitude
+msgctxt "ui_main.include_longitude"
+msgid "Include Longitude"
+msgstr "経度を含む"
+
+#: ui_main.include_personal_info
+msgctxt "ui_main.include_personal_info"
+msgid "Include Personal Information"
+msgstr "個人情報を含む"
+
+#: ui_main.incoming_media
+msgctxt "ui_main.incoming_media"
+msgid "Incoming Media"
+msgstr "メディア"
+
+#: ui_main.information_evaluation
+msgctxt "ui_main.information_evaluation"
+msgid "Information Evaluation"
+msgstr "情報の評価"
+
+#: ui_main.input_location
+msgctxt "ui_main.input_location"
+msgid "Enter your precise location"
+msgstr "前回いた場所を入力してください"
+
+#: ui_main.insufficient_role
+msgctxt "ui_main.insufficient_role"
+msgid ""
+"Your account doesn't have the proper permission to fully log you in. Please "
+"contact the administrator."
+msgstr ""
+
+#: ui_main.interval
+msgctxt "ui_main.interval"
+msgid "Interval"
+msgstr ""
+
+#: ui_main.in_response_to
+msgctxt "ui_main.in_response_to"
+msgid "In response to"
+msgstr "返答"
+
+#: ui_main.ip_address
+msgctxt "ui_main.ip_address"
+msgid "IP Address"
+msgstr "IP アドレス"
+
+#: ui_main.is_this_your_profile
+msgctxt "ui_main.is_this_your_profile"
+msgid "Is this your profile?"
+msgstr "これはあなたの情報ですか?"
+
+#: ui_main.item
+msgctxt "ui_main.item"
+msgid "item"
+msgstr "アイテム"
+
+#: ui_main.items
+msgctxt "ui_main.items"
+msgid "items"
+msgstr "アイテム"
+
+#: ui_main.item_details
+msgctxt "ui_main.item_details"
+msgid "item_details"
+msgstr "アイテム詳細"
+
+#: ui_main.item_title
+msgctxt "ui_main.item_title"
+msgid "Item Title"
+msgstr "アイテムタイトル"
+
+#: ui_main.key
+msgctxt "ui_main.key"
+msgid "Key"
+msgstr "キー"
+
+#: ui_main.keywords
+msgctxt "ui_main.keywords"
+msgid "Keywords"
+msgstr "キーワード"
+
+#: ui_main.kml_kmz_file
+msgctxt "ui_main.kml_kmz_file"
+msgid "KMZ/KML File"
+msgstr "KMZ/KMLファイル"
+
+#: ui_main.kml_kmz_upload
+msgctxt "ui_main.kml_kmz_upload"
+msgid "Upload KMZ/KML File"
+msgstr "KMZ/KMLファイルをアップロード"
+
+#: ui_main.kml_url
+msgctxt "ui_main.kml_url"
+msgid "KML URL"
+msgstr ""
+
+#: ui_main.laconica
+msgctxt "ui_main.laconica"
+msgid "Laconica"
+msgstr ""
+
+#: ui_main.language
+msgctxt "ui_main.language"
+msgid "Language"
+msgstr "言語"
+
+#: ui_main.last
+msgctxt "ui_main.last"
+msgid "Last"
+msgstr "ラスト"
+
+#: ui_main.last_month
+msgctxt "ui_main.last_month"
+msgid "Last Month"
+msgstr "先月"
+
+#: ui_main.last_name
+msgctxt "ui_main.last_name"
+msgid "Last Name"
+msgstr "名字"
+
+#: ui_main.last_year
+msgctxt "ui_main.last_year"
+msgid "Last Year"
+msgstr "去年"
+
+#: ui_main.latitude
+msgctxt "ui_main.latitude"
+msgid "Latitude"
+msgstr "緯度"
+
+#: ui_main.layers
+msgctxt "ui_main.layers"
+msgid "Layers"
+msgstr "レイヤー"
+
+#: ui_main.layers_filter
+msgctxt "ui_main.layers_filter"
+msgid "Other Layers"
+msgstr "他のレイヤー"
+
+#: ui_main.layer_has_been
+msgctxt "ui_main.layer_has_been"
+msgid "The Layer Has Been"
+msgstr "レイヤーは"
+
+#: ui_main.layer_name
+msgctxt "ui_main.layer_name"
+msgid "Layer Name"
+msgstr "レイヤー名"
+
+#: ui_main.layer_url
+msgctxt "ui_main.layer_url"
+msgid "Layer URL"
+msgstr "レイヤーURL"
+
+#: ui_main.leave_a_comment
+msgctxt "ui_main.leave_a_comment"
+msgid "Leave a Comment"
+msgstr "コメントを残す"
+
+#: ui_main.less_information
+msgctxt "ui_main.less_information"
+msgid "Less Information"
+msgstr ""
+
+#: ui_main.level
+msgctxt "ui_main.level"
+msgid "Level"
+msgstr "レベル"
+
+#: ui_main.level_has_been
+msgctxt "ui_main.level_has_been"
+msgid "This level has been"
+msgstr "このレベルは"
+
+#: ui_main.level_name
+msgctxt "ui_main.level_name"
+msgid "Level Name"
+msgstr "レベル名"
+
+#: ui_main.limited
+msgctxt "ui_main.limited"
+msgid "Limited"
+msgstr "リミット"
+
+#: ui_main.link
+msgctxt "ui_main.link"
+msgid "Link"
+msgstr "リンク"
+
+#: ui_main.list
+msgctxt "ui_main.list"
+msgid "List"
+msgstr ""
+
+#: ui_main.loading_reports
+msgctxt "ui_main.loading_reports"
+msgid "Loading Reports"
+msgstr "レポートを読み込んでいます..."
+
+#: ui_main.location
+msgctxt "ui_main.location"
+msgid "Location"
+msgstr "ロケーション"
+
+#: ui_main.locations
+msgctxt "ui_main.locations"
+msgid "Locations"
+msgstr "ロケーション"
+
+#: ui_main.location_example
+msgctxt "ui_main.location_example"
+msgid "City, State and/or Country"
+msgstr "市町村、都道府県もしくは国"
+
+#: ui_main.login
+msgctxt "ui_main.login"
+msgid "Login"
+msgstr "ログイン"
+
+#: ui_main.login_account_creation_successful
+msgctxt "ui_main.login_account_creation_successful"
+msgid "Account created successfully. You may log in now."
+msgstr "アカウントの作成が完了しました。ログインが可能です。"
+
+#: ui_main.login_confirmation_sent
+msgctxt "ui_main.login_confirmation_sent"
+msgid "A confirmation has been sent to your email address."
+msgstr "指定されたメールアドレスに、確認用のメールを送信しました。"
+
+#: ui_main.login_approval_required
+msgctxt "ui_main.login_approval_required"
+msgid ""
+"Account created. Your account must be approved by an admin before you can "
+"login."
+msgstr ""
+
+#: ui_main.login_email_doesnt_exist
+msgctxt "ui_main.login_email_doesnt_exist"
+msgid ""
+"Email address doesn't exist. Try a different address or create an account."
+msgstr "メールアドレスが存在しません。別のメールアドレスを指定するか、作成するかして下さい。"
+
+#: ui_main.login_select_openid
+msgctxt "ui_main.login_select_openid"
+msgid "Please click your account provider"
+msgstr ""
+
+#: ui_main.login_with
+msgctxt "ui_main.login_with"
+msgid "Login with"
+msgstr "以下のユーザ名でログイン:"
+
+#: ui_main.login_userpass
+msgctxt "ui_main.login_userpass"
+msgid "Email and Password"
+msgstr "メールアドレスとパスワード"
+
+#: ui_main.login_openid
+msgctxt "ui_main.login_openid"
+msgid "OpenID"
+msgstr "OpenID"
+
+#: ui_main.login_signup
+msgctxt "ui_main.login_signup"
+msgid "Sign Up"
+msgstr "登録"
+
+#: ui_main.login_signup_click
+msgctxt "ui_main.login_signup_click"
+msgid "Create an Account"
+msgstr "アカウントを作成する"
+
+#: ui_main.login_signup_confirmation_message
+msgctxt "ui_main.login_signup_confirmation_message"
+msgid ""
+"Thank you for signing up at %1$s. To confirm your email address, please go "
+"to the following URL: %2$s"
+msgstr ""
+
+#: ui_main.login_signup_confirmation_subject
+msgctxt "ui_main.login_signup_confirmation_subject"
+msgid "Signup Confirmation"
+msgstr "登録確認"
+
+#: ui_main.login_signup_admin_approval_message
+msgctxt "ui_main.login_signup_admin_approval_message"
+msgid ""
+"An new user has signed up at %1$s. To approve their registration please go "
+"to the following URL: %2$s"
+msgstr ""
+
+#: ui_main.login_signup_admin_approval_subject
+msgctxt "ui_main.login_signup_admin_approval_subject"
+msgid "New User Approval"
+msgstr ""
+
+#: ui_main.login_signup_approval_message
+msgctxt "ui_main.login_signup_approval_message"
+msgid ""
+"Your user account has been approved for %1$s. To login go to the following "
+"URL: %2$s"
+msgstr ""
+
+#: ui_main.login_signup_approval_subject
+msgctxt "ui_main.login_signup_approval_subject"
+msgid "User account approved"
+msgstr ""
+
+#: ui_main.login_signup_text
+msgctxt "ui_main.login_signup_text"
+msgid "Create an account now to take advantage of more features on the site."
+msgstr "このサイトの新たな機能を使用するために、アカウントを作成する。"
+
+#: ui_main.longitude
+msgctxt "ui_main.longitude"
+msgid "Longitude"
+msgstr "経度"
+
+#: ui_main.map
+msgctxt "ui_main.map"
+msgid "Map"
+msgstr "地図"
+
+#: ui_main.mark_read
+msgctxt "ui_main.mark_read"
+msgid "Mark as Read"
+msgstr "既読"
+
+#: ui_main.mark_unread
+msgctxt "ui_main.mark_unread"
+msgid "Mark as Unread"
+msgstr "未読"
+
+#: ui_main.maximum_filesize
+msgctxt "ui_main.maximum_filesize"
+msgid "Maximum filesize"
+msgstr "最大のファイルサイズ"
+
+#: ui_main.media
+msgctxt "ui_main.media"
+msgid "Media"
+msgstr "メディア"
+
+#: ui_main.media_filter
+msgctxt "ui_main.media_filter"
+msgid "Media Filter"
+msgstr "メディアフィルタ"
+
+#: ui_main.members
+msgctxt "ui_main.members"
+msgid "Members"
+msgstr "メンバー"
+
+#: ui_main.manage_your_account
+msgctxt "ui_main.manage_your_account"
+msgid "Manage Your Account"
+msgstr "アカウントを管理する"
+
+#: ui_main.message
+msgctxt "ui_main.message"
+msgid "Message"
+msgstr "メッセージ"
+
+#: ui_main.messages
+msgctxt "ui_main.messages"
+msgid "Messages"
+msgstr "メッセージ"
+
+#: ui_main.message_details
+msgctxt "ui_main.message_details"
+msgid "Message Details"
+msgstr "メッセージ詳細"
+
+#: ui_main.message_non_numeric_source
+msgctxt "ui_main.message_non_numeric_source"
+msgid "Message from a non-numeric source:"
+msgstr ""
+
+#: ui_main.mobile
+msgctxt "ui_main.mobile"
+msgid "Mobile"
+msgstr "モバイル"
+
+#: ui_main.modify
+msgctxt "ui_main.modify"
+msgid "Modify"
+msgstr "編集"
+
+#: ui_main.modify_date
+msgctxt "ui_main.modify_date"
+msgid "Modify Date"
+msgstr "編集日時"
+
+#: ui_main.month
+msgctxt "ui_main.month"
+msgid "month"
+msgstr "月"
+
+#: ui_main.Monthly
+msgctxt "ui_main.Monthly"
+msgid "Monthly"
+msgstr ""
+
+#: ui_main.more
+msgctxt "ui_main.more"
+msgid "More"
+msgstr "もっと"
+
+#: ui_main.more_information
+msgctxt "ui_main.more_information"
+msgid "More Information"
+msgstr "更なる情報"
+
+#: ui_main.multi_country_instance
+msgctxt "ui_main.multi_country_instance"
+msgid "Does this Ushahidi Deployment Span Multiple Countries"
+msgstr "このUshahidiサイトは複数カ国をまたがっていますか。"
+
+#: ui_main.must_confirm_email_address
+msgctxt "ui_main.must_confirm_email_address"
+msgid ""
+"You must confirm your email address to access this deployment. If you lost "
+"your confirmation email, you can request a new one below."
+msgstr ""
+
+#: ui_main.name
+msgctxt "ui_main.name"
+msgid "Name"
+msgstr "名前"
+
+#: ui_main.nearby_report
+msgctxt "ui_main.nearby_report"
+msgid "Nearby Report"
+msgstr "直近のレポート"
+
+#: ui_main.new
+msgctxt "ui_main.new"
+msgid "New"
+msgstr "新着"
+
+#: ui_main.news
+msgctxt "ui_main.news"
+msgid "News"
+msgstr "新着"
+
+#: ui_main.news_feeds
+msgctxt "ui_main.news_feeds"
+msgid "News Feeds"
+msgstr "新着フィード"
+
+#: ui_main.news_source
+msgctxt "ui_main.news_source"
+msgid "News Source"
+msgstr "新着ソース"
+
+#: ui_main.new_category
+msgctxt "ui_main.new_category"
+msgid "New Category"
+msgstr "新着カテゴリ"
+
+#: ui_main.new_password
+msgctxt "ui_main.new_password"
+msgid "New Password"
+msgstr "新しいパスワード"
+
+#: ui_main.new_report
+msgctxt "ui_main.new_report"
+msgid "New Report"
+msgstr "新着レポート"
+
+#: ui_main.next
+msgctxt "ui_main.next"
+msgid "Next"
+msgstr "次"
+
+#: ui_main.no
+msgctxt "ui_main.no"
+msgid "No"
+msgstr "いいえ"
+
+#: ui_main.no_checkins
+msgctxt "ui_main.no_checkins"
+msgid "No checkins to display."
+msgstr ""
+
+#: ui_main.no_data
+msgctxt "ui_main.no_data"
+msgid "No data"
+msgstr "データがありません"
+
+#: ui_main.none
+msgctxt "ui_main.none"
+msgid "None"
+msgstr ""
+
+#: ui_main.notices
+msgctxt "ui_main.notices"
+msgid "Notices"
+msgstr "通告"
+
+#: ui_main.not_approved
+msgctxt "ui_main.not_approved"
+msgid "Not Approved"
+msgstr "未承認"
+
+#: ui_main.not_approved_singular
+msgctxt "ui_main.not_approved_singular"
+msgid "Not Approved"
+msgstr "未承認"
+
+#: ui_main.not_selected
+msgctxt "ui_main.not_selected"
+msgid "---Not Selected---"
+msgstr "---未選択---"
+
+#: ui_main.not_spam
+msgctxt "ui_main.not_spam"
+msgid "not spam"
+msgstr "スパムではない"
+
+#: ui_main.not_specified
+msgctxt "ui_main.not_specified"
+msgid "Not Specified"
+msgstr "選択されていない"
+
+#: ui_main.no_reports
+msgctxt "ui_main.no_reports"
+msgid "There are no reports"
+msgstr "レポートはありません。"
+
+#: ui_main.no_results
+msgctxt "ui_main.no_results"
+msgid "There are no results"
+msgstr "結果はありません。"
+
+#: ui_main.off
+msgctxt "ui_main.off"
+msgid "Off"
+msgstr "OFF"
+
+#: ui_main.official_news
+msgctxt "ui_main.official_news"
+msgid "Official &amp; mainstream news"
+msgstr "公式　&amp;　活発な情報源からのニュース"
+
+#: ui_main.on
+msgctxt "ui_main.on"
+msgid "On"
+msgstr "ON"
+
+#: ui_main.option
+msgctxt "ui_main.option"
+msgid "Option"
+msgstr "選択肢"
+
+#: ui_main.optional
+msgctxt "ui_main.optional"
+msgid "Optional"
+msgstr "選択可能な"
+
+#: ui_main.options
+msgctxt "ui_main.options"
+msgid "Options"
+msgstr "選択肢"
+
+#: ui_main.organization
+msgctxt "ui_main.organization"
+msgid "Organization"
+msgstr "組織"
+
+#: ui_main.organizations
+msgctxt "ui_main.organizations"
+msgid "Organizations"
+msgstr "組織"
+
+#: ui_main.organization_description
+msgctxt "ui_main.organization_description"
+msgid "Organization Description"
+msgstr "組織の説明"
+
+#: ui_main.organization_email
+msgctxt "ui_main.organization_email"
+msgid "Organization Email"
+msgstr "組織のメール"
+
+#: ui_main.organization_has_been
+msgctxt "ui_main.organization_has_been"
+msgid "The Organization Has Been"
+msgstr "この組織は"
+
+#: ui_main.organization_name
+msgctxt "ui_main.organization_name"
+msgid "Organization Name"
+msgstr "組織名"
+
+#: ui_main.organization_phone_1
+msgctxt "ui_main.organization_phone_1"
+msgid "Organization Phone 1"
+msgstr "組織の電話番号１"
+
+#: ui_main.organization_phone_2
+msgctxt "ui_main.organization_phone_2"
+msgid "Organization Phone 2"
+msgstr "組織の電話番号２"
+
+#: ui_main.organization_website
+msgctxt "ui_main.organization_website"
+msgid "Organization Website"
+msgstr "組織のウェブサイト"
+
+#: ui_main.original
+msgctxt "ui_main.original"
+msgid "Original"
+msgstr "オリジナル"
+
+#: ui_main.original_description
+msgctxt "ui_main.original_description"
+msgid "Original Description"
+msgstr "オリジナルの説明"
+
+#: ui_main.original_title
+msgctxt "ui_main.original_title"
+msgid "Original Title"
+msgstr "オリジナルタイトル"
+
+#: ui_main.other_ushahidi_instances
+msgctxt "ui_main.other_ushahidi_instances"
+msgid "Other Deployments"
+msgstr "その他のUSHAHIDIサイト"
+
+#: ui_main.outbox
+msgctxt "ui_main.outbox"
+msgid "Outbox"
+msgstr "アウトボックス"
+
+#: ui_main.outgoing
+msgctxt "ui_main.outgoing"
+msgid "Outgoing"
+msgstr "アウトゴーイング"
+
+#: ui_main.page
+msgctxt "ui_main.page"
+msgid "Page"
+msgstr "ページ"
+
+#: ui_main.pages
+msgctxt "ui_main.pages"
+msgid "Pages"
+msgstr "ページ"
+
+#: ui_main.page_description
+msgctxt "ui_main.page_description"
+msgid "Page Description"
+msgstr "ページ説明"
+
+#: ui_main.page_has_been
+msgctxt "ui_main.page_has_been"
+msgid "The Page Has Been"
+msgstr "このページは"
+
+#: ui_main.page_tab_name
+msgctxt "ui_main.page_tab_name"
+msgid "Page Tab Name"
+msgstr "ページタブ名"
+
+#: ui_main.page_title
+msgctxt "ui_main.page_title"
+msgid "Page Title"
+msgstr "ページタイトル"
+
+#: ui_main.parent_category
+msgctxt "ui_main.parent_category"
+msgid "Parent Category"
+msgstr "親カテゴリ"
+
+#: ui_main.password
+msgctxt "ui_main.password"
+msgid "Password"
+msgstr "パスワード"
+
+#: ui_main.password_again
+msgctxt "ui_main.password_again"
+msgid "Verify Password"
+msgstr "パスワードを再度入力してください。"
+
+#: ui_main.password_changed_successfully
+msgctxt "ui_main.password_changed_successfully"
+msgid "Password changed successfully! Login below."
+msgstr "パスワードの変更が完了しました。以下からログインして下さい。"
+
+#: ui_main.password_forgot
+msgctxt "ui_main.password_forgot"
+msgid "Forgot your password?"
+msgstr "パスワードを忘れてしまいましたか？"
+
+#: ui_main.password_reset_confirm
+msgctxt "ui_main.password_reset_confirm"
+msgid "Check your email for the new password."
+msgstr "新しいパスワードをお送りしたのでメールをご確認ください。"
+
+#: ui_main.password_save
+msgctxt "ui_main.password_save"
+msgid "Stay logged in on this computer?"
+msgstr "このコンピューターにログインを記憶させますか？"
+
+#: ui_main.past_month
+msgctxt "ui_main.past_month"
+msgid "Past Month"
+msgstr "過去の月"
+
+#: ui_main.past_year
+msgctxt "ui_main.past_year"
+msgid "Past Year"
+msgstr "過去の年"
+
+#: ui_main.pending
+msgctxt "ui_main.pending"
+msgid "Pending"
+msgstr "保留"
+
+#: ui_main.per
+msgctxt "ui_main.per"
+msgid "per"
+msgstr "毎"
+
+#: ui_main.personal_information
+msgctxt "ui_main.personal_information"
+msgid "Personal Information <span>Optional.</span>"
+msgstr "個人情報<span>選択肢</span>"
+
+#: ui_main.phone
+msgctxt "ui_main.phone"
+msgid "Phone"
+msgstr "電話番号"
+
+#: ui_main.photos
+msgctxt "ui_main.photos"
+msgid "Photos"
+msgstr "写真"
+
+#: ui_main.pictures
+msgctxt "ui_main.pictures"
+msgid "Pictures"
+msgstr "写真"
+
+#: ui_main.pictures_and_videos
+msgctxt "ui_main.pictures_and_videos"
+msgid "Pictures and Videos"
+msgstr "写真とビデオ"
+
+#: ui_main.pinpoint_location
+msgctxt "ui_main.pinpoint_location"
+msgid ""
+"* Search for your location using a location name OR latitude,longitude "
+"coordinates (format: 38.19, 85.61), OR click on the map to pinpoint the "
+"correct location."
+msgstr "* ロケーション名の経度、緯度、その組み合わせ(フォーマット: 38.19,-85.61)で検索するか、地図のピンポイントを正しい位置にしてください。"
+
+#: ui_main.play
+msgctxt "ui_main.play"
+msgid "Play"
+msgstr "再生"
+
+#: ui_main.please_note
+msgctxt "ui_main.please_note"
+msgid "Please Note"
+msgstr "覚えておいてください"
+
+#: ui_main.plugins
+msgctxt "ui_main.plugins"
+msgid "Plugins"
+msgstr "プラグイン"
+
+#: ui_main.plugin_url
+msgctxt "ui_main.plugin_url"
+msgid "Plugin Website"
+msgstr "プラグインウェブサイト"
+
+#: ui_main.public_profile
+msgctxt "ui_main.public_profile"
+msgid "Public Profile"
+msgstr "公開プロフィール"
+
+#: ui_main.public_profile_url
+msgctxt "ui_main.public_profile_url"
+msgid "Public Profile URL"
+msgstr "公開プロフィールのURL"
+
+#: ui_main.preview
+msgctxt "ui_main.preview"
+msgid "Preview"
+msgstr "レビュー"
+
+#: ui_main.preview_item
+msgctxt "ui_main.preview_item"
+msgid "Preview Item"
+msgstr "レビューアイテム"
+
+#: ui_main.preview_message
+msgctxt "ui_main.preview_message"
+msgid "Preview Message"
+msgstr "レビューメッセージ"
+
+#: ui_main.previous
+msgctxt "ui_main.previous"
+msgid "Previous"
+msgstr "前の"
+
+#: ui_main.private
+msgctxt "ui_main.private"
+msgid "Private"
+msgstr "非公開"
+
+#: ui_main.profile_color
+msgctxt "ui_main.profile_color"
+msgid "Profile Color"
+msgstr ""
+
+#: ui_main.profile_saved
+msgctxt "ui_main.profile_saved"
+msgid "Your Profile Has Been Saved"
+msgstr "プロファイルは保存されました。"
+
+#: ui_main.quick_stats
+msgctxt "ui_main.quick_stats"
+msgid "Quick Stats"
+msgstr "クイック統計"
+
+#: ui_main.rating
+msgctxt "ui_main.rating"
+msgid "Rating"
+msgstr "評価"
+
+#: ui_main.read
+msgctxt "ui_main.read"
+msgid "Read"
+msgstr "読む"
+
+#: ui_main.receive
+msgctxt "ui_main.receive"
+msgid "Receive"
+msgstr "受け取る"
+
+#: ui_main.receive_from
+msgctxt "ui_main.receive_from"
+msgid "Receive from"
+msgstr "受け取る"
+
+#: ui_main.receive_notifications
+msgctxt "ui_main.receive_notifications"
+msgid "Receive Notifications"
+msgstr "通知を受け取る"
+
+#: ui_main.recent_reports
+msgctxt "ui_main.recent_reports"
+msgid "Recent Reports"
+msgstr "最近のレポート"
+
+#: ui_main.refresh_news_feeds
+msgctxt "ui_main.refresh_news_feeds"
+msgid "Refresh News Feeds"
+msgstr "新しいフィードを再度読み込む"
+
+#: ui_main.registered_email
+msgctxt "ui_main.registered_email"
+msgid "Registered Email"
+msgstr "登録されたメールアドレス"
+
+#: ui_main.remove
+msgctxt "ui_main.remove"
+msgid "Remove"
+msgstr "削除"
+
+#: ui_main.reply
+msgctxt "ui_main.reply"
+msgid "Reply"
+msgstr "返信"
+
+#: ui_main.report
+msgctxt "ui_main.report"
+msgid "Report"
+msgstr "レポート"
+
+#: ui_main.reports_listed
+msgctxt "ui_main.reports_listed"
+msgid "Reports <span>(from the map, listed in chronological order)</span>"
+msgstr ""
+
+#: ui_main.reporter
+msgctxt "ui_main.reporter"
+msgid "Reporter"
+msgstr "レポート作成者"
+
+#: ui_main.reporters
+msgctxt "ui_main.reporters"
+msgid "Reporters"
+msgstr "レポーター"
+
+#: ui_main.reporter_date
+msgctxt "ui_main.reporter_date"
+msgid "Reporter Date"
+msgstr "レポートされた日時"
+
+#: ui_main.reporter_email
+msgctxt "ui_main.reporter_email"
+msgid "Reporter Email"
+msgstr "レポーターのメール"
+
+#: ui_main.reporter_first_name
+msgctxt "ui_main.reporter_first_name"
+msgid "Reporter First Name"
+msgstr "レポーターの名前"
+
+#: ui_main.reporter_has_been
+msgctxt "ui_main.reporter_has_been"
+msgid "The Reporter Has Been"
+msgstr "このレポーターは"
+
+#: ui_main.reporter_ip
+msgctxt "ui_main.reporter_ip"
+msgid "Reporter IP Address"
+msgstr "レポーターのIPアドレス"
+
+#: ui_main.reporter_last_name
+msgctxt "ui_main.reporter_last_name"
+msgid "Reporter Last Name"
+msgstr "レポーターの名字"
+
+#: ui_main.reporter_level
+msgctxt "ui_main.reporter_level"
+msgid "Reporter Level"
+msgstr "レポーターのレベル"
+
+#: ui_main.reporter_levels
+msgctxt "ui_main.reporter_levels"
+msgid "Reporter Levels"
+msgstr "レポーターのレベル"
+
+#: ui_main.reporter_phone
+msgctxt "ui_main.reporter_phone"
+msgid "Reporter Phone"
+msgstr "レポーターの電話番号"
+
+#: ui_main.reports
+msgctxt "ui_main.reports"
+msgid "Reports"
+msgstr "レポート"
+
+#: ui_main.reports_btn_browse
+msgctxt "ui_main.reports_btn_browse"
+msgid "Browse"
+msgstr "表示する"
+
+#: ui_main.reports_btn_submit
+msgctxt "ui_main.reports_btn_submit"
+msgid "Submit"
+msgstr "送信"
+
+#: ui_main.reports_by_this_user
+msgctxt "ui_main.reports_by_this_user"
+msgid "Reports By This User"
+msgstr "このユーザにより投稿されたレポート"
+
+#: ui_main.reports_categories
+msgctxt "ui_main.reports_categories"
+msgid "Categories"
+msgstr "カテゴリー"
+
+#: ui_main.reports_count
+msgctxt "ui_main.reports_count"
+msgid "%d Reports"
+msgstr "%d レポート"
+
+#: ui_main.reports_date
+msgctxt "ui_main.reports_date"
+msgid "Date"
+msgstr "日時"
+
+#: ui_main.reports_description
+msgctxt "ui_main.reports_description"
+msgid "Description"
+msgstr "説明"
+
+#: ui_main.reports_download_csv
+msgctxt "ui_main.reports_download_csv"
+msgid "Reports will be downloaded in CSV format"
+msgstr "レポーターはCSVフォーマットでダウンロードされます"
+
+#: ui_main.reports_email
+msgctxt "ui_main.reports_email"
+msgid "Email"
+msgstr "メール"
+
+#: ui_main.reports_features
+msgctxt "ui_main.reports_features"
+msgid "Features"
+msgstr "機能"
+
+#: ui_main.reports_find_location
+msgctxt "ui_main.reports_find_location"
+msgid "Find a location near you"
+msgstr "近くのロケーションを探す"
+
+#: ui_main.reports_first
+msgctxt "ui_main.reports_first"
+msgid "First Name"
+msgstr "名前"
+
+#: ui_main.reports_last
+msgctxt "ui_main.reports_last"
+msgid "Last Name"
+msgstr "名字"
+
+#: ui_main.reports_location_name
+msgctxt "ui_main.reports_location_name"
+msgid "Location Name"
+msgstr "ロケーションの名前を明確にする"
+
+#: ui_main.reports_news
+msgctxt "ui_main.reports_news"
+msgid "News Source Link"
+msgstr "新しい情報源のリンク"
+
+#: ui_main.reports_optional
+msgctxt "ui_main.reports_optional"
+msgid "Optional Information"
+msgstr "参考情報"
+
+#: ui_main.reports_photos
+msgctxt "ui_main.reports_photos"
+msgid "Upload Photos"
+msgstr "写真をアップロード"
+
+#: ui_main.reports_return
+msgctxt "ui_main.reports_return"
+msgid "Return to the reports page"
+msgstr "レポーターのページへ戻る"
+
+#: ui_main.reports_select_city
+msgctxt "ui_main.reports_select_city"
+msgid "Select a City"
+msgstr "街を選択する"
+
+#: ui_main.reports_submitted
+msgctxt "ui_main.reports_submitted"
+msgid ""
+"Your Report has been submitted to our staff for review. We will get back to "
+"you shortly if necessary."
+msgstr "あなたのレポートは私たちのスタッフのレビュー待ちになりました。もし必要でしたら再度ご連絡します。"
+
+#: ui_main.reports_submit_new
+msgctxt "ui_main.reports_submit_new"
+msgid "Submit a New Report"
+msgstr "新しいレポートを提出する"
+
+#: ui_main.reports_time
+msgctxt "ui_main.reports_time"
+msgid "Time"
+msgstr "時間"
+
+#: ui_main.reports_timeline
+msgctxt "ui_main.reports_timeline"
+msgid "Reports Timeline"
+msgstr "タイムライン"
+
+#: ui_main.reports_title
+msgctxt "ui_main.reports_title"
+msgid "Report Title"
+msgstr "レポートタイトル"
+
+#: ui_main.reports_video
+msgctxt "ui_main.reports_video"
+msgid "Video link"
+msgstr "ビデオリンク"
+
+#: ui_main.report_an_incident
+msgctxt "ui_main.report_an_incident"
+msgid "Report an Incident"
+msgstr "インシデントをレポートする"
+
+#: ui_main.report_details
+msgctxt "ui_main.report_details"
+msgid "Report Details"
+msgstr "レポート詳細"
+
+#: ui_main.report_option_1
+msgctxt "ui_main.report_option_1"
+msgid "By sending a message to"
+msgstr "メッセージを送る"
+
+#: ui_main.report_option_2
+msgctxt "ui_main.report_option_2"
+msgid "By sending an email"
+msgstr "メッセージを送る"
+
+#: ui_main.report_option_3
+msgctxt "ui_main.report_option_3"
+msgid "By sending a tweet with the hashtag/s"
+msgstr "ハッシュタグをつけてツイートする"
+
+#: ui_main.report_option_4
+msgctxt "ui_main.report_option_4"
+msgid "By filling this form on our website."
+msgstr "こちらのフォームで入力する"
+
+#: ui_main.report_option_external_apps
+msgctxt "ui_main.report_option_external_apps"
+msgid "By using an app"
+msgstr ""
+
+#: ui_main.report_saved
+msgctxt "ui_main.report_saved"
+msgid "Your Report Has Been Saved"
+msgstr "レポートは保存されました"
+
+#: ui_main.report_title
+msgctxt "ui_main.report_title"
+msgid "Report Title"
+msgstr "レポートタイトル"
+
+#: ui_main.request_information
+msgctxt "ui_main.request_information"
+msgid "Request more information"
+msgstr "更なる情報を求める"
+
+#: ui_main.request_location
+msgctxt "ui_main.request_location"
+msgid "Request location"
+msgstr "ロケーションを求める"
+
+#: ui_main.required
+msgctxt "ui_main.required"
+msgid "Required"
+msgstr "必須"
+
+#: ui_main.requirements
+msgctxt "ui_main.requirements"
+msgid "Requirements"
+msgstr "必須情報"
+
+#: ui_main.resend_confirm_email
+msgctxt "ui_main.resend_confirm_email"
+msgid "Resend Confirmation Email"
+msgstr "確認のEメールを再送信する"
+
+#: ui_main.reset
+msgctxt "ui_main.reset"
+msgid "Reset"
+msgstr "リセット"
+
+#: ui_main.reset_all_filters
+msgctxt "ui_main.reset_all_filters"
+msgid "Reset all filters"
+msgstr "全てのフィルタをリセットする"
+
+#: ui_main.reset_password
+msgctxt "ui_main.reset_password"
+msgid "Reset Password"
+msgstr "パスワードをリセットする"
+
+#: ui_main.retrieve_city_names
+msgctxt "ui_main.retrieve_city_names"
+msgid "Retrieve city names for the selected country"
+msgstr "選択された国の市町村名を取り出す"
+
+#: ui_main.riverid_information
+msgctxt "ui_main.riverid_information"
+msgid "Accounts managed by the %s service."
+msgstr "%s によって管理されているアカウント"
+
+#: ui_main.riverid_exists_login
+msgctxt "ui_main.riverid_exists_login"
+msgid ""
+"You already have an account managed by CrowdmapID! Try using your CrowdmapID"
+" email and password to login."
+msgstr "そのメールアドレスは既にクラウドマップIDとして登録されています。クラウドマップIDとして登録したメールアドレスとパスワードを使ってログインして下さい。"
+
+#: ui_main.role
+msgctxt "ui_main.role"
+msgid "Role"
+msgstr "ロール"
+
+#: ui_main.rss
+msgctxt "ui_main.rss"
+msgid "RSS"
+msgstr "RSS"
+
+#: ui_main.save
+msgctxt "ui_main.save"
+msgid "Save"
+msgstr "保存"
+
+#: ui_main.saved
+msgctxt "ui_main.saved"
+msgid "Saved"
+msgstr "保存済み"
+
+#: ui_main.save_add_new
+msgctxt "ui_main.save_add_new"
+msgid "Save & Add New"
+msgstr "保存＆新規作成"
+
+#: ui_main.save_close
+msgctxt "ui_main.save_close"
+msgid "Save & Close"
+msgstr "保存＆閉じる"
+
+#: ui_main.save_report
+msgctxt "ui_main.save_report"
+msgid "Save Report"
+msgstr "レポートを保存"
+
+#: ui_main.schedule
+msgctxt "ui_main.schedule"
+msgid "Schedule"
+msgstr "スケジュール"
+
+#: ui_main.scheduler
+msgctxt "ui_main.scheduler"
+msgid "Scheduler"
+msgstr "スケジューラー"
+
+#: ui_main.scheduler_day
+msgctxt "ui_main.scheduler_day"
+msgid "Day"
+msgstr "日"
+
+#: ui_main.scheduler_hour
+msgctxt "ui_main.scheduler_hour"
+msgid "Hour"
+msgstr "時間"
+
+#: ui_main.scheduler_log
+msgctxt "ui_main.scheduler_log"
+msgid "Scheduler Log"
+msgstr "スケジューラーログ"
+
+#: ui_main.scheduler_minute
+msgctxt "ui_main.scheduler_minute"
+msgid "Minute"
+msgstr "分"
+
+#: ui_main.scheduler_weekday
+msgctxt "ui_main.scheduler_weekday"
+msgid "Day of the Week"
+msgstr "曜日"
+
+#: ui_main.search
+msgctxt "ui_main.search"
+msgid "Search"
+msgstr "検索"
+
+#: ui_main.search_results
+msgctxt "ui_main.search_results"
+msgid "Search Results"
+msgstr "検索結果"
+
+#: ui_main.security_code
+msgctxt "ui_main.security_code"
+msgid "Security Code"
+msgstr "セキュリティコード"
+
+#: ui_main.select_all
+msgctxt "ui_main.select_all"
+msgid "Select All"
+msgstr "すべて選択する"
+
+#: ui_main.select_field_type
+msgctxt "ui_main.select_field_type"
+msgid "Select a Field Type"
+msgstr "フィールドタイプを選択する"
+
+#: ui_main.select_form_type
+msgctxt "ui_main.select_form_type"
+msgid "Select A Form Type"
+msgstr "フォームタイプを選択する"
+
+#: ui_main.select_in_map
+msgctxt "ui_main.select_in_map"
+msgid "Select in the map"
+msgstr "地図を選択する"
+
+#: ui_main.select_multiple
+msgctxt "ui_main.select_multiple"
+msgid "Select as many as needed"
+msgstr "必要なだけ選択する"
+
+#: ui_main.select_one
+msgctxt "ui_main.select_one"
+msgid "Please verify that you have checked an item"
+msgstr "チェックしたアイテムを検証してください。"
+
+#: ui_main.select_theme
+msgctxt "ui_main.select_theme"
+msgid "Select Theme"
+msgstr "テーマを選択する"
+
+#: ui_main.send
+msgctxt "ui_main.send"
+msgid "Send"
+msgstr "送る"
+
+#: ui_main.send_confirmation
+msgctxt "ui_main.send_confirmation"
+msgid "Send Confirmation"
+msgstr "送信確認"
+
+#: ui_main.sending_to
+msgctxt "ui_main.sending_to"
+msgid "Sending To"
+msgstr "送る"
+
+#: ui_main.sent
+msgctxt "ui_main.sent"
+msgid "Sent"
+msgstr "送信済み"
+
+#: ui_main.sent_by
+msgctxt "ui_main.sent_by"
+msgid "Sent by"
+msgstr "送った人"
+
+#: ui_main.server_address
+msgctxt "ui_main.server_address"
+msgid "Server address"
+msgstr "サーバーアドレス"
+
+#: ui_main.server_type
+msgctxt "ui_main.server_type"
+msgid "Server type"
+msgstr "サーバータイプ"
+
+#: ui_main.service
+msgctxt "ui_main.service"
+msgid "Service"
+msgstr "サービス"
+
+#: ui_main.service_username
+msgctxt "ui_main.service_username"
+msgid "Service Username"
+msgstr "サービスのユーザー名"
+
+#: ui_main.service_user_id
+msgctxt "ui_main.service_user_id"
+msgid "Service User ID"
+msgstr "サービスのユーザーID"
+
+#: ui_main.share
+msgctxt "ui_main.share"
+msgid "Share"
+msgstr "共有"
+
+#: ui_main.shared_data
+msgctxt "ui_main.shared_data"
+msgid "Shared data"
+msgstr "共有されたデータ"
+
+#: ui_main.share_has_been
+msgctxt "ui_main.share_has_been"
+msgid "The share has been"
+msgstr "この共有は"
+
+#: ui_main.sharing
+msgctxt "ui_main.sharing"
+msgid "Sharing"
+msgstr "共有"
+
+#: ui_main.shorter_map
+msgctxt "ui_main.shorter_map"
+msgid "Shorter Map"
+msgstr "短い地図"
+
+#: ui_main.show
+msgctxt "ui_main.show"
+msgid "Show"
+msgstr "見る"
+
+#: ui_main.show_all
+msgctxt "ui_main.show_all"
+msgid "Show all"
+msgstr "すべて見る"
+
+#: ui_main.show_messages
+msgctxt "ui_main.show_messages"
+msgid "Show Messages"
+msgstr "メッセージを表示する"
+
+#: ui_main.showing_reports_from
+msgctxt "ui_main.showing_reports_from"
+msgid "Showing Reports From <span class=\"time-period\">%1$s to %2$s</span>"
+msgstr "<span class=\"time-period\">%1$s から %2$s</span> までのレポートを表示する"
+
+#: ui_main.site
+msgctxt "ui_main.site"
+msgid "Website"
+msgstr "ウェブサイト"
+
+#: ui_main.site_email_address
+msgctxt "ui_main.site_email_address"
+msgid "site email address"
+msgstr "サイトメールアドレス"
+
+#: ui_main.site_url
+msgctxt "ui_main.site_url"
+msgid "Site URL"
+msgstr "サイトURL"
+
+#: ui_main.smaller_map
+msgctxt "ui_main.smaller_map"
+msgid "Smaller Map"
+msgstr "小さい地図"
+
+#: ui_main.sms
+msgctxt "ui_main.sms"
+msgid "SMS"
+msgstr "SMS"
+
+#: ui_main.sorry_no_badges
+msgctxt "ui_main.sorry_no_badges"
+msgid "Sorry, you do not have any badges."
+msgstr ""
+
+#: ui_main.source
+msgctxt "ui_main.source"
+msgid "Source"
+msgstr "ソース"
+
+#: ui_main.source_name
+msgctxt "ui_main.source_name"
+msgid "Source name"
+msgstr "ソース名"
+
+#: ui_main.sort
+msgctxt "ui_main.sort"
+msgid "Sort"
+msgstr "並び替え"
+
+#: ui_main.sort_by
+msgctxt "ui_main.sort_by"
+msgid "Sort By"
+msgstr "以下の項目によって並び替え:"
+
+#: ui_main.source_url
+msgctxt "ui_main.source_url"
+msgid "Source URL"
+msgstr "ソースのURL"
+
+#: ui_main.spam
+msgctxt "ui_main.spam"
+msgid "Spam"
+msgstr "スパム"
+
+#: ui_main.ssl_support
+msgctxt "ui_main.ssl_support"
+msgid "SSL Support?"
+msgstr "SSLサポート？"
+
+#: ui_main.start_point
+msgctxt "ui_main.start_point"
+msgid "From"
+msgstr "から"
+
+#: ui_main.step
+msgctxt "ui_main.step"
+msgid "Step"
+msgstr "ステップ"
+
+#: ui_main.submit
+msgctxt "ui_main.submit"
+msgid "Submit a Report"
+msgstr "レポートを送信"
+
+#: ui_main.submitted_by
+msgctxt "ui_main.submitted_by"
+msgid "Submitted by <strong>%1$s</strong> via <strong>%2$s</strong>"
+msgstr "レポート投稿者 <strong>%1$s</strong> 投稿元 <strong>%2$s</strong>"
+
+#: ui_main.submit_sms
+msgctxt "ui_main.submit_sms"
+msgid "Submit via SMS"
+msgstr "SMS経由で送信"
+
+#: ui_main.submit_sms1
+msgctxt "ui_main.submit_sms1"
+msgid "Send your SMS to"
+msgstr "SMSを送る"
+
+#: ui_main.submit_sms2
+msgctxt "ui_main.submit_sms2"
+msgid "on your phone"
+msgstr "電話へ"
+
+#: ui_main.success
+msgctxt "ui_main.success"
+msgid "Success!"
+msgstr "成功しました！"
+
+#: ui_main.successfuly_imported
+msgctxt "ui_main.successfuly_imported"
+msgid "Succesfully imported"
+msgstr "インポートに成功しました。"
+
+#: ui_main.surname
+msgctxt "ui_main.surname"
+msgid "Surname"
+msgstr "名字"
+
+#: ui_main.survey
+msgctxt "ui_main.survey"
+msgid "Survey"
+msgstr "調査"
+
+#: ui_main.system
+msgctxt "ui_main.system"
+msgid "System"
+msgstr "システム"
+
+#: ui_main.taller_map
+msgctxt "ui_main.taller_map"
+msgid "Taller Map"
+msgstr "長い地図"
+
+#: ui_main.tcp_port
+msgctxt "ui_main.tcp_port"
+msgid "TCP Port"
+msgstr "TCPポート"
+
+#: ui_main.themes
+msgctxt "ui_main.themes"
+msgid "Themes"
+msgstr "テーマ"
+
+#: ui_main.theme_default
+msgctxt "ui_main.theme_default"
+msgid "Default Ushahidi Theme"
+msgstr "Ushahidiのディフォルトテーマ"
+
+#: ui_main.theme_settings
+msgctxt "ui_main.theme_settings"
+msgid "Theme Settings"
+msgstr "テーマ設定"
+
+#: ui_main.this
+msgctxt "ui_main.this"
+msgid "This"
+msgstr "この"
+
+#: ui_main.this_day
+msgctxt "ui_main.this_day"
+msgid "Today"
+msgstr "今日"
+
+#: ui_main.this_month
+msgctxt "ui_main.this_month"
+msgid "This Month"
+msgstr "今月"
+
+#: ui_main.this_week
+msgctxt "ui_main.this_week"
+msgid "This Week"
+msgstr "今週"
+
+#: ui_main.this_year
+msgctxt "ui_main.this_year"
+msgid "This Year"
+msgstr "今年"
+
+#: ui_main.this_is_your_profile
+msgctxt "ui_main.this_is_your_profile"
+msgid "This is your profile."
+msgstr "これがあなたのプロファイルです"
+
+#: ui_main.time
+msgctxt "ui_main.time"
+msgid "Time"
+msgstr "時間"
+
+#: ui_main.title
+msgctxt "ui_main.title"
+msgid "Title "
+msgstr "タイトル"
+
+#: ui_main.to
+msgctxt "ui_main.to"
+msgid "to"
+msgstr "と"
+
+#: ui_main.today
+msgctxt "ui_main.today"
+msgid "Today"
+msgstr "今日"
+
+#: ui_main.today_at
+msgctxt "ui_main.today_at"
+msgid "Today at"
+msgstr "今日の"
+
+#: ui_main.token
+msgctxt "ui_main.token"
+msgid "Token"
+msgstr "トークン"
+
+#: ui_main.total_reports
+msgctxt "ui_main.total_reports"
+msgid "Total Reports"
+msgstr "トータルレポート"
+
+#: ui_main.translated
+msgctxt "ui_main.translated"
+msgid "Translated"
+msgstr "翻訳済み"
+
+#: ui_main.translated_description
+msgctxt "ui_main.translated_description"
+msgid "Translated Description"
+msgstr "翻訳済みの説明"
+
+#: ui_main.translated_title
+msgctxt "ui_main.translated_title"
+msgid "Translated Title"
+msgstr "翻訳済みタイトル"
+
+#: ui_main.translate_to
+msgctxt "ui_main.translate_to"
+msgid "Translate to"
+msgstr "翻訳する"
+
+#: ui_main.translation
+msgctxt "ui_main.translation"
+msgid "Translation"
+msgstr "翻訳"
+
+#: ui_main.translation_saved
+msgctxt "ui_main.translation_saved"
+msgid "Translation has been saved"
+msgstr "翻訳は保存されました。"
+
+#: ui_main.trusted
+msgctxt "ui_main.trusted"
+msgid "Trusted"
+msgstr "信頼出来る"
+
+#: ui_main.type
+msgctxt "ui_main.type"
+msgid "Type"
+msgstr "タイプ"
+
+#: ui_main.twitter
+msgctxt "ui_main.twitter"
+msgid "Twitter"
+msgstr "ツイッター"
+
+#: ui_main.unable_send_email
+msgctxt "ui_main.unable_send_email"
+msgid "Unable to send email."
+msgstr "メールを送信出来ません。"
+
+#: ui_main.uncategorized_reports
+msgctxt "ui_main.uncategorized_reports"
+msgid "Uncategorized Reports"
+msgstr "未分類のレポート"
+
+#: ui_main.unread
+msgctxt "ui_main.unread"
+msgid "unread"
+msgstr "未読"
+
+#: ui_main.unverified
+msgctxt "ui_main.unverified"
+msgid "Unverified"
+msgstr "未検証"
+
+#: ui_main.update_feeds
+msgctxt "ui_main.update_feeds"
+msgid "Update feeds"
+msgstr "フィードのアップデート"
+
+#: ui_main.upload
+msgctxt "ui_main.upload"
+msgid "Upload"
+msgstr "アップロード"
+
+#: ui_main.upload_guide
+msgctxt "ui_main.upload_guide"
+msgid "View our report upload guides:-"
+msgstr "レポートアップロードのガイドを見る"
+
+#: ui_main.upload_docs_1
+msgctxt "ui_main.upload_docs_1"
+msgid "XML Upload guide"
+msgstr "XMLのアップロードガイド"
+
+#: ui_main.upload_docs_2
+msgctxt "ui_main.upload_docs_2"
+msgid "CSV Upload guide"
+msgstr "CSVのアップロードガイド"
+
+#: ui_main.upload_file
+msgctxt "ui_main.upload_file"
+msgid "File to upload"
+msgstr "アップロードするファイル"
+
+#: ui_main.upload_reports
+msgctxt "ui_main.upload_reports"
+msgid "Upload Reports"
+msgstr "レポートをアップロードする"
+
+#: ui_main.upload_reports_custom_forms
+msgctxt "ui_main.upload_reports_custom_forms"
+msgid ""
+"Custom field columns must have their form_id appended to them e.g custom "
+"field Test, on the default form, whose id is 1, will be Test-1. During "
+"custom form field import, ensure that"
+msgstr ""
+
+#: ui_main.upload_reports_detail_1
+msgctxt "ui_main.upload_reports_detail_1"
+msgid ""
+"With the form below, you can import incidents into the Ushahidi engine."
+msgstr "以下のフォーム内で、Ushahidiエンジンにインシデントを取り込む事が出来ます。"
+
+#: ui_main.upload_reports_detail_2
+msgctxt "ui_main.upload_reports_detail_2"
+msgid "Reports must be uploaded in either CSV or XML format."
+msgstr "レポートは、CSVまたはXML形式でなければなりません。"
+
+#: ui_main.upload_reports_detail_3
+msgctxt "ui_main.upload_reports_detail_3"
+msgid ""
+"When incident ID already exists in the database, the entry in the CSV/XML "
+"file will be ignored."
+msgstr ""
+
+#: ui_main.upload_reports_detail_4
+msgctxt "ui_main.upload_reports_detail_4"
+msgid "It must contain at least Incident Title and Incident Date."
+msgstr "インシデントタイトルとインシデントの日時が入っている必要があります。"
+
+#: ui_main.upload_reports_detail_4b
+msgctxt "ui_main.upload_reports_detail_4b"
+msgid ""
+"If no latitude and longitude columns are supplied, the location will be "
+"geocoded using the Google Geocoder."
+msgstr ""
+
+#: ui_main.upload_reports_detail_4c
+msgctxt "ui_main.upload_reports_detail_4c"
+msgid ""
+"If importing additional info i.e personal information and/or custom form "
+"fields"
+msgstr ""
+
+#: ui_main.upload_reports_detail_4d
+msgctxt "ui_main.upload_reports_detail_4d"
+msgid ""
+"At least one of the personal information fields(name, surname,email) entries"
+" MUST exist. Empty records will not be imported"
+msgstr "少なくともひとつの個人情報(名前、名字、メールアドレス)が入力されていなければなりません。"
+
+#: ui_main.upload_reports_detail_4e
+msgctxt "ui_main.upload_reports_detail_4e"
+msgid ""
+"Your entries for dropdown fields, radio buttons and checkboxes match the "
+"options provided for the custom field on your instance"
+msgstr ""
+
+#: ui_main.upload_reports_detail_4f
+msgctxt "ui_main.upload_reports_detail_4f"
+msgid ""
+"Checkbox options are separated by a comma e.g if your selected choice of "
+"fruits is apples,mangoes and grapes, your entry for this should be "
+"\"apples,mangoes,grapes\""
+msgstr ""
+
+#: ui_main.upload_reports_detail_4g
+msgctxt "ui_main.upload_reports_detail_4g"
+msgid ""
+"Date field values are in the following format: mm/dd/yyyy e.g 3rd October "
+"2012 = 10/03/2012"
+msgstr ""
+
+#: ui_main.upload_reports_detail_5
+msgctxt "ui_main.upload_reports_detail_5"
+msgid "A Sample CSV Report"
+msgstr "CSVレポートのサンプル"
+
+#: ui_main.upload_reports_detail_6
+msgctxt "ui_main.upload_reports_detail_6"
+msgid ""
+"#,INCIDENT TITLE,INCIDENT "
+"DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED,LATITUDE,LONGITUDE<br "
+"/>\"1\",\"Suspected death in Nairobi\",\"2009-05-15 "
+"01:06:00\",\"Nairobi\",\"Three cases have been confirmed in C. del "
+"Uruguay\",\"DEATHS, CIVILIANS, \",YES,YES,\"-1.287\",\"36.821\""
+msgstr "#,インシデントタイトル,インシデントの日時,場所,説明,カテゴリ,承認済,確認済み<br />\"1\",\"ナイロビで死亡の疑いあり\",\"2009-05-15 01:06:00\",\"Nairobi\",\"ウルグアイで３つのレポートが確認された。\",\"死亡, 市民\",はい,はい"
+
+#: ui_main.upload_reports_detail_7
+msgctxt "ui_main.upload_reports_detail_7"
+msgid ""
+"\"2\",\"Looting\",\"2009-03-18 10:10:00\",\"Accra\",\"Looting happening "
+"everywhere\",\"RIOTS, DEATHS, PROPERTY LOSS, "
+"\",YES,NO,\"5.55\",\"-0.2166667\""
+msgstr "\"2\",\"略奪\",\"2009-03-18 10:10:00\",\"アクラ\",\"略奪が至る所で\",\"略奪, 死亡, 暴動, \",はい,いいえ"
+
+#: ui_main.upload_successful
+msgctxt "ui_main.upload_successful"
+msgid "Upload Successful"
+msgstr "アップロードに成功しました"
+
+#: ui_main.upload_video
+msgctxt "ui_main.upload_video"
+msgid "Upload Video"
+msgstr "動画をアップロードする"
+
+#: ui_main.url
+msgctxt "ui_main.url"
+msgid "URL"
+msgstr "URL"
+
+#: ui_main.user
+msgctxt "ui_main.user"
+msgid "User"
+msgstr "ユーザー"
+
+#: ui_main.username
+msgctxt "ui_main.username"
+msgid "Username"
+msgstr "ユーザー名"
+
+#: ui_main.ushahidi_admin
+msgctxt "ui_main.ushahidi_admin"
+msgid "Ushahidi Admin"
+msgstr "Ushahidi管理"
+
+#: ui_main.verification
+msgctxt "ui_main.verification"
+msgid "Verification"
+msgstr "検証"
+
+#: ui_main.verified
+msgctxt "ui_main.verified"
+msgid "Verified"
+msgstr "検証済み"
+
+#: ui_main.verified_reports
+msgctxt "ui_main.verified_reports"
+msgid "Verified Reports"
+msgstr "レポートを検証する"
+
+#: ui_main.verify
+msgctxt "ui_main.verify"
+msgid "Verify"
+msgstr "検証"
+
+#: ui_main.verify_this_report
+msgctxt "ui_main.verify_this_report"
+msgid "Verify this Report"
+msgstr "このレポートを検証する"
+
+#: ui_main.version
+msgctxt "ui_main.version"
+msgid "Version"
+msgstr "バージョン"
+
+#: ui_main.via
+msgctxt "ui_main.via"
+msgid "via"
+msgstr "によって"
+
+#: ui_main.video
+msgctxt "ui_main.video"
+msgid "Video"
+msgstr "ビデオ"
+
+#: ui_main.view
+msgctxt "ui_main.view"
+msgid "View"
+msgstr "見る"
+
+#: ui_main.views
+msgctxt "ui_main.views"
+msgid "Views"
+msgstr "見る"
+
+#: ui_main.view_all
+msgctxt "ui_main.view_all"
+msgid "View All"
+msgstr "すべて見る"
+
+#: ui_main.view_all_feeds
+msgctxt "ui_main.view_all_feeds"
+msgid "View all feeds"
+msgstr "すべてのフィードを見る"
+
+#: ui_main.view_all_reports
+msgctxt "ui_main.view_all_reports"
+msgid "View all reports"
+msgstr "すべてのレポートを見る"
+
+#: ui_main.view_items
+msgctxt "ui_main.view_items"
+msgid "View Items"
+msgstr "アイテムを見る"
+
+#: ui_main.view_more
+msgctxt "ui_main.view_more"
+msgid "View More"
+msgstr "もっと見る"
+
+#: ui_main.view_public_profile
+msgctxt "ui_main.view_public_profile"
+msgid "View Public Profile"
+msgstr "公開プロフィールを閲覧する"
+
+#: ui_main.view_report
+msgctxt "ui_main.view_report"
+msgid "View Report"
+msgstr "レポートを見る"
+
+#: ui_main.view_reports
+msgctxt "ui_main.view_reports"
+msgid "View Reports"
+msgstr "レポートを見る"
+
+#: ui_main.view_video
+msgctxt "ui_main.view_video"
+msgid "View Video"
+msgstr "動画を閲覧する"
+
+#: ui_main.visible
+msgctxt "ui_main.visible"
+msgid "Visible"
+msgstr "可視化"
+
+#: ui_main.waiting_approval
+msgctxt "ui_main.waiting_approval"
+msgid "Waiting Approval"
+msgstr "承認待ち"
+
+#: ui_main.waiting_verification
+msgctxt "ui_main.waiting_verification"
+msgid "Waiting Verification"
+msgstr "確認待ち"
+
+#: ui_main.wider_map
+msgctxt "ui_main.wider_map"
+msgid "Wider Map"
+msgstr "大きな地図"
+
+#: ui_main.web_form
+msgctxt "ui_main.web_form"
+msgid "Web Form"
+msgstr ""
+
+#: ui_main.web
+msgctxt "ui_main.web"
+msgid "Web"
+msgstr "Web"
+
+#: ui_main.weight
+msgctxt "ui_main.weight"
+msgid "Weight"
+msgstr "重さ"
+
+#: ui_main.Weekly
+msgctxt "ui_main.Weekly"
+msgid "Weekly"
+msgstr ""
+
+#: ui_main.yes
+msgctxt "ui_main.yes"
+msgid "Yes"
+msgstr "はい"
+
+#: ui_main.yesterday
+msgctxt "ui_main.yesterday"
+msgid "Yesterday"
+msgstr "機能"
+
+#: ui_main.your_dashboard
+msgctxt "ui_main.your_dashboard"
+msgid "Your Dashboard"
+msgstr "ダッシュボード"
+
+#: ui_main.your_file
+msgctxt "ui_main.your_file"
+msgid "Your file"
+msgstr "ファイル"
+
+#: ui_main.zoom_in
+msgctxt "ui_main.zoom_in"
+msgid "Zoom In"
+msgstr "ズームイン"
+
+#: ui_main.zoom_out
+msgctxt "ui_main.zoom_out"
+msgid "Zoom Out"
+msgstr "ズームアウト"

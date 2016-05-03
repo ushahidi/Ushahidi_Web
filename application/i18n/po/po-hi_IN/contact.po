@@ -1,0 +1,74 @@
+#. extracted from en_US/contact.php, hi_IN/contact.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-20 22:16+0000\n"
+"PO-Revision-Date: 2012-09-20 22:16+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: hi_IN\n"
+
+#: contact.captcha.default
+msgctxt "contact.captcha.default"
+msgid "Please enter a valid security code."
+msgstr ""
+
+#: contact.captcha.valid
+msgctxt "contact.captcha.valid"
+msgid "Please enter a valid security code."
+msgstr ""
+
+#: contact.captcha.required
+msgctxt "contact.captcha.required"
+msgid "Please enter the security code."
+msgstr ""
+
+#: contact.contact_email.email
+msgctxt "contact.contact_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr ""
+
+#: contact.contact_email.length
+msgctxt "contact.contact_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr ""
+
+#: contact.contact_email.required
+msgctxt "contact.contact_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr ""
+
+#: contact.contact_message.required
+msgctxt "contact.contact_message.required"
+msgid "The message field is required."
+msgstr ""
+
+#: contact.contact_name.length
+msgctxt "contact.contact_name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr ""
+
+#: contact.contact_name.required
+msgctxt "contact.contact_name.required"
+msgid "The name field is required."
+msgstr ""
+
+#: contact.contact_subject.length
+msgctxt "contact.contact_subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr ""
+
+#: contact.contact_subject.required
+msgctxt "contact.contact_subject.required"
+msgid "The subject field is required."
+msgstr ""
+
+#: contact.email_send.failed
+msgctxt "contact.email_send.failed"
+msgid "There was an error sending your message."
+msgstr ""
+

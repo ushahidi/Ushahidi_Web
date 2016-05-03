@@ -1,0 +1,62 @@
+# 
+# Translators:
+# headofthebored <papia567@yahoo.gr>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Greek (http://www.transifex.com/ushahidi/ushahidi-v2/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: message.captcha.default
+msgctxt "message.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Παρακαλώ εισάγετε ένα έγκυρο κωδικό ασφαλείας."
+
+#: message.captcha.required
+msgctxt "message.captcha.required"
+msgid "Please enter the security code."
+msgstr "Παρακαλώ εισάγετε τον κωδικό ασφαλείας."
+
+#: message.email.email
+msgctxt "message.email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "Το πεδίο διεύθυνση ηλεκτρονικού ταχυδρομείου φαίνεται να μην περιέχει μια έγκυρη διεύθυνση e-mail;"
+
+#: message.email.length
+msgctxt "message.email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "Το πεδίο διεύθυνση ηλεκτρονικού ταχυδρομείου πρέπει να έχει μήκος τουλάχιστον 4 και όχι περισσότερο απο 64 χαρακτήρες."
+
+#: message.email.required
+msgctxt "message.email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Το πεδίο διεύθυνση ηλεκτρονικού ταχυδρομείου είναι υποχρεωτικό εάν το checkbox είναι επιλεγμένο."
+
+#: message.message.required
+msgctxt "message.message.required"
+msgid "The comments field is required."
+msgstr "Το πεδίο \"Σχόλια\" είναι υποχρεωτικό."
+
+#: message.name.length
+msgctxt "message.name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Το πεδίο \"Όνομα\" πρέπει να είναι τουλάχιστον 3 χαρακτήρες."
+
+#: message.name.required
+msgctxt "message.name.required"
+msgid "The name field is required."
+msgstr "Το πεδίο \"Όνομα\" είναι υποχρεωτικό"
+
+#: message.phone.length
+msgctxt "message.phone.length"
+msgid "The phone field is not valid."
+msgstr "Το πεδίο \"Τηλέφωνο\" είναι υποχρεωτικό"

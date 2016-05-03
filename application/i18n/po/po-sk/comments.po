@@ -1,0 +1,62 @@
+# 
+# Translators:
+# Jakub Mičuch <micuch.jakub@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-12 04:22+0000\n"
+"Last-Translator: Jakub Mičuch <micuch.jakub@gmail.com>\n"
+"Language-Team: Slovak (http://www.transifex.com/ushahidi/ushahidi-v2/language/sk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: comments.captcha.default
+msgctxt "comments.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Prosím zadajte platný bezpečnostný kód."
+
+#: comments.captcha.required
+msgctxt "comments.captcha.required"
+msgid "Please enter the security code."
+msgstr "Prosím zadajte bezpečnostný kód."
+
+#: comments.captcha.valid
+msgctxt "comments.captcha.valid"
+msgid "You entered the wrong security code."
+msgstr "Vložili ste nesprávny bezpečnostný kód."
+
+#: comments.comment_author.length
+msgctxt "comments.comment_author.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Pole \"Meno\" musí mať najmenej 3 znaky."
+
+#: comments.comment_author.required
+msgctxt "comments.comment_author.required"
+msgid "The name field is required."
+msgstr "Pole \"Meno\" je povinné."
+
+#: comments.comment_description.required
+msgctxt "comments.comment_description.required"
+msgid "The comments field is required."
+msgstr "Pole \"Komentáre\" je povinné."
+
+#: comments.comment_email.email
+msgctxt "comments.comment_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "Pole \"E-mail\" nezobrazuje platnú e-mailovú adresu."
+
+#: comments.comment_email.length
+msgctxt "comments.comment_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "Pole \"E-mail\" musí obsahovať aspoň 4 a nie viac ako 64 znakov."
+
+#: comments.comment_email.required
+msgctxt "comments.comment_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Pole \"E-mail\" je povinné ak je políčko zaškrknuté."

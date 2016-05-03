@@ -1,0 +1,216 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Macedonian (Macedonia) (http://www.transifex.com/ushahidi/ushahidi-v2/language/mk_MK/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: mk_MK\n"
+"Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: datetime.am
+msgctxt "datetime.am"
+msgid "am"
+msgstr ""
+
+#: datetime.friday.abbv
+msgctxt "datetime.friday.abbv"
+msgid "Fri"
+msgstr "Пет"
+
+#: datetime.friday.full
+msgctxt "datetime.friday.full"
+msgid "Friday"
+msgstr "Петок"
+
+#: datetime.monday.abbv
+msgctxt "datetime.monday.abbv"
+msgid "Mon"
+msgstr "Пон"
+
+#: datetime.monday.full
+msgctxt "datetime.monday.full"
+msgid "Monday"
+msgstr "Понеделник"
+
+#: datetime.pm
+msgctxt "datetime.pm"
+msgid "pm"
+msgstr ""
+
+#: datetime.saturday.abbv
+msgctxt "datetime.saturday.abbv"
+msgid "Sat"
+msgstr "Саб"
+
+#: datetime.saturday.full
+msgctxt "datetime.saturday.full"
+msgid "Saturday"
+msgstr "Сабота"
+
+#: datetime.sunday.abbv
+msgctxt "datetime.sunday.abbv"
+msgid "Sun"
+msgstr "Нед"
+
+#: datetime.sunday.full
+msgctxt "datetime.sunday.full"
+msgid "Sunday"
+msgstr "Недела"
+
+#: datetime.thursday.abbv
+msgctxt "datetime.thursday.abbv"
+msgid "Thu"
+msgstr "Чет"
+
+#: datetime.thursday.full
+msgctxt "datetime.thursday.full"
+msgid "Thursday"
+msgstr "Четврток"
+
+#: datetime.tuesday.abbv
+msgctxt "datetime.tuesday.abbv"
+msgid "Tue"
+msgstr "Вто"
+
+#: datetime.tuesday.full
+msgctxt "datetime.tuesday.full"
+msgid "Tuesday"
+msgstr "Вторник"
+
+#: datetime.wednesday.abbv
+msgctxt "datetime.wednesday.abbv"
+msgid "Wed"
+msgstr "Сре"
+
+#: datetime.wednesday.full
+msgctxt "datetime.wednesday.full"
+msgid "Wednesday"
+msgstr "Среда"
+
+#: datetime.january.abbv
+msgctxt "datetime.january.abbv"
+msgid "Jan"
+msgstr "Јан"
+
+#: datetime.january.full
+msgctxt "datetime.january.full"
+msgid "January"
+msgstr "Јануари"
+
+#: datetime.february.abbv
+msgctxt "datetime.february.abbv"
+msgid "Feb"
+msgstr "Феб"
+
+#: datetime.february.full
+msgctxt "datetime.february.full"
+msgid "February"
+msgstr "Фебруари"
+
+#: datetime.march.abbv
+msgctxt "datetime.march.abbv"
+msgid "Mar"
+msgstr "Мар"
+
+#: datetime.march.full
+msgctxt "datetime.march.full"
+msgid "March"
+msgstr "Март"
+
+#: datetime.april.abbv
+msgctxt "datetime.april.abbv"
+msgid "Apr"
+msgstr "Апр"
+
+#: datetime.april.full
+msgctxt "datetime.april.full"
+msgid "April"
+msgstr "Април"
+
+#: datetime.may.abbv
+msgctxt "datetime.may.abbv"
+msgid "May"
+msgstr "Мај"
+
+#: datetime.may.full
+msgctxt "datetime.may.full"
+msgid "May"
+msgstr "Мај"
+
+#: datetime.june.abbv
+msgctxt "datetime.june.abbv"
+msgid "Jun"
+msgstr "Јун"
+
+#: datetime.june.full
+msgctxt "datetime.june.full"
+msgid "June"
+msgstr "Јуни"
+
+#: datetime.july.abbv
+msgctxt "datetime.july.abbv"
+msgid "Jul"
+msgstr "Јул"
+
+#: datetime.july.full
+msgctxt "datetime.july.full"
+msgid "July"
+msgstr "Јули"
+
+#: datetime.august.abbv
+msgctxt "datetime.august.abbv"
+msgid "Aug"
+msgstr "Авг"
+
+#: datetime.august.full
+msgctxt "datetime.august.full"
+msgid "August"
+msgstr "Август"
+
+#: datetime.september.abbv
+msgctxt "datetime.september.abbv"
+msgid "Sep"
+msgstr "Сеп"
+
+#: datetime.september.full
+msgctxt "datetime.september.full"
+msgid "September"
+msgstr "Септември"
+
+#: datetime.october.abbv
+msgctxt "datetime.october.abbv"
+msgid "Oct"
+msgstr "Окт"
+
+#: datetime.october.full
+msgctxt "datetime.october.full"
+msgid "October"
+msgstr "Октомври"
+
+#: datetime.november.abbv
+msgctxt "datetime.november.abbv"
+msgid "Nov"
+msgstr "Ное"
+
+#: datetime.november.full
+msgctxt "datetime.november.full"
+msgid "November"
+msgstr "Ноември"
+
+#: datetime.december.abbv
+msgctxt "datetime.december.abbv"
+msgid "Dec"
+msgstr "Дек"
+
+#: datetime.december.full
+msgctxt "datetime.december.full"
+msgid "December"
+msgstr "Декември"

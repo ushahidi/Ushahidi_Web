@@ -1,0 +1,411 @@
+# 
+# Translators:
+# Boripat Lebel <inactive+boripatlebel@transifex.com>, 2014
+# Ngamnet_review <ngamnetaektasaeng@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2014-08-13 06:37+0000\n"
+"Last-Translator: Ngamnet_review <ngamnetaektasaeng@gmail.com>\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/ushahidi/ushahidi-v2/language/th_TH/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th_TH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: installer.base_path
+msgctxt "installer.base_path"
+msgid "Base Path"
+msgstr "เส้นทางฐาน"
+
+#: installer.database
+msgctxt "installer.database"
+msgid "Database"
+msgstr "ฐานข้อมูล"
+
+#: installer.database_host
+msgctxt "installer.database_host"
+msgid "Database Host"
+msgstr "โฮสต์ฐานข้อมูล"
+
+#: installer.database_host_description
+msgctxt "installer.database_host_description"
+msgid ""
+"If you are running Ushahidi on your own computer, this will more than likely"
+" be \"localhost\". If you are running Ushahidi from a web server, you will "
+"get your host information from your web hosting provider."
+msgstr "ถ้าคุณใช้ Ushahidi บนเครื่องคอมพิวเตอร์ของคุณเองนี้จะเป็น \"localhost\" ถ้าคุณใช้ Ushahidi จากเว็บเซิร์ฟเวอร์คุณจะได้รับข้อมูลโฮสต์ของคุณจากผู้ให้บริการเว็บโฮสติ้งของคุณ"
+
+#: installer.database_name
+msgctxt "installer.database_name"
+msgid "Database Name"
+msgstr "ชื่อฐานข้อมูล"
+
+#: installer.database_name_description
+msgctxt "installer.database_name_description"
+msgid "The name of the database you want to run Ushahidi in"
+msgstr "ชื่อของฐานข้อมูลที่คุณต้องการที่จะทำงานใน Ushahidi"
+
+#: installer.db_information_link
+msgctxt "installer.db_information_link"
+msgid ""
+"For more information, please check out <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" "
+"target=\"_blank\">this article</a> on the wiki that talks about databases in"
+" more detail."
+msgstr "สำหรับข้อมูลเพิ่มเติมโปรดตรวจสอบ <a href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" target=\"_blank\"> ในบทความนี้ </a> วิกิพีเดียอธิบายรายละเอียดเกี่ยวกับฐานข้อมูลเพิ่มเติม"
+
+#: installer.default_language
+msgctxt "installer.default_language"
+msgid "Default Language (Locale)"
+msgstr "ภาษาหลัก (ท้องถิ่น)"
+
+#: installer.default_language_description
+msgctxt "installer.default_language_description"
+msgid ""
+"Each deployment of Ushahidi comes with a set of built in language "
+"translations. You can also <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\""
+" target=\"_blank\">add your own</a>."
+msgstr "การใช้งานของแต่ละ Ushahidi มาพร้อมกับชุดแปลภาษา นอกจากนี้คุณยังสามารถ < href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\" target = \"_blank\"> เพิ่มของคุณเอง </ a>"
+
+#: installer.disable
+msgctxt "installer.disable"
+msgid "Disable"
+msgstr "ปิดการใช้งาน"
+
+#: installer.enable
+msgctxt "installer.enable"
+msgid "Enable"
+msgstr "เปิดการใช้งาน"
+
+#: installer.error_summary
+msgctxt "installer.error_summary"
+msgid "Listed below is a summary of the errors we encountered."
+msgstr "ข้างล่างนี้เป็นรายละเอียดของข้อผิดพลาดที่เราพบ"
+
+#: installer.files_location_text
+msgctxt "installer.files_location_text"
+msgid ""
+"The location on your server where you placed your Ushahidi files. <strong>We"
+" have automatically detected this value, please make sure that it is "
+"correct.</strong> If the field is empty, do not worry, it means ushahidi is "
+"installed at the top level directory."
+msgstr "สถานที่ตั้งของเซิร์ฟเวอร์ของคุณที่คุณวางไฟล์ Ushahidi ของคุณ <strong> เราได้ตรวจพบโดยอัตโนมัติค่านี้ โปรดตรวจสอบให้แน่ใจว่ามันถูกต้อง. </strong> ถ้าเขตว่างเปล่าไม่ต้องกังวลเพราะหมายความว่า Ushahidi มีการติดตั้งที่ไดเรกทอรีระดับบนสุด"
+
+#: installer.finished
+msgctxt "installer.finished"
+msgid "Finished"
+msgstr "เสร็จสิ้น"
+
+#: installer.general
+msgctxt "installer.general"
+msgid "General"
+msgstr "ทั่วไป"
+
+#: installer.google_key
+msgctxt "installer.google_key"
+msgid "<span>Google</span> API Key"
+msgstr "<span>Google</span> API คีย์"
+
+#: installer.google_key_description
+msgctxt "installer.google_key_description"
+msgid ""
+"Anyone can get an api key. <a id=\"api-link\" "
+"href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Get "
+"yours now</a>"
+msgstr "ทุกคนสามารถได้รับคีย์ API <a id=\"api-link\" href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\"> ได้รับของคุณตอนนี้ </ a>"
+
+#: installer.go_back
+msgctxt "installer.go_back"
+msgid "Go Back"
+msgstr "กลับไป"
+
+#: installer.index.advanced
+msgctxt "installer.index.advanced"
+msgid "ADVANCED INSTALLATION"
+msgstr "การติดตั้งขั้นสูง"
+
+#: installer.index.advanced_installation_description
+msgctxt "installer.index.advanced_installation_description"
+msgid ""
+"Get all the basic settings completed through this 5-step process.  This "
+"includes server, map, site name and contact details."
+msgstr "รับการตั้งค่าพื้นฐานทั้งหมดผ่านกระบวนการ 5 ขั้นตอนนี้ ซึ่งรวมถึงเซิร์ฟเวอร์ แผนที่ ชื่อเว็บไซต์และรายละเอียดติดต่อ"
+
+#: installer.index.basic_installation
+msgctxt "installer.index.basic_installation"
+msgid "BASIC INSTALLATION"
+msgstr "การติดตั้งขั้นพื้นฐาน"
+
+#: installer.index.basic_installation_description
+msgctxt "installer.index.basic_installation_description"
+msgid ""
+"Simple and fast. All you need is your website's root directory and your "
+"database information. Choose this option if you want to get up and running "
+"quickly, and you can always configure everything else later."
+msgstr "ง่ายและรวดเร็ว สิ่งที่คุณต้องใช้คือไดเรกทอรีของเว็บไซต์ของคุณและข้อมูลจากฐานข้อมูลของคุณ เลือกตัวเลือกนี้ถ้าคุณต้องการที่จะได้รับการทำงานที่รวดเร็ว นอกจากนี้คุณก็สามารถกำหนดค่าอื่นๆในเวลาภายหลังได้"
+
+#: installer.index.proceed
+msgctxt "installer.index.proceed"
+msgid "Proceed"
+msgstr "ดำเนินการ"
+
+#: installer.index.welcome
+msgctxt "installer.index.welcome"
+msgid ""
+"Welcome to the Ushahidi server install process.  Choose which type of "
+"installation you would like to use below."
+msgstr "ยินดีต้อนรับสู่เซิร์ฟเวอร์ Ushahidi เลือกชนิดของการติดตั้งที่คุณต้องการข้างล่าง"
+
+#: installer.installation_successful
+msgctxt "installer.installation_successful"
+msgid "Installation Successful"
+msgstr "ติดตั้งสำเร็จ"
+
+#: installer.mail_server
+msgctxt "installer.mail_server"
+msgid "Mail Server"
+msgstr "เมล์เซิร์ฟเวอร์"
+
+#: installer.mail_server_host
+msgctxt "installer.mail_server_host"
+msgid "Mail Server Host"
+msgstr "เมล์เซิร์ฟเวอร์โฮสต์"
+
+#: installer.mail_server_host_description
+msgctxt "installer.mail_server_host_description"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "ตัวอย่าง: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: installer.mail_server_password
+msgctxt "installer.mail_server_password"
+msgid "Mail Server Password"
+msgstr "รหัสผ่านอีเมลเซิร์ฟเวอร์"
+
+#: installer.mail_server_password_description
+msgctxt "installer.mail_server_password_description"
+msgid "The password you normally use to login in to your email"
+msgstr "รหัสผ่านที่คุณใช้เพื่อเข้าสู่ระบบในอีเมล์ของคุณ"
+
+#: installer.mail_server_port
+msgctxt "installer.mail_server_port"
+msgid "Mail Server Port"
+msgstr "พอร์ตเซิร์ฟเวอร์เมล์"
+
+#: installer.mail_server_port_description
+msgctxt "installer.mail_server_port_description"
+msgid "Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "พอร์ตสามัญ: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: installer.mail_server_type
+msgctxt "installer.mail_server_type"
+msgid "Mail Server Type"
+msgstr "ประเภทเซิร์ฟเวอร์อีเมล์"
+
+#: installer.mail_server_type_description
+msgctxt "installer.mail_server_type_description"
+msgid ""
+"Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a "
+"href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" "
+"target=\"_blank\">What is the difference?</a>"
+msgstr "ข้อความอินเทอร์เน็ตโปรโตคอล (IMAP) หรือ ไปรษณีย์โปรโตคอล (POP) <a href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" target=\"_blank\"> ความแตกต่างคืออะไร? </a>"
+
+#: installer.mail_server_username
+msgctxt "installer.mail_server_username"
+msgid "Mail Server Username"
+msgstr "ชื่่อเข้าใช้งานเซิร์ฟเวอร์เมล์"
+
+#: installer.mail_server_username_description
+msgctxt "installer.mail_server_username_description"
+msgid ""
+"If you are using Gmail, Hotmail, or Yahoo Mail, enter a full email address "
+"as a username."
+msgstr "หากคุณใช้ Gmail, Hotmail หรือ Yahoo Mail, ให้ใส่ที่อยู่อีเมลเพื่อเป็นชื่อผู้ใช้งาน"
+
+#: installer.map
+msgctxt "installer.map"
+msgid "Map"
+msgstr "แผนที่"
+
+#: installer.map_provider
+msgctxt "installer.map_provider"
+msgid "Map Provider"
+msgstr "ผู้ให้บริการแผนที่"
+
+#: installer.map_provider_description
+msgctxt "installer.map_provider_description"
+msgid ""
+"Ushahidi works equally well with any of these three mapping providers: "
+"Google, Bing or Open Street Map. Choose the one that has the most detail in "
+"your area."
+msgstr "Ushahidi ทำงานได้ดีกับสามผู้ให้บริการการทำแผนที่ดั้งต่อไปนี้: Google, Bing หรือ Open Street Map โปรดเลือกบริการการทำแผนที่่ที่ให้รายละเอียดมากที่สุดในพื้นที่ของคุณ"
+
+#: installer.other_steps
+msgctxt "installer.other_steps"
+msgid "Other steps..."
+msgstr "ขั้นตอนอื่นๆ ..."
+
+#: installer.password
+msgctxt "installer.password"
+msgid "Password"
+msgstr "รหัสผ่าน"
+
+#: installer.password_description
+msgctxt "installer.password_description"
+msgid "Your database password"
+msgstr "รหัสผ่านสำหรับฐานข้อมูลของคุณ"
+
+#: installer.previous
+msgctxt "installer.previous"
+msgid "Previous"
+msgstr "ก่อน"
+
+#: installer.restart_apache
+msgctxt "installer.restart_apache"
+msgid "Please restart your Apache Server"
+msgstr "โปรดรีสตาร์ท Apache เซิร์ฟเวอร์ของคุณ"
+
+#: installer.select_mail_server_ssl
+msgctxt "installer.select_mail_server_ssl"
+msgid "Enable or disable SSL"
+msgstr "เปิดหรือปิดการใช้งาน SSL"
+
+#: installer.select_mail_server_ssl_description
+msgctxt "installer.select_mail_server_ssl_description"
+msgid ""
+"Some mail servers give you the option of using <abbr title=\"Secure Sockets "
+"Layer\">SSL</abbr> when making a connection. Using SSL is recommended as it "
+"gives you an added level of security."
+msgstr "เซิร์ฟเวอร์อีเมล์บางอย่างให้คุณเลือกใช้ <abbr title=\"Secure Sockets Layer\"> SSL </ abbr> เมื่อมีการเชื่อมต่อ แนะนำให้ใช้ SSL เพราะจะช่วยเพิ่มระดับความปลอดภัย"
+
+#: installer.setup_sms
+msgctxt "installer.setup_sms"
+msgid "Set up your SMS server"
+msgstr "ตั้งค่าเซิร์ฟเวอร์ SMS ของคุณ"
+
+#: installer.site_email
+msgctxt "installer.site_email"
+msgid "Site Email Address"
+msgstr "อีเมล์ไซต์"
+
+#: installer.site_email_alerts
+msgctxt "installer.site_email_alerts"
+msgid "Site Alert Email Address"
+msgstr "ไซต์แจ้งเตือนอีเมล์"
+
+#: installer.site_email_alerts_description
+msgctxt "installer.site_email_alerts_description"
+msgid ""
+"When your site visitors sign up for email alerts, they will receive emails "
+"from this address. This email address does not have to be the same as the "
+"Site Email Address."
+msgstr "เมื่อผู้เข้าชมเว็บไซต์ของคุณลงทะเบียนสำหรับการแจ้งเตือนอีเมล พวกเขาจะได้รับอีเมลจากที่อยู่นี้ ที่อยู่อีเมลนี้ไม่จำเป็นต้องเป็นชื่อเดียวกันกับที่อยู่อีเมล์เว็บไซต์"
+
+#: installer.site_email_description
+msgctxt "installer.site_email_description"
+msgid "Site wide email communication will be funneled through this address"
+msgstr "ไซต์อีเมล์สื่อสารจะผ่านทางที่อยู่นี้"
+
+#: installer.site_name
+msgctxt "installer.site_name"
+msgid "Site Name"
+msgstr "ชื่อไซต์"
+
+#: installer.site_name_description
+msgctxt "installer.site_name_description"
+msgid "The name of your site"
+msgstr "ชื่อของไซต์ของคุณ"
+
+#: installer.site_tagline
+msgctxt "installer.site_tagline"
+msgid "Site Tagline"
+msgstr "ไซต์ Tagline"
+
+#: installer.site_tagline_description
+msgctxt "installer.site_tagline_description"
+msgid "Your tagline"
+msgstr "Tagline ของคุณ"
+
+#: installer.summary.text_1
+msgctxt "installer.summary.text_1"
+msgid ""
+"The files and folders listed below need to be writable by your webserver."
+msgstr "ไฟล์และโฟลเดอร์ที่แสดงด้านล่างจะต้องสามารถเขียนได้โดยเว็บเซิร์ฟเวอร์ของคุณ"
+
+#: installer.summary.text_2
+msgctxt "installer.summary.text_2"
+msgid ""
+"<p>Here are instructions for changing file permissions:</p>\n"
+"        <ul>\n"
+"            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n"
+"            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n"
+"        </ul>"
+msgstr "<p>ที่่นี่่มีคำแนะนำสำหรับการเปลี่ยนสิทธิ์ไฟล์:</p>\n<ul>\n<li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n<li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n</ul>"
+
+#: installer.summary.text_3
+msgctxt "installer.summary.text_3"
+msgid ""
+"Before you get started, you will need to make sure the following files and "
+"folders are writable by your webserver. This involves changing file "
+"permissions."
+msgstr "ก่อนที่คุณจะเริ่มต้น คุณจะต้องแน่ใจว่าไฟล์ดังต่อไปนี้และโฟลเดอร์ที่มีสามารถเขียนได้โดยเว็บเซิร์ฟเวอร์ของคุณ ซึ่งเกี่ยวข้องกับการเปลี่ยนแปลงสิทธิ์ของแฟ้ม"
+
+#: installer.summary.text_4
+msgctxt "installer.summary.text_4"
+msgid ""
+"For the installation process, please have the following bits of information "
+"on hand."
+msgstr "สำหรับขั้นตอนการติดตั้ง โปรดมีข้อมูลดังต่อไปนี้ติดตัว"
+
+#: installer.table_prefix
+msgctxt "installer.table_prefix"
+msgid "Table Prefix"
+msgstr "คำนำหน้าตาราง"
+
+#: installer.table_prefix_description
+msgctxt "installer.table_prefix_description"
+msgid ""
+"Normally you would not change the table prefix. However, if you want to run "
+"multiple Ushahidi installations from a single database, you can do that by "
+"changing the prefix here."
+msgstr "ปกติคุณจะไม่เปลี่ยนคำนำหน้าตาราง แต่ถ้าคุณต้องการที่จะเรียกใช้การติดตั้ง Ushahidi จากหลายฐานข้อมูลเดียว คุณสามารถทำได้โดยการเปลี่ยนคำนำหน้าตารางที่่นี่่"
+
+#: installer.title
+msgctxt "installer.title"
+msgid "Title"
+msgstr "ชื่อเรื่อง"
+
+#: installer.to_login
+msgctxt "installer.to_login"
+msgid "To login, go to"
+msgstr "เพื่อเข้าสู่ระบบไปที่่"
+
+#: installer.upload_data
+msgctxt "installer.upload_data"
+msgid "Upload report data"
+msgstr "อัปโหลดข้อมูลรายงาน"
+
+#: installer.username
+msgctxt "installer.username"
+msgid "Username"
+msgstr "ชื่อผู้ใช้"
+
+#: installer.username_description
+msgctxt "installer.username_description"
+msgid "Your database username"
+msgstr "ชื่อผู้ใช้ฐานข้อมูล"
+
+#: installer.use_credentials
+msgctxt "installer.use_credentials"
+msgid "and use the following credentials"
+msgstr "และใช้สิทธิดังต่อไปนี้"
+
+#: installer.view_site
+msgctxt "installer.view_site"
+msgid "View your website"
+msgstr "ดูเว็บไซต์ของคุณ"

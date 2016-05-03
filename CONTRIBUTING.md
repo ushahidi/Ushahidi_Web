@@ -1,17 +1,12 @@
-Ushahidi is an open source project. We encourage you to pitch in. [Join the mailing list](http://list.ushahidi.com) and dive into the [wiki](https://wiki.ushahidi.com)!
+# Cómo contribuir a este repositorio
 
-* If you want to submit a bug report please make sure to follow our [reporting guidelines](https://wiki.ushahidi.com/display/WIKI/Report+a+bug).
+Haz un _fork_ del repositorio en GitHub y aplica tus cambios en ese _fork_, basándote en la rama (_branch_) `develop`. Cuando tengas algo listo, envíanos un _Pull Request_ sobre la misma rama.
 
-* If you want to submit a patch, please read the checkout the contribution guidelines:
-  * [Ushahidi Developer Guide](https://wiki.ushahidi.com/display/WIKI/Ushahidi+Developer+Guide)
+Puedes ofrecerte a colaborar en cualquiera de los [_issues_ del proyecto](https://github.com/desastre-ecuador/mapa.desastre.ec/issues). Si no sabes cuál tomar, fíjate en lo priorizado en [el tablero de Waffle](https://waffle.io/desastre-ecuador/mapa.desastre.ec/join). También puedes unirte al [chat del equipo técnico en Telegram](https://telegram.me/joinchat/AbmN-wcPvovTZcL0Lpr14Q).
+
+Adicionalmente, los lineamientos para la contribución de Ushahidi (en inglés) pueden serte útiles:
+  * [Ushahidi Developer Guide](https://wiki.ushahidi.com/display/WIKI/Ushahidi+v2.X+Developer+Guide)
   * [Coding Style Guide](https://wiki.ushahidi.com/display/WIKI/Coding+Style+Guide)
   * [Localization best practice](https://wiki.ushahidi.com/display/WIKI/Localization+-+dev+best+practices)
 
-* If you have a change or new feature in mind, you can [submit it on github](https://github.com/ushahidi/Ushahidi_Web/issues/new) or [add it to the wishlist for 3.0](https://wiki.ushahidi.com/display/WIKI/Ushahidi+3.x+Wishlist).
-
-*We only accept bug reports, feature request and pull requests in GitHub*.
-
-* If you have a question about how to use Ushahidi, please [ask on the Ushahidi Forums](http://forums.ushahidi.com).
-
-Thanks!
-Ushahidi Team
+¡Gracias por tu ayuda!

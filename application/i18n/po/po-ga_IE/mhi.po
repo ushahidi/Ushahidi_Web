@@ -1,0 +1,51 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Irish (Ireland) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ga_IE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ga_IE\n"
+"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: mhi.contact_captcha.default
+msgctxt "mhi.contact_captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Cuir isteach cód slándála bailí, le do thoil"
+
+#: mhi.contact_captcha.required
+msgctxt "mhi.contact_captcha.required"
+msgid "Please enter the security code."
+msgstr "Cuir isteach an Cód Slándála"
+
+#: mhi.contact_email.email
+msgctxt "mhi.contact_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "Tá an chosúlacht air nach seoladh ríomhphoist bailí atá sa réimse ríomhphoist?"
+
+#: mhi.contact_email.required
+msgctxt "mhi.contact_email.required"
+msgid "Please provide a valid email address."
+msgstr "Cuir isteach seoladh ríomhphoist bailí, le do thoil"
+
+#: mhi.contact_message.required
+msgctxt "mhi.contact_message.required"
+msgid "The message field is required."
+msgstr "Tá an réimse teachtaireachta ag teastáil."
+
+#: mhi.contact_subject.length
+msgctxt "mhi.contact_subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr "Ní mór don réimse ábhair a bheith 3 charachtar ar fhad ar a laghad."
+
+#: mhi.contact_subject.required
+msgctxt "mhi.contact_subject.required"
+msgid "The subject field is required."
+msgstr "Tá an réimse ábhair ag teastáil."

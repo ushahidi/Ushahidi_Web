@@ -1,0 +1,411 @@
+# 
+# Translators:
+# Ath Ell <ellsomath@gmail.com>, 2013
+# Sok Sophea <sksophea@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Khmer (http://www.transifex.com/ushahidi/ushahidi-v2/language/km/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: installer.base_path
+msgctxt "installer.base_path"
+msgid "Base Path"
+msgstr "ផ្លូវ​មូលដ្ឋាន"
+
+#: installer.database
+msgctxt "installer.database"
+msgid "Database"
+msgstr "មូលដ្ឋាន​ទិន្នន័យ"
+
+#: installer.database_host
+msgctxt "installer.database_host"
+msgid "Database Host"
+msgstr "ម៉ាស៊ីន​មូលដ្ឋាន​ទិន្នន័យ"
+
+#: installer.database_host_description
+msgctxt "installer.database_host_description"
+msgid ""
+"If you are running Ushahidi on your own computer, this will more than likely"
+" be \"localhost\". If you are running Ushahidi from a web server, you will "
+"get your host information from your web hosting provider."
+msgstr "ប្រសិនបើ​អ្នក​កំពុង​ប្រើ​យូសាហ៊ីឌី​នៅ​លើ​កុំព្យូទ័រ​របស់​អ្នក នេះ​ទំនងជា \"localhost\"។ ប្រសិនបើ​អ្នក​កំពុង​ដំណើរការ​យូសាហ៊ីឌី​ពី​ម៉ាស៊ីន​មេ​បណ្ដាញ អ្នក​នឹង​ទទួល​បាន​ព័ត៌មាន​ម៉ាស៊ីន​ពី​ក្រុមហ៊ុន​ផ្ដល់​ការ​បង្ហោះ​បណ្ដាញ​របស់​អ្នក។ "
+
+#: installer.database_name
+msgctxt "installer.database_name"
+msgid "Database Name"
+msgstr "ឈ្មោះ​មូលដ្ឋាន​ទិន្នន័យ"
+
+#: installer.database_name_description
+msgctxt "installer.database_name_description"
+msgid "The name of the database you want to run Ushahidi in"
+msgstr "ឈ្មោះ​មូលដ្ឋាន​ទិន្នន័យ​ដែល​អ្នក​ត្រូវ​ដំណើរការ​យូសាហ៊ីឌី"
+
+#: installer.db_information_link
+msgctxt "installer.db_information_link"
+msgid ""
+"For more information, please check out <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" "
+"target=\"_blank\">this article</a> on the wiki that talks about databases in"
+" more detail."
+msgstr "សម្រាប់​ព័ត៌មាន​បន្ថែម​សូម​មើល​នៅ <a href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" target=\"_blank\">អត្ថបទ​នេះ</a> នៅ​លើ​វីគី​ដែល​និយាយ​អំពី​មូលដ្ឋាន​ទិន្នន័យ​លម្អិត។"
+
+#: installer.default_language
+msgctxt "installer.default_language"
+msgid "Default Language (Locale)"
+msgstr "ភាសា​លំនាំដើម (Locale)"
+
+#: installer.default_language_description
+msgctxt "installer.default_language_description"
+msgid ""
+"Each deployment of Ushahidi comes with a set of built in language "
+"translations. You can also <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\""
+" target=\"_blank\">add your own</a>."
+msgstr "ការ​ប្រើប្រាស់​នីមួយៗ​របស់​យូសាហ៊ីឌី​គឺ​មក​ជាមួយ​សំណុំ​ការ​បកប្រែ​ភាសា​ដែល​ជាប់។ អ្នក​បន្ថែម​ភាសា​របស់​អ្នក​បាន <a href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\" target=\"_blank\"></a>."
+
+#: installer.disable
+msgctxt "installer.disable"
+msgid "Disable"
+msgstr "បិទ"
+
+#: installer.enable
+msgctxt "installer.enable"
+msgid "Enable"
+msgstr "បើក"
+
+#: installer.error_summary
+msgctxt "installer.error_summary"
+msgid "Listed below is a summary of the errors we encountered."
+msgstr "បញ្ជី​ខាងក្រោម​គឺ​សេចក្ដី​សង្ខេប​អំពី​កំហុស​ដែល​យើង​បាន​ជួប។"
+
+#: installer.files_location_text
+msgctxt "installer.files_location_text"
+msgid ""
+"The location on your server where you placed your Ushahidi files. <strong>We"
+" have automatically detected this value, please make sure that it is "
+"correct.</strong> If the field is empty, do not worry, it means ushahidi is "
+"installed at the top level directory."
+msgstr "ទីតាំង​នៅ​លើ​ម៉ាស៊ីន​មេ​សម្រាប់​ដាក់​ឯកសារ​យូសាហ៊ីឌី​របស់​អ្នក។ <strong>យើ​បាន​រក​ឃើញ​តម្លៃ​នេះ​ដោយ​ស្វ័យប្រវត្តិ សូម​ប្រាកដ​ថា​វា​ត្រឹមត្រូវ។</strong> ប្រសិនបើ​វាល​ទទេ សូម​កុំ​បារម្ភ​អី វា​មានន័យថា​យូសាហ៊ីឌី​ត្រូវ​បាន​ដំឡើង​នៅ​ថត​កំពូល។"
+
+#: installer.finished
+msgctxt "installer.finished"
+msgid "Finished"
+msgstr "បាន​បញ្ចប់"
+
+#: installer.general
+msgctxt "installer.general"
+msgid "General"
+msgstr "ទូទៅ"
+
+#: installer.google_key
+msgctxt "installer.google_key"
+msgid "<span>Google</span> API Key"
+msgstr "<span>Google</span> API Key"
+
+#: installer.google_key_description
+msgctxt "installer.google_key_description"
+msgid ""
+"Anyone can get an api key. <a id=\"api-link\" "
+"href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Get "
+"yours now</a>"
+msgstr "អ្នក​ណា​ក៏​អាច​យក​គ្រាប់ចុច api បាន​ដែរ។ <a id=\"api-link\" href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">យក​របស់​អ្នក​ឥឡូវ</a>"
+
+#: installer.go_back
+msgctxt "installer.go_back"
+msgid "Go Back"
+msgstr "ត្រឡប់​ក្រោយ"
+
+#: installer.index.advanced
+msgctxt "installer.index.advanced"
+msgid "ADVANCED INSTALLATION"
+msgstr "ការ​ដំឡើង​កម្រិតខ្ពស់"
+
+#: installer.index.advanced_installation_description
+msgctxt "installer.index.advanced_installation_description"
+msgid ""
+"Get all the basic settings completed through this 5-step process.  This "
+"includes server, map, site name and contact details."
+msgstr "បញ្ចប់​ការ​កំណត់​មូលដ្ឋាន​ទាំងអស់​ក្នុង​ដំណើរការ​៥​ជំហាន​នេះ។ នេះ​គឺ​រួមបញ្ចូល​ទាំង​ម៉ាស៊ីន​មេ ផែនទី ឈ្មោះ​តំបន់បណ្ដាញ និង​សេចក្ដី​លម្អិត​ទំនាក់ទំនង។"
+
+#: installer.index.basic_installation
+msgctxt "installer.index.basic_installation"
+msgid "BASIC INSTALLATION"
+msgstr "ការ​ដំឡើង​មូលដ្ឋាន"
+
+#: installer.index.basic_installation_description
+msgctxt "installer.index.basic_installation_description"
+msgid ""
+"Simple and fast. All you need is your website's root directory and your "
+"database information. Choose this option if you want to get up and running "
+"quickly, and you can always configure everything else later."
+msgstr "សាមញ្ញ​ហើយ​លឿន។ អ្វី​ដែល​អ្នក​ត្រូវការ​គឺ​ថត root នៃ​តំបន់បណ្ដាញ​របស់​អ្នក និង​ព័ត៌មាន​មូលដ្ឋាន​ទិន្នន័យ។ ជ្រើស​ជម្រើស​នេះ​ប្រសិនបើ​អ្នក​ចង់​ក្រោក​ពី​ដំណេក និង​រត់​រហ័ស ហើយ​អ្នក​អាច​កំណត់​រចនាសម្ព័ន្ធ​ចំណុច​ផ្សេងទៀត​នៅ​ពេល​ក្រោយ​បាន។"
+
+#: installer.index.proceed
+msgctxt "installer.index.proceed"
+msgid "Proceed"
+msgstr "ធ្វើ​បន្ត"
+
+#: installer.index.welcome
+msgctxt "installer.index.welcome"
+msgid ""
+"Welcome to the Ushahidi server install process.  Choose which type of "
+"installation you would like to use below."
+msgstr "សូម​ស្វាគមន៍​មក​កាន់​ដំណើរការ​ដំឡើង​ម៉ាស៊ីន​មេ​របស់​យូសាហ៊ីឌី។ ជ្រើស​ប្រភេទ​ដំឡើង​ដែល​អ្នក​ចង់​ប្រើ​ដូច​ខាងក្រោម។"
+
+#: installer.installation_successful
+msgctxt "installer.installation_successful"
+msgid "Installation Successful"
+msgstr "ការ​ដំឡើង​បាន​ជោគជ័យ"
+
+#: installer.mail_server
+msgctxt "installer.mail_server"
+msgid "Mail Server"
+msgstr "ម៉ាស៊ីន​មេ​អ៊ីមែល"
+
+#: installer.mail_server_host
+msgctxt "installer.mail_server_host"
+msgid "Mail Server Host"
+msgstr "ម៉ាស៊ីន​របស់​ម៉ាស៊ីន​មេ​អ៊ីមែល"
+
+#: installer.mail_server_host_description
+msgctxt "installer.mail_server_host_description"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "ឧទាហរណ៍៖ mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: installer.mail_server_password
+msgctxt "installer.mail_server_password"
+msgid "Mail Server Password"
+msgstr "ពាក្យសម្ងាត់​ម៉ាស៊ីន​មេ​អ៊ីមែល"
+
+#: installer.mail_server_password_description
+msgctxt "installer.mail_server_password_description"
+msgid "The password you normally use to login in to your email"
+msgstr "ពាក្យសម្ងាត់​ដែល​ត្រូវ​ប្រើ​ដើម្បី​ចូល​អ៊ីមែល​របស់​អ្នក"
+
+#: installer.mail_server_port
+msgctxt "installer.mail_server_port"
+msgid "Mail Server Port"
+msgstr "ច្រក​ម៉ាស៊ីន​មេ​អ៊ីមែល"
+
+#: installer.mail_server_port_description
+msgctxt "installer.mail_server_port_description"
+msgid "Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "ច្រក​ទូទៅ៖ 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: installer.mail_server_type
+msgctxt "installer.mail_server_type"
+msgid "Mail Server Type"
+msgstr "ប្រភេទ​ម៉ាស៊ីន​មេ​អ៊ីមែល"
+
+#: installer.mail_server_type_description
+msgctxt "installer.mail_server_type_description"
+msgid ""
+"Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a "
+"href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" "
+"target=\"_blank\">What is the difference?</a>"
+msgstr "Internet Message Access Protocol (IMAP) ឬ Post Office Protocol (POP). <a href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" target=\"_blank\">តើ​អ្វី​ជា​ភាព​ខុសគ្នា?</a>"
+
+#: installer.mail_server_username
+msgctxt "installer.mail_server_username"
+msgid "Mail Server Username"
+msgstr "ឈ្មោះ​អ្នកប្រើ​ម៉ាស៊ីន​មេ​អ៊ីមែល"
+
+#: installer.mail_server_username_description
+msgctxt "installer.mail_server_username_description"
+msgid ""
+"If you are using Gmail, Hotmail, or Yahoo Mail, enter a full email address "
+"as a username."
+msgstr "ប្រសិនបើ​អ្នក​កំពុង​ប្រើ Gmail, Hotmail ឬ Yahoo Mail សូម​បញ្ចូល​អាសយដ្ឋាន​អ៊ីមែល​ពេញ​របស់​អ្នក​ជា​ឈ្មោះ​អ្នកប្រើ។"
+
+#: installer.map
+msgctxt "installer.map"
+msgid "Map"
+msgstr "ផែនទី"
+
+#: installer.map_provider
+msgctxt "installer.map_provider"
+msgid "Map Provider"
+msgstr "ក្រុមហ៊ុន​ផ្ដល់​សេវា​ផែនទី"
+
+#: installer.map_provider_description
+msgctxt "installer.map_provider_description"
+msgid ""
+"Ushahidi works equally well with any of these three mapping providers: "
+"Google, Bing or Open Street Map. Choose the one that has the most detail in "
+"your area."
+msgstr "យូសាហ៊ីឌី​ធ្វើការ​ស្មើ​គ្នា​ជាមួយ​ក្រុមហ៊ុន​ផ្ដល់​សេវាកម្ម​ផែនទី​ទាំង​បី​គឺ៖ Google, Bing ឬ Open Street Map។ ជ្រើស​ក្រុមហ៊ុន​មួយ​ដែល​មាន​សេចក្ដី​លម្អិត​ច្រើន​បំផុត​នៅ​ក្នុង​តំបន់​របស់​អ្នក។"
+
+#: installer.other_steps
+msgctxt "installer.other_steps"
+msgid "Other steps..."
+msgstr "ជំហាន​ដទៃទៀត..."
+
+#: installer.password
+msgctxt "installer.password"
+msgid "Password"
+msgstr "ពាក្យសម្ងាត់"
+
+#: installer.password_description
+msgctxt "installer.password_description"
+msgid "Your database password"
+msgstr "ពាក្យសម្ងាត់​មូលដ្ឋាន​ទិន្នន័យ​របស់​អ្នក"
+
+#: installer.previous
+msgctxt "installer.previous"
+msgid "Previous"
+msgstr "មុន"
+
+#: installer.restart_apache
+msgctxt "installer.restart_apache"
+msgid "Please restart your Apache Server"
+msgstr "សូម​ចាប់ផ្ដើម​ម៉ាស៊ីន​មេ Apache របស់​អ្នក​ឡើងវិញ"
+
+#: installer.select_mail_server_ssl
+msgctxt "installer.select_mail_server_ssl"
+msgid "Enable or disable SSL"
+msgstr "បិទ ឬ​បើក SSL"
+
+#: installer.select_mail_server_ssl_description
+msgctxt "installer.select_mail_server_ssl_description"
+msgid ""
+"Some mail servers give you the option of using <abbr title=\"Secure Sockets "
+"Layer\">SSL</abbr> when making a connection. Using SSL is recommended as it "
+"gives you an added level of security."
+msgstr "ម៉ាស៊ីន​មេ​អ៊ីមែល​មួយ​ចំនួន​ផ្ដល់ឲ្យ​អ្នក​នូវ​ជម្រើស​នៃ​ការប្រើប្រាស់ <abbr title=\"Secure Sockets Layer\">SSL</abbr> នៅ​ពេល​តភ្ជាប់។ ការ​ប្រើ SSL ត្រូវ​បាន​ផ្ដល់​អនុសាសន៍ ព្រោះ​វា​បាន​ផ្ដល់ឲ្យ​អ្នក​នូវ​កម្រិត​សុវត្ថិភាព​បន្ថែម។"
+
+#: installer.setup_sms
+msgctxt "installer.setup_sms"
+msgid "Set up your SMS server"
+msgstr "រៀបចំ​ម៉ាស៊ីន​មេ SMS របស់​អ្នក"
+
+#: installer.site_email
+msgctxt "installer.site_email"
+msgid "Site Email Address"
+msgstr "អាស័យដ្ឋាន​អ៊ីម៉ែល​តំបន់​បណ្ដាញ"
+
+#: installer.site_email_alerts
+msgctxt "installer.site_email_alerts"
+msgid "Site Alert Email Address"
+msgstr "អាសយដ្ឋាន​អ៊ីមែល​ជូនដំណឹង​តំបន់បណ្ដាញ"
+
+#: installer.site_email_alerts_description
+msgctxt "installer.site_email_alerts_description"
+msgid ""
+"When your site visitors sign up for email alerts, they will receive emails "
+"from this address. This email address does not have to be the same as the "
+"Site Email Address."
+msgstr "នៅ​ពេល​អ្នក​ទស្សនា​តបន់បណ្ដាញ​របស់​អ្នក​ចុះឈ្មោះ​សម្រាប់​ការ​ជូនដំណឹង​តាម​អ៊ីមែល ពួកគេ​នឹង​ទទួល​អ៊ីមែល​ពី​អាសយដ្ឋាន​នេះ។ អាសយដ្ឋាន​អ៊ីមែល​នេះ​មិន​ត្រូវ​ឲ្យ​ដូចគ្នា​ជាមួយ​អាសយដ្ឋាន​អ៊ីមែល​តំបន់បណ្ដាញ​ទេ។"
+
+#: installer.site_email_description
+msgctxt "installer.site_email_description"
+msgid "Site wide email communication will be funneled through this address"
+msgstr "ទំនាក់ទំនង​អ៊ីមែល​នៅ​ក្នុង​តំបន់បណ្ដាញ​នឹង​ត្រូវ​បាន​បញ្ចូល​តាម​អាសយដ្ឋាន​នេះ"
+
+#: installer.site_name
+msgctxt "installer.site_name"
+msgid "Site Name"
+msgstr "ឈ្មោះ​តំបន់បណ្ដាញ"
+
+#: installer.site_name_description
+msgctxt "installer.site_name_description"
+msgid "The name of your site"
+msgstr "ឈ្មោះ​តំបន់បណ្ដាញ​របស់​អ្នក"
+
+#: installer.site_tagline
+msgctxt "installer.site_tagline"
+msgid "Site Tagline"
+msgstr "ជួរ​ស្លាក​តំបន់បណ្ដាញ"
+
+#: installer.site_tagline_description
+msgctxt "installer.site_tagline_description"
+msgid "Your tagline"
+msgstr "ជួរ​ស្លាក​របស់​អ្នក"
+
+#: installer.summary.text_1
+msgctxt "installer.summary.text_1"
+msgid ""
+"The files and folders listed below need to be writable by your webserver."
+msgstr "ឯកសារ និង​ថត​ដែល​បាន​រាយ​ខាងក្រោម ចាំបាច់​ត្រូវ​​អាច​សរសេរ​បាន​ដោយ​ម៉ាស៊ីន​មេ​បណ្ដាញ​របស់​អ្នក។"
+
+#: installer.summary.text_2
+msgctxt "installer.summary.text_2"
+msgid ""
+"<p>Here are instructions for changing file permissions:</p>\n"
+"        <ul>\n"
+"            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n"
+"            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n"
+"        </ul>"
+msgstr "<p>នេះ​ជា​សេចក្ដី​ណែនាំ​សម្រាប់​ការ​ប្ដូរ​សិទ្ធិ​ឯកសារ៖</p>\n        <ul>\n            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">យូនីក/លីនុច</a></li>\n            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">វីនដូ</a></li>\n        </ul>"
+
+#: installer.summary.text_3
+msgctxt "installer.summary.text_3"
+msgid ""
+"Before you get started, you will need to make sure the following files and "
+"folders are writable by your webserver. This involves changing file "
+"permissions."
+msgstr "មុន​ពេល​ចាប់ផ្ដើម អ្នក​ចាំបាច់​ត្រូវ​ប្រាកដ​ថា​ឯកសារ និង​ថត​ដូច​ខាងក្រោម​គឺ​អាច​សរសេរ​បាន​ដោយ​ម៉ាស៊ីន​មេ​បណ្ដាញ​របស់​អ្នក។ នេះ​គឺ​ពាក់ព័ន្ធ​ជាមួយ​ការ​ប្ដូរ​សិទ្ធិ​ឯកសារ។"
+
+#: installer.summary.text_4
+msgctxt "installer.summary.text_4"
+msgid ""
+"For the installation process, please have the following bits of information "
+"on hand."
+msgstr "សម្រាប់​ជំហាន​នៃ​ការ​ដំឡើង សូម​មើល​ព័ត៌មាន​ខាងក្រោម​នេះ​ជាមុន។"
+
+#: installer.table_prefix
+msgctxt "installer.table_prefix"
+msgid "Table Prefix"
+msgstr "តារាង​បុព្វបទ"
+
+#: installer.table_prefix_description
+msgctxt "installer.table_prefix_description"
+msgid ""
+"Normally you would not change the table prefix. However, if you want to run "
+"multiple Ushahidi installations from a single database, you can do that by "
+"changing the prefix here."
+msgstr "ជា​ទូទៅ​អ្នក​មិន​គួរ​ប្ដូរ​តារាង​បុព្វបទ​ទេ។ ទោះបីជា​អ្នក​ចង់​ដំណើរការ​ដំឡើង​យូសាហ៊ីឌី​ច្រើន​ចេញពី​មូលដ្ឋាន​ទិន្នន័យ​តែមួយ​ក៏ដោយ អ្នក​អាច​ធ្វើ​វា​បាន​ដោយ​ប្ដូរ​បុព្វបទ​នៅ​ទីនេះ។"
+
+#: installer.title
+msgctxt "installer.title"
+msgid "Title"
+msgstr "ចំណងជើង"
+
+#: installer.to_login
+msgctxt "installer.to_login"
+msgid "To login, go to"
+msgstr "ដើម្បី​ចូល សូម​ទៅកាន់"
+
+#: installer.upload_data
+msgctxt "installer.upload_data"
+msgid "Upload report data"
+msgstr "ផ្ទុក​ទិន្នន័យ​របាយការណ៍​ឡើង"
+
+#: installer.username
+msgctxt "installer.username"
+msgid "Username"
+msgstr "ឈ្មោះ​អ្នកប្រើ"
+
+#: installer.username_description
+msgctxt "installer.username_description"
+msgid "Your database username"
+msgstr "ឈ្មោះ​អ្នកប្រើ​មូលដ្ឋាន​ទិន្នន័យ​របស់​អ្នក"
+
+#: installer.use_credentials
+msgctxt "installer.use_credentials"
+msgid "and use the following credentials"
+msgstr "និង​ប្រើ​ព័ត៌មាន​សម្ងាត់​ដូច​ខាងក្រោម"
+
+#: installer.view_site
+msgctxt "installer.view_site"
+msgid "View your website"
+msgstr "មើល​តំបន់បណ្ដាញ​របស់​អ្នក"

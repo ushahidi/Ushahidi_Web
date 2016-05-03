@@ -1,0 +1,588 @@
+# 
+# Translators:
+# Almita <alma.seper@oneworldsee.org>, 2012
+# prangec <dejan.georgievski@oneworldsee.org>, 2013
+# Fikret Muratović <fikretmuratovic@gmail.com>, 2012
+# Jasmina Borovina <jasminaha@gmail.com>, 2012
+# SamirBL <samir_rajic@yahoo.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Bosnian (Bosnia and Herzegovina) (http://www.transifex.com/ushahidi/ushahidi-v2/language/bs_BA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bs_BA\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: tooltips.actions.add_to_category
+msgctxt "tooltips.actions.add_to_category"
+msgid ""
+"This adds the report to additional categories. If you select Category 1 here"
+" and the report already has Category 2 attached to it, the report will then "
+"have both Category 1 and Category 2."
+msgstr "Ovo dodaje izvještaj u dodatne kategorije. Ako ste ovdje izabrali Kategoriju 1 a izvještaj je već unesen pod Kategoriju 2 onda će izvještaj biti i pod Kategorijom 1 i pod Kategorijom 2."
+
+#: tooltips.actions.approve
+msgctxt "tooltips.actions.approve"
+msgid "Approves a report or not. If approved, it will show up publicly."
+msgstr "Odobrava izvještaj ili ne. Odobreni izvještaj se prikazuje javno."
+
+#: tooltips.actions.assign_badge
+msgctxt "tooltips.actions.assign_badge"
+msgid ""
+"You will be able to assign a badge to the triggering user. Pick the badge "
+"that gets assigned here."
+msgstr "Moći ćete da korisniku koji inicira proces dodjelite odgovarajući bedž. Ovdje odaberite bedž koji ćete dodjeliti."
+
+#: tooltips.actions.between_times
+msgctxt "tooltips.actions.between_times"
+msgid ""
+"This is a range of hours and/or minutes between two times in 24 hour format."
+" If you input an earlier time in the second field, it will be flipped with "
+"the first. These times must be within a single day. Also, this time is "
+"checked against the time you have configured on your site in site settings "
+"and <strong>not</strong> necessarily the timezone of the user interacting "
+"with your deployment. Leave this at 00:00 to 00:00 to ignore this qualifier."
+msgstr "Radi se o opsegu sati i/ili minuta između dva data vremena u 24-časovnom formatu. Ako u drugo polje unesete ranije vreme, dva polja će automatski biti zamjenjena. Oba termina moraju se nalaziti unutar jednog dana. Takođe, unešeno vreme upoređuje se sa vremenom koje ste konfigurirali na vašem sajtu u setinzima a <strong>ne</strong> nužno sa vremenskom zonom u kojoj se nalazi korisnik koji komunicira sa vašom instalacijom. Ako želite da ignorirate ovaj kvalifikator, ostavite oba polja na vrijednosti 00:00 do 00:00."
+
+#: tooltips.actions.category
+msgctxt "tooltips.actions.category"
+msgid ""
+"If you would like to activate triggers only when a certain category is being"
+" used, you can set that here. This will allow a trigger to be activated if "
+"only one of the categories is used. For instace, if you select Category 1 "
+"and Category 2 here and a report is submitted using Category 2 and Category "
+"3, it will pass the test."
+msgstr "Ako želite da aktivirate okidače samo kada se koristi određena kategorija, ta podešavanja možete obaviti ovdje. To će omoogućiti aktiviranje okidača ako se koristi samo jedna od kategorija. Na primjer, ako odaberete Kategoriju 1 i Kategoriju 2, a izvještaj je podnešen korištenjem Kategorije 2 i Kategorije 3, proći će test. "
+
+#: tooltips.actions.days_of_the_week
+msgctxt "tooltips.actions.days_of_the_week"
+msgid ""
+"If these actions happen on certain days of the week, set that here. Keep in "
+"mind the day is determined by the timezone configured on your deployment. "
+"Hold shift, command, or control for multiple day selection."
+msgstr "Ako se te akcije dešavaju određenih dana u nedelji, to možete podesiti ovdje. Imajte u vidu da se dan određuje preko časovne zone konfigurirane u vašoj instalaciji. Pritisnite shift, command ili control dugme na tastaturi za odabir više dana istovremeno. "
+
+#: tooltips.actions.email_body
+msgctxt "tooltips.actions.email_body"
+msgid "Body of the email that will be sent."
+msgstr "Tijelo e-mail poruke."
+
+#: tooltips.actions.email_subject
+msgctxt "tooltips.actions.email_subject"
+msgid "Subject of email that will be sent."
+msgstr "Predmet e-mail poruke."
+
+#: tooltips.actions.feed_id
+msgctxt "tooltips.actions.feed_id"
+msgid ""
+"The feed can be all feeds or a specific feeds. If you would only like "
+"specific feeds to activate a trigger, you will want to select them here. "
+"Otherwise, you will want to leave this as \"all\""
+msgstr "Unos se može odnositi i na sve unose i na specifične unose. Ako želite da samo specifični unosi aktiviraju okidač, odabraćete ih ovdje. Ako ne, ovdje ćete ostaviti opciju \"all\"."
+
+#: tooltips.actions.from
+msgctxt "tooltips.actions.from"
+msgid ""
+"Twitter author username (or multiple usernames separated by commas). If you "
+"would like to activate triggers only for twitter messages from a particular "
+"user, enter their username here (not including @)"
+msgstr "Korisničko ime autora na Twitter-u (ili više korisničkih imena odvojenih zarezima). Ako želite da aktivirate okidače samo za tweetove tačno određenog korisnika ili korisnice, unesite njegovo ili njeno korisničko ime ovdje (bez @)"
+
+#: tooltips.actions.keywords
+msgctxt "tooltips.actions.keywords"
+msgid ""
+"You can choose to leave this blank if you do not want to check against "
+"keywords. If you add words here, you will need to separate them with a comma"
+" (,). For example, if you want to activate a trigger when someone mentions "
+"\"love\" or \"peace\" in their message, you will want to add \"love, peace\""
+" in the keywords box."
+msgstr "Ako ne želite da upoređujete sa datim ključnim riječima, ovo polje možete ostaviti prayno. Ako ćete unositi riječi, trebate ih odvojiti zarezom (,). Na primjer, ako želite da aktivirate okidač kada neko pomene \"ljubav\" ili \"mir\" u svojoj poruci, onda ćete u polje za ključne riječi unijeti \"ljubav, mir\"."
+
+#: tooltips.actions.location
+msgctxt "tooltips.actions.location"
+msgid ""
+"You can either select anywhere or a specific location. If you select a "
+"specific location, you will be asked to draw a box around the area that "
+"qualifies an action. For example, if you want this trigger to be activated "
+"when someone submits a report in Brazil, you will select \"specific area\" "
+"and then draw the box around Brazil. You can make these boxes as small or as"
+" large as you would like. You can also draw multiple boxes."
+msgstr "Možete odabrati koje bilo mjesto ili neku specifičnu lokaciju. Ako odaberete specifičnu lokaciju, od vas će biti zatraženo da iscrtate pravougaonik oko oblasti koja kvalifikuje neku akciju. Na primjer, ako želite da taj okidač bude aktiviran kada neko podnese izvještaj u Brazilu, odabraćete \"specifičnu oblast\" i onda nacrtati pravougaonik oko Brazila. Te pravougaonike možete napravite onoliko mali ili veliko koliko želite. Možete iscrtati i više pravougaonika. "
+
+#: tooltips.actions.on_specific_count
+msgctxt "tooltips.actions.on_specific_count"
+msgid ""
+"This qualifier will activate the trigger on the N-th count either for the "
+"entire collective user base or for each individual user. Leave this blank to"
+" ignore it."
+msgstr "Ovaj kvalifikator će aktivirati okidač na N-tom odbrojavanju kako za kolektivnu bazu korisnika tako i za pojedinačne korisnike i korisnice. Ako želite da ga ignorirate, ostavite polje prazno."
+
+#: tooltips.actions.report_title
+msgctxt "tooltips.actions.report_title"
+msgid "This is the default title to add to the report."
+msgstr "Ovo je automatski naslov koji će biti dodan na izvještaj."
+
+#: tooltips.actions.response
+msgctxt "tooltips.actions.response"
+msgid ""
+"If all of the qualifiers above are passed, the trigger will initiate a "
+"response. This can range from approving a report to emailing a user. Select "
+"the response here to activate additional options for the specific responses."
+msgstr "Ako su prošli svi gorenavedeni kvalifikatori, okidać će inicirati odgovor. Odgovor može ići u opsegu od odobravanja izvještaja do izvještavanja korisnika elektronskom poštom. Odaberite odgovor kako bi aktivirali dopunske opcije za svaki pojedinačni odgovor."
+
+#: tooltips.actions.send_to
+msgctxt "tooltips.actions.send_to"
+msgid ""
+"If you select \"Triggering User\", the email will be sent to the user who "
+"performed the action. If you select the radio button next to the input box, "
+"you will be able to enter a custom email address. This is useful if you are "
+"setting up triggers to notify people when certain parts of the map are "
+"seeing reports, check ins or some other activity."
+msgstr "Ako odaberete \"Korisnik sa dozvolom za aktiviranje\", korisniku koji obavlja tu akciju će dobiti poruku elektronskom poštom. Ako odaberete radio dugme koje se nalazi pored polja za unos, moći ćete da unesete specijalnu email adresu. To je veoma korisno ako postavljate okidače da obavještavaju ljude kada se javljaju izvještaji, prijave ili druge aktivnosti na određenim djelovima mape."
+
+#: tooltips.actions.specific_days
+msgctxt "tooltips.actions.specific_days"
+msgid ""
+"You can select multiple days here. Dates are determined by your deployment "
+"timezone setting. In order to default to all dates, do not select any dates."
+msgstr "Možete označiti više od jednog dana. Datume određuje podešavanje časovnih zona na vašoj instalaciji. Nemojte odabrati nijedan datum ako želite da se akcija automatski odnosi na sve datume. "
+
+#: tooltips.actions.trigger
+msgctxt "tooltips.actions.trigger"
+msgid ""
+"The trigger is the core component of setting up your Action Triggers. This "
+"is where you determine if you would like something to happen when someone "
+"submits a report, performs a check in, etc. You will be able to filter "
+"responses to these actions after selecting one."
+msgstr "Okidač je ključna komponenta za podešavanje vaših Okidača akcije. Ovdje odlučujete dali želite da se nešto desi kada neko podnese izvještaj, prijavi se, itd. Moći ćete da filtrirate odgovore na te akcije izborom određenog filtra."
+
+#: tooltips.actions.user
+msgctxt "tooltips.actions.user"
+msgid ""
+"The user can be anyone or a specific user. If you would only like specific "
+"users to activate a trigger, you will want to select them here. Otherwise, "
+"you will want to leave this as \"anyone\" since most triggers are set up for"
+" all users interacting with the system"
+msgstr "Korisnik može biti bilo ko ili tačno određeni korisnik. Ako želite da samo određeni korisnici mogu aktivirati okidač, odabraćete ih ovdje. Inače, ostavićete opciju \"Anyone\" u ovom polju, znajući da je većina okidača podešena za sve korisnike koji su u sistemu"
+
+#: tooltips.actions.verify
+msgctxt "tooltips.actions.verify"
+msgid "Marks a report as verified or not."
+msgstr "Označava izvještaj kao potvrđen ili nepotvrđen"
+
+#: tooltips.change_picture
+msgctxt "tooltips.change_picture"
+msgid ""
+"Profile pages on this site use Gravatar. By clicking on your image, you will"
+" be taken to the Gravatar website where you can change your profile picture."
+msgstr "Profil stranica koristi Gravatar fotografiju. Klik na vašu fotografiju će vas odvesti na Gravatar stranicu gdje možete promjeniti fotografiju."
+
+#: tooltips.default_value
+msgctxt "tooltips.default_value"
+msgid "Separate each value with a comma, e.g. value1, value2."
+msgstr "Razdvojite svaku vrijednost sa zarezom, npr. vrijednost1, vrijednost2"
+
+#: tooltips.radio_choices
+msgctxt "tooltips.radio_choices"
+msgid ""
+"Separate each value with a comma, e.g. value1, value2. In case you want to "
+"set a default value, end your list of options with :: e.g If you want to "
+"make value3 the default, it will be value1, value2, value3::value3"
+msgstr "Odvojite sve vrijednosti zarezom, na primjer, vrijednost1, vrijednost2. Ako želite da postavite automatsku vrijednost, završite vašu listu opcija sa :: na primjer, ako želite da napravite value3 automatskom vrijednošću, linija će glasitei value1, value2, value3::value3"
+
+#: tooltips.dropdown_choices
+msgctxt "tooltips.dropdown_choices"
+msgid "Separate each choice item with a comma, e.g. Item 1, Item 2 etc."
+msgstr "Odvojite svaku izabranu stavku zarezom. Npr. Stavka 1, Stavka 2 itd."
+
+#: tooltips.private_to
+msgctxt "tooltips.private_to"
+msgid "Start typing to list members."
+msgstr "Započnite unos da izlistate članove."
+
+#: tooltips.private_subject
+msgctxt "tooltips.private_subject"
+msgid "Private message subject"
+msgstr "Naslov privatne poruke"
+
+#: tooltips.private_message
+msgctxt "tooltips.private_message"
+msgid "Private message"
+msgstr "Privatna poruka"
+
+#: tooltips.profile_color
+msgctxt "tooltips.profile_color"
+msgid ""
+"You can select a color that will show up under your profile picture on your "
+"public profile. This color will also be the color dot that shows up on the "
+"map for your checkins."
+msgstr "Možete odabrati boju pozadine ispod vaše slike profila na vašem javnom profilu. Te boje će biti i tačka koja će se pojaviti na mapi kada se prijavite."
+
+#: tooltips.profile_email
+msgctxt "tooltips.profile_email"
+msgid "Your email address"
+msgstr "Vaša e-mail adresa"
+
+#: tooltips.profile_name
+msgctxt "tooltips.profile_name"
+msgid ""
+"This is one of the ways that you are identified on the website. Keep in mind"
+" that this is public!"
+msgstr "Ovo je jedan od načina kako možete biti identifikovani na stranici. Imajte na umu da je ova informacija javna."
+
+#: tooltips.profile_new_password
+msgctxt "tooltips.profile_new_password"
+msgid ""
+"If set, this will be your new password. Leave this field blank if you wish "
+"to keep your current password."
+msgstr "Ako želite da promjenite šifru, unesite je u ovo polje. Ako ne želite da promjenite šifru, ostavite ovo polje prazno."
+
+#: tooltips.profile_new_users_password
+msgctxt "tooltips.profile_new_users_password"
+msgid ""
+"This is a requirement when creating a new user and will be the users "
+"password. You should inform your new user to change their password after "
+"logging in for the first time."
+msgstr "Ova informacija je obavezna pri kreiranju novog korisnika i inicijalno će služiti kao korisnička šifra. Obavijestite novog korisnika da promjeni šifru nakon prve registracije."
+
+#: tooltips.profile_notify
+msgctxt "tooltips.profile_notify"
+msgid ""
+"Selecting YES lets you get alerts via email when new reports or comments are"
+" posted on your website."
+msgstr "Izbor opcije DA vam omogućava da dobijate obavijesti putem elektronske pošte kada se novi izvještaji ili komentari postave na vašu stranicu."
+
+#: tooltips.profile_password
+msgctxt "tooltips.profile_password"
+msgid ""
+"Your current password. We require you enter your password to prevent any "
+"unauthorized changes to your account."
+msgstr "Vaša šifra. Neophodno je unijeti šifru da bi spriječili neovlašten pristup vašem nalogu."
+
+#: tooltips.profile_public
+msgctxt "tooltips.profile_public"
+msgid ""
+"Your profile can be viewed by anyone on the Internet if you check this "
+"option. This is also the easiest way to show off the reports you've "
+"submitted, your checkins, badges, etc all on one page."
+msgstr "Ako odaberete ovu opciju, vaš profil mogu gledati svi korisnici interneta. To je takođe i najlakši način da pokažete izvještaje koje ste postavili, prijave, bedževe, itd. na jednoj strani."
+
+#: tooltips.profile_public_url
+msgctxt "tooltips.profile_public_url"
+msgid "This is the address where your public profile can be found."
+msgstr "Ovo je adresa gdje se može pronaći vaš javni profil."
+
+#: tooltips.profile_username
+msgctxt "tooltips.profile_username"
+msgid "Your username cannot be changed."
+msgstr "Vaše korisničko ime nije promjenjivo"
+
+#: tooltips.settings_access_level
+msgctxt "tooltips.settings_access_level"
+msgid ""
+"Access Levels are used to restrict access to custom form field data. Higher "
+"access levels can access fields from lower levels. Superadmin has the "
+"highest access level (100). Public data is displayed at the lowest access "
+"level (0). Members have access level 10. Admin is access level 90 by "
+"default."
+msgstr "Nivoa pristupa se koriste kako bi ograničili pristup terenskim podacima iz namjenskih formulara. Viši nivoi pristupa mogu pristupiti poljima iz nižih nivoa. Superadmin ima najviši nivo pristupa (100). Javni podaci su izloženi na najnižem nivou pristupa (0). Članovi imaju nivo pristupa 10. Admin korisnik automatski dobija nivo 90."
+
+#: tooltips.settings_alert_email
+msgctxt "tooltips.settings_alert_email"
+msgid "This is the email address that will be used to send email alerts."
+msgstr "Ovo je e-mail adresa koja će biti korištena za e-mail obavještenja"
+
+#: tooltips.settings_allow_alerts
+msgctxt "tooltips.settings_allow_alerts"
+msgid "Allow users to subscribe for alerts via the web."
+msgstr "Dozvolite korisnicima da se pretplate na obavještenja putem web-a"
+
+#: tooltips.settings_allow_clustering
+msgctxt "tooltips.settings_allow_clustering"
+msgid "This allows bundling of similar reports into a single dot on the map"
+msgstr "Ovo omogućuje grupisanje sličnih izvještaja u jednu tačku na karti."
+
+#: tooltips.settings_allow_comments
+msgctxt "tooltips.settings_allow_comments"
+msgid "Allow users to comment on reports on the main site."
+msgstr "Dozvolite korisnicima da komentarišu izvještaj na glavnoj stranici"
+
+#: tooltips.settings_allow_feed
+msgctxt "tooltips.settings_allow_feed"
+msgid "This allows RSS News feeds to be displayed on the main site."
+msgstr "Ovo omogućuje RSS Novosti da budu prikazane na glavnoj stranici."
+
+#: tooltips.settings_allow_feed_category
+msgctxt "tooltips.settings_allow_feed_category"
+msgid "This allows creating new Category from RSS News feeds."
+msgstr ""
+
+#: tooltips.settings_allow_reports
+msgctxt "tooltips.settings_allow_reports"
+msgid "Allow users to submit information via the web form."
+msgstr "Dozvoljava korisnicima da postave informaciju preko web forme"
+
+#: tooltips.settings_api_default_record_limit
+msgctxt "tooltips.settings_api_default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "Automatski broj izvještaja koji se prikazuje po API zahtjevu"
+
+#: tooltips.settings_api_max_record_limit
+msgctxt "tooltips.settings_api_max_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "Maksimalni broj izvještaja koji se prikazuje po API zahtjevu"
+
+#: tooltips.settings_api_max_requests_per_ip
+msgctxt "tooltips.settings_api_max_requests_per_ip"
+msgid "Maximum number of API requests per IP address"
+msgstr "Maksimalni broj API zahtjeva po IP adresi"
+
+#: tooltips.settings_banner
+msgctxt "tooltips.settings_banner"
+msgid ""
+"The site banner shows up at the top of the front end of your website if the "
+"theme you are using supports it. The recommended size for this banner will "
+"depend on the theme you are using. Keep in mind that this will replace the "
+"site title and tagline at the top of the page."
+msgstr "Banner sajta prikazuje se na vrhu naslovne strane vašeg sajta, ako to podržava tema koju koristite. Preporučene dimenzije bannera zavisiće od teme koju koristite. Imajte u vidu da će baner zamjeniti naslov sajta i tagline na vrhu strane."
+
+#: tooltips.settings_blocks_per_row
+msgctxt "tooltips.settings_blocks_per_row"
+msgid "Number of Block columns that will be displayed on each row."
+msgstr " Broj blokova sa kolonama koji će se prikazivati u svakom redu."
+
+#: tooltips.settings_cache_pages
+msgctxt "tooltips.settings_cache_pages"
+msgid ""
+"Enable or disable page caching. This makes pages display faster by cutting "
+"response times. We recommend using caching on high traffic sites. **Remember"
+" that reports will be populated on the front end based on the schedule you "
+"set below (Cache Lifetime)."
+msgstr "Aktivirajte ili isključite keširanje strane. To omogućava brže prikazivanje strana skraćivanjem vremena reakcije. Preporučujemo korištenje keširanja kod sajtova sa velikim saobraćajem. **Upamtite da će izvještaji biti postavljeni na front endu na osnovu rasporeda koji ste podesili dolje (Cache Lifetime)."
+
+#: tooltips.settings_cache_pages_lifetime
+msgctxt "tooltips.settings_cache_pages_lifetime"
+msgid "Set the lifetime of the cache."
+msgstr "Podesite rok trajanja keša."
+
+#: tooltips.settings_checkins
+msgctxt "tooltips.settings_checkins"
+msgid ""
+"This setting enables checkins on your deployment. This is a simplified "
+"report type that is not moderated before it goes on the homepage and "
+"requires your site to be configured a certain way. When you enable this, "
+"make sure your timezone setting is on UTC and your theme supports checkins. "
+"When you enable this, checkin-only themes will become enabled under your "
+"addons/themes settings page."
+msgstr "Ova postavka omogućava prijavljivanje na vašu instalaciju. Ovo je pojednostavljen tip izvještaja koji nije moderiran pre postavljanja na homepage i zahtjeva samo da vaš sajt bude konfiguriran na određeni način. Kada aktivirate ovu mogućnost, osigurajte se da je časovna zona podešena na UTC i da vaša tema podržava prijave. Kada aktivirata ovu mogućnost, u strani sa setinzima addonova/tema biće aktivirane samo teme teme koje su dostupne uz prijavu."
+
+#: tooltips.settings_configure_map
+msgctxt "tooltips.settings_configure_map"
+msgid "Set the map to cover a specific location."
+msgstr "Podesite mapu da pokriva specifičnu lokaciju."
+
+#: tooltips.settings_default_category_colors
+msgctxt "tooltips.settings_default_category_colors"
+msgid "Set one color code for all the categories on the site."
+msgstr "Podesite jednu boju za sve kategorije na stranici."
+
+#: tooltips.settings_default_category_icons
+msgctxt "tooltips.settings_default_category_icons"
+msgid "Set one icon for all the categories on the site."
+msgstr "Podesite jednu ikonu za sve kategorije na stranici."
+
+#: tooltips.settings_default_location
+msgctxt "tooltips.settings_default_location"
+msgid "This is the country the site is being deployed."
+msgstr "Ovo je država u kojoj je instaliran sajt."
+
+#: tooltips.settings_display_contact
+msgctxt "tooltips.settings_display_contact"
+msgid "Turn the Contact Tab on or off on the main site."
+msgstr "Uključite ili isključite Tab za kontakte na glavnom sajtu."
+
+#: tooltips.settings_display_howtohelp
+msgctxt "tooltips.settings_display_howtohelp"
+msgid "Turn the How to Help Tab on or off on the main site."
+msgstr "Uključite ili isključite Tab za pomoć na glavnom sajtu."
+
+#: tooltips.settings_display_items_per_page
+msgctxt "tooltips.settings_display_items_per_page"
+msgid "This is the number of reports displayed per page on the main site."
+msgstr "Ovdje imate broj izvještaja koji će se prikazati po strani na glavnom sajtu."
+
+#: tooltips.settings_display_items_per_page_admin
+msgctxt "tooltips.settings_display_items_per_page_admin"
+msgid ""
+"This is the number of reports displayed per page on the admin Back End."
+msgstr "Ovdje imate broj izvještaja koji se prikazuje po strani na administratorskim stranama u Back Endu."
+
+#: tooltips.settings_flsms_download
+msgctxt "tooltips.settings_flsms_download"
+msgid "This is the hub for incoming messages."
+msgstr "Ovoj je čvorište za dolazeće poruke."
+
+#: tooltips.settings_flsms_synchronize
+msgctxt "tooltips.settings_flsms_synchronize"
+msgid "This synchronizes the messages in the hub with the Ushahidi platform."
+msgstr "Ovdje se sinhroniziraju poruke u čvorištu sa Ushahidi platformom."
+
+#: tooltips.settings_flsms_text_1
+msgctxt "tooltips.settings_flsms_text_1"
+msgid "Phone numbers through which the text messages are received."
+msgstr "Broj telefona za primanje SMS poruka."
+
+#: tooltips.settings_google_analytics
+msgctxt "tooltips.settings_google_analytics"
+msgid "Tracks visitors of your site. Get detailed visitor statistics."
+msgstr "Pratite posjetioce Vaše stranice. Dobijte detaljne statističke podatke posjetioca."
+
+#: tooltips.settings_locale
+msgctxt "tooltips.settings_locale"
+msgid "Sets the language that will be used in the site."
+msgstr "Postavite jezik koji će se koristiti na stranici."
+
+#: tooltips.settings_manually_approve_users
+msgctxt "tooltips.settings_manually_approve_users"
+msgid ""
+"If you set this option to yes, you must approve every individual user who "
+"creates an account on your site by assigning them roles (ie. Member, Admin, "
+"Superadmin)."
+msgstr "Ako postavite ovu opciju na yes, morate da odobrite svakog individualnog korisnika koji kreira račun na vašem sajtu i dodjeliti im uloge (t.j. Član, Administrator, Superadministrator)."
+
+#: tooltips.settings_map_provider
+msgctxt "tooltips.settings_map_provider"
+msgid "This defines which map is to be used on the site."
+msgstr "Ovo odredžuje koja mapa će koristiti za stranicu."
+
+#: tooltips.settings_map_timeline
+msgctxt "tooltips.settings_map_timeline"
+msgid ""
+"This shows the timeline based on the date and time reports were submitted"
+msgstr "Ovdje je prikazana hronologija na osnova datuma i vremena podnošenja izvještaja"
+
+#: tooltips.settings_private_deployment
+msgctxt "tooltips.settings_private_deployment"
+msgid ""
+"Setting this value to true or yes will make your deployment private so only "
+"users with accounts that you specify will be able to access the deployment."
+msgstr "Ako postavite ovu vrijednost na true ili yes, vaša instalacija postaje privatna i samo korisnici sa korisničkim računima koje ćete vi odrediti moći će pristupiti instalaciji."
+
+#: tooltips.settings_require_email_confirmation
+msgctxt "tooltips.settings_require_email_confirmation"
+msgid ""
+"Users will be emailed with a confirmation link to click before they are "
+"allowed to log into the deployment if this is set to yes. If you enable this"
+" after your deployment has accepted users, they will be prompted to confirm "
+"their account before they will be allowed to continue using it."
+msgstr "Korisnici će emailom dobiti link za potvrdu koji moraju da kliknu prije nego se mogu logirati u instalaciju, ako ste ovdje odabrali yes. Ako ste aktivirali ovu opciju nakon što je vaša instalacija već primila neke korisnike, od njih će biti zatraženo da potvrde svoj račun prije nego što im bude dozvoljeno da ga nastave koristiti."
+
+#: tooltips.settings_server_host
+msgctxt "tooltips.settings_server_host"
+msgid "This is where the emails reside"
+msgstr "Ovdje se čuvaju email poruke"
+
+#: tooltips.settings_server_password
+msgctxt "tooltips.settings_server_password"
+msgid "This is the password for the email address that receives reports."
+msgstr "Ovo je lozinka za email adresu koja prima izvještaje."
+
+#: tooltips.settings_server_port
+msgctxt "tooltips.settings_server_port"
+msgid ""
+"This is required to accept incoming connections from the email address."
+msgstr "Ovo je potrebno za prihvatanje ulaznih konekcija sa email adrese."
+
+#: tooltips.settings_server_ssl_support
+msgctxt "tooltips.settings_server_ssl_support"
+msgid "This is required to enhance a secure connection."
+msgstr "Ovo je potrebno kako bi se pojačala bezbjedna konekcija."
+
+#: tooltips.settings_server_type
+msgctxt "tooltips.settings_server_type"
+msgid "This is required to retrieve e-mails from the host server."
+msgstr "Ovo je potrebno za povlačenje email poruka sa servera."
+
+#: tooltips.settings_server_username
+msgctxt "tooltips.settings_server_username"
+msgid "This is the email address that receives reports."
+msgstr "Ovo je email adresa koja prima izvještaje."
+
+#: tooltips.settings_share_site_stats
+msgctxt "tooltips.settings_share_site_stats"
+msgid ""
+"Hit statistics are stored on a server controlled by Ushahidi. By enabling "
+"this option, you gain access to hit statistics directly in your admin panel."
+" By disabling it, you will stop collecting statistics and will be unable to "
+"recover traffic stats collected while this is turned off."
+msgstr "Statistike o hitovima čuvaju se na serveru koji je pod kontrolom Ushahidija. Aktiviranjem ove opcije, dobijate pristup statistici o hitovima direktno u vaš administratorski panel. Deaktiviranjem ćete zaustaviti sakupljanje statistika i nećete moći da obnovite statistike o saobraćaju sakupljene dok je ova opcija bila isključena. "
+
+#: tooltips.settings_site_copyright_statement
+msgctxt "tooltips.settings_site_copyright_statement"
+msgid ""
+"Do others have the right to republish text, images, video and/or design "
+"themes that you and your users create? Go to "
+"https://creativecommons.org/choose/ if you are interested in specifying what"
+" others are able to do with your work. And remember to be specific about "
+"what elements of the site you are licensing!"
+msgstr "Dali druge osobe imaju pravo da ponovo objave tekst, slike, video i/ili dizajnerske teme koje ste kreirali vi ili vaši korisnici? Posjetite https://creativecommons.org/choose/ ako želite da tačno odredite šta drugi ljudi mogu raditi sa vašim djelima. Upamtite da trebate biti precizni i određeni koje elemente sajta licencirate!"
+
+#: tooltips.settings_site_email
+msgctxt "tooltips.settings_site_email"
+msgid ""
+"This is the email address that will receive email reports and messages from "
+"the contact form."
+msgstr "Ova email adresa će primati izvještaje i poruke podnešene preko formulara za kontakt elektronskom poštom."
+
+#: tooltips.settings_site_message
+msgctxt "tooltips.settings_site_message"
+msgid ""
+"This is text that will appear above the map on the homepage. This is useful "
+"for giving important information to visitors on the site. To remove the box,"
+" simply delete the message here."
+msgstr "Ovaj tekst će stajati iznad mape na homepage-u i koristan je zato što nudi važne informacije posjetiocima sajta. Ako želite da uklonite taj box, jednostavno izbrišite ovu poruku."
+
+#: tooltips.settings_site_name
+msgctxt "tooltips.settings_site_name"
+msgid "This is the name of the site that appears at the top of the main site."
+msgstr "Ovo je ime stranice koje se pojavljuje na vrhu glavne stranice."
+
+#: tooltips.settings_site_submit_report_message
+msgctxt "tooltips.settings_site_submit_report_message"
+msgid ""
+"This is a message that will show up on the submit report page. This is good "
+"for disclaimers or further instructions for your visitors who are reporting."
+msgstr "Ovo je poruka koja će se pojaviti na strani za podnošenje izvještaja. Može se iskoristiti za disklejmere i davanje dopunskih uputstava posjetiocima koji podnose izvještaje."
+
+#: tooltips.settings_site_tagline
+msgctxt "tooltips.settings_site_tagline"
+msgid "In a few words, explain what this site is about."
+msgstr "Opišite stranicu u nekoliko riječi."
+
+#: tooltips.settings_site_timezone
+msgctxt "tooltips.settings_site_timezone"
+msgid ""
+"This is the timezone that your site will operate on. This has an impact on "
+"any actions you have set up that utilize time and date, as well as the "
+"default current time for reports on the front and back end of the site."
+msgstr "Ovdje je navedena časovna zona u kojoj će raditi vaš sajt. To će uticati na sve akcije koje ste podesili a koje ovise o tačnom vremenu i datumu, a postavljaće automatski i vreme objavljivanja izvještaja na front endu i na back endu sajta."
+
+#: tooltips.settings_twitter_configuration
+msgctxt "tooltips.settings_twitter_configuration"
+msgid "Set the twitter hashtag that will be used on a tweet"
+msgstr "Odredite twitter hashtag koji će biti korišten u tweetu."
+
+#: tooltips.feed_geolocation_user
+msgctxt "tooltips.feed_geolocation_user"
+msgid ""
+"If you want to geocode your feed entries, grab a user http://geonames.org, "
+"enable the free webservices and enter it here. Leave empty to disable this "
+"function.<br /><br />Beware of the the use limits!"
+msgstr ""

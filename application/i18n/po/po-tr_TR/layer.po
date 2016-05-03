@@ -1,0 +1,64 @@
+# 
+# Translators:
+# emrahgursel <emrahgursel@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.com/ushahidi/ushahidi-v2/language/tr_TR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: layer.layer_color.length
+msgctxt "layer.layer_color.length"
+msgid "The color field must be 6 characters long."
+msgstr "Renk alanı en az 6 karakterden oluşmalıdır."
+
+#: layer.layer_color.required
+msgctxt "layer.layer_color.required"
+msgid "The color field is required."
+msgstr "Renk alanı boş bırakılamaz."
+
+#: layer.layer_file.type
+msgctxt "layer.layer_file.type"
+msgid ""
+"The file field does not appear to contain a valid file. The only accepted "
+"formats are .KMZ and .KML."
+msgstr "Dosya uzantısı geçersiz. .KMZ, .KML uzantılı dosyalar kabul edilmektedir."
+
+#: layer.layer_file.valid
+msgctxt "layer.layer_file.valid"
+msgid "The file field does not appear to contain a valid file"
+msgstr "Dosya geçersiz görünüyor."
+
+#: layer.layer_name.length
+msgctxt "layer.layer_name.length"
+msgid "The name field must be at least 3 and no more 80 characters long."
+msgstr "İsim alanı en az 3, en fazla 80 karakterden oluşmalıdır."
+
+#: layer.layer_name.required
+msgctxt "layer.layer_name.required"
+msgid "The name field is required."
+msgstr "İsim alanı boş bırakılamaz."
+
+#: layer.layer_url.atleast
+msgctxt "layer.layer_url.atleast"
+msgid "Either a KML URL or File is required."
+msgstr "Bir KML URL'si ya da Dosyası gereklidir"
+
+#: layer.layer_url.both
+msgctxt "layer.layer_url.both"
+msgid "You can't have both a KML file and a URL."
+msgstr "Aynı anda hem bir KML dosyasına ve bir KML URL'sine sahip olamazsınız"
+
+#: layer.layer_url.url
+msgctxt "layer.layer_url.url"
+msgid "Please enter a valid URL, e.g. http://www.ushahidi.com/layerl.kml"
+msgstr "Lütfen geçerli bir adres giriniz. Örn. http://www.ushahidi.com/layerl.kml"

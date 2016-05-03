@@ -1,0 +1,1656 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-09-11 06:22+0000\n"
+"PO-Revision-Date: 2013-09-11 06:17+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/ushahidi/ushahidi-v2/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_admin.access_denied_credentials
+msgctxt "ui_admin.access_denied_credentials"
+msgid ""
+"Access denied. Either your credentials are not valid or your request has "
+"been refused."
+msgstr "讀取被拒絕，有可能是你的帳號資料已經無效，或是您的請求曾經被拒絕"
+
+#: ui_admin.access_denied_others
+msgctxt "ui_admin.access_denied_others"
+msgid ""
+"Access denied. Your request has been understood, but denied due to access "
+"limits like time. Try back later."
+msgstr "讀取被拒絕，有可能是因為頻寬限制，請稍後再試"
+
+#: ui_admin.access_level
+msgctxt "ui_admin.access_level"
+msgid "Access Level"
+msgstr "訪問級別"
+
+#: ui_admin.actions
+msgctxt "ui_admin.actions"
+msgid "Actions"
+msgstr "動作"
+
+#: ui_admin.add_to_category
+msgctxt "ui_admin.add_to_category"
+msgid "Add to Category"
+msgstr "新增到類別"
+
+#: ui_admin.added
+msgctxt "ui_admin.added"
+msgid "added"
+msgstr "已新增"
+
+#: ui_admin.added_edited
+msgctxt "ui_admin.added_edited"
+msgid "added/edited"
+msgstr "已新增/已編輯"
+
+#: ui_admin.addons
+msgctxt "ui_admin.addons"
+msgid "Addons"
+msgstr "插件"
+
+#: ui_admin.admin_role
+msgctxt "ui_admin.admin_role"
+msgid "Admin"
+msgstr "管理"
+
+#: ui_admin.alerts
+msgctxt "ui_admin.alerts"
+msgid "Alerts"
+msgstr "提醒"
+
+#: ui_admin.alerts_received
+msgctxt "ui_admin.alerts_received"
+msgid "Alerts Received"
+msgstr "收到的提醒"
+
+#: ui_admin.all
+msgctxt "ui_admin.all"
+msgid "All"
+msgstr ""
+
+#: ui_admin.am
+msgctxt "ui_admin.am"
+msgid "AM"
+msgstr ""
+
+#: ui_admin.anonymous
+msgctxt "ui_admin.anonymous"
+msgid "Anonymous"
+msgstr "匿名者"
+
+#: ui_admin.anyone_role
+msgctxt "ui_admin.anyone_role"
+msgid "Anyone"
+msgstr "訪問者"
+
+#: ui_admin.anywhere
+msgctxt "ui_admin.anywhere"
+msgid "Anywhere"
+msgstr "未知地"
+
+#: ui_admin.api_banned
+msgctxt "ui_admin.api_banned"
+msgid "API Banned"
+msgstr "API 禁止"
+
+#: ui_admin.api_logs
+msgctxt "ui_admin.api_logs"
+msgid "API Logs"
+msgstr "API 日誌"
+
+#: ui_admin.api_settings
+msgctxt "ui_admin.api_settings"
+msgid "API Settings"
+msgstr "API 設定"
+
+#: ui_admin.api_unban
+msgctxt "ui_admin.api_unban"
+msgid "UNBAN"
+msgstr "取消禁止"
+
+#: ui_admin.api_unban_all
+msgctxt "ui_admin.api_unban_all"
+msgid "UNBAN ALL"
+msgstr "全部取消禁止"
+
+#: ui_admin.approved
+msgctxt "ui_admin.approved"
+msgid "approved"
+msgstr "已核准"
+
+#: ui_admin.approve_auto
+msgctxt "ui_admin.approve_auto"
+msgid "Auto Approve"
+msgstr "自動核准"
+
+#: ui_admin.approve_manual
+msgctxt "ui_admin.approve_manual"
+msgid "Manually Approve"
+msgstr "手動核准"
+
+#: ui_admin.archived
+msgctxt "ui_admin.archived"
+msgid "Archived"
+msgstr "已存檔"
+
+#: ui_admin.are_you_sure_you_want_to
+msgctxt "ui_admin.are_you_sure_you_want_to"
+msgid "Are you sure you want to"
+msgstr "您確定要"
+
+#: ui_admin.are_you_sure_you_want_to_delete_this_item
+msgctxt "ui_admin.are_you_sure_you_want_to_delete_this_item"
+msgid "Are you sure you want to delete this item?"
+msgstr "您確定要刪除該項嗎？"
+
+#: ui_admin.are_you_sure_you_want_to_delete_this_photo
+msgctxt "ui_admin.are_you_sure_you_want_to_delete_this_photo"
+msgid "Are you sure you want to delete this photo?"
+msgstr "您確定要刪除該照片嗎？"
+
+#: ui_admin.are_you_sure_you_want_to_switch_forms
+msgctxt "ui_admin.are_you_sure_you_want_to_switch_forms"
+msgid "Are you sure you want to switch forms?"
+msgstr "您確定更換表格嗎？"
+
+#: ui_admin.assign
+msgctxt "ui_admin.assign"
+msgid "Assign"
+msgstr "分配"
+
+#: ui_admin.assignments
+msgctxt "ui_admin.assignments"
+msgid "Assignments"
+msgstr "任務"
+
+#: ui_admin.assign_badge
+msgctxt "ui_admin.assign_badge"
+msgid "Assign Badge"
+msgstr "分配徽章"
+
+#: ui_admin.author
+msgctxt "ui_admin.author"
+msgid "Author"
+msgstr "作者"
+
+#: ui_admin.author_email
+msgctxt "ui_admin.author_email"
+msgid "Author email"
+msgstr "作者 Email"
+
+#: ui_admin.back
+msgctxt "ui_admin.back"
+msgid "Back"
+msgstr "回去"
+
+#: ui_admin.banip_action
+msgctxt "ui_admin.banip_action"
+msgid "Ban IP"
+msgstr "禁止 IP"
+
+#: ui_admin.between_times
+msgctxt "ui_admin.between_times"
+msgid "Between Times"
+msgstr "起止時間"
+
+#: ui_admin.blocks
+msgctxt "ui_admin.blocks"
+msgid "Blocks"
+msgstr "區塊"
+
+#: ui_admin.body
+msgctxt "ui_admin.body"
+msgid "Body"
+msgstr "文件體"
+
+#: ui_admin.cancel
+msgctxt "ui_admin.cancel"
+msgid "Cancel"
+msgstr "取消"
+
+#: ui_admin.categories
+msgctxt "ui_admin.categories"
+msgid "Categories"
+msgstr "分類"
+
+#: ui_admin.chart_display_error
+msgctxt "ui_admin.chart_display_error"
+msgid "Error displaying chart"
+msgstr "圖表顯示錯誤"
+
+#: ui_admin.check_message_valid
+msgctxt "ui_admin.check_message_valid"
+msgid "Please make sure your message is valid."
+msgstr "請確認你的留言訊息正確"
+
+#: ui_admin.check_number
+msgctxt "ui_admin.check_number"
+msgid "Please make sure the number is valid."
+msgstr "請確認你已輸入正確的號碼"
+
+#: ui_admin.check_sms_settings
+msgctxt "ui_admin.check_sms_settings"
+msgid "Please check your SMS settings!"
+msgstr "請確認簡訊設定!"
+
+#: ui_admin.checkin_details
+msgctxt "ui_admin.checkin_details"
+msgid "Checkin Details"
+msgstr "簽入詳情"
+
+#: ui_admin.checkins
+msgctxt "ui_admin.checkins"
+msgid "Checkins"
+msgstr "簽入"
+
+#: ui_admin.cities_loaded
+msgctxt "ui_admin.cities_loaded"
+msgid "Cities loaded"
+msgstr "已載入的城市"
+
+#: ui_admin.code
+msgctxt "ui_admin.code"
+msgid "code"
+msgstr "程式"
+
+#: ui_admin.code_out_of_sync
+msgctxt "ui_admin.code_out_of_sync"
+msgid "Code version out of sync."
+msgstr "程式本版不一致"
+
+#: ui_admin.color
+msgctxt "ui_admin.color"
+msgid "Color"
+msgstr "顏色"
+
+#: ui_admin.comments
+msgctxt "ui_admin.comments"
+msgid "Comments"
+msgstr "留言"
+
+#: ui_admin.confirmation_code
+msgctxt "ui_admin.confirmation_code"
+msgid "Your alerts confirmation code is: "
+msgstr "你的通知確認碼為 "
+
+#: ui_admin.confirm_msg
+msgctxt "ui_admin.confirm_msg"
+msgid "The User Has Been"
+msgstr "該使用者已經"
+
+#: ui_admin.count
+msgctxt "ui_admin.count"
+msgid "Count"
+msgstr "計數"
+
+#: ui_admin.country_not_found
+msgctxt "ui_admin.country_not_found"
+msgid "Country Not Found"
+msgstr "找不到這個國家"
+
+#: ui_admin.created_edited
+msgctxt "ui_admin.created_edited"
+msgid "created/edited"
+msgstr "已新增/已編輯"
+
+#: ui_admin.create_report
+msgctxt "ui_admin.create_report"
+msgid "Create a Report"
+msgstr "新增一個通報"
+
+#: ui_admin.critical_upgrade
+msgctxt "ui_admin.critical_upgrade"
+msgid "Critical Upgrade"
+msgstr "重要的升級"
+
+#: ui_admin.csv
+msgctxt "ui_admin.csv"
+msgid "CSV"
+msgstr ""
+
+#: ui_admin.currently_active
+msgctxt "ui_admin.currently_active"
+msgid "Currently Active"
+msgstr "當前處於活動狀態"
+
+#: ui_admin.currently_inactive
+msgctxt "ui_admin.currently_inactive"
+msgid "Currently Inactive"
+msgstr "當前處於非活動狀態"
+
+#: ui_admin.custom_forms_insufficient_permissions
+msgctxt "ui_admin.custom_forms_insufficient_permissions"
+msgid ""
+"You don't have sufficient permissions to edit the following custom fields."
+msgstr "您沒有有足夠的權限編輯以下的自定義字段。"
+
+#: ui_admin.daily
+msgctxt "ui_admin.daily"
+msgid "Daily"
+msgstr "每天"
+
+#: ui_admin.dashboard
+msgctxt "ui_admin.dashboard"
+msgid "Dashboard"
+msgstr "總覽"
+
+#: ui_admin.database
+msgctxt "ui_admin.database"
+msgid "database"
+msgstr "資料庫"
+
+#: ui_admin.date_time
+msgctxt "ui_admin.date_time"
+msgid "Date & Time"
+msgstr "日期& 時間"
+
+#: ui_admin.date_added
+msgctxt "ui_admin.date_added"
+msgid "Date Added"
+msgstr ""
+
+#: ui_admin.date_modified
+msgctxt "ui_admin.date_modified"
+msgid "Date Modified"
+msgstr ""
+
+#: ui_admin.days_of_the_week
+msgctxt "ui_admin.days_of_the_week"
+msgid "Days of the week"
+msgstr ""
+
+#: ui_admin.db_out_of_sync
+msgctxt "ui_admin.db_out_of_sync"
+msgid "DB version out of sync."
+msgstr "資料庫版本不一致"
+
+#: ui_admin.deleted
+msgctxt "ui_admin.deleted"
+msgid "deleted"
+msgstr "已刪除"
+
+#: ui_admin.delete_action
+msgctxt "ui_admin.delete_action"
+msgid "Delete"
+msgstr "刪除"
+
+#: ui_admin.delete_all
+msgctxt "ui_admin.delete_all"
+msgid "Delete all reports"
+msgstr ""
+
+#: ui_admin.delete_badge
+msgctxt "ui_admin.delete_badge"
+msgid "Delete Badge"
+msgstr "刪除徽章"
+
+#: ui_admin.demo
+msgctxt "ui_admin.demo"
+msgid "Demo"
+msgstr "範例"
+
+#: ui_admin.description
+msgctxt "ui_admin.description"
+msgid "Description"
+msgstr "描述"
+
+#: ui_admin.disabled
+msgctxt "ui_admin.disabled"
+msgid "Disabled"
+msgstr "禁用"
+
+#: ui_admin.divider_start_field
+msgctxt "ui_admin.divider_start_field"
+msgid "Divider Start"
+msgstr "分頻開始"
+
+#: ui_admin.divider_end_field
+msgctxt "ui_admin.divider_end_field"
+msgid "Divider End"
+msgstr "分頻結束"
+
+#: ui_admin.divider_class
+msgctxt "ui_admin.divider_class"
+msgid "div class"
+msgstr ""
+
+#: ui_admin.download_reports
+msgctxt "ui_admin.download_reports"
+msgid "Download Reports"
+msgstr "下載通報資料"
+
+#: ui_admin.dropdown_choices
+msgctxt "ui_admin.dropdown_choices"
+msgid "Dropdown Choices"
+msgstr "下拉選項"
+
+#: ui_admin.edited
+msgctxt "ui_admin.edited"
+msgid "EDITED"
+msgstr ""
+
+#: ui_admin.edited_by
+msgctxt "ui_admin.edited_by"
+msgid "Edited By"
+msgstr ""
+
+#: ui_admin.edit_action
+msgctxt "ui_admin.edit_action"
+msgid "Edit"
+msgstr "編輯"
+
+#: ui_admin.edit_log
+msgctxt "ui_admin.edit_log"
+msgid "Edit Log"
+msgstr ""
+
+#: ui_admin.email
+msgctxt "ui_admin.email"
+msgid "Email"
+msgstr ""
+
+#: ui_admin.entire_collective
+msgctxt "ui_admin.entire_collective"
+msgid "Entire Collective"
+msgstr ""
+
+#: ui_admin.error_geocoding
+msgctxt "ui_admin.error_geocoding"
+msgid "Error in geocoding! HTTP error"
+msgstr "地理相關程式有錯誤! HTTP發生錯誤"
+
+#: ui_admin.error_imap
+msgctxt "ui_admin.error_imap"
+msgid "IMAP PHP Library is not installed"
+msgstr "IMAP PHP 庫未安裝"
+
+#: ui_admin.error_twitter
+msgctxt "ui_admin.error_twitter"
+msgid "Incorrect Credentials"
+msgstr ""
+
+#: ui_admin.error_msg
+msgctxt "ui_admin.error_msg"
+msgid "Error"
+msgstr "錯誤"
+
+#: ui_admin.error_post_incident
+msgctxt "ui_admin.error_post_incident"
+msgid "Error, unable to post incident"
+msgstr "錯誤，無法通報事件"
+
+#: ui_admin.every_six_hours
+msgctxt "ui_admin.every_six_hours"
+msgid "Every Six Hours"
+msgstr "每六個小時"
+
+#: ui_admin.every_twelve_hours
+msgctxt "ui_admin.every_twelve_hours"
+msgid "Every Twelve Hours"
+msgstr "每十二個小時"
+
+#: ui_admin.experimental
+msgctxt "ui_admin.experimental"
+msgid "Experimental"
+msgstr "實驗性的"
+
+#: ui_admin.faqs
+msgctxt "ui_admin.faqs"
+msgid "FAQ's"
+msgstr "問與答"
+
+#: ui_admin.feed
+msgctxt "ui_admin.feed"
+msgid "feed"
+msgstr ""
+
+#: ui_admin.feedback
+msgctxt "ui_admin.feedback"
+msgid "Feedback"
+msgstr "意見回饋"
+
+#: ui_admin.feeds
+msgctxt "ui_admin.feeds"
+msgid "feeds"
+msgstr ""
+
+#: ui_admin.field_choices
+msgctxt "ui_admin.field_choices"
+msgid "List of Choices"
+msgstr "選擇列表"
+
+#: ui_admin.field_default
+msgctxt "ui_admin.field_default"
+msgid "Default Value"
+msgstr "預設值"
+
+#: ui_admin.field_datatype
+msgctxt "ui_admin.field_datatype"
+msgid "Data Type"
+msgstr "數據類型"
+
+#: ui_admin.field_datatype_javascript
+msgctxt "ui_admin.field_datatype_javascript"
+msgid "Javascript"
+msgstr ""
+
+#: ui_admin.field_datatype_markup
+msgctxt "ui_admin.field_datatype_markup"
+msgid "Markup"
+msgstr ""
+
+#: ui_admin.field_datatype_numeric
+msgctxt "ui_admin.field_datatype_numeric"
+msgid "Numeric"
+msgstr "數字框"
+
+#: ui_admin.field_datatype_text
+msgctxt "ui_admin.field_datatype_text"
+msgid "Free Text"
+msgstr "文本框"
+
+#: ui_admin.field_height
+msgctxt "ui_admin.field_height"
+msgid "Height (In Rows)"
+msgstr "欄高"
+
+#: ui_admin.field_hidden
+msgctxt "ui_admin.field_hidden"
+msgid "Hidden Field"
+msgstr "隱藏字段"
+
+#: ui_admin.field_maxlength
+msgctxt "ui_admin.field_maxlength"
+msgid "Maximum Character Length"
+msgstr "字元最大限制"
+
+#: ui_admin.field_name
+msgctxt "ui_admin.field_name"
+msgid "Field Name"
+msgstr "欄位名稱"
+
+#: ui_admin.field_toggle
+msgctxt "ui_admin.field_toggle"
+msgid "Toggle"
+msgstr ""
+
+#: ui_admin.field_toggle_no
+msgctxt "ui_admin.field_toggle_no"
+msgid "No"
+msgstr "否"
+
+#: ui_admin.field_toggle_yes_close
+msgctxt "ui_admin.field_toggle_yes_close"
+msgid "Yes, Closed by default"
+msgstr "是的，默認情況下關閉"
+
+#: ui_admin.field_toggle_yes_open
+msgctxt "ui_admin.field_toggle_yes_open"
+msgid "Yes, Open by default"
+msgstr "是的，默認情況下打開"
+
+#: ui_admin.file_not_found_upload
+msgctxt "ui_admin.file_not_found_upload"
+msgid "Could not find uploaded file"
+msgstr "找不到上傳的檔案"
+
+#: ui_admin.file_open_error
+msgctxt "ui_admin.file_open_error"
+msgid "Could not open file for reading"
+msgstr "無法打開檔案"
+
+#: ui_admin.form_not_exists
+msgctxt "ui_admin.form_not_exists"
+msgid "That Form Does Not Exist!"
+msgstr "這個格式不存在!"
+
+#: ui_admin.forum
+msgctxt "ui_admin.forum"
+msgid "Forum"
+msgstr "論壇"
+
+#: ui_admin.free_text_field
+msgctxt "ui_admin.free_text_field"
+msgid "Text Area Field (Free Text)"
+msgstr "純文字欄位 (Free Text)"
+
+#: ui_admin.date_field
+msgctxt "ui_admin.date_field"
+msgid "Date Field"
+msgstr "日期框"
+
+#: ui_admin.radio_field
+msgctxt "ui_admin.radio_field"
+msgid "Radio Buttons Field"
+msgstr "單選按鈕"
+
+#: ui_admin.checkbox_field
+msgctxt "ui_admin.checkbox_field"
+msgid "Checkboxes Field"
+msgstr "多選框"
+
+#: ui_admin.dropdown_field
+msgctxt "ui_admin.dropdown_field"
+msgid "Dropdown Field"
+msgstr "下拉框"
+
+#: ui_admin.from
+msgctxt "ui_admin.from"
+msgid "From"
+msgstr "來自"
+
+#: ui_admin.from_date
+msgctxt "ui_admin.from_date"
+msgid "From"
+msgstr "來自"
+
+#: ui_admin.geonames_timeout
+msgctxt "ui_admin.geonames_timeout"
+msgid "Geonames Timeout Error"
+msgstr "地名超時錯誤"
+
+#: ui_admin.get_help
+msgctxt "ui_admin.get_help"
+msgid "Get Help"
+msgstr "取得協助"
+
+#: ui_admin.get_more_themes
+msgctxt "ui_admin.get_more_themes"
+msgid "Get more themes"
+msgstr ""
+
+#: ui_admin.get_more_plugins
+msgctxt "ui_admin.get_more_plugins"
+msgid "Get more plugins"
+msgstr ""
+
+#: ui_admin.header_actions
+msgctxt "ui_admin.header_actions"
+msgid "Actions"
+msgstr "動作"
+
+#: ui_admin.header_add_edit
+msgctxt "ui_admin.header_add_edit"
+msgid "Add/Edit"
+msgstr "新增/編輯"
+
+#: ui_admin.header_email
+msgctxt "ui_admin.header_email"
+msgid "Email"
+msgstr ""
+
+#: ui_admin.header_manage_users
+msgctxt "ui_admin.header_manage_users"
+msgid "Manage Users"
+msgstr "管理使用者"
+
+#: ui_admin.header_role
+msgctxt "ui_admin.header_role"
+msgid "Role"
+msgstr "角色"
+
+#: ui_admin.header_user
+msgctxt "ui_admin.header_user"
+msgid "User"
+msgstr "使用者"
+
+#: ui_admin.help
+msgctxt "ui_admin.help"
+msgid "help"
+msgstr "協助"
+
+#: ui_admin.hourly
+msgctxt "ui_admin.hourly"
+msgid "Hourly"
+msgstr "每小時"
+
+#: ui_admin.incident_feed
+msgctxt "ui_admin.incident_feed"
+msgid "Incident feed for"
+msgstr ""
+
+#: ui_admin.installer_info
+msgctxt "ui_admin.installer_info"
+msgid ""
+"The installer folder still exists. Delete the installer folder. It is a "
+"potential security vulnerability."
+msgstr ""
+
+#: ui_admin.instance
+msgctxt "ui_admin.instance"
+msgid "Instance"
+msgstr ""
+
+#: ui_admin.instances
+msgctxt "ui_admin.instances"
+msgid "Instances"
+msgstr ""
+
+#: ui_admin.instance_details
+msgctxt "ui_admin.instance_details"
+msgid "Instance Details"
+msgstr ""
+
+#: ui_admin.invalid_parameter
+msgctxt "ui_admin.invalid_parameter"
+msgid "Invalid Parameter"
+msgstr ""
+
+#: ui_admin.ip_address
+msgctxt "ui_admin.ip_address"
+msgid "IP Address"
+msgstr "IP 位置"
+
+#: ui_admin.is_date
+msgctxt "ui_admin.is_date"
+msgid "Is this a Date Field?"
+msgstr "請確認為正確日期格式"
+
+#: ui_admin.ispublic_visible
+msgctxt "ui_admin.ispublic_visible"
+msgid "Who Can View Answers"
+msgstr "誰可以查看解答？"
+
+#: ui_admin.ispublic_submit
+msgctxt "ui_admin.ispublic_submit"
+msgid "Who Can Submit Answers"
+msgstr "誰可以提交解答"
+
+#: ui_admin.keyword
+msgctxt "ui_admin.keyword"
+msgid "Keyword"
+msgstr "關鍵字"
+
+#: ui_admin.keywords
+msgctxt "ui_admin.keywords"
+msgid "Keywords"
+msgstr "關鍵字"
+
+#: ui_admin.label_email
+msgctxt "ui_admin.label_email"
+msgid "Email Address:"
+msgstr "Email 信箱:"
+
+#: ui_admin.label_full_name
+msgctxt "ui_admin.label_full_name"
+msgid "Full Name:"
+msgstr "全名:"
+
+#: ui_admin.label_password
+msgctxt "ui_admin.label_password"
+msgid "Password:"
+msgstr "密碼:"
+
+#: ui_admin.label_role
+msgctxt "ui_admin.label_role"
+msgid "Role:"
+msgstr "角色:"
+
+#: ui_admin.label_username
+msgctxt "ui_admin.label_username"
+msgid "Username:"
+msgstr "使用者名稱:"
+
+#: ui_admin.layers
+msgctxt "ui_admin.layers"
+msgid "Layers"
+msgstr "圖層"
+
+#: ui_admin.login_role
+msgctxt "ui_admin.login_role"
+msgid "Moderator"
+msgstr "審核者"
+
+#: ui_admin.logout
+msgctxt "ui_admin.logout"
+msgid "Logout"
+msgstr "登出"
+
+#: ui_admin.logs
+msgctxt "ui_admin.logs"
+msgid "Logs"
+msgstr ""
+
+#: ui_admin.manage
+msgctxt "ui_admin.manage"
+msgid "Manage"
+msgstr "管理"
+
+#: ui_admin.manage_roles
+msgctxt "ui_admin.manage_roles"
+msgid "Manage Roles & Permissions"
+msgstr "管理角色與權限"
+
+#: ui_admin.manage_users
+msgctxt "ui_admin.manage_users"
+msgid "View Users"
+msgstr "查看使用者"
+
+#: ui_admin.manage_users_edit
+msgctxt "ui_admin.manage_users_edit"
+msgid "Add/Edit Users"
+msgstr "新增/編輯 使用者"
+
+#: ui_admin.manage_public_listing
+msgctxt "ui_admin.manage_public_listing"
+msgid "Manage Your Public Listing"
+msgstr ""
+
+#: ui_admin.mark_as
+msgctxt "ui_admin.mark_as"
+msgid "Mark As"
+msgstr "標註為"
+
+#: ui_admin.marked_as_not_spam
+msgctxt "ui_admin.marked_as_not_spam"
+msgid "marked as not spam"
+msgstr "標註為非垃圾訊息"
+
+#: ui_admin.marked_as_spam
+msgctxt "ui_admin.marked_as_spam"
+msgid "marked as spam"
+msgstr "標註為垃圾訊息"
+
+#: ui_admin.match_no_documents
+msgctxt "ui_admin.match_no_documents"
+msgid "did not match any documents"
+msgstr "未符合任何文件"
+
+#: ui_admin.message
+msgctxt "ui_admin.message"
+msgid "Message"
+msgstr "訊息"
+
+#: ui_admin.messages
+msgctxt "ui_admin.messages"
+msgid "Messages"
+msgstr "訊息"
+
+#: ui_admin.messages_laconica
+msgctxt "ui_admin.messages_laconica"
+msgid "Laconica Messages"
+msgstr ""
+
+#: ui_admin.messages_twitter
+msgctxt "ui_admin.messages_twitter"
+msgid "Twitter Messages"
+msgstr "Twitter 訊息"
+
+#: ui_admin.message_sent
+msgctxt "ui_admin.message_sent"
+msgid "Your message has been sent!"
+msgstr "你的訊息已經送出!"
+
+#: ui_admin.mhi
+msgctxt "ui_admin.mhi"
+msgid "MHI"
+msgstr ""
+
+#: ui_admin.minute
+msgctxt "ui_admin.minute"
+msgid "Minute"
+msgstr ""
+
+#: ui_admin.minutes
+msgctxt "ui_admin.minutes"
+msgid "Minutes"
+msgstr ""
+
+#: ui_admin.missing_parameter
+msgctxt "ui_admin.missing_parameter"
+msgid "Missing Parameter"
+msgstr ""
+
+#: ui_admin.moderator
+msgctxt "ui_admin.moderator"
+msgid "Moderator"
+msgstr ""
+
+#: ui_admin.modified
+msgctxt "ui_admin.modified"
+msgid "modified"
+msgstr ""
+
+#: ui_admin.modify_timezone
+msgctxt "ui_admin.modify_timezone"
+msgid "Modify Timezone Setting"
+msgstr "修改時區設置"
+
+#: ui_admin.move_down_action
+msgctxt "ui_admin.move_down_action"
+msgid "move down"
+msgstr "往下移"
+
+#: ui_admin.move_up_action
+msgctxt "ui_admin.move_up_action"
+msgid "move up"
+msgstr "往上移"
+
+#: ui_admin.multiple_hosted_instances
+msgctxt "ui_admin.multiple_hosted_instances"
+msgid "Multiple Hosted Instances"
+msgstr "多個託管實例"
+
+#: ui_admin.my_alerts
+msgctxt "ui_admin.my_alerts"
+msgid "My Alerts"
+msgstr "我的快訊"
+
+#: ui_admin.my_checkins
+msgctxt "ui_admin.my_checkins"
+msgid "My Checkins"
+msgstr "我的簽入"
+
+#: ui_admin.my_profile
+msgctxt "ui_admin.my_profile"
+msgid "My Profile"
+msgstr "我的個人資料"
+
+#: ui_admin.my_reports
+msgctxt "ui_admin.my_reports"
+msgid "My Reports"
+msgstr "我的通報"
+
+#: ui_admin.my_votes
+msgctxt "ui_admin.my_votes"
+msgid "Votes Cast"
+msgstr "投票數"
+
+#: ui_admin.my_votes_up
+msgctxt "ui_admin.my_votes_up"
+msgid "Positive"
+msgstr "肯定"
+
+#: ui_admin.my_votes_down
+msgctxt "ui_admin.my_votes_down"
+msgid "Negative"
+msgstr "否定"
+
+#: ui_admin.name
+msgctxt "ui_admin.name"
+msgid "Name"
+msgstr ""
+
+#: ui_admin.new_alert
+msgctxt "ui_admin.new_alert"
+msgid "Create New Alert"
+msgstr "新增通知"
+
+#: ui_admin.new_private
+msgctxt "ui_admin.new_private"
+msgid "Create New Message"
+msgstr "新增訊息"
+
+#: ui_admin.new_password
+msgctxt "ui_admin.new_password"
+msgid "New Password"
+msgstr "新密碼"
+
+#: ui_admin.no
+msgctxt "ui_admin.no"
+msgid "No"
+msgstr ""
+
+#: ui_admin.none_category_explanation
+msgctxt "ui_admin.none_category_explanation"
+msgid ""
+"This is a special category that will not show up on the report submission "
+"form for users submitting reports. This is used to hold reports left without"
+" categories(uncategorized reports) as a result of category deletion."
+msgstr "這是一個特殊的類別，將不會顯示在用戶提交報告的頁面。這是用來存放作為刪除的沒有分類（未歸類報告）的報告。"
+
+#: ui_admin.notification
+msgctxt "ui_admin.notification"
+msgid "Notification"
+msgstr "通告"
+
+#: ui_admin.not_case_sensitive
+msgctxt "ui_admin.not_case_sensitive"
+msgid "This is not case sensitive."
+msgstr "不區分大小寫"
+
+#: ui_admin.not_found
+msgctxt "ui_admin.not_found"
+msgid "Not Found"
+msgstr "找不到相關資訊"
+
+#: ui_admin.no_data
+msgctxt "ui_admin.no_data"
+msgid "No data. There are no results to show."
+msgstr "沒有數據，沒有可顯示的結果。"
+
+#: ui_admin.no_error
+msgctxt "ui_admin.no_error"
+msgid "No Error"
+msgstr "沒有錯誤"
+
+#: ui_admin.no_result_display_msg
+msgctxt "ui_admin.no_result_display_msg"
+msgid "No Results To Display!"
+msgstr "沒有結果!"
+
+#: ui_admin.of
+msgctxt "ui_admin.of"
+msgid "of"
+msgstr ""
+
+#: ui_admin.on_specific_count
+msgctxt "ui_admin.on_specific_count"
+msgid "On Specific Count"
+msgstr ""
+
+#: ui_admin.openids
+msgctxt "ui_admin.openids"
+msgid "OpenID's"
+msgstr ""
+
+#: ui_admin.page
+msgctxt "ui_admin.page"
+msgid "page"
+msgstr "頁"
+
+#: ui_admin.pages
+msgctxt "ui_admin.pages"
+msgid "pages"
+msgstr "頁"
+
+#: ui_admin.page_not_found
+msgctxt "ui_admin.page_not_found"
+msgid "Page Not Found"
+msgstr "找不到網頁"
+
+#: ui_admin.page_not_found_message_with_contact
+msgctxt "ui_admin.page_not_found_message_with_contact"
+msgid ""
+"Sorry, the page you are trying to view is not here.<p><strong>Did you follow"
+" a link from somewhere else on our site?</strong><br />If you reached this "
+"page from another part of our site, please <a href=\"%s\">contact us</a> so "
+"that we can correct our mistake.</p><p><strong>Did you follow a link from "
+"another site? </strong><br />Links from other sites can sometimes be "
+"outdated or misspelled. <a href=\"%s\">Tell us</a> where you came from and "
+"we can try to contact the other site in order to fix the "
+"problem.</p><p><strong>Did you type the URL? </strong><br />You may have "
+"typed the address (URL) incorrectly. Check to make sure you have got the "
+"exact right spelling, capitalization, etc. </p>"
+msgstr ""
+
+#: ui_admin.page_not_found_message
+msgctxt "ui_admin.page_not_found_message"
+msgid "Sorry, the page you are trying to view is not here."
+msgstr ""
+
+#: ui_admin.parameters_used
+msgctxt "ui_admin.parameters_used"
+msgid "Parameters Used"
+msgstr ""
+
+#: ui_admin.password
+msgctxt "ui_admin.password"
+msgid "Password"
+msgstr "密碼"
+
+#: ui_admin.password_reset
+msgctxt "ui_admin.password_reset"
+msgid "Password Reset"
+msgstr "重設密碼"
+
+#: ui_admin.password_reset_message_line_1
+msgctxt "ui_admin.password_reset_message_line_1"
+msgid "Dear"
+msgstr ""
+
+#: ui_admin.password_reset_message_line_2
+msgctxt "ui_admin.password_reset_message_line_2"
+msgid "We received a request to reset the password for"
+msgstr "我們收到一個重設密碼的需求for"
+
+#: ui_admin.password_reset_message_line_3
+msgctxt "ui_admin.password_reset_message_line_3"
+msgid ""
+"To change your password, please click on the link below (or copy and paste "
+"it into your browser)."
+msgstr "欲修改密碼，請點選以下連結 (或複製以下連結至瀏覽器)."
+
+#: ui_admin.password_reset_message_line_4
+msgctxt "ui_admin.password_reset_message_line_4"
+msgid ""
+"As you requested, your password has now been reset. Your new details are as "
+"follows"
+msgstr "你的密碼已經重設。詳細資訊如下："
+
+#: ui_admin.password_reset_subject
+msgctxt "ui_admin.password_reset_subject"
+msgid "Ushahidi password reset"
+msgstr "重設 Ushahidi 密碼"
+
+#: ui_admin.phone
+msgctxt "ui_admin.phone"
+msgid "Phone"
+msgstr "電話"
+
+#: ui_admin.please_select
+msgctxt "ui_admin.please_select"
+msgid "Please Select"
+msgstr "請選擇"
+
+#: ui_admin.pm
+msgctxt "ui_admin.pm"
+msgid "PM"
+msgstr ""
+
+#: ui_admin.post_method_not_used
+msgctxt "ui_admin.post_method_not_used"
+msgid "Data was not sent by post method"
+msgstr "數據未能以POST方式送出"
+
+#: ui_admin.preview
+msgctxt "ui_admin.preview"
+msgid "Preview"
+msgstr "預覽"
+
+#: ui_admin.private_message
+msgctxt "ui_admin.private_message"
+msgid "Message"
+msgstr "訊息"
+
+#: ui_admin.private_messages
+msgctxt "ui_admin.private_messages"
+msgid "Private Messages"
+msgstr "私人訊息"
+
+#: ui_admin.private_sent
+msgctxt "ui_admin.private_sent"
+msgid "Private Message Sent"
+msgstr "發送私人訊息"
+
+#: ui_admin.private_subject
+msgctxt "ui_admin.private_subject"
+msgid "Subject"
+msgstr "標題"
+
+#: ui_admin.private_to
+msgctxt "ui_admin.private_to"
+msgid "To"
+msgstr "接收人"
+
+#: ui_admin.public_listing
+msgctxt "ui_admin.public_listing"
+msgid "Public Listing"
+msgstr ""
+
+#: ui_admin.qualifiers
+msgctxt "ui_admin.qualifiers"
+msgid "Qualifiers"
+msgstr "限定條件"
+
+#: ui_admin.read
+msgctxt "ui_admin.read"
+msgid "read"
+msgstr "讀取"
+
+#: ui_admin.relevance
+msgctxt "ui_admin.relevance"
+msgid "Relevance"
+msgstr "符合程度"
+
+#: ui_admin.report_title
+msgctxt "ui_admin.report_title"
+msgid "Report Title"
+msgstr "通報標題"
+
+#: ui_admin.report_date
+msgctxt "ui_admin.report_date"
+msgid "Report Date"
+msgstr ""
+
+#: ui_admin.reporters
+msgctxt "ui_admin.reporters"
+msgid "Reporters"
+msgstr "通報者"
+
+#: ui_admin.reporter_levels
+msgctxt "ui_admin.reporter_levels"
+msgid "Reporter Levels"
+msgstr "通報者層級"
+
+#: ui_admin.reports
+msgctxt "ui_admin.reports"
+msgid "Reports"
+msgstr "通報事件"
+
+#: ui_admin.reputation
+msgctxt "ui_admin.reputation"
+msgid "Reputation Score"
+msgstr "信譽分數"
+
+#: ui_admin.required
+msgctxt "ui_admin.required"
+msgid "Required"
+msgstr "必填"
+
+#: ui_admin.reset
+msgctxt "ui_admin.reset"
+msgid "Reset"
+msgstr "重設"
+
+#: ui_admin.response
+msgctxt "ui_admin.response"
+msgid "Response"
+msgstr "回應"
+
+#: ui_admin.results
+msgctxt "ui_admin.results"
+msgid "Results"
+msgstr "結果"
+
+#: ui_admin.revoke
+msgctxt "ui_admin.revoke"
+msgid "Revoke"
+msgstr "撤銷"
+
+#: ui_admin.riverid_exists_admin
+msgctxt "ui_admin.riverid_exists_admin"
+msgid ""
+"This email already has an account managed by CrowdmapID. The user will need "
+"to use their existing Crowdmap password to login."
+msgstr ""
+
+#: ui_admin.save_settings
+msgctxt "ui_admin.save_settings"
+msgid "Save Settings"
+msgstr "保存設定"
+
+#: ui_admin.search
+msgctxt "ui_admin.search"
+msgid "Search"
+msgstr "查詢"
+
+#: ui_admin.search_reports
+msgctxt "ui_admin.search_reports"
+msgid "Search Reports"
+msgstr ""
+
+#: ui_admin.searching_for
+msgctxt "ui_admin.searching_for"
+msgid "searching for"
+msgstr "查詢for"
+
+#: ui_admin.security_info_encryption_key
+msgctxt "ui_admin.security_info_encryption_key"
+msgid ""
+"The encryption key is still set to the default value. This is insecure and "
+"must be changed."
+msgstr "加密密鑰仍設置為默認值，這是不安全的，必須改變。"
+
+#: ui_admin.security_info_https
+msgctxt "ui_admin.security_info_https"
+msgid ""
+"This site being served over HTTP. This should be set to HTTPS for increased "
+"security."
+msgstr "本網站通過HTTP提供服務。應設置為HTTPS以提高安全性。"
+
+#: ui_admin.security_info_instructions
+msgctxt "ui_admin.security_info_instructions"
+msgid "Instructions are available on the wiki: "
+msgstr "維基(Wiki)說明: "
+
+#: ui_admin.select_download_format
+msgctxt "ui_admin.select_download_format"
+msgid "Select your desired reports download format:-"
+msgstr ""
+
+#: ui_admin.select_field_type
+msgctxt "ui_admin.select_field_type"
+msgid "--- Select A Field Type ---"
+msgstr "--- 選擇欄位形式 ---"
+
+#: ui_admin.select_item
+msgctxt "ui_admin.select_item"
+msgid "Please select an item"
+msgstr "請選擇一個品項"
+
+#: ui_admin.select_trigger_before_response
+msgctxt "ui_admin.select_trigger_before_response"
+msgid "You must select a Trigger before you can select a Response."
+msgstr ""
+
+#: ui_admin.select_trigger_before_qualifiers
+msgctxt "ui_admin.select_trigger_before_qualifiers"
+msgid "You must select a Trigger before you can define Qualifiers."
+msgstr ""
+
+#: ui_admin.sender
+msgctxt "ui_admin.sender"
+msgid "Sender"
+msgstr "寄送者"
+
+#: ui_admin.send_to
+msgctxt "ui_admin.send_to"
+msgid "Send To"
+msgstr "接受者"
+
+#: ui_admin.sent_from_website
+msgctxt "ui_admin.sent_from_website"
+msgid "This message was sent from your website at "
+msgstr "這則訊息被送出，由你的網站 "
+
+#: ui_admin.server_time
+msgctxt "ui_admin.server_time"
+msgid "Server Time"
+msgstr "服務器時間"
+
+#: ui_admin.settings
+msgctxt "ui_admin.settings"
+msgid "Settings"
+msgstr "設定"
+
+#: ui_admin.showing_page
+msgctxt "ui_admin.showing_page"
+msgid "Showing page"
+msgstr "顯示頁面"
+
+#: ui_admin.showing_results
+msgctxt "ui_admin.showing_results"
+msgid "Showing results"
+msgstr "顯示結果"
+
+#: ui_admin.shown
+msgctxt "ui_admin.shown"
+msgid "shown"
+msgstr ""
+
+#: ui_admin.special_category
+msgctxt "ui_admin.special_category"
+msgid "Special Category"
+msgstr "特殊分類"
+
+#: ui_admin.special_category_explanation
+msgctxt "ui_admin.special_category_explanation"
+msgid ""
+"This is a special category that will not show up on the report submission "
+"form for users submitting reports. This is used in conjunction with the "
+"\"Trusted Reporters\" feature."
+msgstr "這是一個特殊分類，將不會在用戶提交的報告表單中顯示。該分類需與“可信的報告者”一起使用。"
+
+#: ui_admin.specific_area
+msgctxt "ui_admin.specific_area"
+msgid "Specific Area"
+msgstr "特別區域"
+
+#: ui_admin.state
+msgctxt "ui_admin.state"
+msgid "State"
+msgstr ""
+
+#: ui_admin.statistics
+msgctxt "ui_admin.statistics"
+msgid "Statistics"
+msgstr "統計"
+
+#: ui_admin.stats
+msgctxt "ui_admin.stats"
+msgid "Stats"
+msgstr "統計"
+
+#: ui_admin.stats_collection_error
+msgctxt "ui_admin.stats_collection_error"
+msgid "Stat collection failed! Please try again later."
+msgstr "Stat Collection Failed! Either our stats server is down or something is misconfigured in your deployment of Ushahidi. Try back in a bit to see if the server is up and running. To manually reset your stats, modify stat_id (set to null) and stat_key (set to 0) in the settings table of your database. WARNING: You will lose access to your statistics if you do this!"
+
+#: ui_admin.stats_collection_error_short
+msgctxt "ui_admin.stats_collection_error_short"
+msgid "Stat Collection Failed!"
+msgstr ""
+
+#: ui_admin.specific_days
+msgctxt "ui_admin.specific_days"
+msgid "Specific Days"
+msgstr "特殊的日子"
+
+#: ui_admin.subject
+msgctxt "ui_admin.subject"
+msgid "Subject"
+msgstr "主題"
+
+#: ui_admin.superadmin_role
+msgctxt "ui_admin.superadmin_role"
+msgid "Super Admin"
+msgstr "超級管理者"
+
+#: ui_admin.task_performed
+msgctxt "ui_admin.task_performed"
+msgid "Task Performed"
+msgstr "任務已執行"
+
+#: ui_admin.text_field
+msgctxt "ui_admin.text_field"
+msgid "Text Field"
+msgstr "純文字欄位"
+
+#: ui_admin.theme_name
+msgctxt "ui_admin.theme_name"
+msgid "Name"
+msgstr "姓名"
+
+#: ui_admin.title
+msgctxt "ui_admin.title"
+msgid "Manage Users"
+msgstr "管理使用者"
+
+#: ui_admin.timeout
+msgctxt "ui_admin.timeout"
+msgid "Timeout Error"
+msgstr ""
+
+#: ui_admin.to
+msgctxt "ui_admin.to"
+msgid "to"
+msgstr ""
+
+#: ui_admin.total_records
+msgctxt "ui_admin.total_records"
+msgid "Total Records"
+msgstr "全部紀錄"
+
+#: ui_admin.to_date
+msgctxt "ui_admin.to_date"
+msgid "to"
+msgstr ""
+
+#: ui_admin.translate_reports
+msgctxt "ui_admin.translate_reports"
+msgid "Translate Reports"
+msgstr "翻譯報告"
+
+#: ui_admin.trigger
+msgctxt "ui_admin.trigger"
+msgid "Trigger"
+msgstr "觸發器"
+
+#: ui_admin.triggering_user
+msgctxt "ui_admin.triggering_user"
+msgid "Triggering User"
+msgstr "觸發用戶"
+
+#: ui_admin.triggers
+msgctxt "ui_admin.triggers"
+msgid "Triggers"
+msgstr "觸發器"
+
+#: ui_admin.unapproved
+msgctxt "ui_admin.unapproved"
+msgid "unapproved"
+msgstr "未核准"
+
+#: ui_admin.unknown
+msgctxt "ui_admin.unknown"
+msgid "Unknown"
+msgstr "未知"
+
+#: ui_admin.unknown_failure
+msgctxt "ui_admin.unknown_failure"
+msgid "Unknown Failure"
+msgstr "未知的錯誤"
+
+#: ui_admin.unread
+msgctxt "ui_admin.unread"
+msgid "unread"
+msgstr "未讀取"
+
+#: ui_admin.unsubscribe_message
+msgctxt "ui_admin.unsubscribe_message"
+msgid "You will no longer receive alerts from"
+msgstr "您將不再接收警示，從"
+
+#: ui_admin.update_link
+msgctxt "ui_admin.update_link"
+msgid " Click here to upgrade now"
+msgstr " 點選這裡以升級"
+
+#: ui_admin.upgrade_ushahidi
+msgctxt "ui_admin.upgrade_ushahidi"
+msgid "Upgrade Ushahidi"
+msgstr "升級 Ushahidi"
+
+#: ui_admin.upgrade_ushahidi_status
+msgctxt "ui_admin.upgrade_ushahidi_status"
+msgid "Upgrade Ushahidi Status"
+msgstr "升級 Ushahidi 狀態"
+
+#: ui_admin.upload_reports
+msgctxt "ui_admin.upload_reports"
+msgid "Upload Reports"
+msgstr "上傳報告"
+
+#: ui_admin.user
+msgctxt "ui_admin.user"
+msgid "User"
+msgstr ""
+
+#: ui_admin.users
+msgctxt "ui_admin.users"
+msgid "Users"
+msgstr "使用者"
+
+#: ui_admin.ushahidi
+msgctxt "ui_admin.ushahidi"
+msgid "Ushahidi"
+msgstr ""
+
+#: ui_admin.verified_unverified
+msgctxt "ui_admin.verified_unverified"
+msgid "Verified/Unverified"
+msgstr "已驗證/未驗證"
+
+#: ui_admin.verify_unverify
+msgctxt "ui_admin.verify_unverify"
+msgid "Verify/Unverify"
+msgstr "確認/取消 驗證"
+
+#: ui_admin.version
+msgctxt "ui_admin.version"
+msgid "Version"
+msgstr "版本"
+
+#: ui_admin.version_available
+msgctxt "ui_admin.version_available"
+msgid " is available for upgrade."
+msgstr " 已可升級."
+
+#: ui_admin.video_encoding
+msgctxt "ui_admin.video_encoding"
+msgid "Video Encoding"
+msgstr "視頻編碼"
+
+#: ui_admin.view_private
+msgctxt "ui_admin.view_private"
+msgid "Private Messages"
+msgstr "私人訊息"
+
+#: ui_admin.view_site
+msgctxt "ui_admin.view_site"
+msgid "View Site"
+msgstr "瀏覽網站"
+
+#: ui_admin.view_report
+msgctxt "ui_admin.view_report"
+msgid "View Report"
+msgstr "查看通報"
+
+#: ui_admin.welcome
+msgctxt "ui_admin.welcome"
+msgid "Welcome, "
+msgstr "歡迎, "
+
+#: ui_admin.wiki
+msgctxt "ui_admin.wiki"
+msgid "Wiki"
+msgstr "維基 Wiki"
+
+#: ui_admin.xml
+msgctxt "ui_admin.xml"
+msgid "XML"
+msgstr ""
+
+#: ui_admin.yes
+msgctxt "ui_admin.yes"
+msgid "Yes"
+msgstr "是"
+
+#: ui_admin.your_search_for
+msgctxt "ui_admin.your_search_for"
+msgid "Your search for"
+msgstr "您的搜索"
+
+#: ui_admin.delete_all_instructions
+msgctxt "ui_admin.delete_all_instructions"
+msgid ""
+"Clicking the button below will delete ALL reports on the database. You "
+"should use this with caution as this operation cannot be undone."
+msgstr ""
+
+#: ui_admin.delete_all_backup
+msgctxt "ui_admin.delete_all_backup"
+msgid "We recommend you backup your database before proceeding"
+msgstr ""
+
+#: ui_admin.delete_all_button
+msgctxt "ui_admin.delete_all_button"
+msgid "I'm sure I want to delete all %s report(s) from the database."
+msgstr ""
+
+#: ui_admin.delete_all_confirm
+msgctxt "ui_admin.delete_all_confirm"
+msgid "Are you sure you want to delete all reports?"
+msgstr ""
+
+#: ui_admin.delete_all_no_reports
+msgctxt "ui_admin.delete_all_no_reports"
+msgid "There are no reports to be deleted."
+msgstr ""
+
+#: ui_admin.user_no_logins
+msgctxt "ui_admin.user_no_logins"
+msgid "Number of logins"
+msgstr ""
+
+#: ui_admin.user_last_login
+msgctxt "ui_admin.user_last_login"
+msgid "Last login"
+msgstr ""
+
+#: ui_admin.user_confirmed_account
+msgctxt "ui_admin.user_confirmed_account"
+msgid "Confirmed account?"
+msgstr ""

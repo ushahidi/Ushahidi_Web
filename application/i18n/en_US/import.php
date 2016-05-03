@@ -1,0 +1,35 @@
+<?php
+$lang = array(
+	'csv' => array(
+		'approved' => 'APPROVED must be either YES or NO on line ',
+		'required_column' => 'CSV file is missing required column',
+		'verified' => 'VERIFIED must be either YES or NO on line ',	
+	),
+	'incident_exists' => 'Incident already exists for ID #',
+	'incident_date' => 'Could not parse incident date on report # ',
+	'new_category' => 'New category added to database: ',
+	'xml' => array(
+		'category_error' => 'The category title and category description fields are required. XML Import failed for category #',
+		'field_datatype' => 'Field datatype option added for field ',
+		'field_default' => 'Default values are required for radio, checkbox and dropdown fields for the following field on form ',
+		'field_error' => 'Custom field name missing/field type not allowed. Import failed for the following field on form ',
+		'field_hidden' => 'Field hidden option added for field ',
+		'file_empty' => 'Import failed. The file you have uploaded is empty.',
+		'form_field_no_match' => 'The following field does not exist on the form listed in report #',
+		'incident_title_date' =>'Both Report Title and Report Date are required for incident #',
+		'invalid_response' => 'Invalid field response for the following field on report #',
+		'missing_elements' => 'XML file selected for import must have at least one of the following: Categories, Custom forms or Reports',
+		'missing_form_title' => 'Form title must be provided for form #',
+		'missing_localization' => 'Could not import empty category translation for localization for category #',
+		'new_field' => 'New field added to database: ',
+		'new_form' => 'New form added to database: ',
+		'no_categories' => 'There are no categories to import',
+		'no_category_exists' => 'The following category does not exist, listed in report #',
+		'no_custom_forms' => 'There are no custom forms to import.',
+		'no_form_exists' => 'The following form does not exist, listed on report #',
+		'no_reports' => 'There are no reports to import.',
+		'translation_title' => 'Category translation import failed. Missing category title for the following localization on category #',
+		'translation_added' => 'Category translation added: Localization ',	
+	),
+);
+?>

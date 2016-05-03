@@ -1,0 +1,218 @@
+# 
+# Translators:
+# Boripat Lebel <inactive+boripatlebel@transifex.com>, 2014
+# Ngamnet_review <ngamnetaektasaeng@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2014-08-24 05:11+0000\n"
+"Last-Translator: Ngamnet_review <ngamnetaektasaeng@gmail.com>\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/ushahidi/ushahidi-v2/language/th_TH/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th_TH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: datetime.am
+msgctxt "datetime.am"
+msgid "am"
+msgstr "am"
+
+#: datetime.friday.abbv
+msgctxt "datetime.friday.abbv"
+msgid "Fri"
+msgstr "ศุกร์"
+
+#: datetime.friday.full
+msgctxt "datetime.friday.full"
+msgid "Friday"
+msgstr "วันศุกร์"
+
+#: datetime.monday.abbv
+msgctxt "datetime.monday.abbv"
+msgid "Mon"
+msgstr "จันทร์"
+
+#: datetime.monday.full
+msgctxt "datetime.monday.full"
+msgid "Monday"
+msgstr "วันจันทร์"
+
+#: datetime.pm
+msgctxt "datetime.pm"
+msgid "pm"
+msgstr "pm"
+
+#: datetime.saturday.abbv
+msgctxt "datetime.saturday.abbv"
+msgid "Sat"
+msgstr "เสาร์"
+
+#: datetime.saturday.full
+msgctxt "datetime.saturday.full"
+msgid "Saturday"
+msgstr "วันเสาร์"
+
+#: datetime.sunday.abbv
+msgctxt "datetime.sunday.abbv"
+msgid "Sun"
+msgstr "อาทิตย์"
+
+#: datetime.sunday.full
+msgctxt "datetime.sunday.full"
+msgid "Sunday"
+msgstr "วันอาทิตย์"
+
+#: datetime.thursday.abbv
+msgctxt "datetime.thursday.abbv"
+msgid "Thu"
+msgstr "พฤหัสบดี"
+
+#: datetime.thursday.full
+msgctxt "datetime.thursday.full"
+msgid "Thursday"
+msgstr "วันพฤหัสบดี"
+
+#: datetime.tuesday.abbv
+msgctxt "datetime.tuesday.abbv"
+msgid "Tue"
+msgstr "อังคาร"
+
+#: datetime.tuesday.full
+msgctxt "datetime.tuesday.full"
+msgid "Tuesday"
+msgstr "วันอังคาร"
+
+#: datetime.wednesday.abbv
+msgctxt "datetime.wednesday.abbv"
+msgid "Wed"
+msgstr "พุธ"
+
+#: datetime.wednesday.full
+msgctxt "datetime.wednesday.full"
+msgid "Wednesday"
+msgstr "วันพุธ"
+
+#: datetime.january.abbv
+msgctxt "datetime.january.abbv"
+msgid "Jan"
+msgstr "ม.ค."
+
+#: datetime.january.full
+msgctxt "datetime.january.full"
+msgid "January"
+msgstr "มกราคม"
+
+#: datetime.february.abbv
+msgctxt "datetime.february.abbv"
+msgid "Feb"
+msgstr "ก.พ."
+
+#: datetime.february.full
+msgctxt "datetime.february.full"
+msgid "February"
+msgstr "กุมภาพันธ์"
+
+#: datetime.march.abbv
+msgctxt "datetime.march.abbv"
+msgid "Mar"
+msgstr "มี.ค."
+
+#: datetime.march.full
+msgctxt "datetime.march.full"
+msgid "March"
+msgstr "มีนาคม"
+
+#: datetime.april.abbv
+msgctxt "datetime.april.abbv"
+msgid "Apr"
+msgstr "เม.ย."
+
+#: datetime.april.full
+msgctxt "datetime.april.full"
+msgid "April"
+msgstr "เมษายน"
+
+#: datetime.may.abbv
+msgctxt "datetime.may.abbv"
+msgid "May"
+msgstr "พ.ค."
+
+#: datetime.may.full
+msgctxt "datetime.may.full"
+msgid "May"
+msgstr "พฤษภาคม"
+
+#: datetime.june.abbv
+msgctxt "datetime.june.abbv"
+msgid "Jun"
+msgstr "มิ.ย."
+
+#: datetime.june.full
+msgctxt "datetime.june.full"
+msgid "June"
+msgstr "มิถุนายน"
+
+#: datetime.july.abbv
+msgctxt "datetime.july.abbv"
+msgid "Jul"
+msgstr "ก.ค."
+
+#: datetime.july.full
+msgctxt "datetime.july.full"
+msgid "July"
+msgstr "กรกฎาคม"
+
+#: datetime.august.abbv
+msgctxt "datetime.august.abbv"
+msgid "Aug"
+msgstr "ส.ค."
+
+#: datetime.august.full
+msgctxt "datetime.august.full"
+msgid "August"
+msgstr "สิงหาคม"
+
+#: datetime.september.abbv
+msgctxt "datetime.september.abbv"
+msgid "Sep"
+msgstr "ก.ย."
+
+#: datetime.september.full
+msgctxt "datetime.september.full"
+msgid "September"
+msgstr "กันยายน"
+
+#: datetime.october.abbv
+msgctxt "datetime.october.abbv"
+msgid "Oct"
+msgstr "ต.ค."
+
+#: datetime.october.full
+msgctxt "datetime.october.full"
+msgid "October"
+msgstr "ตุลาคม"
+
+#: datetime.november.abbv
+msgctxt "datetime.november.abbv"
+msgid "Nov"
+msgstr "พ.ย."
+
+#: datetime.november.full
+msgctxt "datetime.november.full"
+msgid "November"
+msgstr "พฤศจิกายน"
+
+#: datetime.december.abbv
+msgctxt "datetime.december.abbv"
+msgid "Dec"
+msgstr "ธ.ค."
+
+#: datetime.december.full
+msgctxt "datetime.december.full"
+msgid "December"
+msgstr "ธันวาคม"

@@ -1,0 +1,53 @@
+# 
+# Translators:
+# Luís Lago <luisalveslago@gmail.com>, 2013
+# alfalb_mansil, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-06-25 21:48+0000\n"
+"Last-Translator: alfalb_mansil\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/ushahidi/ushahidi-v2/language/pt_PT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: reports.incident_id.required
+msgctxt "reports.incident_id.required"
+msgid "Please verify that you have checked an item"
+msgstr "Por favor, verifique se selecionou pelo menos um item"
+
+#: reports.incident_id.numeric
+msgctxt "reports.incident_id.numeric"
+msgid "Please verify that you have checked an item"
+msgstr "Por favor, verifique se selecionou pelo menos um item"
+
+#: reports.incident_id.categories_required
+msgctxt "reports.incident_id.categories_required"
+msgid "Reports must be categorized before they can be approved"
+msgstr "Os relatórios devem ser categorizados antes de poderem ser aprovados"
+
+#: reports.action.permission
+msgctxt "reports.action.permission"
+msgid "You don't have permission to perform this action"
+msgstr "Não tem permissão para realizar esta ação"
+
+#: reports.uploadfile.required
+msgctxt "reports.uploadfile.required"
+msgid "You must select a file to upload"
+msgstr "Deve selecionar um ficheiro para enviar"
+
+#: reports.uploadfile.type
+msgctxt "reports.uploadfile.type"
+msgid "The upload file must either be of .csv or .xml format"
+msgstr "O ficheiro a enviar deve ter a extensão .csv ou .xml"
+
+#: reports.uploadfile.valid
+msgctxt "reports.uploadfile.valid"
+msgid "The file upload field does not seem to contain a valid file"
+msgstr "O campo do ficheiro a enviar parece não possuir um ficheiro válido"

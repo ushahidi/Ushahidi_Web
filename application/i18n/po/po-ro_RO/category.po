@@ -1,0 +1,95 @@
+# 
+# Translators:
+# Monica Ipate <monica.ipate@gmail.com>, 2012
+# Monica Ipate <monica.ipate@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:04+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Romanian (Romania) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ro_RO/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: category.category_color.length
+msgctxt "category.category_color.length"
+msgid "The color field must be 6 characters long."
+msgstr "Câmpul culoare trebuie să aibă 6 caractere lungime."
+
+#: category.category_color.required
+msgctxt "category.category_color.required"
+msgid "The color field is required."
+msgstr "Câmpul culoare este necesar."
+
+#: category.category_description.required
+msgctxt "category.category_description.required"
+msgid "The description field is required."
+msgstr "Câmpul descriere este necesar."
+
+#: category.category_image.size
+msgctxt "category.category_image.size"
+msgid "Please ensure that image uploads sizes are limited to 50KB."
+msgstr "Vă rugăm asigurați-vă că imaginile încărcate sunt limitate la 50KB."
+
+#: category.category_image.type
+msgctxt "category.category_image.type"
+msgid ""
+"The image field does not appear to contain a valid image. The only accepted "
+"formats are .JPG, .PNG and .GIF."
+msgstr "Câmpul pentru imagini nu pare să conțină o imagine validă. Formatele acceptate sunt doar .JPG, .PNG și .GIF."
+
+#: category.category_image.valid
+msgctxt "category.category_image.valid"
+msgid "The image field does not appear to contain a valid file"
+msgstr "Câmpul imagine nu pare să conțină un fișier valid"
+
+#: category.category_title.length
+msgctxt "category.category_title.length"
+msgid "The title field must be at least 3 and no more 80 characters long."
+msgstr "Câmpul titlu trebuie să fie de cel puțin 3 caractere și nu mai mult de 80 de caractere lungime."
+
+#: category.category_title.required
+msgctxt "category.category_title.required"
+msgid "The title field is required."
+msgstr "Câmpul titlu este necesar."
+
+#: category.parent_id.already_parent
+msgctxt "category.parent_id.already_parent"
+msgid "You cannot subcategorize a category with subcategories."
+msgstr "Nu puteți subclasifica o categorie cu subcategorii."
+
+#: category.parent_id.exists
+msgctxt "category.parent_id.exists"
+msgid "The parent category does not exist."
+msgstr "Categoria părinte nu există."
+
+#: category.parent_id.numeric
+msgctxt "category.parent_id.numeric"
+msgid "The parent category field must be numeric."
+msgstr "Câmpul pentru categoria părinte trebuie să fie numeric."
+
+#: category.parent_id.parent_trusted
+msgctxt "category.parent_id.parent_trusted"
+msgid "The parent category cannot be a special category"
+msgstr "Categoria părinte nu poate fi a categorie specială"
+
+#: category.parent_id.required
+msgctxt "category.parent_id.required"
+msgid "The parent category field is required."
+msgstr "Câmpul categoria părinte este necesar."
+
+#: category.parent_id.same
+msgctxt "category.parent_id.same"
+msgid "The category and the parent category cannot be the same."
+msgstr "Categoria și categoria părinte nu pot fi identice."
+
+#: category.parent_id.special
+msgctxt "category.parent_id.special"
+msgid "Special categories cannot be subcategorised."
+msgstr "Categoriile speciale nu pot fi subclasificate."

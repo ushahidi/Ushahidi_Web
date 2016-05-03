@@ -1,0 +1,53 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-12-02 20:42+0000\n"
+"Last-Translator: Xan das Bolas <xandasbolas@riseup.net>\n"
+"Language-Team: Galician (http://www.transifex.com/ushahidi/ushahidi-v2/language/gl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: feeds.date
+msgctxt "feeds.date"
+msgid "DATE"
+msgstr "DATA"
+
+#: feeds.feed_name.length
+msgctxt "feeds.feed_name.length"
+msgid ""
+"The feed name field must be at least 3 and no more \n"
+"\t\t\t70 characters long."
+msgstr "O nome do feed debe contar con alomenos 3 caracteres de lonxitude \n\t\t\t e non mais de 70."
+
+#: feeds.feed_name.required
+msgctxt "feeds.feed_name.required"
+msgid "Please enter the name of the feed."
+msgstr "Introduza o nome do feed."
+
+#: feeds.feed_url.required
+msgctxt "feeds.feed_url.required"
+msgid "Please enter feed's URL."
+msgstr "Introduza o URL do feed."
+
+#: feeds.feed_url.url
+msgctxt "feeds.feed_url.url"
+msgid "Please enter a valid URL, e.g. http://www.ushahidi.com"
+msgstr "Introduza un URL válido, p.ex. http://www.ushahidi.com"
+
+#: feeds.source
+msgctxt "feeds.source"
+msgid "SOURCE"
+msgstr "FONTE"
+
+#: feeds.title
+msgctxt "feeds.title"
+msgid "Title"
+msgstr "Título"

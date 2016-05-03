@@ -1,0 +1,411 @@
+# 
+# Translators:
+# orsime <orsime@yahoo.com>, 2013
+# Zoltan Medovarszky <igor@igor.hu>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Hungarian (Hungary) (http://www.transifex.com/ushahidi/ushahidi-v2/language/hu_HU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu_HU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: installer.base_path
+msgctxt "installer.base_path"
+msgid "Base Path"
+msgstr "Alap elérési útvonal"
+
+#: installer.database
+msgctxt "installer.database"
+msgid "Database"
+msgstr "Adatbázis"
+
+#: installer.database_host
+msgctxt "installer.database_host"
+msgid "Database Host"
+msgstr "Adatbázis kiszolgáló"
+
+#: installer.database_host_description
+msgctxt "installer.database_host_description"
+msgid ""
+"If you are running Ushahidi on your own computer, this will more than likely"
+" be \"localhost\". If you are running Ushahidi from a web server, you will "
+"get your host information from your web hosting provider."
+msgstr "Ha az Ushaidit a saját számítógépén futtatja, akkor az lesz a ,,helyi gazdagép\". Ha az Ushahidit egy web szerverről futtatja, a kiszolgáló adatait a szerver szolgáltatójától kapja meg."
+
+#: installer.database_name
+msgctxt "installer.database_name"
+msgid "Database Name"
+msgstr "Adatbázis neve"
+
+#: installer.database_name_description
+msgctxt "installer.database_name_description"
+msgid "The name of the database you want to run Ushahidi in"
+msgstr "Az adatbázis neve, amelybe az Ushahidit be fogja kötni"
+
+#: installer.db_information_link
+msgctxt "installer.db_information_link"
+msgid ""
+"For more information, please check out <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" "
+"target=\"_blank\">this article</a> on the wiki that talks about databases in"
+" more detail."
+msgstr "Még több információ ezen az oldalon,<a href=\"http://wiki.ushahidi.com/doku.php?idhttp://piratepad.net/ep/tag/?query=a_brief_word_on_databases=a_brief_word_on_databases\" target=\"_blank\">this article</a> a wikiben olvashat részletesebben az adatbázisokról "
+
+#: installer.default_language
+msgctxt "installer.default_language"
+msgid "Default Language (Locale)"
+msgstr "Alapértelmezett nyelv (Helyi)"
+
+#: installer.default_language_description
+msgctxt "installer.default_language_description"
+msgid ""
+"Each deployment of Ushahidi comes with a set of built in language "
+"translations. You can also <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\""
+" target=\"_blank\">add your own</a>."
+msgstr "Minden Ushahidi telepítőhöz vannak beépített fordítások. Ön is <a href=\"http://wiki.ushahidi.com/doku.php?idhttp://piratepad.net/ep/tag/?query=localisation_l10n_internationlisation_i18n&s%5B%5D=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\" target=\"_blank\">hozzáadhatja a sajátját</a>"
+
+#: installer.disable
+msgctxt "installer.disable"
+msgid "Disable"
+msgstr "Tilt"
+
+#: installer.enable
+msgctxt "installer.enable"
+msgid "Enable"
+msgstr "Engedélyez"
+
+#: installer.error_summary
+msgctxt "installer.error_summary"
+msgid "Listed below is a summary of the errors we encountered."
+msgstr "Az alábbi egy lista az eddig tapasztalt hibákról"
+
+#: installer.files_location_text
+msgctxt "installer.files_location_text"
+msgid ""
+"The location on your server where you placed your Ushahidi files. <strong>We"
+" have automatically detected this value, please make sure that it is "
+"correct.</strong> If the field is empty, do not worry, it means ushahidi is "
+"installed at the top level directory."
+msgstr "A server helye, ahová az Ushahidi fájljait feltöltötte.<strong>Automatikusan lekértük ezt az információt, kértjük, ellenőrizze, hogy helyes-e.</strong> Ha a mező üres, ne aggódjon, ez azt jeletni, hogy az Ushahidi a legfelső könyvtárba lett installálva"
+
+#: installer.finished
+msgctxt "installer.finished"
+msgid "Finished"
+msgstr "Befejezve"
+
+#: installer.general
+msgctxt "installer.general"
+msgid "General"
+msgstr "Általános"
+
+#: installer.google_key
+msgctxt "installer.google_key"
+msgid "<span>Google</span> API Key"
+msgstr "<span>Google</span> API kulcs"
+
+#: installer.google_key_description
+msgctxt "installer.google_key_description"
+msgid ""
+"Anyone can get an api key. <a id=\"api-link\" "
+"href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Get "
+"yours now</a>"
+msgstr "Bárki kaphat API kulcsot. <a id=\"api-link\" href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Kérjen sajátot</a>"
+
+#: installer.go_back
+msgctxt "installer.go_back"
+msgid "Go Back"
+msgstr "Vissza"
+
+#: installer.index.advanced
+msgctxt "installer.index.advanced"
+msgid "ADVANCED INSTALLATION"
+msgstr "HALADÓ TELEPÍTÉS"
+
+#: installer.index.advanced_installation_description
+msgctxt "installer.index.advanced_installation_description"
+msgid ""
+"Get all the basic settings completed through this 5-step process.  This "
+"includes server, map, site name and contact details."
+msgstr "Az összes alapvető beállítást keresztül bonyolódott az 5-lépéses folyamat.Ez magában foglalja a szervert, térképet, oldal nevet és elérhetőséget "
+
+#: installer.index.basic_installation
+msgctxt "installer.index.basic_installation"
+msgid "BASIC INSTALLATION"
+msgstr "ALAP TELEPÍTÉS"
+
+#: installer.index.basic_installation_description
+msgctxt "installer.index.basic_installation_description"
+msgid ""
+"Simple and fast. All you need is your website's root directory and your "
+"database information. Choose this option if you want to get up and running "
+"quickly, and you can always configure everything else later."
+msgstr "Egyszerű és gyors.Minden, amire szükséged van az egy honlapon gyökér könyvtár, és az adatbázisa adatait. Válassza ezt az opciót, ha azt akarja, hogy gyorsan üzembe hozni, és minden mást később beállítani"
+
+#: installer.index.proceed
+msgctxt "installer.index.proceed"
+msgid "Proceed"
+msgstr "Folytatás"
+
+#: installer.index.welcome
+msgctxt "installer.index.welcome"
+msgid ""
+"Welcome to the Ushahidi server install process.  Choose which type of "
+"installation you would like to use below."
+msgstr "Udvozoljuk az Ushahidi szerver telepítése folyamatánál.Válassza ki, melyik típusú telepítést kíván használni "
+
+#: installer.installation_successful
+msgctxt "installer.installation_successful"
+msgid "Installation Successful"
+msgstr "Telepítés sikeres "
+
+#: installer.mail_server
+msgctxt "installer.mail_server"
+msgid "Mail Server"
+msgstr "E-mail szerver"
+
+#: installer.mail_server_host
+msgctxt "installer.mail_server_host"
+msgid "Mail Server Host"
+msgstr "Mail Server Hostja "
+
+#: installer.mail_server_host_description
+msgctxt "installer.mail_server_host_description"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "Mintái: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: installer.mail_server_password
+msgctxt "installer.mail_server_password"
+msgid "Mail Server Password"
+msgstr "Mail Server Jelszó "
+
+#: installer.mail_server_password_description
+msgctxt "installer.mail_server_password_description"
+msgid "The password you normally use to login in to your email"
+msgstr "A jelszó, amit általában használ a bejelentkezéshez az e-mailje fiokaba valo bejelentkezéshez használ"
+
+#: installer.mail_server_port
+msgctxt "installer.mail_server_port"
+msgid "Mail Server Port"
+msgstr "Mail Server Portja "
+
+#: installer.mail_server_port_description
+msgctxt "installer.mail_server_port_description"
+msgid "Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "Közös Portok: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: installer.mail_server_type
+msgctxt "installer.mail_server_type"
+msgid "Mail Server Type"
+msgstr "Mail Server Tipusa "
+
+#: installer.mail_server_type_description
+msgctxt "installer.mail_server_type_description"
+msgid ""
+"Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a "
+"href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" "
+"target=\"_blank\">What is the difference?</a>"
+msgstr "Internet Message Access Protocol (IMAP), illetve Post Office Protocol (POP). <a href = \" http://saturn.med.nyu.edu/it/help/email/imap/index.html\"target =\" _blank \"> Mi a különbség?</a> "
+
+#: installer.mail_server_username
+msgctxt "installer.mail_server_username"
+msgid "Mail Server Username"
+msgstr "Mail Server Neve "
+
+#: installer.mail_server_username_description
+msgctxt "installer.mail_server_username_description"
+msgid ""
+"If you are using Gmail, Hotmail, or Yahoo Mail, enter a full email address "
+"as a username."
+msgstr "Ha használja a Gmail, Hotmail, Yahoo fiokot írja be a teljes e-mail címet felhasználónévkent "
+
+#: installer.map
+msgctxt "installer.map"
+msgid "Map"
+msgstr "Térkép"
+
+#: installer.map_provider
+msgctxt "installer.map_provider"
+msgid "Map Provider"
+msgstr "Térkép Szolgáltató"
+
+#: installer.map_provider_description
+msgctxt "installer.map_provider_description"
+msgid ""
+"Ushahidi works equally well with any of these three mapping providers: "
+"Google, Bing or Open Street Map. Choose the one that has the most detail in "
+"your area."
+msgstr "Ushahidi egyenlően működik a következő 4 térkép szolgáltatóval:Googl, Yahoo, Bing vagy Open Street Map Azt válaszd, amelyik a legrészletesebb fedést nyújtja a célterületre"
+
+#: installer.other_steps
+msgctxt "installer.other_steps"
+msgid "Other steps..."
+msgstr "További lépséek"
+
+#: installer.password
+msgctxt "installer.password"
+msgid "Password"
+msgstr "Jelszó"
+
+#: installer.password_description
+msgctxt "installer.password_description"
+msgid "Your database password"
+msgstr "Az adatbázis jelszó"
+
+#: installer.previous
+msgctxt "installer.previous"
+msgid "Previous"
+msgstr "Előző"
+
+#: installer.restart_apache
+msgctxt "installer.restart_apache"
+msgid "Please restart your Apache Server"
+msgstr "Apach szerver:restart!"
+
+#: installer.select_mail_server_ssl
+msgctxt "installer.select_mail_server_ssl"
+msgid "Enable or disable SSL"
+msgstr "Engedélyezd vagy tiltsad az SSL-t!"
+
+#: installer.select_mail_server_ssl_description
+msgctxt "installer.select_mail_server_ssl_description"
+msgid ""
+"Some mail servers give you the option of using <abbr title=\"Secure Sockets "
+"Layer\">SSL</abbr> when making a connection. Using SSL is recommended as it "
+"gives you an added level of security."
+msgstr "Kapcsolódás során néhány levelező szerver megadja a lehetőségét a <abbr title=\"Secure Sockets Layer\">SSL</abbr> használatának. Az SSL használata akkor javasolt, amikor extra biztonsági szintre van szükség."
+
+#: installer.setup_sms
+msgctxt "installer.setup_sms"
+msgid "Set up your SMS server"
+msgstr "Állítsd be az SMS szervered"
+
+#: installer.site_email
+msgctxt "installer.site_email"
+msgid "Site Email Address"
+msgstr "Az oldal email címe"
+
+#: installer.site_email_alerts
+msgctxt "installer.site_email_alerts"
+msgid "Site Alert Email Address"
+msgstr "Riasztásokat küldő email cím"
+
+#: installer.site_email_alerts_description
+msgctxt "installer.site_email_alerts_description"
+msgid ""
+"When your site visitors sign up for email alerts, they will receive emails "
+"from this address. This email address does not have to be the same as the "
+"Site Email Address."
+msgstr "Amikor a látogatók feliratkoznak riasztás értesítőre, akkor erről a címről fogják kapni. Ennek az email címnek nem kell megegyeznie az oldal email címével."
+
+#: installer.site_email_description
+msgctxt "installer.site_email_description"
+msgid "Site wide email communication will be funneled through this address"
+msgstr "Az weboldal szintű email kommunikáció ezen a címen keresztül fog olyni."
+
+#: installer.site_name
+msgctxt "installer.site_name"
+msgid "Site Name"
+msgstr "Mi legyen a neve?"
+
+#: installer.site_name_description
+msgctxt "installer.site_name_description"
+msgid "The name of your site"
+msgstr "Részletes leírás"
+
+#: installer.site_tagline
+msgctxt "installer.site_tagline"
+msgid "Site Tagline"
+msgstr "Az oldal kulcsszavai"
+
+#: installer.site_tagline_description
+msgctxt "installer.site_tagline_description"
+msgid "Your tagline"
+msgstr "A te kulcsszavas leírásod"
+
+#: installer.summary.text_1
+msgctxt "installer.summary.text_1"
+msgid ""
+"The files and folders listed below need to be writable by your webserver."
+msgstr "Az alábbi fájlok és mappák írhatóaknak kell lenniük a webszervered által"
+
+#: installer.summary.text_2
+msgctxt "installer.summary.text_2"
+msgid ""
+"<p>Here are instructions for changing file permissions:</p>\n"
+"        <ul>\n"
+"            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n"
+"            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n"
+"        </ul>"
+msgstr " <p>Itt vannak az instrukciók, hogy hogyan állítsd be a fájl jogosultságait:</p> <ul> <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li> <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li> </ul>"
+
+#: installer.summary.text_3
+msgctxt "installer.summary.text_3"
+msgid ""
+"Before you get started, you will need to make sure the following files and "
+"folders are writable by your webserver. This involves changing file "
+"permissions."
+msgstr "Mielőtt nekiveselkedsz, győződj meg arról, hogy a következő fájlok és mappák írhatóak a webszervered által. Ez a hozzáférési beállítások módosítását is jelentheti."
+
+#: installer.summary.text_4
+msgctxt "installer.summary.text_4"
+msgid ""
+"For the installation process, please have the following bits of information "
+"on hand."
+msgstr "Az installációs folyamathoz, ezt a morzsányi információt tartsd a kezed ügyében."
+
+#: installer.table_prefix
+msgctxt "installer.table_prefix"
+msgid "Table Prefix"
+msgstr "Tábla előtag"
+
+#: installer.table_prefix_description
+msgctxt "installer.table_prefix_description"
+msgid ""
+"Normally you would not change the table prefix. However, if you want to run "
+"multiple Ushahidi installations from a single database, you can do that by "
+"changing the prefix here."
+msgstr "Normális esetben nem kell a táblázat prefix-ét változtatni. Azonban ha több Ushahidi installációt szeretnél egy adatbázisról futtatni, megteheted a prefix átállításával itten."
+
+#: installer.title
+msgctxt "installer.title"
+msgid "Title"
+msgstr "Cím"
+
+#: installer.to_login
+msgctxt "installer.to_login"
+msgid "To login, go to"
+msgstr "Belépéshez, ide menj:"
+
+#: installer.upload_data
+msgctxt "installer.upload_data"
+msgid "Upload report data"
+msgstr "A jelentési adatok feltöltése"
+
+#: installer.username
+msgctxt "installer.username"
+msgid "Username"
+msgstr "Felasználó neved"
+
+#: installer.username_description
+msgctxt "installer.username_description"
+msgid "Your database username"
+msgstr "Az adatbázis-felhasználó neved"
+
+#: installer.use_credentials
+msgctxt "installer.use_credentials"
+msgid "and use the following credentials"
+msgstr "használd az alábbi ....t"
+
+#: installer.view_site
+msgctxt "installer.view_site"
+msgid "View your website"
+msgstr "Látogasd meg a kész weboldalad!"

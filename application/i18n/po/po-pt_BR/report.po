@@ -1,0 +1,395 @@
+# 
+# Translators:
+# allviana <allnoronha@gmail.com>, 2012
+# Iske Solstag <solstag@member.fsf.org>, 2013
+# Iske Solstag <solstag@member.fsf.org>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-08-22 06:26+0000\n"
+"PO-Revision-Date: 2013-09-23 18:23+0000\n"
+"Last-Translator: Iske Solstag <solstag@member.fsf.org>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/ushahidi/ushahidi-v2/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: report.comments_form_error
+msgctxt "report.comments_form_error"
+msgid "error!"
+msgstr "erro!"
+
+#: report.country_name.single_country
+msgctxt "report.country_name.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the report "
+"location is within the country %s."
+msgstr "Essa implantação se estende dentro de um único país. Por favor, verifique se o local está dentro do referido país %s."
+
+#: report.custom_field.values
+msgctxt "report.custom_field.values"
+msgid "Please enter a valid value for the \"%s\" field."
+msgstr "Por favor, preencha um valor válido para o campo \"%s\""
+
+#: report.custom_field.numeric
+msgctxt "report.custom_field.numeric"
+msgid "The \"%s\" field must be numeric."
+msgstr "O campo \"%s\" deve ser numérico."
+
+#: report.custom_field.required
+msgctxt "report.custom_field.required"
+msgid "The \"%s\" field is required."
+msgstr "É necessário preencher o campo \"%s\"."
+
+#: report.custom_field.not_exist
+msgctxt "report.custom_field.not_exist"
+msgid "The \"%s\" field is does not exist."
+msgstr "O campo \"%s\" não existe."
+
+#: report.custom_field.permission
+msgctxt "report.custom_field.permission"
+msgid "The \"%s\" field cannot be edited by your account."
+msgstr "O campo \"%s\" não pode ser editado pela sua conta."
+
+#: report.custom_field.email
+msgctxt "report.custom_field.email"
+msgid "The \"%s\" field must contain a valid email address."
+msgstr "O campo \"%s\" deve conter um endereço de email válido."
+
+#: report.custom_field.phone
+msgctxt "report.custom_field.phone"
+msgid "The \"%s\" field must contain a valid phone number."
+msgstr "O campo \"%s\" deve conter um número de telefone válido."
+
+#: report.custom_field.date_mmddyyyy
+msgctxt "report.custom_field.date_mmddyyyy"
+msgid "The \"%s\" field must contain a valid date (MM/DD/YYYY)."
+msgstr "O campo \"%s\" deve conter uma data válida no formato americano (MM/DD/YYYY)"
+
+#: report.custom_field.date_ddmmyyyy
+msgctxt "report.custom_field.date_ddmmyyyy"
+msgid "The \"%s\" field must contain a valid date (DD/MM/YYYY)."
+msgstr "O campo \"%s\" deve conter uma data válida (DD/MM/YYYY)"
+
+#: report.data_include.between
+msgctxt "report.data_include.between"
+msgid "Please select a valid item to include in the download."
+msgstr "Selecione um item válido para incluir no download."
+
+#: report.data_include.numeric
+msgctxt "report.data_include.numeric"
+msgid "Please select a valid item to include in the download."
+msgstr "Selecione um item válido para incluir no download."
+
+#: report.data_active.between
+msgctxt "report.data_active.between"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Por favor, selecione \"Relatos Aguardando Aprovação\" ou \"Relatos Aprovados\" ou ambos."
+
+#: report.data_active.numeric
+msgctxt "report.data_active.numeric"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Por favor, selecione \"Relatos Aguardando Aprovação\" ou \"Relatos Aprovados\" ou ambos."
+
+#: report.data_active.required
+msgctxt "report.data_active.required"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Por favor, selecione \"Relatos Aguardando Aprovação\" ou \"Relatos aprovados\" ou ambos."
+
+#: report.data_verified.between
+msgctxt "report.data_verified.between"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Por favor, selecione \"Relatos Aguardando Verificação\" ou \"Relatos Verificados\" ou ambos."
+
+#: report.data_verified.numeric
+msgctxt "report.data_verified.numeric"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Por favor, selecione \"Relatos Aguardando Verificação\" ou \"Relatos Verificados\" ou ambos."
+
+#: report.data_verified.required
+msgctxt "report.data_verified.required"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Por favor, selecione \"Relatos Aguardando Verificação\" ou \"Relatos Verificados\" ou ambos."
+
+#: report.data_point.between
+msgctxt "report.data_point.between"
+msgid "Please select a valid type of report to download."
+msgstr "Selecione um tipo válido de relato para baixar."
+
+#: report.data_point.numeric
+msgctxt "report.data_point.numeric"
+msgid "Please select a valid type of report to download."
+msgstr "Selecione um tipo válido de relato para baixar."
+
+#: report.data_point.required
+msgctxt "report.data_point.required"
+msgid "Please select a valid type of report to download."
+msgstr "Selecione um tipo válido de relato para baixar."
+
+#: report.format.required
+msgctxt "report.format.required"
+msgid "You must select a download format. Select either CSV or XML."
+msgstr "Você deve escolher um formato para download. Escolha entre CSV ou XML."
+
+#: report.format.valid
+msgctxt "report.format.valid"
+msgid "Please select a valid format to download your reports in"
+msgstr "Por favor, escolha um formato válido no qual descarregar seus relatos"
+
+#: report.from_date.date_mmddyyyy
+msgctxt "report.from_date.date_mmddyyyy"
+msgid "The FROM date field does not appear to contain a valid date."
+msgstr "O campo da data inicial parece não conter uma data válida."
+
+#: report.from_date.range
+msgctxt "report.from_date.range"
+msgid "Please enter a valid FROM date. It cannot be greater than today."
+msgstr "Digite uma data inicial válida, não pode ser posterior a data de hoje."
+
+#: report.incident_active.between
+msgctxt "report.incident_active.between"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Forneça dados válidos para o campo aprove esse relato."
+
+#: report.incident_active.required
+msgctxt "report.incident_active.required"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Forneça dados válidos para o campo aprove esse relato."
+
+#: report.incident_ampm.validvalues
+msgctxt "report.incident_ampm.validvalues"
+msgid "The am/pm field does not appear to contain a valid value."
+msgstr "O campo am/pm parece não conter dados válidos."
+
+#: report.incident_category.numeric
+msgctxt "report.incident_category.numeric"
+msgid "The \"Categories\" field does not appear to contain a valid category."
+msgstr "O campo categoria parece não conter uma categoria válida."
+
+#: report.incident_category.required
+msgctxt "report.incident_category.required"
+msgid "The \"Categories\" field is required."
+msgstr "É necessário preencher o campo categoria."
+
+#: report.incident_date.date_ddmmyyyy
+msgctxt "report.incident_date.date_ddmmyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "O campo data parece não conter uma data válida."
+
+#: report.incident_date.date_mmddyyyy
+msgctxt "report.incident_date.date_mmddyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "O campo data parece não conter uma data válida."
+
+#: report.incident_date.required
+msgctxt "report.incident_date.required"
+msgid "The date field is required."
+msgstr "É necessário preencher o campo data."
+
+#: report.incident_description.required
+msgctxt "report.incident_description.required"
+msgid "The \"Description\" field is required."
+msgstr "É necessário preencher o campo descrição."
+
+#: report.incident_hour.between
+msgctxt "report.incident_hour.between"
+msgid "The hour field does not appear to contain a valid hour."
+msgstr "O campo horário parece não conter uma hora válida."
+
+#: report.incident_hour.required
+msgctxt "report.incident_hour.required"
+msgid "The hour field is required."
+msgstr "É necessário preencher o campo horário."
+
+#: report.incident_information.alpha
+msgctxt "report.incident_information.alpha"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Forneça dados válidos para o campo probabilidade da informação."
+
+#: report.incident_information.length
+msgctxt "report.incident_information.length"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Forneça dados válidos para o campo probabilidade da informação."
+
+#: report.incident_minute.between
+msgctxt "report.incident_minute.between"
+msgid "The minute field does not appear to contain a valid value."
+msgstr "O campo horário parece não conter uma hora válida."
+
+#: report.incident_minute.required
+msgctxt "report.incident_minute.required"
+msgid "The minute field is required."
+msgstr "É necessário preencher o campo horário."
+
+#: report.incident_news.url
+msgctxt "report.incident_news.url"
+msgid "The news source links field does not appear to contain a valid URL."
+msgstr "O link da fonte de notícias parece não conter uma URL válida."
+
+#: report.incident_photo.size
+msgctxt "report.incident_photo.size"
+msgid "Please ensure that photo upload sizes are limited to 2MB."
+msgstr "Certifique-se de que o tamanho das fotos enviadas está limitado a 2MB."
+
+#: report.incident_photo.type
+msgctxt "report.incident_photo.type"
+msgid ""
+"The Upload Photos field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "O campo de envio de fotos parece não conter uma imagem válida. Os únicos formatos aceitos são .JPG, .PNG e .GIF."
+
+#: report.incident_photo.valid
+msgctxt "report.incident_photo.valid"
+msgid "The Upload Photos field does not appear to contain a valid file."
+msgstr "O campo de envio de fotos parece não conter um arquivo válido."
+
+#: report.incident_source.alpha
+msgctxt "report.incident_source.alpha"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Forneça dados válidos para o campo confiabilidade da fonte."
+
+#: report.incident_source.length
+msgctxt "report.incident_source.length"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Forneça dados válidos para o campo confiabilidade da fonte."
+
+#: report.incident_title.length
+msgctxt "report.incident_title.length"
+msgid ""
+"The \"Report Title\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "O campo título deve ter pelo menos 3 e no máximo 200 caracteres."
+
+#: report.incident_title.required
+msgctxt "report.incident_title.required"
+msgid "The \"Report Title\" field is required."
+msgstr "É necessário preencher o campo título."
+
+#: report.incident_title.csrf
+msgctxt "report.incident_title.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a report?"
+msgstr "Possível ataque CSRF. Você realmente pretendia criar/editar um relato?"
+
+#: report.incident_verified.between
+msgctxt "report.incident_verified.between"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Forneça dados válidos para o campo verificar esse relato."
+
+#: report.incident_verified.required
+msgctxt "report.incident_verified.required"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Forneça dados válidos para o campo verificar esse relato."
+
+#: report.incident_video.url
+msgctxt "report.incident_video.url"
+msgid "The video links field does not appear to contain a valid URL."
+msgstr "O link do vídeo parece não conter uma URL válida."
+
+#: report.latitude.between
+msgctxt "report.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "O campo latitude parece não conter uma latitude válida."
+
+#: report.latitude.required
+msgctxt "report.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "É necessário preencher o campo latitude. Clique no mapa para apontar um local."
+
+#: report.locale.alpha_dash
+msgctxt "report.locale.alpha_dash"
+msgid "The locale field has an incorrect value. "
+msgstr "O campo locale apresenta um valor incorreto. "
+
+#: report.locale.exists
+msgctxt "report.locale.exists"
+msgid "This report already has a translation for this language."
+msgstr "Esse relato já tem uma tradução nesse idioma."
+
+#: report.locale.length
+msgctxt "report.locale.length"
+msgid "The locale field has an incorrect value. "
+msgstr "O campo locale apresenta um valor incorreto. "
+
+#: report.locale.locale
+msgctxt "report.locale.locale"
+msgid ""
+"The Original Report and the Translation have the same locale (language)."
+msgstr "O relato original e a tradução apresentam o mesmo locale (idioma)."
+
+#: report.locale.required
+msgctxt "report.locale.required"
+msgid "The locale is required."
+msgstr "É necessário fornecer o locale."
+
+#: report.location_name.length
+msgctxt "report.location_name.length"
+msgid ""
+"The \"Location Name\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "O nome do local deve ter pelo menos 3 e no máximo 200 caracteres."
+
+#: report.location_name.required
+msgctxt "report.location_name.required"
+msgid "The \"Location Name\" field is required."
+msgstr "É necessário preencher o campo local."
+
+#: report.longitude.between
+msgctxt "report.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "O campo longitude parece não conter uma longitude válida."
+
+#: report.longitude.required
+msgctxt "report.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "É necessário preencher o campo longitude. Clique no mapa para apontar um local."
+
+#: report.person_email.email
+msgctxt "report.person_email.email"
+msgid "The email field does not appear to contain a valid email address."
+msgstr "O campo do email parece não conter um endereço de email válido."
+
+#: report.person_email.length
+msgctxt "report.person_email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "O campo de email deve ter pelo menos 4 e no máximo 64 caracteres."
+
+#: report.person_first.length
+msgctxt "report.person_first.length"
+msgid ""
+"The first name field must be at least 3 and no more 100 characters long."
+msgstr "O nome deve ter pelo menos 3 e no máximo 100 caracteres."
+
+#: report.person_last.length
+msgctxt "report.person_last.length"
+msgid ""
+"The last name field must be at least 2 and no more 100 characters long."
+msgstr "O sobrenome deve ter pelo menos 3 e no máximo 100 caracteres."
+
+#: report.to_date.date_mmddyyyy
+msgctxt "report.to_date.date_mmddyyyy"
+msgid "The TO date field does not appear to contain a valid date."
+msgstr "O campo da data final parece não conter uma data válida."
+
+#: report.to_date.range
+msgctxt "report.to_date.range"
+msgid "Please enter a valid TO date. It cannot be greater than today."
+msgstr "Digite uma data inicial válida, não pode ser posterior a data de hoje."
+
+#: report.to_date.range_greater
+msgctxt "report.to_date.range_greater"
+msgid "Your FROM date cannot be greater than your TO date."
+msgstr "A data inicial não pode ter posterior à data final."

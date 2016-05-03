@@ -1,0 +1,231 @@
+# 
+# Translators:
+# Tomi Toivio <tomi@sange.fi>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-20 11:56+0000\n"
+"Last-Translator: Tomi Toivio <tomi@sange.fi>\n"
+"Language-Team: Finnish (http://www.transifex.com/ushahidi/ushahidi-v2/language/fi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: alerts.alert_email.email
+msgctxt "alerts.alert_email.email"
+msgid "The Email field does not appear to contain a valid email address?"
+msgstr "Kentässä sähköposti ei näytä olevan kelvollista sähköpostiosoitetta?"
+
+#: alerts.alert_email.email_check
+msgctxt "alerts.alert_email.email_check"
+msgid ""
+"That Email address has already been registered to receive alerts for that "
+"location."
+msgstr "Sähköpostiosoite saa jo hälytyksiä tästä sijainnista."
+
+#: alerts.alert_email.length
+msgctxt "alerts.alert_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "Kentän sähköposti täytyy olla vähintään 4 ja korkeintaan 64 merkkiä pitkä."
+
+#: alerts.alert_email.required
+msgctxt "alerts.alert_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "Kenttä sähköposti vaaditaan, jos ruudussa on rasti."
+
+#: alerts.alert_country.single_country
+msgctxt "alerts.alert_country.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the alert "
+"location is within the country %s."
+msgstr "Tämä asennus kattaa vain yhden maan. Varmista, että hälytysten paikkakunta on maan %s alueella."
+
+#: alerts.alert_lat.between
+msgctxt "alerts.alert_lat.between"
+msgid "You have not selected a valid location on the map."
+msgstr "Et ole valinnut kelvollista sijaintia kartalta."
+
+#: alerts.alert_lat.required
+msgctxt "alerts.alert_lat.required"
+msgid "You have not selected a valid location on the map."
+msgstr "Et ole valinnut kelvollista sijaintia kartalta."
+
+#: alerts.alert_lon.between
+msgctxt "alerts.alert_lon.between"
+msgid "You have not selected a valid location on the map."
+msgstr "Et ole valinnut kelvollista sijaintia kartalta."
+
+#: alerts.alert_lon.required
+msgctxt "alerts.alert_lon.required"
+msgid "You have not selected a valid location on the map."
+msgstr "Et ole valinnut kelvollista sijaintia kartalta."
+
+#: alerts.alert_mobile.length
+msgctxt "alerts.alert_mobile.length"
+msgid ""
+"The Mobile Phone field does not seem to contain the right amount of digits."
+msgstr "Kentässä matkapuhelin ei ole oikeaa määrää numeroita."
+
+#: alerts.alert_mobile.mobile_check
+msgctxt "alerts.alert_mobile.mobile_check"
+msgid ""
+"That Mobile Phone Number has already been registered to receive alerts for "
+"that location."
+msgstr "Matkapuhelin on jo rekisteröity tästä sijainnista tulevia hälytyksiä varten."
+
+#: alerts.alert_mobile.numeric
+msgctxt "alerts.alert_mobile.numeric"
+msgid ""
+"The Mobile Phone field does not appear to contain a valid phone. Please "
+"input numbers only including Country Code."
+msgstr "Kentässä matkapuhelin ei näytä olevan kelvollista puhelinta. Ole hyvä ja kirjoita vain numeroita, sisältäen maakoodin."
+
+#: alerts.alert_mobile.one_required
+msgctxt "alerts.alert_mobile.one_required"
+msgid "You must enter either your Mobile Phone Number or your Email Address."
+msgstr "Kirjoita joko matkapuhelinnumerosi tai sähköpostiosoitteesi."
+
+#: alerts.alert_mobile.required
+msgctxt "alerts.alert_mobile.required"
+msgid "The Mobile Phone field is required if the checkbox is checked."
+msgstr "Kenttä matkapuhelin tarvitaan, jos ruudussa on rasti."
+
+#: alerts.alert_radius.in_array
+msgctxt "alerts.alert_radius.in_array"
+msgid "You have not set a valid radius on the map."
+msgstr "Et ole valinnut kelvollista sädettä kartalta."
+
+#: alerts.alert_radius.required
+msgctxt "alerts.alert_radius.required"
+msgid "You have not set your radius on the map."
+msgstr "Et ole asettanut sädettä kartalle."
+
+#: alerts.alert_recipient.required
+msgctxt "alerts.alert_recipient.required"
+msgid "You have not set a recipient for alerts."
+msgstr "Et ole asettanut hälytyksille vastaanottajaa."
+
+#: alerts.alerts_subscribed
+msgctxt "alerts.alerts_subscribed"
+msgid "You have subscribed for alerts with the following categories"
+msgstr "Olet tilannut hälytykset seuraavissa kategorioissa"
+
+#: alerts.code_already_verified
+msgctxt "alerts.code_already_verified"
+msgid "This code has been verified before!"
+msgstr "Tämä koodi on vahvistettu aiemmin!"
+
+#: alerts.code_not_found
+msgctxt "alerts.code_not_found"
+msgid ""
+"This verification code was not found! Please confirm that you have the "
+"correct URL."
+msgstr "Tätä vahvistuskoodia ei löytynyt! Tarkista, että sinulla on oikea URL."
+
+#: alerts.code_verified
+msgctxt "alerts.code_verified"
+msgid ""
+" Your code was verified correctly. You will now receive alerts about "
+"incidents as they happen."
+msgstr "Koodisi on vahvistettu oikein. Saat nyt hälytyksiä tapahtumista."
+
+#: alerts.confirm_request
+msgctxt "alerts.confirm_request"
+msgid "To confirm your alert request, please go to "
+msgstr "Vahvistaaksesi hälytyspyynnön, mene osoitteeseen"
+
+#: alerts.create_more_alerts
+msgctxt "alerts.create_more_alerts"
+msgid "Return to the Alerts page to create more alerts"
+msgstr "Palaa sivulle hälytykset luodaksesi lisää hälytyksiä"
+
+#: alerts.email_alert_request_created
+msgctxt "alerts.email_alert_request_created"
+msgid ""
+"Your Email Alert request has been created and verification message has been "
+"sent to "
+msgstr "Sähköpostihälytyksesi on luotu ja vahvistusviesti lähetetty osoitteeseen"
+
+#: alerts.email_code
+msgctxt "alerts.email_code"
+msgid "Please enter the Email confirmation code you received below: "
+msgstr "Kirjoita saamasi sähköpostin vahvistuskoodi alle:"
+
+#: alerts.email_error_head
+msgctxt "alerts.email_error_head"
+msgid "Your Email Alert Request Has NOT Been Saved!"
+msgstr "Sähköpostihälytyspyyntöäsi ei ole tallennettu!"
+
+#: alerts.email_ok_head
+msgctxt "alerts.email_ok_head"
+msgid "Your Email Alert Request Has Been Saved!"
+msgstr "Sähköpostihälytyspyyntösi on tallennettu!"
+
+#: alerts.error
+msgctxt "alerts.error"
+msgid "The system was not able to process your confirmation request!"
+msgstr "Järjestelmä ei kyennyt käsittelemään vahvistuspyyntöäsi!"
+
+#: alerts.mobile_alert_request_created
+msgctxt "alerts.mobile_alert_request_created"
+msgid ""
+"Your Mobile Alert request has been created and verification message has been"
+" sent to "
+msgstr "Matkapuhelinhälytyspyyntösi on luotu ja vahvistusviesti lähetetty"
+
+#: alerts.mobile_code
+msgctxt "alerts.mobile_code"
+msgid ""
+"Please enter the SMS confirmation code you received on your mobile phone "
+"below: "
+msgstr "Kirjoita alle puhelimeesi saamasi SMS-vahvistuskoodi:"
+
+#: alerts.mobile_error_head
+msgctxt "alerts.mobile_error_head"
+msgid "Your Mobile Alert Request Has NOT Been Saved!"
+msgstr "Matkapuhelinhälytyspyyntöä ei ole tallennettu!"
+
+#: alerts.mobile_ok_head
+msgctxt "alerts.mobile_ok_head"
+msgid "Your Mobile Alert Request Has Been Saved!"
+msgstr "Matkapuhelinhälytyspyyntösi on tallennettu!"
+
+#: alerts.settings_error
+msgctxt "alerts.settings_error"
+msgid "This deployment is not set up to correctly process alerts"
+msgstr "Tätä asennusta ei ole määritelty käsittelemään hälytyksiä oikein"
+
+#: alerts.unsubscribe
+msgctxt "alerts.unsubscribe"
+msgid ""
+"You have received this email because you subscribed to receive alerts. If "
+"you do not wish to receive future alerts go to "
+msgstr "Olet saanut tämän sähköpostin, koska olet tilannut hälytykset. Jos et tahdo saada tulevia hälytyksiä, mene"
+
+#: alerts.unsubscribed
+msgctxt "alerts.unsubscribed"
+msgid "You will no longer receive alerts from "
+msgstr "Et saa enää hälytyksiä "
+
+#: alerts.unsubscribe_failed
+msgctxt "alerts.unsubscribe_failed"
+msgid ""
+"We were not able to unsubscribe you. Please confirm that you have the "
+"correct URL."
+msgstr "Emme voineet peruuttaa tilaustasi. Vahvista, että sinulla on oikea URL."
+
+#: alerts.verification_email_subject
+msgctxt "alerts.verification_email_subject"
+msgid "alerts - verification"
+msgstr "hälytykset - vahvistus"
+
+#: alerts.verify_code
+msgctxt "alerts.verify_code"
+msgid ""
+"You will not receive alerts on this location until you confirm your request."
+msgstr "Et saa hälytyksiä tästä sijainnista ennen kuin vahvistat pyyntösi."

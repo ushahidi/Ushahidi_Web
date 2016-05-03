@@ -1,0 +1,53 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Albanian (Albania) (http://www.transifex.com/ushahidi/ushahidi-v2/language/sq_AL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sq_AL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: feeds.date
+msgctxt "feeds.date"
+msgid "DATE"
+msgstr "DATA"
+
+#: feeds.feed_name.length
+msgctxt "feeds.feed_name.length"
+msgid ""
+"The feed name field must be at least 3 and no more \n"
+"\t\t\t70 characters long."
+msgstr "Hap&euml;sira e emrit p&euml;r lajmet e fundit duhet t&euml; p&euml;rmbaj&euml; 3 deri n&euml; 70 karaktere."
+
+#: feeds.feed_name.required
+msgctxt "feeds.feed_name.required"
+msgid "Please enter the name of the feed."
+msgstr "Ju lutem shkruani emrin e lajmit."
+
+#: feeds.feed_url.required
+msgctxt "feeds.feed_url.required"
+msgid "Please enter feed's URL."
+msgstr "Ju lutem vendosni URL p&euml;r lajmet e dit&euml;s."
+
+#: feeds.feed_url.url
+msgctxt "feeds.feed_url.url"
+msgid "Please enter a valid URL, e.g. http://www.ushahidi.com"
+msgstr "Ju lutem vendosni nj&euml; URL t&euml; vlefshme, p.sh. http://www.ais.al"
+
+#: feeds.source
+msgctxt "feeds.source"
+msgid "SOURCE"
+msgstr "BURIMI"
+
+#: feeds.title
+msgctxt "feeds.title"
+msgid "Title"
+msgstr "TITULLI"

@@ -1,0 +1,392 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-08-22 06:26+0000\n"
+"PO-Revision-Date: 2013-08-22 06:21+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Georgian (Georgia) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ka_GE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ka_GE\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: report.comments_form_error
+msgctxt "report.comments_form_error"
+msgid "error!"
+msgstr "შეცდომა!"
+
+#: report.country_name.single_country
+msgctxt "report.country_name.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the report "
+"location is within the country %s."
+msgstr ""
+
+#: report.custom_field.values
+msgctxt "report.custom_field.values"
+msgid "Please enter a valid value for the \"%s\" field."
+msgstr ""
+
+#: report.custom_field.numeric
+msgctxt "report.custom_field.numeric"
+msgid "The \"%s\" field must be numeric."
+msgstr ""
+
+#: report.custom_field.required
+msgctxt "report.custom_field.required"
+msgid "The \"%s\" field is required."
+msgstr ""
+
+#: report.custom_field.not_exist
+msgctxt "report.custom_field.not_exist"
+msgid "The \"%s\" field is does not exist."
+msgstr ""
+
+#: report.custom_field.permission
+msgctxt "report.custom_field.permission"
+msgid "The \"%s\" field cannot be edited by your account."
+msgstr ""
+
+#: report.custom_field.email
+msgctxt "report.custom_field.email"
+msgid "The \"%s\" field must contain a valid email address."
+msgstr ""
+
+#: report.custom_field.phone
+msgctxt "report.custom_field.phone"
+msgid "The \"%s\" field must contain a valid phone number."
+msgstr ""
+
+#: report.custom_field.date_mmddyyyy
+msgctxt "report.custom_field.date_mmddyyyy"
+msgid "The \"%s\" field must contain a valid date (MM/DD/YYYY)."
+msgstr ""
+
+#: report.custom_field.date_ddmmyyyy
+msgctxt "report.custom_field.date_ddmmyyyy"
+msgid "The \"%s\" field must contain a valid date (DD/MM/YYYY)."
+msgstr ""
+
+#: report.data_include.between
+msgctxt "report.data_include.between"
+msgid "Please select a valid item to include in the download."
+msgstr "ჩამოსტვირთად მიუთითეთ სწორი პუნქტი "
+
+#: report.data_include.numeric
+msgctxt "report.data_include.numeric"
+msgid "Please select a valid item to include in the download."
+msgstr "ჩამოსტვირთად მიუთითეთ სწორი პუნქტი "
+
+#: report.data_active.between
+msgctxt "report.data_active.between"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr ""
+
+#: report.data_active.numeric
+msgctxt "report.data_active.numeric"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr ""
+
+#: report.data_active.required
+msgctxt "report.data_active.required"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr ""
+
+#: report.data_verified.between
+msgctxt "report.data_verified.between"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr ""
+
+#: report.data_verified.numeric
+msgctxt "report.data_verified.numeric"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr ""
+
+#: report.data_verified.required
+msgctxt "report.data_verified.required"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr ""
+
+#: report.data_point.between
+msgctxt "report.data_point.between"
+msgid "Please select a valid type of report to download."
+msgstr "ჩამოსტვირთად მიუთითეთ სწორი ტიპი"
+
+#: report.data_point.numeric
+msgctxt "report.data_point.numeric"
+msgid "Please select a valid type of report to download."
+msgstr "ჩამოსტვირთად მიუთითეთ სწორი ტიპი"
+
+#: report.data_point.required
+msgctxt "report.data_point.required"
+msgid "Please select a valid type of report to download."
+msgstr "ჩამოსტვირთად მიუთითეთ სწორი ტიპი"
+
+#: report.format.required
+msgctxt "report.format.required"
+msgid "You must select a download format. Select either CSV or XML."
+msgstr ""
+
+#: report.format.valid
+msgctxt "report.format.valid"
+msgid "Please select a valid format to download your reports in"
+msgstr ""
+
+#: report.from_date.date_mmddyyyy
+msgctxt "report.from_date.date_mmddyyyy"
+msgid "The FROM date field does not appear to contain a valid date."
+msgstr "თარიღის ველი  „დან“ არ შეიცავს სწორ თარიღს?"
+
+#: report.from_date.range
+msgctxt "report.from_date.range"
+msgid "Please enter a valid FROM date. It cannot be greater than today."
+msgstr "გთხოვთ მიუთითოთ სწორი თარიღი გრაფაში „დან“ . იგი ვერ იქნება დღევანდელ თარიღზე უფრო მეტი."
+
+#: report.incident_active.between
+msgctxt "report.incident_active.between"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "ამ ანგარიშის დასამტკიცებლად გთხოვთ შეიყვანოთ სწორი მონაცემი "
+
+#: report.incident_active.required
+msgctxt "report.incident_active.required"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "ამ ანგარიშის დასამტკიცებლად გთხოვთ შეიყვანოთ სწორი მონაცემი "
+
+#: report.incident_ampm.validvalues
+msgctxt "report.incident_ampm.validvalues"
+msgid "The am/pm field does not appear to contain a valid value."
+msgstr "Am/pm ველი არ შეიცავს სწორ მონაცემს?"
+
+#: report.incident_category.numeric
+msgctxt "report.incident_category.numeric"
+msgid "The \"Categories\" field does not appear to contain a valid category."
+msgstr "კატეგორიის გრაფა არ შეიცავდს სწორ კატეგორიას?"
+
+#: report.incident_category.required
+msgctxt "report.incident_category.required"
+msgid "The \"Categories\" field is required."
+msgstr "კატეგორიის გრაფა სავალდებულოა."
+
+#: report.incident_date.date_ddmmyyyy
+msgctxt "report.incident_date.date_ddmmyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "თარიღის გრაფა არ შეიცავს სწორ თარიღს?"
+
+#: report.incident_date.date_mmddyyyy
+msgctxt "report.incident_date.date_mmddyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "თარიღის გრაფა არ შეიცავს სწორ თარიღს?"
+
+#: report.incident_date.required
+msgctxt "report.incident_date.required"
+msgid "The date field is required."
+msgstr "თარიღის გრაფა აუცილებელია."
+
+#: report.incident_description.required
+msgctxt "report.incident_description.required"
+msgid "The \"Description\" field is required."
+msgstr "აღწერის ველი სავალდებულოა."
+
+#: report.incident_hour.between
+msgctxt "report.incident_hour.between"
+msgid "The hour field does not appear to contain a valid hour."
+msgstr "საათის ველი არ შეიცავს სწორ საათს?"
+
+#: report.incident_hour.required
+msgctxt "report.incident_hour.required"
+msgid "The hour field is required."
+msgstr "საათის ველი სავალდებულოა."
+
+#: report.incident_information.alpha
+msgctxt "report.incident_information.alpha"
+msgid "Please enter a valid value for Information Probability."
+msgstr "გთხოვთ შეიყვანოთ სწორი მონაცემი "
+
+#: report.incident_information.length
+msgctxt "report.incident_information.length"
+msgid "Please enter a valid value for Information Probability."
+msgstr "გთხოვთ შეიყვანოთ სწორი მონაცემი "
+
+#: report.incident_minute.between
+msgctxt "report.incident_minute.between"
+msgid "The minute field does not appear to contain a valid value."
+msgstr "წუთის ველი არ შეიცავს სწორ მონაცემს?"
+
+#: report.incident_minute.required
+msgctxt "report.incident_minute.required"
+msgid "The minute field is required."
+msgstr "წუთის ველი სავალდებულოა."
+
+#: report.incident_news.url
+msgctxt "report.incident_news.url"
+msgid "The news source links field does not appear to contain a valid URL."
+msgstr "ინფორმაციის წყაროს ბმულების ველი არ შეიცავს სწორ მისამართს (URL) ?"
+
+#: report.incident_photo.size
+msgctxt "report.incident_photo.size"
+msgid "Please ensure that photo upload sizes are limited to 2MB."
+msgstr "გთხოვთ, დარწმუნდეთ რომ ფოტოს ატვირთვის ზომები შეზღუდულია 2MB-ით."
+
+#: report.incident_photo.type
+msgctxt "report.incident_photo.type"
+msgid ""
+"The Upload Photos field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "ფოტოების ასატვირთი ველი არ შეიცავს სწორ სურათს. ფორმატები უნდა იყოს მხოლოდ JPG PNG და GIF ."
+
+#: report.incident_photo.valid
+msgctxt "report.incident_photo.valid"
+msgid "The Upload Photos field does not appear to contain a valid file."
+msgstr "ფოტოების ასატვირთი ველი არ შეიცავს სწორ ფაილის"
+
+#: report.incident_source.alpha
+msgctxt "report.incident_source.alpha"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "წყაროს სანდოობისთვის, გთხოვთ, შეიყვანოთ სწორი მონაცემი"
+
+#: report.incident_source.length
+msgctxt "report.incident_source.length"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "წყაროს სანდოობისთვის, გთხოვთ, შეიყვანოთ სწორი მონაცემი"
+
+#: report.incident_title.length
+msgctxt "report.incident_title.length"
+msgid ""
+"The \"Report Title\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "სახელწოდების ველი უნდა შეიცავდეს მინიმუმ 3 და მაქსიმუმ 200 სიმბოლოს."
+
+#: report.incident_title.required
+msgctxt "report.incident_title.required"
+msgid "The \"Report Title\" field is required."
+msgstr "სათაურის ველი სავალდებულოა."
+
+#: report.incident_title.csrf
+msgctxt "report.incident_title.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a report?"
+msgstr ""
+
+#: report.incident_verified.between
+msgctxt "report.incident_verified.between"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "ანგარიშიდ გადასამოწმებლად, გთხოვთ, შეიყვანოთ სწორი მონაცემი"
+
+#: report.incident_verified.required
+msgctxt "report.incident_verified.required"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "ანგარიშიდ გადასამოწმებლად, გთხოვთ, შეიყვანოთ სწორი მონაცემი"
+
+#: report.incident_video.url
+msgctxt "report.incident_video.url"
+msgid "The video links field does not appear to contain a valid URL."
+msgstr "ვიდეოს ბმულების ველი არ შეიცავს სწორ მისამართს (URL) ?"
+
+#: report.latitude.between
+msgctxt "report.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "განედის ველი არ შეიცავს სწორ განედს?"
+
+#: report.latitude.required
+msgctxt "report.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "გრძედის ველი სავალდებულოა. ადგილმდებარეობის მოსანიშნად, გთხოვთ, დააჭიროთ რუქაზე ."
+
+#: report.locale.alpha_dash
+msgctxt "report.locale.alpha_dash"
+msgid "The locale field has an incorrect value. "
+msgstr "ადგილმდებარეობის ველში შეიცავს არასწორს მონაცემს. "
+
+#: report.locale.exists
+msgctxt "report.locale.exists"
+msgid "This report already has a translation for this language."
+msgstr "ეს ანგარიში უკვე ნათარგმნია ამ ენაზე"
+
+#: report.locale.length
+msgctxt "report.locale.length"
+msgid "The locale field has an incorrect value. "
+msgstr "ადგილმდებარეობის ველში შეიცავს არასწორს მონაცემს. "
+
+#: report.locale.locale
+msgctxt "report.locale.locale"
+msgid ""
+"The Original Report and the Translation have the same locale (language)."
+msgstr "ანგარიშის ორიგინალსა  და თარგმანს აქვს იგივე ადგილდებარეობა (ენა)"
+
+#: report.locale.required
+msgctxt "report.locale.required"
+msgid "The locale is required."
+msgstr "ადგილდებარეობა სავალდებულოა."
+
+#: report.location_name.length
+msgctxt "report.location_name.length"
+msgid ""
+"The \"Location Name\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "ადგილმდებარეობის დასახელების ველის უნდა შეიცავდეს არანაკლებ 3 და არა უმეტეს 200 სიმბოლოს."
+
+#: report.location_name.required
+msgctxt "report.location_name.required"
+msgid "The \"Location Name\" field is required."
+msgstr "ადგილმდებარეობის დასახელების ველი სავალდებულოა."
+
+#: report.longitude.between
+msgctxt "report.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "გრძედის ველი არ შეიცავს სწორ გრძედის მონაცემს?"
+
+#: report.longitude.required
+msgctxt "report.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "გრძედის ველი სავალდებულოა. ადგილმდებარეობის მოსანიშნად, გთხოვთ, დააჭიროთ რუქაზე ."
+
+#: report.person_email.email
+msgctxt "report.person_email.email"
+msgid "The email field does not appear to contain a valid email address."
+msgstr "ფოსტის ველი არ შეიცავს სწორ ფოსტის მისამართს?"
+
+#: report.person_email.length
+msgctxt "report.person_email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "ფოსტის ველი უნდა შეიცავდეს მინიმუმ 4 და მაქსიმუმ 64 სიმბოლოს."
+
+#: report.person_first.length
+msgctxt "report.person_first.length"
+msgid ""
+"The first name field must be at least 3 and no more 100 characters long."
+msgstr "სახელის ველი უნდა შეიცავდეს მინიმუმ 3 და მაქსიმუმ 100 სიმბოლოს."
+
+#: report.person_last.length
+msgctxt "report.person_last.length"
+msgid ""
+"The last name field must be at least 2 and no more 100 characters long."
+msgstr "გვარის ველი უნდა შეიცავდეს მინიმუმ 3 და მაქსიმუმ 100 სიმბოლოს."
+
+#: report.to_date.date_mmddyyyy
+msgctxt "report.to_date.date_mmddyyyy"
+msgid "The TO date field does not appear to contain a valid date."
+msgstr "თარიღის ველი არ შეიცავს სწორ თარიღს?"
+
+#: report.to_date.range
+msgctxt "report.to_date.range"
+msgid "Please enter a valid TO date. It cannot be greater than today."
+msgstr "გთხოვთ შეიყვანოთ სწორი თარიღი. იგი ვერ იქნება დღევანდელ თარიღზე უფრო მეტი."
+
+#: report.to_date.range_greater
+msgctxt "report.to_date.range_greater"
+msgid "Your FROM date cannot be greater than your TO date."
+msgstr "თქვენი საწყისი თარიღი ვერ იქნება იმაზე უფრო მეტი ვიდრე არის დღევანდელი."

@@ -1,17 +1,17 @@
 /**
  * Categories js file.
- * 
+ *
  * Handles javascript stuff related to category function.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 $(document).ready(function() {
@@ -36,7 +36,7 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
+
 	$("#categorySort tr").hover(function() {
 		$(this.cells[0]).addClass('col-show-handle');
 	}, function() {
@@ -47,7 +47,7 @@ $(document).ready(function() {
 		$('.category_translations_form_fields').toggle(400);
 		return false;
 	});
-	
+
 	$('#category_color').ColorPicker({
 		onSubmit: function(hsb, hex, rgb) {
 			$('#category_color').val(hex);
@@ -69,11 +69,11 @@ function fillFields(event)
 {
 	params = event.data;
 	show_addedit();
-	$("#category_id").attr("value", params.category_id);
-	$("#parent_id").attr("value", params.parent_id);
-	$("#category_title").attr("value", params.category_title);
-	$("#category_description").attr("value", params.category_description);
-	$("#category_color").attr("value", params.category_color);
+	$("#category_id").val(params.category_id);
+	$("#parent_id").val(params.parent_id);
+	$("#category_title").val(params.category_title);
+	$("#category_description").val(params.category_description);
+	$("#category_color").val(params.category_color);
 	$(".category_lang").show();
 	$(".category_lang_"+params.locale).hide();
 	$.each(params.category_langs, function (lang_key, value) {
@@ -93,9 +93,9 @@ function catAction ( action, confirmAction, id )
 	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 	if (answer){
 		// Set Category ID
-		$("#category_id_action").attr("value", id);
+		$("#category_id_action").val(id);
 		// Set Submit Type
-		$("#category_action").attr("value", action);
+		$("#category_action").val(action);
 		// Submit Form
 		$("#catListing").submit();
 	}

@@ -1,0 +1,584 @@
+# 
+# Translators:
+# Lidia Cibor <lidka.cibor@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/ushahidi/ushahidi-v2/language/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: tooltips.actions.add_to_category
+msgctxt "tooltips.actions.add_to_category"
+msgid ""
+"This adds the report to additional categories. If you select Category 1 here"
+" and the report already has Category 2 attached to it, the report will then "
+"have both Category 1 and Category 2."
+msgstr "这增加了报告的额外类别。如果你选择1类和2类报告已连接到它，该报告将有1类和2类。"
+
+#: tooltips.actions.approve
+msgctxt "tooltips.actions.approve"
+msgid "Approves a report or not. If approved, it will show up publicly."
+msgstr "批准报告或否。如果获得批准，它将被公开。"
+
+#: tooltips.actions.assign_badge
+msgctxt "tooltips.actions.assign_badge"
+msgid ""
+"You will be able to assign a badge to the triggering user. Pick the badge "
+"that gets assigned here."
+msgstr "你可以分配一个徽章给用户。选中一个徽章，然后在这里分配。"
+
+#: tooltips.actions.between_times
+msgctxt "tooltips.actions.between_times"
+msgid ""
+"This is a range of hours and/or minutes between two times in 24 hour format."
+" If you input an earlier time in the second field, it will be flipped with "
+"the first. These times must be within a single day. Also, this time is "
+"checked against the time you have configured on your site in site settings "
+"and <strong>not</strong> necessarily the timezone of the user interacting "
+"with your deployment. Leave this at 00:00 to 00:00 to ignore this qualifier."
+msgstr "这是二十四小时制的时分范围，第一区域要比第二区域早，否则需要反转，并且将检查系统配置时间。"
+
+#: tooltips.actions.category
+msgctxt "tooltips.actions.category"
+msgid ""
+"If you would like to activate triggers only when a certain category is being"
+" used, you can set that here. This will allow a trigger to be activated if "
+"only one of the categories is used. For instace, if you select Category 1 "
+"and Category 2 here and a report is submitted using Category 2 and Category "
+"3, it will pass the test."
+msgstr "如果你想激活触发器当在指定类别被使用时，您可以在这里设置。如果一篇事件报告有多个分类类别，且每个类别都有触发器，那么只激活一个。"
+
+#: tooltips.actions.days_of_the_week
+msgctxt "tooltips.actions.days_of_the_week"
+msgid ""
+"If these actions happen on certain days of the week, set that here. Keep in "
+"mind the day is determined by the timezone configured on your deployment. "
+"Hold shift, command, or control for multiple day selection."
+msgstr "如果这些动作发生在每周的特定日子，请在此设置。按住 Shift、Commond(Mac)、或者 Control(Windows)健选择几个日期。"
+
+#: tooltips.actions.email_body
+msgctxt "tooltips.actions.email_body"
+msgid "Body of the email that will be sent."
+msgstr "邮件内容将被发送"
+
+#: tooltips.actions.email_subject
+msgctxt "tooltips.actions.email_subject"
+msgid "Subject of email that will be sent."
+msgstr "邮件标题将被发送"
+
+#: tooltips.actions.feed_id
+msgctxt "tooltips.actions.feed_id"
+msgid ""
+"The feed can be all feeds or a specific feeds. If you would only like "
+"specific feeds to activate a trigger, you will want to select them here. "
+"Otherwise, you will want to leave this as \"all\""
+msgstr "源可以是所有饲料所有的饲料或特定饲料。如果你只想特定饲料激活触发器，你会想在这里选择它们。否则，你将要离开这个“皆”"
+
+#: tooltips.actions.from
+msgctxt "tooltips.actions.from"
+msgid ""
+"Twitter author username (or multiple usernames separated by commas). If you "
+"would like to activate triggers only for twitter messages from a particular "
+"user, enter their username here (not including @)"
+msgstr "官方中文译名推特作者的用户名 (或多个用户名用逗号分隔)。如果你想激活触发器仅对于官方中文译名推特消息从一个特定的用户， 在这里输入自己的用户名（不包括@）"
+
+#: tooltips.actions.keywords
+msgctxt "tooltips.actions.keywords"
+msgid ""
+"You can choose to leave this blank if you do not want to check against "
+"keywords. If you add words here, you will need to separate them with a comma"
+" (,). For example, if you want to activate a trigger when someone mentions "
+"\"love\" or \"peace\" in their message, you will want to add \"love, peace\""
+" in the keywords box."
+msgstr "如果你不想要关键字，那么让此处空白；否则，多个关键字用英文逗号分隔。"
+
+#: tooltips.actions.location
+msgctxt "tooltips.actions.location"
+msgid ""
+"You can either select anywhere or a specific location. If you select a "
+"specific location, you will be asked to draw a box around the area that "
+"qualifies an action. For example, if you want this trigger to be activated "
+"when someone submits a report in Brazil, you will select \"specific area\" "
+"and then draw the box around Brazil. You can make these boxes as small or as"
+" large as you would like. You can also draw multiple boxes."
+msgstr "你可以设定在任何地方或一个特定的位置。如果你选择了一个特定的位置，你将被要求画一个框周围的地区是一个行动。例如，如果你想要这个触发器被激活时，有人提出一个报告在巴西，你会选择“特别区域”，然后在巴西画一个区域。你可以把这些区域画小或大，也可以画多个。"
+
+#: tooltips.actions.on_specific_count
+msgctxt "tooltips.actions.on_specific_count"
+msgid ""
+"This qualifier will activate the trigger on the N-th count either for the "
+"entire collective user base or for each individual user. Leave this blank to"
+" ignore it."
+msgstr "该限定符将激活特定数的集群用户或独立用户。留空白可以忽略。"
+
+#: tooltips.actions.report_title
+msgctxt "tooltips.actions.report_title"
+msgid "This is the default title to add to the report."
+msgstr "这是默认添加到报告的标题。"
+
+#: tooltips.actions.response
+msgctxt "tooltips.actions.response"
+msgid ""
+"If all of the qualifiers above are passed, the trigger will initiate a "
+"response. This can range from approving a report to emailing a user. Select "
+"the response here to activate additional options for the specific responses."
+msgstr "如果所有的限定都通过，触发器将启动响应。这将产生从核准事件报告到发邮件到用户的变化。选择回应激活额外选项。"
+
+#: tooltips.actions.send_to
+msgctxt "tooltips.actions.send_to"
+msgid ""
+"If you select \"Triggering User\", the email will be sent to the user who "
+"performed the action. If you select the radio button next to the input box, "
+"you will be able to enter a custom email address. This is useful if you are "
+"setting up triggers to notify people when certain parts of the map are "
+"seeing reports, check ins or some other activity."
+msgstr "如果你选择“触发的用户”，电子邮件将被发送到执行行动的用户。如果你选择单选按钮旁边的输入框，你将能够进入一个定制的电子邮件地址。当你设置触发的用户在某些地区的地图看到报告，签入或其他一些活动时是有用的。"
+
+#: tooltips.actions.specific_days
+msgctxt "tooltips.actions.specific_days"
+msgid ""
+"You can select multiple days here. Dates are determined by your deployment "
+"timezone setting. In order to default to all dates, do not select any dates."
+msgstr "你可以选择多个日期。由时区配置决定。如果不选择日期，默认为所有日期。"
+
+#: tooltips.actions.trigger
+msgctxt "tooltips.actions.trigger"
+msgid ""
+"The trigger is the core component of setting up your Action Triggers. This "
+"is where you determine if you would like something to happen when someone "
+"submits a report, performs a check in, etc. You will be able to filter "
+"responses to these actions after selecting one."
+msgstr "触发器是调定你的行为操作的核心部件。当有人提交一个事件报告，签入等行为时，你可以通过它过滤回应或使某事发生。"
+
+#: tooltips.actions.user
+msgctxt "tooltips.actions.user"
+msgid ""
+"The user can be anyone or a specific user. If you would only like specific "
+"users to activate a trigger, you will want to select them here. Otherwise, "
+"you will want to leave this as \"anyone\" since most triggers are set up for"
+" all users interacting with the system"
+msgstr "用户可以是任何人，或一个特定的用户。如果你只喜欢特定用户激活触发器，你可以选择他们；否则，你将要排除这个“anyone”当最触发器设置为所有用户与系统的相互作用"
+
+#: tooltips.actions.verify
+msgctxt "tooltips.actions.verify"
+msgid "Marks a report as verified or not."
+msgstr "标记一个事件报告已验证或未验证。"
+
+#: tooltips.change_picture
+msgctxt "tooltips.change_picture"
+msgid ""
+"Profile pages on this site use Gravatar. By clicking on your image, you will"
+" be taken to the Gravatar website where you can change your profile picture."
+msgstr "资料页面本网站使用 Gravatar。通过点击你的头像，你将被带到 Gravatar 网站。在那里，您可以更改您的个人资料头像。"
+
+#: tooltips.default_value
+msgctxt "tooltips.default_value"
+msgid "Separate each value with a comma, e.g. value1, value2."
+msgstr "用英文逗号分隔每一个值，例如1,2。"
+
+#: tooltips.radio_choices
+msgctxt "tooltips.radio_choices"
+msgid ""
+"Separate each value with a comma, e.g. value1, value2. In case you want to "
+"set a default value, end your list of options with :: e.g If you want to "
+"make value3 the default, it will be value1, value2, value3::value3"
+msgstr "用英文逗号分隔每一个值，例如1,2。如果你想设置默认值，在选项列表结束位置加::符号。例如，如果你想让 Value 3为默认值，这将是 Value 1,Value 2,Value 3::Value 3"
+
+#: tooltips.dropdown_choices
+msgctxt "tooltips.dropdown_choices"
+msgid "Separate each choice item with a comma, e.g. Item 1, Item 2 etc."
+msgstr "用英文逗号分隔每一个值，例如 Item 1, Item 2 etc."
+
+#: tooltips.private_to
+msgctxt "tooltips.private_to"
+msgid "Start typing to list members."
+msgstr "开始输入成员名单"
+
+#: tooltips.private_subject
+msgctxt "tooltips.private_subject"
+msgid "Private message subject"
+msgstr "私信标题"
+
+#: tooltips.private_message
+msgctxt "tooltips.private_message"
+msgid "Private message"
+msgstr "私信"
+
+#: tooltips.profile_color
+msgctxt "tooltips.profile_color"
+msgid ""
+"You can select a color that will show up under your profile picture on your "
+"public profile. This color will also be the color dot that shows up on the "
+"map for your checkins."
+msgstr "您可以选择一种颜色，将显示在您的个人资料图片在您的公众形象。这也将是彩色点阵显示的地图为您的签入。"
+
+#: tooltips.profile_email
+msgctxt "tooltips.profile_email"
+msgid "Your email address"
+msgstr "您的电子邮箱地址"
+
+#: tooltips.profile_name
+msgctxt "tooltips.profile_name"
+msgid ""
+"This is one of the ways that you are identified on the website. Keep in mind"
+" that this is public!"
+msgstr "这是确定在网站上标识的一种方法。请记住这是公开信息！"
+
+#: tooltips.profile_new_password
+msgctxt "tooltips.profile_new_password"
+msgid ""
+"If set, this will be your new password. Leave this field blank if you wish "
+"to keep your current password."
+msgstr "如果设置，这将是您的新密码。将此字段留空如果您想保留您的当前密码。"
+
+#: tooltips.profile_new_users_password
+msgctxt "tooltips.profile_new_users_password"
+msgid ""
+"This is a requirement when creating a new user and will be the users "
+"password. You should inform your new user to change their password after "
+"logging in for the first time."
+msgstr "这是在创建一个新用户时的一个要求，将作为用户密码。你应该通知你的新用户，在第一次登陆后修改他们的密码。"
+
+#: tooltips.profile_notify
+msgctxt "tooltips.profile_notify"
+msgid ""
+"Selecting YES lets you get alerts via email when new reports or comments are"
+" posted on your website."
+msgstr "选择\"是\"让你通过电子邮件在新的事件报告或评论发布时获取事件警示信息。"
+
+#: tooltips.profile_password
+msgctxt "tooltips.profile_password"
+msgid ""
+"Your current password. We require you enter your password to prevent any "
+"unauthorized changes to your account."
+msgstr "您当前的密码。我们要求您输入您的密码，防止任何未经授权的更改您的帐户。"
+
+#: tooltips.profile_public
+msgctxt "tooltips.profile_public"
+msgid ""
+"Your profile can be viewed by anyone on the Internet if you check this "
+"option. This is also the easiest way to show off the reports you've "
+"submitted, your checkins, badges, etc all on one page."
+msgstr "选中此项后，任何人都可以查看你的资料。这是最简单的来展示您提交的报告，您的登入，徽章，等等信息。"
+
+#: tooltips.profile_public_url
+msgctxt "tooltips.profile_public_url"
+msgid "This is the address where your public profile can be found."
+msgstr "您的公众资料的地址。"
+
+#: tooltips.profile_username
+msgctxt "tooltips.profile_username"
+msgid "Your username cannot be changed."
+msgstr "你的用户名不能更改。"
+
+#: tooltips.settings_access_level
+msgctxt "tooltips.settings_access_level"
+msgid ""
+"Access Levels are used to restrict access to custom form field data. Higher "
+"access levels can access fields from lower levels. Superadmin has the "
+"highest access level (100). Public data is displayed at the lowest access "
+"level (0). Members have access level 10. Admin is access level 90 by "
+"default."
+msgstr "访问级别是用来限制访问自定义表单域数据。较高的访问级别可以访问域从较低水平。superadmin 具有最高的访问级别（100）。公共数据显示在最低访问级别（0）。成员的访问级别10。管理员访问90级默认。"
+
+#: tooltips.settings_alert_email
+msgctxt "tooltips.settings_alert_email"
+msgid "This is the email address that will be used to send email alerts."
+msgstr "这是用来发送事件警示的电子邮箱地址。"
+
+#: tooltips.settings_allow_alerts
+msgctxt "tooltips.settings_allow_alerts"
+msgid "Allow users to subscribe for alerts via the web."
+msgstr "允许用户通过网络订阅事件警示。"
+
+#: tooltips.settings_allow_clustering
+msgctxt "tooltips.settings_allow_clustering"
+msgid "This allows bundling of similar reports into a single dot on the map"
+msgstr "允许捆绑类似的报告，到一个单一的点在地图上"
+
+#: tooltips.settings_allow_comments
+msgctxt "tooltips.settings_allow_comments"
+msgid "Allow users to comment on reports on the main site."
+msgstr "允许用户在主站上评论。"
+
+#: tooltips.settings_allow_feed
+msgctxt "tooltips.settings_allow_feed"
+msgid "This allows RSS News feeds to be displayed on the main site."
+msgstr "允许RSS源显示在主站上。"
+
+#: tooltips.settings_allow_feed_category
+msgctxt "tooltips.settings_allow_feed_category"
+msgid "This allows creating new Category from RSS News feeds."
+msgstr "这允许创建新的分类，从RSS新闻源。"
+
+#: tooltips.settings_allow_reports
+msgctxt "tooltips.settings_allow_reports"
+msgid "Allow users to submit information via the web form."
+msgstr "允许用户通过网络形式提交信息。"
+
+#: tooltips.settings_api_default_record_limit
+msgctxt "tooltips.settings_api_default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "默认记录号码被每个 API request 获取"
+
+#: tooltips.settings_api_max_record_limit
+msgctxt "tooltips.settings_api_max_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "最大记录号码被每个 API request 获取"
+
+#: tooltips.settings_api_max_requests_per_ip
+msgctxt "tooltips.settings_api_max_requests_per_ip"
+msgid "Maximum number of API requests per IP address"
+msgstr "每个IP地址请求的最大记录数"
+
+#: tooltips.settings_banner
+msgctxt "tooltips.settings_banner"
+msgid ""
+"The site banner shows up at the top of the front end of your website if the "
+"theme you are using supports it. The recommended size for this banner will "
+"depend on the theme you are using. Keep in mind that this will replace the "
+"site title and tagline at the top of the page."
+msgstr "网站横幅显示了在顶部的前端的网站如果您使用的是支持它的主题。建议的大小，这面旗帜将取决于你使用的主题。记住，这将取代网站标题和标语在页面顶部。"
+
+#: tooltips.settings_blocks_per_row
+msgctxt "tooltips.settings_blocks_per_row"
+msgid "Number of Block columns that will be displayed on each row."
+msgstr "多块列将被显示在每一行。"
+
+#: tooltips.settings_cache_pages
+msgctxt "tooltips.settings_cache_pages"
+msgid ""
+"Enable or disable page caching. This makes pages display faster by cutting "
+"response times. We recommend using caching on high traffic sites. **Remember"
+" that reports will be populated on the front end based on the schedule you "
+"set below (Cache Lifetime)."
+msgstr "启用或禁用页面缓存。这使得网页的显示速度更快的响应时间。我们建议使用缓存高流量的网站。* *记住，报告将被填充在前端的基础上设置的计划下（缓存生命周期）。"
+
+#: tooltips.settings_cache_pages_lifetime
+msgctxt "tooltips.settings_cache_pages_lifetime"
+msgid "Set the lifetime of the cache."
+msgstr "设置缓存生命周期。"
+
+#: tooltips.settings_checkins
+msgctxt "tooltips.settings_checkins"
+msgid ""
+"This setting enables checkins on your deployment. This is a simplified "
+"report type that is not moderated before it goes on the homepage and "
+"requires your site to be configured a certain way. When you enable this, "
+"make sure your timezone setting is on UTC and your theme supports checkins. "
+"When you enable this, checkin-only themes will become enabled under your "
+"addons/themes settings page."
+msgstr "这个设置允许你登入。这是一个简化的报告类型，不是在它的主页，需要您的站点配置一定的方式。当你激活这个，确定你的时区设置在协调世界时和你的主题支持登记表。当你使这一主题，checkin-only 将启用在你的插件/主题设置页面。"
+
+#: tooltips.settings_configure_map
+msgctxt "tooltips.settings_configure_map"
+msgid "Set the map to cover a specific location."
+msgstr "设置地图的覆盖一个特定的位置。"
+
+#: tooltips.settings_default_category_colors
+msgctxt "tooltips.settings_default_category_colors"
+msgid "Set one color code for all the categories on the site."
+msgstr "为网站上所有类别设置一个颜色代码。"
+
+#: tooltips.settings_default_category_icons
+msgctxt "tooltips.settings_default_category_icons"
+msgid "Set one icon for all the categories on the site."
+msgstr "为网站上所有类别设置一个图标"
+
+#: tooltips.settings_default_location
+msgctxt "tooltips.settings_default_location"
+msgid "This is the country the site is being deployed."
+msgstr "这是网站将被部署的国家。"
+
+#: tooltips.settings_display_contact
+msgctxt "tooltips.settings_display_contact"
+msgid "Turn the Contact Tab on or off on the main site."
+msgstr "关闭或打开联系方式页面"
+
+#: tooltips.settings_display_howtohelp
+msgctxt "tooltips.settings_display_howtohelp"
+msgid "Turn the How to Help Tab on or off on the main site."
+msgstr "关闭或打开帮助页面"
+
+#: tooltips.settings_display_items_per_page
+msgctxt "tooltips.settings_display_items_per_page"
+msgid "This is the number of reports displayed per page on the main site."
+msgstr "这是在主站上显示的事件报告的数量。"
+
+#: tooltips.settings_display_items_per_page_admin
+msgctxt "tooltips.settings_display_items_per_page_admin"
+msgid ""
+"This is the number of reports displayed per page on the admin Back End."
+msgstr "这是在管理后台上显示的事件报告的数量。"
+
+#: tooltips.settings_flsms_download
+msgctxt "tooltips.settings_flsms_download"
+msgid "This is the hub for incoming messages."
+msgstr "这是该中心收到的消息。"
+
+#: tooltips.settings_flsms_synchronize
+msgctxt "tooltips.settings_flsms_synchronize"
+msgid "This synchronizes the messages in the hub with the Ushahidi platform."
+msgstr "这将同步信息枢纽 Ushahidi。"
+
+#: tooltips.settings_flsms_text_1
+msgctxt "tooltips.settings_flsms_text_1"
+msgid "Phone numbers through which the text messages are received."
+msgstr "短信息接收的手机号码。"
+
+#: tooltips.settings_google_analytics
+msgctxt "tooltips.settings_google_analytics"
+msgid "Tracks visitors of your site. Get detailed visitor statistics."
+msgstr "跟踪您的访客。获得详细的访客统计。"
+
+#: tooltips.settings_locale
+msgctxt "tooltips.settings_locale"
+msgid "Sets the language that will be used in the site."
+msgstr "设置网站使用的语言。"
+
+#: tooltips.settings_manually_approve_users
+msgctxt "tooltips.settings_manually_approve_users"
+msgid ""
+"If you set this option to yes, you must approve every individual user who "
+"creates an account on your site by assigning them roles (ie. Member, Admin, "
+"Superadmin)."
+msgstr "如果你设置这个选项，你必须通过每个个人用户创建一个帐户，在您的网站他们的角色分配（即 Member，Admin，superadmin）。"
+
+#: tooltips.settings_map_provider
+msgctxt "tooltips.settings_map_provider"
+msgid "This defines which map is to be used on the site."
+msgstr "定义网站使用的地图。"
+
+#: tooltips.settings_map_timeline
+msgctxt "tooltips.settings_map_timeline"
+msgid ""
+"This shows the timeline based on the date and time reports were submitted"
+msgstr "这显示了在时间线根据提交的日期和时间的报告"
+
+#: tooltips.settings_private_deployment
+msgctxt "tooltips.settings_private_deployment"
+msgid ""
+"Setting this value to true or yes will make your deployment private so only "
+"users with accounts that you specify will be able to access the deployment."
+msgstr "设置此值为真或是使得只有拥有帐户的用户能够访问网站的部署。"
+
+#: tooltips.settings_require_email_confirmation
+msgctxt "tooltips.settings_require_email_confirmation"
+msgid ""
+"Users will be emailed with a confirmation link to click before they are "
+"allowed to log into the deployment if this is set to yes. If you enable this"
+" after your deployment has accepted users, they will be prompted to confirm "
+"their account before they will be allowed to continue using it."
+msgstr "用户将通过电子邮件发送一个确认链接点击才可以登录到部署，如果这是设置为“是”。如果你使这一部署后接受了用户，他们将被提示确认他们的帐户之前，他们将被允许继续使用它。"
+
+#: tooltips.settings_server_host
+msgctxt "tooltips.settings_server_host"
+msgid "This is where the emails reside"
+msgstr "这是邮件服务器主机"
+
+#: tooltips.settings_server_password
+msgctxt "tooltips.settings_server_password"
+msgid "This is the password for the email address that receives reports."
+msgstr "这是电子邮箱的密码"
+
+#: tooltips.settings_server_port
+msgctxt "tooltips.settings_server_port"
+msgid ""
+"This is required to accept incoming connections from the email address."
+msgstr "这是邮件服务器的端口"
+
+#: tooltips.settings_server_ssl_support
+msgctxt "tooltips.settings_server_ssl_support"
+msgid "This is required to enhance a secure connection."
+msgstr "安全链接 SSL 支持"
+
+#: tooltips.settings_server_type
+msgctxt "tooltips.settings_server_type"
+msgid "This is required to retrieve e-mails from the host server."
+msgstr "为从主服务器上接收Email，此选项是必须的。"
+
+#: tooltips.settings_server_username
+msgctxt "tooltips.settings_server_username"
+msgid "This is the email address that receives reports."
+msgstr "事件报告邮件接收电子邮箱用户名"
+
+#: tooltips.settings_share_site_stats
+msgctxt "tooltips.settings_share_site_stats"
+msgid ""
+"Hit statistics are stored on a server controlled by Ushahidi. By enabling "
+"this option, you gain access to hit statistics directly in your admin panel."
+" By disabling it, you will stop collecting statistics and will be unable to "
+"recover traffic stats collected while this is turned off."
+msgstr "命中数据存储在服务器控制 Ushahidi。通过启用此选项，您可以存取击中统计直接在您的控制面板。通过禁用它，你将停止收集数据和将无法收回的交通统计资料收集，这是关闭的。"
+
+#: tooltips.settings_site_copyright_statement
+msgctxt "tooltips.settings_site_copyright_statement"
+msgid ""
+"Do others have the right to republish text, images, video and/or design "
+"themes that you and your users create? Go to "
+"https://creativecommons.org/choose/ if you are interested in specifying what"
+" others are able to do with your work. And remember to be specific about "
+"what elements of the site you are licensing!"
+msgstr "其他人有权发布文本，图像，视频和/或设计主题，您和您的用户创建？如果你有兴趣去 https://creativecommons.org/choose/ 指定其他人能够做你的工作。记得具体是什么内容的网站，你的认证！"
+
+#: tooltips.settings_site_email
+msgctxt "tooltips.settings_site_email"
+msgid ""
+"This is the email address that will receive email reports and messages from "
+"the contact form."
+msgstr "这是从联系我们页面接收邮件或事件报告的电子邮件地址。"
+
+#: tooltips.settings_site_message
+msgctxt "tooltips.settings_site_message"
+msgid ""
+"This is text that will appear above the map on the homepage. This is useful "
+"for giving important information to visitors on the site. To remove the box,"
+" simply delete the message here."
+msgstr "这个文本是出现在地图上的主页。这是非常有用的重要信息网站上的访客。不要它，只需在这里把消息删除。"
+
+#: tooltips.settings_site_name
+msgctxt "tooltips.settings_site_name"
+msgid "This is the name of the site that appears at the top of the main site."
+msgstr "这是出现在顶部的本网站的名称。"
+
+#: tooltips.settings_site_submit_report_message
+msgctxt "tooltips.settings_site_submit_report_message"
+msgid ""
+"This is a message that will show up on the submit report page. This is good "
+"for disclaimers or further instructions for your visitors who are reporting."
+msgstr "这是显示在表单提交页面的一个信息。可以是一个好的免责声明或进一步指示你的访客编写表单。"
+
+#: tooltips.settings_site_tagline
+msgctxt "tooltips.settings_site_tagline"
+msgid "In a few words, explain what this site is about."
+msgstr "一句话描述这个网站"
+
+#: tooltips.settings_site_timezone
+msgctxt "tooltips.settings_site_timezone"
+msgid ""
+"This is the timezone that your site will operate on. This has an impact on "
+"any actions you have set up that utilize time and date, as well as the "
+"default current time for reports on the front and back end of the site."
+msgstr "这是您的网站上运行的时区。这影响任何行动，建立了利用时间和日期，以及默认的当前时间报告的前端和后端的网站。"
+
+#: tooltips.settings_twitter_configuration
+msgctxt "tooltips.settings_twitter_configuration"
+msgid "Set the twitter hashtag that will be used on a tweet"
+msgstr "设置推特(twitter)#标签用于鸣叫"
+
+#: tooltips.feed_geolocation_user
+msgctxt "tooltips.feed_geolocation_user"
+msgid ""
+"If you want to geocode your feed entries, grab a user http://geonames.org, "
+"enable the free webservices and enter it here. Leave empty to disable this "
+"function.<br /><br />Beware of the the use limits!"
+msgstr ""

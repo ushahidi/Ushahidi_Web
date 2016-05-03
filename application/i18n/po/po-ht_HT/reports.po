@@ -1,0 +1,33 @@
+#. extracted from en_US/reports.php, ht_HT/reports.php
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-15 04:39+0000\n"
+"PO-Revision-Date: 2012-08-15 04:39+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: ht_HT\n"
+
+#: reports.incident_id.required
+msgctxt "reports.incident_id.required"
+msgid "Please verify that you have checked an item"
+msgstr ""
+
+#: reports.incident_id.numeric
+msgctxt "reports.incident_id.numeric"
+msgid "Please verify that you have checked an item"
+msgstr ""
+
+#: reports.incident_id.categories_required
+msgctxt "reports.incident_id.categories_required"
+msgid "Reports must be categorized before they can be approved"
+msgstr ""
+
+#: reports.action.permission
+msgctxt "reports.action.permission"
+msgid "You don't have permission to perform this action"
+msgstr ""
+

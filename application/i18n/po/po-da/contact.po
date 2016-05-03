@@ -1,0 +1,77 @@
+# 
+# Translators:
+# Neogeografen <soren.johannessen@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-06-27 14:10+0000\n"
+"Last-Translator: Neogeografen <soren.johannessen@gmail.com>\n"
+"Language-Team: Danish (http://www.transifex.com/ushahidi/ushahidi-v2/language/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: contact.captcha.default
+msgctxt "contact.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Angiv en valid sikkerhedskode."
+
+#: contact.captcha.valid
+msgctxt "contact.captcha.valid"
+msgid "Please enter a valid security code."
+msgstr "Angiv en valid sikkerhedskode."
+
+#: contact.captcha.required
+msgctxt "contact.captcha.required"
+msgid "Please enter the security code."
+msgstr "Angiv en sikkerhedskode."
+
+#: contact.contact_email.email
+msgctxt "contact.contact_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "Denne e-mail ser ikke ud til at indholde en valid e-mail-adresse."
+
+#: contact.contact_email.length
+msgctxt "contact.contact_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "E-mail feltet skal mindst være på 4 tegn og max. 64 tegn langt."
+
+#: contact.contact_email.required
+msgctxt "contact.contact_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "E-mail feltet er påkrævet hvis tjekboksen er afkrydset."
+
+#: contact.contact_message.required
+msgctxt "contact.contact_message.required"
+msgid "The message field is required."
+msgstr "Beskedfeltet skal angives."
+
+#: contact.contact_name.length
+msgctxt "contact.contact_name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Navnefeltet skal være på mindst 3 tegn."
+
+#: contact.contact_name.required
+msgctxt "contact.contact_name.required"
+msgid "The name field is required."
+msgstr "Navnefeltet skal angives."
+
+#: contact.contact_subject.length
+msgctxt "contact.contact_subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr "Emnefeltet skal være mindst 3 tegn langt."
+
+#: contact.contact_subject.required
+msgctxt "contact.contact_subject.required"
+msgid "The subject field is required."
+msgstr "Emnefeltet skal angives."
+
+#: contact.email_send.failed
+msgctxt "contact.email_send.failed"
+msgid "There was an error sending your message."
+msgstr "Der skete en fejl ved afsendelse af din besked."

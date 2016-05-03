@@ -1,0 +1,18 @@
+#. extracted from en_US/footer.php, cy_GB/footer.php
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-15 04:39+0000\n"
+"PO-Revision-Date: 2012-08-15 04:39+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: cy_GB\n"
+
+#: footer.cURL_not_installed
+msgctxt "footer.cURL_not_installed"
+msgid "php5-curl is not installed on this system."
+msgstr ""
+

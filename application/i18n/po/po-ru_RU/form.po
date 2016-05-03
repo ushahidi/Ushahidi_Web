@@ -1,0 +1,122 @@
+# 
+# Translators:
+# sher <sher@online.ua>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-06-29 08:36+0000\n"
+"Last-Translator: sher <sher@online.ua>\n"
+"Language-Team: Russian (Russia) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ru_RU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: form.field_default.default
+msgctxt "form.field_default.default"
+msgid "The default value you have provided for the field is invalid."
+msgstr "Заданное вами значение по умолчанию для поля недопустимо."
+
+#: form.field_default.length
+msgctxt "form.field_default.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 200 characters long."
+msgstr "Имя поля должно быть не менее 3 и не более 200 символов."
+
+#: form.field_height.between
+msgctxt "form.field_height.between"
+msgid "Please enter a value 0 to 50 for the Field Height."
+msgstr "Введите значение поля от 0 до 50"
+
+#: form.field_isdate.between
+msgctxt "form.field_isdate.between"
+msgid "You have entered an invalid value for Date Field."
+msgstr "Вы выбрали неправильное значение поля \"Дата\""
+
+#: form.field_isdate.required
+msgctxt "form.field_isdate.required"
+msgid "Please select Yes or No for the Date Field."
+msgstr "Выберите Да или Нет"
+
+#: form.field_name.length
+msgctxt "form.field_name.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 100 characters long."
+msgstr "Имя поля должно быть не менее 3 и не более 100 символов."
+
+#: form.field_name.required
+msgctxt "form.field_name.required"
+msgid "Please enter Field Name."
+msgstr "Введите имя поля."
+
+#: form.field_name.duplicate
+msgctxt "form.field_name.duplicate"
+msgid ""
+"The field name you entered already exists on this form. Please enter another"
+" one."
+msgstr "Имя поля, которое вы ввели, уже существует в этой форме. Введите другое."
+
+#: form.field_required.between
+msgctxt "form.field_required.between"
+msgid "You have entered an invalid value for Field Required."
+msgstr "Вы ввели неправильное значения для обязательного поля"
+
+#: form.field_required.required
+msgctxt "form.field_required.required"
+msgid "Please select Yes or No for Field Required."
+msgstr "Выберите \"Да\" или \"Нет\" для обязательного поля"
+
+#: form.field_type.numeric
+msgctxt "form.field_type.numeric"
+msgid "Please select a valid Field Type."
+msgstr "Выберите правильный тип поля."
+
+#: form.field_type.required
+msgctxt "form.field_type.required"
+msgid "Please select a Field Type."
+msgstr "Выберите тип поля."
+
+#: form.field_width.between
+msgctxt "form.field_width.between"
+msgid "Please enter a value 0 to 300 for the Field Width."
+msgstr "Введите значение от 0 до 300 для ширины поля"
+
+#: form.form_description.required
+msgctxt "form.form_description.required"
+msgid "Please enter form's Description."
+msgstr "Введите описание формы."
+
+#: form.form_id.default
+msgctxt "form.form_id.default"
+msgid "The default form cannot be deleted."
+msgstr "Форма по-умолчанию не может быть удалена."
+
+#: form.form_id.numeric
+msgctxt "form.form_id.numeric"
+msgid "Please select which form to add this field to."
+msgstr "Выберите, в какую форму нужно добавить данное поле."
+
+#: form.form_id.required
+msgctxt "form.form_id.required"
+msgid "Please select which form to add this field to."
+msgstr "Выберите, в какую форму нужно добавить данное поле."
+
+#: form.form_title.length
+msgctxt "form.form_title.length"
+msgid ""
+"The form name field must be at least 3 and no more than 100 characters long."
+msgstr "Длина имени формы не может быть менее 3х и более 100 символов."
+
+#: form.form_title.required
+msgctxt "form.form_title.required"
+msgid "Please enter the name of the form."
+msgstr "Введите имя формы."
+
+#: form.form_title.exists
+msgctxt "form.form_title.exists"
+msgid "A form with that title already exists. Please choose another."
+msgstr "Форма с этим именем уже существует. Выберите другое имя."

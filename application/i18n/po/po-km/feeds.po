@@ -1,0 +1,55 @@
+# 
+# Translators:
+# Ath Ell <ellsomath@gmail.com>, 2013
+# Seng Sutha <sutha@open.org.kh>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Khmer (http://www.transifex.com/ushahidi/ushahidi-v2/language/km/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: feeds.date
+msgctxt "feeds.date"
+msgid "DATE"
+msgstr "កាលបរិច្ឆេទ"
+
+#: feeds.feed_name.length
+msgctxt "feeds.feed_name.length"
+msgid ""
+"The feed name field must be at least 3 and no more \n"
+"\t\t\t70 characters long."
+msgstr "វាល​ឈ្មោះ​​​មតិ​ព័ត៌មាន​ត្រូវ​តែ​មាន​តួអក្សរ​យ៉ាងហោចណាស់ ៣ និង​មិន​វែង​ជាង ៧០ តួអក្សរ​ឡើយ។"
+
+#: feeds.feed_name.required
+msgctxt "feeds.feed_name.required"
+msgid "Please enter the name of the feed."
+msgstr "សូម​បញ្ចូល​ឈ្មោះ​​មតិ​ព័ត៌មាន។"
+
+#: feeds.feed_url.required
+msgctxt "feeds.feed_url.required"
+msgid "Please enter feed's URL."
+msgstr "សូម​បញ្ចូល​ URL របស់​មតិ​ព័ត៌មាន។"
+
+#: feeds.feed_url.url
+msgctxt "feeds.feed_url.url"
+msgid "Please enter a valid URL, e.g. http://www.ushahidi.com"
+msgstr "សូម​បញ្ចូល URL ត្រឹមត្រូវ  ឧ. http://www.ushahidi.com"
+
+#: feeds.source
+msgctxt "feeds.source"
+msgid "SOURCE"
+msgstr "ប្រភព"
+
+#: feeds.title
+msgctxt "feeds.title"
+msgid "Title"
+msgstr "ចំណងជើង"

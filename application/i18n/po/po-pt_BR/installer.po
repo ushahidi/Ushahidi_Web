@@ -1,0 +1,411 @@
+# 
+# Translators:
+# allviana <allnoronha@gmail.com>, 2012
+# Iske Solstag <solstag@member.fsf.org>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/ushahidi/ushahidi-v2/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: installer.base_path
+msgctxt "installer.base_path"
+msgid "Base Path"
+msgstr "Caminho básico"
+
+#: installer.database
+msgctxt "installer.database"
+msgid "Database"
+msgstr "Base de dados"
+
+#: installer.database_host
+msgctxt "installer.database_host"
+msgid "Database Host"
+msgstr "hospedagem de base de dados"
+
+#: installer.database_host_description
+msgctxt "installer.database_host_description"
+msgid ""
+"If you are running Ushahidi on your own computer, this will more than likely"
+" be \"localhost\". If you are running Ushahidi from a web server, you will "
+"get your host information from your web hosting provider."
+msgstr "Caso esteja rodando Ushahidi no seu computador, será normalmente o \"localhost\". Caso esteja rodando o Ushahidi de um servidor, será necessário obter as informações sobre o provedor de internet"
+
+#: installer.database_name
+msgctxt "installer.database_name"
+msgid "Database Name"
+msgstr "Nome da database"
+
+#: installer.database_name_description
+msgctxt "installer.database_name_description"
+msgid "The name of the database you want to run Ushahidi in"
+msgstr "Nome da database na qual você quer rodar o Ushahidi"
+
+#: installer.db_information_link
+msgctxt "installer.db_information_link"
+msgid ""
+"For more information, please check out <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" "
+"target=\"_blank\">this article</a> on the wiki that talks about databases in"
+" more detail."
+msgstr "Para obter mais informações, leia <a href=\"http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases\" target=\"_blank\">esse artigo</a> no wiki, que aborda database mais detalhadamente."
+
+#: installer.default_language
+msgctxt "installer.default_language"
+msgid "Default Language (Locale)"
+msgstr "Idioma padrão (Locale)"
+
+#: installer.default_language_description
+msgctxt "installer.default_language_description"
+msgid ""
+"Each deployment of Ushahidi comes with a set of built in language "
+"translations. You can also <a "
+"href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\""
+" target=\"_blank\">add your own</a>."
+msgstr "Cada versão do Ushahidi vem com um conjunto embutido de tradução. É possível também <a href=\"http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages\" target=\"_blank\">acrescentar o seu idioma</a>"
+
+#: installer.disable
+msgctxt "installer.disable"
+msgid "Disable"
+msgstr "Desabilitar"
+
+#: installer.enable
+msgctxt "installer.enable"
+msgid "Enable"
+msgstr "Habilitar"
+
+#: installer.error_summary
+msgctxt "installer.error_summary"
+msgid "Listed below is a summary of the errors we encountered."
+msgstr "Veja abaixo um resumo dos erros encontrados"
+
+#: installer.files_location_text
+msgctxt "installer.files_location_text"
+msgid ""
+"The location on your server where you placed your Ushahidi files. <strong>We"
+" have automatically detected this value, please make sure that it is "
+"correct.</strong> If the field is empty, do not worry, it means ushahidi is "
+"installed at the top level directory."
+msgstr "O local no servidor onde os arquivos do Ushahidi foram guardados. <strong>Esse dado foi automaticamente identificado, certifique-se de que está correto.</strong> Se o campo estiver vazio, não se preocupe: isso significa que o ushahidi está instalado no diretório principal"
+
+#: installer.finished
+msgctxt "installer.finished"
+msgid "Finished"
+msgstr "Encerrado"
+
+#: installer.general
+msgctxt "installer.general"
+msgid "General"
+msgstr "Geral"
+
+#: installer.google_key
+msgctxt "installer.google_key"
+msgid "<span>Google</span> API Key"
+msgstr "Chave API <span>Google</span>"
+
+#: installer.google_key_description
+msgctxt "installer.google_key_description"
+msgid ""
+"Anyone can get an api key. <a id=\"api-link\" "
+"href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Get "
+"yours now</a>"
+msgstr "Qualquer pessoa pode obter uma chave api. <a id=\"api-link\" href=\"http://code.google.com/apis/maps/signup.html\" target=\"_blank\">Obtenha a sua agora</a>."
+
+#: installer.go_back
+msgctxt "installer.go_back"
+msgid "Go Back"
+msgstr "Voltar"
+
+#: installer.index.advanced
+msgctxt "installer.index.advanced"
+msgid "ADVANCED INSTALLATION"
+msgstr "INSTALAÇÃO AVANÇADA"
+
+#: installer.index.advanced_installation_description
+msgctxt "installer.index.advanced_installation_description"
+msgid ""
+"Get all the basic settings completed through this 5-step process.  This "
+"includes server, map, site name and contact details."
+msgstr "Complete toda a configuração básica por meio das 5 etapas desse processo. Elas abarcam servidor, mapa, nome do site e detalhes de contato."
+
+#: installer.index.basic_installation
+msgctxt "installer.index.basic_installation"
+msgid "BASIC INSTALLATION"
+msgstr "INSTALAÇÃO BÁSICA"
+
+#: installer.index.basic_installation_description
+msgctxt "installer.index.basic_installation_description"
+msgid ""
+"Simple and fast. All you need is your website's root directory and your "
+"database information. Choose this option if you want to get up and running "
+"quickly, and you can always configure everything else later."
+msgstr "Fácil e rápido. Só é necessário ter em mãos o diretório root de seu site e as informações de sua database. Escolha essa opção se preferir o funcionamento rápido, e as outras configurações podem ser feitas mais tarde"
+
+#: installer.index.proceed
+msgctxt "installer.index.proceed"
+msgid "Proceed"
+msgstr "Continuar"
+
+#: installer.index.welcome
+msgctxt "installer.index.welcome"
+msgid ""
+"Welcome to the Ushahidi server install process.  Choose which type of "
+"installation you would like to use below."
+msgstr "Bem-vindo ao processo de instalação do servidor do Ushahidi. Escolha o tipo de instalação que você prefere a seguir."
+
+#: installer.installation_successful
+msgctxt "installer.installation_successful"
+msgid "Installation Successful"
+msgstr "Instalação feita com sucesso"
+
+#: installer.mail_server
+msgctxt "installer.mail_server"
+msgid "Mail Server"
+msgstr "Servidor de email"
+
+#: installer.mail_server_host
+msgctxt "installer.mail_server_host"
+msgid "Mail Server Host"
+msgstr "Host do servidor de email"
+
+#: installer.mail_server_host_description
+msgctxt "installer.mail_server_host_description"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "Exemplos: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: installer.mail_server_password
+msgctxt "installer.mail_server_password"
+msgid "Mail Server Password"
+msgstr "Senha do servidor de email"
+
+#: installer.mail_server_password_description
+msgctxt "installer.mail_server_password_description"
+msgid "The password you normally use to login in to your email"
+msgstr "Senha usada normalmente para acessar seu email"
+
+#: installer.mail_server_port
+msgctxt "installer.mail_server_port"
+msgid "Mail Server Port"
+msgstr "Porta do servidor de email"
+
+#: installer.mail_server_port_description
+msgctxt "installer.mail_server_port_description"
+msgid "Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "Portas comuns: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: installer.mail_server_type
+msgctxt "installer.mail_server_type"
+msgid "Mail Server Type"
+msgstr "Tipo de servidor de email"
+
+#: installer.mail_server_type_description
+msgctxt "installer.mail_server_type_description"
+msgid ""
+"Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a "
+"href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" "
+"target=\"_blank\">What is the difference?</a>"
+msgstr "Internet Message Access Protocol (IMAP) ou Post Office Protocol (POP). <a href=\"http://saturn.med.nyu.edu/it/help/email/imap/index.html\" target=\"_blank\">Qual é a diferença?</a>"
+
+#: installer.mail_server_username
+msgctxt "installer.mail_server_username"
+msgid "Mail Server Username"
+msgstr "Nome de usuário do servidor de email"
+
+#: installer.mail_server_username_description
+msgctxt "installer.mail_server_username_description"
+msgid ""
+"If you are using Gmail, Hotmail, or Yahoo Mail, enter a full email address "
+"as a username."
+msgstr "Caso esteja usando Gmail, Hotmail ou Yahoo Mail, forneça o email completo como nome de usuário"
+
+#: installer.map
+msgctxt "installer.map"
+msgid "Map"
+msgstr "Mapa"
+
+#: installer.map_provider
+msgctxt "installer.map_provider"
+msgid "Map Provider"
+msgstr "Provedor do mapa"
+
+#: installer.map_provider_description
+msgctxt "installer.map_provider_description"
+msgid ""
+"Ushahidi works equally well with any of these three mapping providers: "
+"Google, Bing or Open Street Map. Choose the one that has the most detail in "
+"your area."
+msgstr "O Ushahidi funciona da mesma forma com qualquer um desses provedores de mapas: Google, Bing, Yahoo ou Open Street Map. Escolha o que apresentar mais detalhes sobre a sua área."
+
+#: installer.other_steps
+msgctxt "installer.other_steps"
+msgid "Other steps..."
+msgstr "Outros passos..."
+
+#: installer.password
+msgctxt "installer.password"
+msgid "Password"
+msgstr "Senha"
+
+#: installer.password_description
+msgctxt "installer.password_description"
+msgid "Your database password"
+msgstr "Senha da database"
+
+#: installer.previous
+msgctxt "installer.previous"
+msgid "Previous"
+msgstr "Anterior"
+
+#: installer.restart_apache
+msgctxt "installer.restart_apache"
+msgid "Please restart your Apache Server"
+msgstr "Reinicie o seu servidor Apache"
+
+#: installer.select_mail_server_ssl
+msgctxt "installer.select_mail_server_ssl"
+msgid "Enable or disable SSL"
+msgstr "Habilitar ou desabilitar SSL"
+
+#: installer.select_mail_server_ssl_description
+msgctxt "installer.select_mail_server_ssl_description"
+msgid ""
+"Some mail servers give you the option of using <abbr title=\"Secure Sockets "
+"Layer\">SSL</abbr> when making a connection. Using SSL is recommended as it "
+"gives you an added level of security."
+msgstr "Alguns servidores de email oferecem a opção de usar <abbr title=\"Secure Sockets Layer\">SSL</abbr> ao fazer uma conexão. É recomendável usar SSL para prover um nível maior de segurança."
+
+#: installer.setup_sms
+msgctxt "installer.setup_sms"
+msgid "Set up your SMS server"
+msgstr "Configurar servidor de SMS"
+
+#: installer.site_email
+msgctxt "installer.site_email"
+msgid "Site Email Address"
+msgstr "Email do site"
+
+#: installer.site_email_alerts
+msgctxt "installer.site_email_alerts"
+msgid "Site Alert Email Address"
+msgstr "Alerta de email do site"
+
+#: installer.site_email_alerts_description
+msgctxt "installer.site_email_alerts_description"
+msgid ""
+"When your site visitors sign up for email alerts, they will receive emails "
+"from this address. This email address does not have to be the same as the "
+"Site Email Address."
+msgstr "Quando os visitantes do seu site inscreverem-se para receber alertas de email, eles receberão mensagens por meio desse endereço. Não é necessário que seja o mesmo email fornecido como email do site."
+
+#: installer.site_email_description
+msgctxt "installer.site_email_description"
+msgid "Site wide email communication will be funneled through this address"
+msgstr "Os comunicados do site serão canalizados através deste endereço"
+
+#: installer.site_name
+msgctxt "installer.site_name"
+msgid "Site Name"
+msgstr "Nome do site"
+
+#: installer.site_name_description
+msgctxt "installer.site_name_description"
+msgid "The name of your site"
+msgstr "Nome do seu site"
+
+#: installer.site_tagline
+msgctxt "installer.site_tagline"
+msgid "Site Tagline"
+msgstr "Slogan do site"
+
+#: installer.site_tagline_description
+msgctxt "installer.site_tagline_description"
+msgid "Your tagline"
+msgstr "Seu slogan"
+
+#: installer.summary.text_1
+msgctxt "installer.summary.text_1"
+msgid ""
+"The files and folders listed below need to be writable by your webserver."
+msgstr "Os arquivos e pastas a seguir podem ser gravadas pelo seu servidor web"
+
+#: installer.summary.text_2
+msgctxt "installer.summary.text_2"
+msgid ""
+"<p>Here are instructions for changing file permissions:</p>\n"
+"        <ul>\n"
+"            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n"
+"            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n"
+"        </ul>"
+msgstr "<p>Veja aqui instruções sobre como mudar permissões de arquivo:</p>\n        <ul>\n            <li><a href=\"http://www.washington.edu/computing/unix/permissions.html\" target=\"_blank\">Unix/Linux</a></li>\n            <li><a href=\"http://support.microsoft.com/kb/308419\" target=\"_blank\">Windows</a></li>\n        </ul>"
+
+#: installer.summary.text_3
+msgctxt "installer.summary.text_3"
+msgid ""
+"Before you get started, you will need to make sure the following files and "
+"folders are writable by your webserver. This involves changing file "
+"permissions."
+msgstr "Antes de começar, é preciso certificar-se de que os arquivos e pastas a seguir podem ser gravadas pelo seu servidor web. Esse processo envolve alteração de permissões."
+
+#: installer.summary.text_4
+msgctxt "installer.summary.text_4"
+msgid ""
+"For the installation process, please have the following bits of information "
+"on hand."
+msgstr "Para prosseguir com o processo de instalação, tenha em mãos os seguintes dados:"
+
+#: installer.table_prefix
+msgctxt "installer.table_prefix"
+msgid "Table Prefix"
+msgstr "Prefixo da tabela"
+
+#: installer.table_prefix_description
+msgctxt "installer.table_prefix_description"
+msgid ""
+"Normally you would not change the table prefix. However, if you want to run "
+"multiple Ushahidi installations from a single database, you can do that by "
+"changing the prefix here."
+msgstr "Normalmente, não é preciso mudar o prefixo da tabela. No entanto, caso você queira rodar várias instalações do Ushahidi em uma única database, é preciso mudar o prefixo aqui."
+
+#: installer.title
+msgctxt "installer.title"
+msgid "Title"
+msgstr "Título"
+
+#: installer.to_login
+msgctxt "installer.to_login"
+msgid "To login, go to"
+msgstr "Para fazer login, acesse"
+
+#: installer.upload_data
+msgctxt "installer.upload_data"
+msgid "Upload report data"
+msgstr "Carregar dados de relato"
+
+#: installer.username
+msgctxt "installer.username"
+msgid "Username"
+msgstr "Nome de usuário"
+
+#: installer.username_description
+msgctxt "installer.username_description"
+msgid "Your database username"
+msgstr "Nome de usuário na database"
+
+#: installer.use_credentials
+msgctxt "installer.use_credentials"
+msgid "and use the following credentials"
+msgstr "e use as credenciais a seguir"
+
+#: installer.view_site
+msgctxt "installer.view_site"
+msgid "View your website"
+msgstr "Ver o site"

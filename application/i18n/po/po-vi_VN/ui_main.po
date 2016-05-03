@@ -1,0 +1,3170 @@
+# 
+# Translators:
+# Thu Hoai <contact@bizover.net>, 2013
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi_VN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_main.about
+msgctxt "ui_main.about"
+msgid "About "
+msgstr "về"
+
+#: ui_main.access
+msgctxt "ui_main.access"
+msgid "Access"
+msgstr "Truy cập"
+
+#: ui_main.access_limits
+msgctxt "ui_main.access_limits"
+msgid "Access Limits"
+msgstr "Giới hạn truy cập"
+
+#: ui_main.account_name
+msgctxt "ui_main.account_name"
+msgid "Account Name"
+msgstr "Tên tài khoản"
+
+#: ui_main.actions
+msgctxt "ui_main.actions"
+msgid "Actions"
+msgstr "Thao tác"
+
+#: ui_main.action_confirm
+msgctxt "ui_main.action_confirm"
+msgid "This action cannot be undone. Are you sure you want to continue?"
+msgstr "Thao tác hiện vẫn chưa hoàn tất. Bạn có chắc muốn tiếp tục?"
+
+#: ui_main.activate
+msgctxt "ui_main.activate"
+msgid "Activate"
+msgstr "Kích hoạt"
+
+#: ui_main.active
+msgctxt "ui_main.active"
+msgid "Active"
+msgstr "Đang hoạt động"
+
+#: ui_main.add
+msgctxt "ui_main.add"
+msgid "Add"
+msgstr "Thêm"
+
+#: ui_main.added_by
+msgctxt "ui_main.added_by"
+msgid "Added By"
+msgstr "Thêm vào bởi"
+
+#: ui_main.additional_data
+msgctxt "ui_main.additional_data"
+msgid "Additional Data"
+msgstr "Dữ liệu bổ sung"
+
+#: ui_main.additional_reports
+msgctxt "ui_main.additional_reports"
+msgid "Additional Reports"
+msgstr "Báo cáo bổ sung"
+
+#: ui_main.add_edit
+msgctxt "ui_main.add_edit"
+msgid "Add/Edit"
+msgstr "Thêm/Sửa"
+
+#: ui_main.add_field
+msgctxt "ui_main.add_field"
+msgid "Add a Field"
+msgstr "Thêm một lĩnh vực"
+
+#: ui_main.add_language
+msgctxt "ui_main.add_language"
+msgid "Add Language"
+msgstr "Thêm ngôn ngữ"
+
+#: ui_main.add_new
+msgctxt "ui_main.add_new"
+msgid "Add New"
+msgstr "Thêm mới"
+
+#: ui_main.add_new_category
+msgctxt "ui_main.add_new_category"
+msgid "Add New Category"
+msgstr "Thêm Phân Loại Mới"
+
+#: ui_main.add_translation
+msgctxt "ui_main.add_translation"
+msgid "Add Translation"
+msgstr "Thêm Chuyển Ngữ"
+
+#: ui_main.admin
+msgctxt "ui_main.admin"
+msgid "Administration"
+msgstr "Quản Trị viên"
+
+#: ui_main.alerts
+msgctxt "ui_main.alerts"
+msgid "Get Alerts"
+msgstr "Nhận cảnh báo"
+
+#: ui_main.alerts_alert_me
+msgctxt "ui_main.alerts_alert_me"
+msgid "Alert me if a report is filed in, or around:"
+msgstr "cảnh báo tôi khi một báo cáo đã được thực thi, hoặc xung quanh:"
+
+#: ui_main.alerts_btn_send
+msgctxt "ui_main.alerts_btn_send"
+msgid "Save My Alert"
+msgstr "Lưu Thông Báo Của Tôi"
+
+#: ui_main.alerts_email
+msgctxt "ui_main.alerts_email"
+msgid "Email address:"
+msgstr "Địa chỉ email:"
+
+#: ui_main.alerts_enter_email
+msgctxt "ui_main.alerts_enter_email"
+msgid "enter email address"
+msgstr "điền vào địa chỉ email"
+
+#: ui_main.alerts_enter_mobile
+msgctxt "ui_main.alerts_enter_mobile"
+msgid "enter mobile number with country code"
+msgstr "điền vào số điện thoại đi kèm theo là mã vùng điện thoại đứng đầu"
+
+#: ui_main.alerts_get
+msgctxt "ui_main.alerts_get"
+msgid "Get Alerts"
+msgstr "Nhận Thông Báo"
+
+#: ui_main.alert_has_been
+msgctxt "ui_main.alert_has_been"
+msgid "Alert has been"
+msgstr "Cảnh báo đã được"
+
+#: ui_main.alerts_mobile_phone
+msgctxt "ui_main.alerts_mobile_phone"
+msgid "Mobile phone:"
+msgstr "Số di động:"
+
+#: ui_main.alerts_place_spot
+msgctxt "ui_main.alerts_place_spot"
+msgid ""
+"Or place a spot on the map below, and we will alert you when a report is "
+"submitted within 20 kilometers."
+msgstr "Hoặc click vào một điểm nào đó ở bản đồ bên dưới, và chúng tối sẽ thông báo cho bạn khi báo cáo đã được hoàn tất trong vòng chu vi 20 ki lô mét."
+
+#: ui_main.alerts_place_spot2
+msgctxt "ui_main.alerts_place_spot2"
+msgid ""
+"If you can't find your location, please click on the map to pinpoint the "
+"correct location."
+msgstr "Nếu bạn không thể tìm thấy vị trí của bạn, bạn có thể click vào bản đồ để chỉ ra vị trí hiện tại của bạn."
+
+#: ui_main.alerts_rss
+msgctxt "ui_main.alerts_rss"
+msgid "RSS Feeds (copy the URL below)"
+msgstr "Tin RSS (sao chép đường dẫn bên dưới)"
+
+#: ui_main.alerts_select_city
+msgctxt "ui_main.alerts_select_city"
+msgid "Select a city"
+msgstr "Chọn một thành phố"
+
+#: ui_main.alerts_step1_select_city
+msgctxt "ui_main.alerts_step1_select_city"
+msgid "<strong>Step 1:</strong> Select your city or location:"
+msgstr "<strong>Bước 1:</strong>Chọn thành phố hoặc địa điểm của bạn:"
+
+#: ui_main.alerts_step2_send_alerts
+msgctxt "ui_main.alerts_step2_send_alerts"
+msgid "<strong>Step 2:</strong> Send alerts to my:"
+msgstr "<strong>Bước 2:</strong> Gửi thông báo tới:"
+
+#: ui_main.alerts_step3_select_catgories
+msgctxt "ui_main.alerts_step3_select_catgories"
+msgid "<strong>Step 3 (Optional):</strong> Select Categories"
+msgstr "<strong>Bước 3 (không có cũng được):</strong> Chọn Phân Loại"
+
+#: ui_main.alert_confirm_previous
+msgctxt "ui_main.alert_confirm_previous"
+msgid "Confirm A Previous Alert Request"
+msgstr "Xác nhận Yêu Cầu Thông Báo Trước Đó"
+
+#: ui_main.alert_saved
+msgctxt "ui_main.alert_saved"
+msgid "Your Alert Has Been Saved!"
+msgstr "Phần thông báo của bạn đã được lưu!"
+
+#: ui_main.all
+msgctxt "ui_main.all"
+msgid "All"
+msgstr "Tất cả"
+
+#: ui_main.allowed
+msgctxt "ui_main.allowed"
+msgid "Allowed"
+msgstr "Cho phép"
+
+#: ui_main.allowed_tags
+msgctxt "ui_main.allowed_tags"
+msgid "Allowed HTML tags: \"%s\"."
+msgstr "Cho phép các thẻ đánh dấu HTLM: \"%s\"."
+
+#: ui_main.allowed_iframes
+msgctxt "ui_main.allowed_iframes"
+msgid "Iframes are only allowed from: %s."
+msgstr "Iframes chỉ được cho phép từ: %s."
+
+#: ui_main.all_categories
+msgctxt "ui_main.all_categories"
+msgid "All Categories"
+msgstr "Tất cả Phân Loại"
+
+#: ui_main.all_time
+msgctxt "ui_main.all_time"
+msgid "All Time"
+msgstr "Tất cả thời gian"
+
+#: ui_main.and
+msgctxt "ui_main.and"
+msgid "and"
+msgstr "và"
+
+#: ui_main.api
+msgctxt "ui_main.api"
+msgid "API"
+msgstr "API"
+
+#: ui_main.approve
+msgctxt "ui_main.approve"
+msgid "Approve"
+msgstr "Chấp thuận"
+
+#: ui_main.approved
+msgctxt "ui_main.approved"
+msgid "Approved"
+msgstr "Đã chấp thuận"
+
+#: ui_main.approved_reports
+msgctxt "ui_main.approved_reports"
+msgid "Approved Reports"
+msgstr "Báo cáo đã chấp thuận"
+
+#: ui_main.approve_this_report
+msgctxt "ui_main.approve_this_report"
+msgid "Approve this Report"
+msgstr "Chấp thuận báo cáo này"
+
+#: ui_main.approximate
+msgctxt "ui_main.approximate"
+msgid "Approximate"
+msgstr "Xấp xỉ"
+
+#: ui_main.archive
+msgctxt "ui_main.archive"
+msgid "Archive"
+msgstr "Sao lưu"
+
+#: ui_main.archived
+msgctxt "ui_main.archived"
+msgid "Archived"
+msgstr "Đã sao lưu"
+
+#: ui_main.ascending
+msgctxt "ui_main.ascending"
+msgid "Ascending"
+msgstr "Tăng dần"
+
+#: ui_main.at
+msgctxt "ui_main.at"
+msgid "at"
+msgstr "tại"
+
+#: ui_main.author
+msgctxt "ui_main.author"
+msgid "Author"
+msgstr "Tác giả"
+
+#: ui_main.auto_checkin
+msgctxt "ui_main.auto_checkin"
+msgid "Auto Checkin"
+msgstr "Tự động đăng nhập"
+
+#: ui_main.Auto
+msgctxt "ui_main.Auto"
+msgid "Auto"
+msgstr ""
+
+#: ui_main.avg_reports_per_day
+msgctxt "ui_main.avg_reports_per_day"
+msgid "Avg Reports Per Day"
+msgstr "Trung bình báo cáo mỗi ngày"
+
+#: ui_main.awaiting_approval
+msgctxt "ui_main.awaiting_approval"
+msgid "Awaiting Approval"
+msgstr "Đang đợi việc chấp thuận"
+
+#: ui_main.awaiting_verification
+msgctxt "ui_main.awaiting_verification"
+msgid "Awaiting Verification"
+msgstr "Đang đợi việc xác nhận"
+
+#: ui_main.badge
+msgctxt "ui_main.badge"
+msgid "Badge"
+msgstr "Huy hiệu"
+
+#: ui_main.badges
+msgctxt "ui_main.badges"
+msgid "Badges"
+msgstr "Huy hiệu"
+
+#: ui_main.badge_image
+msgctxt "ui_main.badge_image"
+msgid "Badge Image"
+msgstr "Hình ảnh huy hiệu"
+
+#: ui_main.badge_image_upload_your_own
+msgctxt "ui_main.badge_image_upload_your_own"
+msgid "Or you can upload your own badge image instead."
+msgstr "Hoặc bạn có thể tự tải hình ảnh về huy hiệu của chính bạn."
+
+#: ui_main.badge_pack
+msgctxt "ui_main.badge_pack"
+msgid "Badge Pack"
+msgstr "Gói huy hiệu"
+
+#: ui_main.badge_select
+msgctxt "ui_main.badge_select"
+msgid "Select a Badge"
+msgstr "Chọn một huy hiệu"
+
+#: ui_main.blog
+msgctxt "ui_main.blog"
+msgid "Blog"
+msgstr "Blog"
+
+#: ui_main.browse_profiles
+msgctxt "ui_main.browse_profiles"
+msgid "Browse Profiles"
+msgstr "Duyệt tìm Hồ Sơ"
+
+#: ui_main.cancel
+msgctxt "ui_main.cancel"
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: ui_main.categories
+msgctxt "ui_main.categories"
+msgid "Categories"
+msgstr "Phân Loại"
+
+#: ui_main.category
+msgctxt "ui_main.category"
+msgid "Category"
+msgstr "Phân Loại"
+
+#: ui_main.category_filter
+msgctxt "ui_main.category_filter"
+msgid "Category Filter"
+msgstr "Bộ lọc phân loại"
+
+#: ui_main.category_has_been
+msgctxt "ui_main.category_has_been"
+msgid "The category has been "
+msgstr "Phân loại đã được"
+
+#: ui_main.category_name
+msgctxt "ui_main.category_name"
+msgid "Category Name"
+msgstr "Tên phân loại"
+
+#: ui_main.change_date_range
+msgctxt "ui_main.change_date_range"
+msgid "Change Date Range"
+msgstr "Thay đổi khoảng thời gian"
+
+#: ui_main.change_password
+msgctxt "ui_main.change_password"
+msgid "Change Password"
+msgstr "Thay đổi mật khẩu"
+
+#: ui_main.change_picture
+msgctxt "ui_main.change_picture"
+msgid "Change My Picture"
+msgstr "Thay đổi hình ảnh của bạn"
+
+#: ui_main.choose
+msgctxt "ui_main.choose"
+msgid "Choose a"
+msgstr "Chọn một"
+
+#: ui_main.choose_data_points
+msgctxt "ui_main.choose_data_points"
+msgid "Choose data points to download"
+msgstr "Chọn điểm dữ liệu để tải xuống"
+
+#: ui_main.choose_date_range
+msgctxt "ui_main.choose_date_range"
+msgid "Or choose your own date range"
+msgstr "Hoặc chọn khoảng thời gian của riêng bạn"
+
+#: ui_main.choose_field_type
+msgctxt "ui_main.choose_field_type"
+msgid "Choose field type"
+msgstr "Chọn loại trường"
+
+#: ui_main.cleanurl
+msgctxt "ui_main.cleanurl"
+msgid "Clean URLs"
+msgstr "Làm rỗng URL"
+
+#: ui_main.clear
+msgctxt "ui_main.clear"
+msgid "Clear"
+msgstr "Làm rỗng"
+
+#: ui_main.clear_map
+msgctxt "ui_main.clear_map"
+msgid "Clear Map"
+msgstr "Làm rỗng bản đồ"
+
+#: ui_main.close
+msgctxt "ui_main.close"
+msgid "Close"
+msgstr "Đóng lại"
+
+#: ui_main.clusters
+msgctxt "ui_main.clusters"
+msgid "clusters"
+msgstr "bó"
+
+#: ui_main.color
+msgctxt "ui_main.color"
+msgid "Color"
+msgstr "Màu sắc"
+
+#: ui_main.comment
+msgctxt "ui_main.comment"
+msgid "Comment"
+msgstr "Bình luận"
+
+#: ui_main.comments
+msgctxt "ui_main.comments"
+msgid "Comments"
+msgstr "Bình luận"
+
+#: ui_main.comment_details
+msgctxt "ui_main.comment_details"
+msgid "Comment Details"
+msgstr "Chi tiết Bình luận"
+
+#: ui_main.configuration_saved
+msgctxt "ui_main.configuration_saved"
+msgid "Your Settings Have Been Saved!"
+msgstr "Thiết lập của bạn đã được lưu!"
+
+#: ui_main.configure
+msgctxt "ui_main.configure"
+msgid "Configure"
+msgstr "Chỉnh sửa"
+
+#: ui_main.confirm_email_successful
+msgctxt "ui_main.confirm_email_successful"
+msgid ""
+"You have successfully confirmed your email address! Please login below."
+msgstr "Bạn đã xác nhận thành công địa chỉ email của bạn! Hãy đăng nhập bên dưới, biên dịch bởi Phan Anh."
+
+#: ui_main.confirm_email_successful_and_approval
+msgctxt "ui_main.confirm_email_successful_and_approval"
+msgid ""
+"You have successfully confirmed your email address! An administrator must "
+"approve your account before you login"
+msgstr "Bạn đã xác nhận thành công địa chỉ email của bạn! Quản trị viên phải chấp thuận tài khoản của bạn trước khi đăng nhập vào"
+
+#: ui_main.confirm_email_failed
+msgctxt "ui_main.confirm_email_failed"
+msgid ""
+"Email confirmation failed! You can request a new email confirmation below."
+msgstr "Việc xác nhận email không thành công! Bạn có thể được quyền yêu cầu thêm một email xác nhận nữa bên dưới."
+
+#: ui_main.contact
+msgctxt "ui_main.contact"
+msgid "Contact Us"
+msgstr "Liên hệ chúng tôi"
+
+#: ui_main.contact_code
+msgctxt "ui_main.contact_code"
+msgid "Security Code"
+msgstr "Mã an ninh"
+
+#: ui_main.contact_email
+msgctxt "ui_main.contact_email"
+msgid "Your Email Address"
+msgstr "Thay đổi địa chỉ email của bạn"
+
+#: ui_main.contact_message
+msgctxt "ui_main.contact_message"
+msgid "Message"
+msgstr "Tin nhắn"
+
+#: ui_main.contact_message_has_send
+msgctxt "ui_main.contact_message_has_send"
+msgid "Your Message Has Been Sent!"
+msgstr "Tin nhắn của bạn đã được gửi!"
+
+#: ui_main.contact_name
+msgctxt "ui_main.contact_name"
+msgid "Your Name"
+msgstr "Tên của bạn"
+
+#: ui_main.contact_phone
+msgctxt "ui_main.contact_phone"
+msgid "Your Phone Number"
+msgstr "Số điện thoại của bạn"
+
+#: ui_main.contact_send
+msgctxt "ui_main.contact_send"
+msgid "Send Message"
+msgstr "Gửi tin nhắn"
+
+#: ui_main.contact_subject
+msgctxt "ui_main.contact_subject"
+msgid "Message Subject"
+msgstr "Tựa đề tin nhắn"
+
+#: ui_main.copyright
+msgctxt "ui_main.copyright"
+msgid "Copyright ©"
+msgstr "Biên dịch bởi phan Anh ©"
+
+#: ui_main.create
+msgctxt "ui_main.create"
+msgid "Create"
+msgstr "Tạo"
+
+#: ui_main.create_edit
+msgctxt "ui_main.create_edit"
+msgid "Create/Edit"
+msgstr "Tạo/sửa"
+
+#: ui_main.create_new
+msgctxt "ui_main.create_new"
+msgid "Create New"
+msgstr "Tạo mới"
+
+#: ui_main.create_new_password
+msgctxt "ui_main.create_new_password"
+msgid "Create New Password"
+msgstr "Tạo mật khẩu mới"
+
+#: ui_main.create_report
+msgctxt "ui_main.create_report"
+msgid "Create Report"
+msgstr "Tạo báo cáo"
+
+#: ui_main.credibility
+msgctxt "ui_main.credibility"
+msgid "Credibility"
+msgstr "Độ tin cậy"
+
+#: ui_main.current_password
+msgctxt "ui_main.current_password"
+msgid "Current Password"
+msgstr "Mật khẩu hiện tại"
+
+#: ui_main.custom_fields
+msgctxt "ui_main.custom_fields"
+msgid "Custom Fields"
+msgstr "Trường tự chọn"
+
+#: ui_main.data
+msgctxt "ui_main.data"
+msgid "Information"
+msgstr "Thông tin"
+
+#: ui_main.date
+msgctxt "ui_main.date"
+msgid "Date"
+msgstr "Ngày tháng"
+
+#: ui_main.date_format
+msgctxt "ui_main.date_format"
+msgid "(mm/dd/yyyy)"
+msgstr "(tt/nn/nnnn)"
+
+#: ui_main.date_time
+msgctxt "ui_main.date_time"
+msgid "Date & Time"
+msgstr "Thời gian & Ngày tháng"
+
+#: ui_main.day
+msgctxt "ui_main.day"
+msgid "day"
+msgstr "ngày"
+
+#: ui_main.Daily
+msgctxt "ui_main.Daily"
+msgid "Daily"
+msgstr ""
+
+#: ui_main.deactivate
+msgctxt "ui_main.deactivate"
+msgid "Deactivate"
+msgstr "Tắt kích hoạt"
+
+#: ui_main.default_location_name
+msgctxt "ui_main.default_location_name"
+msgid "Nairobi, Kenya"
+msgstr "Nairobi, Kenya"
+
+#: ui_main.delete
+msgctxt "ui_main.delete"
+msgid "Delete"
+msgstr "Xóa"
+
+#: ui_main.deleted
+msgctxt "ui_main.deleted"
+msgid "Deleted"
+msgstr "Đã xóa"
+
+#: ui_main.deletes
+msgctxt "ui_main.deletes"
+msgid "Deletes"
+msgstr "Xóa"
+
+#: ui_main.delete_disabled
+msgctxt "ui_main.delete_disabled"
+msgid "Delete Disabled"
+msgstr "Tắt tính năng xóa"
+
+#: ui_main.delete_last
+msgctxt "ui_main.delete_last"
+msgid "Delete Last"
+msgstr "Xóa tận cùng"
+
+#: ui_main.delete_report
+msgctxt "ui_main.delete_report"
+msgid "Delete this Report"
+msgstr "Xóa báo cáo này"
+
+#: ui_main.delete_selected
+msgctxt "ui_main.delete_selected"
+msgid "Delete Selected"
+msgstr "Xóa những vùng được chọn"
+
+#: ui_main.delete_spam
+msgctxt "ui_main.delete_spam"
+msgid "Delete Spam"
+msgstr "Xóa Spam"
+
+#: ui_main.demo
+msgctxt "ui_main.demo"
+msgid "Demo"
+msgstr "Thử nghiệm"
+
+#: ui_main.description
+msgctxt "ui_main.description"
+msgid "Description"
+msgstr "Mô tả"
+
+#: ui_main.descending
+msgctxt "ui_main.descending"
+msgid "Descending"
+msgstr "Giảm dần"
+
+#: ui_main.detailed_location_example
+msgctxt "ui_main.detailed_location_example"
+msgid "Example: Corner of City Market, 5th Street & 4th Avenue, Johannesburg"
+msgstr "Thí dụ: Góc phố Thần Kinh, số 5 đường Tưng Tửng & số 4 bệnh viện Nhiệt Đới, thành phố Phồng Tôm"
+
+#: ui_main.details
+msgctxt "ui_main.details"
+msgid "Details"
+msgstr "Chi tiết"
+
+#: ui_main.direct_report
+msgctxt "ui_main.direct_report"
+msgid "Direct Report"
+msgstr "Báo cáo trực tiếp"
+
+#: ui_main.disabled
+msgctxt "ui_main.disabled"
+msgid "Disabled"
+msgstr "Vô hiệu hóa"
+
+#: ui_main.disapprove
+msgctxt "ui_main.disapprove"
+msgid "Unapprove"
+msgstr "Không chấp thuận"
+
+#: ui_main.download_reports
+msgctxt "ui_main.download_reports"
+msgid "Download Reports"
+msgstr "Tải về báo cáo"
+
+#: ui_main.download
+msgctxt "ui_main.download"
+msgid "Download"
+msgstr "Tải xuống"
+
+#: ui_main.edit
+msgctxt "ui_main.edit"
+msgid "Edit"
+msgstr "Sửa"
+
+#: ui_main.edit_form_fields
+msgctxt "ui_main.edit_form_fields"
+msgid "Edit Form Fields"
+msgstr "Sửa các trường trong mẫu đơn"
+
+#: ui_main.edit_report
+msgctxt "ui_main.edit_report"
+msgid "Edit Report"
+msgstr "Sửa báo cáo"
+
+#: ui_main.email
+msgctxt "ui_main.email"
+msgid "Email"
+msgstr "Email"
+
+#: ui_main.email_address
+msgctxt "ui_main.email_address"
+msgid "Email Address"
+msgstr "Địa chỉ email"
+
+#: ui_main.email_configuration
+msgctxt "ui_main.email_configuration"
+msgid "Mail Server Settings"
+msgstr "Thiết lập server mail"
+
+#: ui_main.email_server_host
+msgctxt "ui_main.email_server_host"
+msgid "Mail Server Host"
+msgstr "Server Host Mail"
+
+#: ui_main.email_server_password
+msgctxt "ui_main.email_server_password"
+msgid "Mail Server Password"
+msgstr "Mật khẩu Mail Server"
+
+#: ui_main.email_server_port
+msgctxt "ui_main.email_server_port"
+msgid "Mail Server Port"
+msgstr "Cổng kết nối Mail Server"
+
+#: ui_main.email_server_ssl_support
+msgctxt "ui_main.email_server_ssl_support"
+msgid "Mail Server SSL support"
+msgstr "Hỗ trợ kết nối SSL Mail Server"
+
+#: ui_main.email_server_type
+msgctxt "ui_main.email_server_type"
+msgid "Mail Server Type"
+msgstr "Loại Mail Server"
+
+#: ui_main.email_server_username
+msgctxt "ui_main.email_server_username"
+msgid "Mail Server Username"
+msgstr "Tên người dùng Mail Server"
+
+#: ui_main.email_settings_comment_0
+msgctxt "ui_main.email_settings_comment_0"
+msgid "so your settings have to be associated with this email address"
+msgstr "nên các thiết lập cần được gắn với địa chỉ email này"
+
+#: ui_main.email_settings_comment_00
+msgctxt "ui_main.email_settings_comment_00"
+msgid ""
+"In order to receive reports by email, please input your email account "
+"settings below. Please note that emails will be received at your"
+msgstr "Để có thể nhận báo cáo bằng email, hãy điền vào địa chỉ tài khoản email của bạn trong phần thiết lập bên dưới. Chú ý rằng email sẽ nhận được tại email của bạn"
+
+#: ui_main.email_settings_comment_1
+msgctxt "ui_main.email_settings_comment_1"
+msgid "Some servers require a complete email address"
+msgstr "Một vài server yêu cầu việc hoàn tất địa chỉ email"
+
+#: ui_main.email_settings_comment_2
+msgctxt "ui_main.email_settings_comment_2"
+msgid "Email account password"
+msgstr "Mật khẩu tài khoản email"
+
+#: ui_main.email_settings_comment_3
+msgctxt "ui_main.email_settings_comment_3"
+msgid "Common ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "Cổng kết nối thường gặp: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: ui_main.email_settings_comment_4
+msgctxt "ui_main.email_settings_comment_4"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "Thí dụ: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: ui_main.email_settings_comment_5
+msgctxt "ui_main.email_settings_comment_5"
+msgid "Examples: pop3, imap"
+msgstr "Thí du: pop3, imap"
+
+#: ui_main.email_settings_comment_6
+msgctxt "ui_main.email_settings_comment_6"
+msgid "Enable or disable SSL connections"
+msgstr "Bật hoặc tắt kết nối dạng SSL"
+
+#: ui_main.empty
+msgctxt "ui_main.empty"
+msgid "---EMPTY---"
+msgstr "---RỖNG---"
+
+#: ui_main.end_point
+msgctxt "ui_main.end_point"
+msgid "to"
+msgstr "đến"
+
+#: ui_main.error
+msgctxt "ui_main.error"
+msgid "Error!"
+msgstr "Lỗi!"
+
+#: ui_main.example
+msgctxt "ui_main.example"
+msgid "Example"
+msgstr "Thí dụ"
+
+#: ui_main.example_country
+msgctxt "ui_main.example_country"
+msgid "Kenya"
+msgstr "Kenya"
+
+#: ui_main.external_apps
+msgctxt "ui_main.external_apps"
+msgid "External Apps"
+msgstr "Ứng dụng bổ sung"
+
+#: ui_main.external_video_link
+msgctxt "ui_main.external_video_link"
+msgid "External Video Link"
+msgstr "Liên kết video bổ sung"
+
+#: ui_main.facebook
+msgctxt "ui_main.facebook"
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ui_main.feed
+msgctxt "ui_main.feed"
+msgid "Feed"
+msgstr "Feed"
+
+#: ui_main.feedback
+msgctxt "ui_main.feedback"
+msgid "Provide Feedback"
+msgstr "Cung cấp phản hồi"
+
+#: ui_main.feedback_reports
+msgctxt "ui_main.feedback_reports"
+msgid "Please give us feedback about your experience by sending an email to "
+msgstr ""
+
+#: ui_main.feeds
+msgctxt "ui_main.feeds"
+msgid "Feeds"
+msgstr "Feeds"
+
+#: ui_main.feed_has_been
+msgctxt "ui_main.feed_has_been"
+msgid "The feed has been"
+msgstr "Feed đã được"
+
+#: ui_main.feed_items
+msgctxt "ui_main.feed_items"
+msgid "Feed Items"
+msgstr "Đối tượng feed"
+
+#: ui_main.feed_name
+msgctxt "ui_main.feed_name"
+msgid "Feed Name"
+msgstr "Tên feed"
+
+#: ui_main.feed_url
+msgctxt "ui_main.feed_url"
+msgid "Feed URL"
+msgstr "URL của Feed"
+
+#: ui_main.field_unused
+msgctxt "ui_main.field_unused"
+msgid "Unused field"
+msgstr "Các trường không sử dụng"
+
+#: ui_main.file
+msgctxt "ui_main.file"
+msgid "File"
+msgstr "Tập ti"
+
+#: ui_main.file_over_max_allowed
+msgctxt "ui_main.file_over_max_allowed"
+msgid "Your file is over the maximum allowed filesize."
+msgstr "Tập tin của bạn có kích thước quá giới hạn cho phép."
+
+#: ui_main.filters
+msgctxt "ui_main.filters"
+msgid "Filters"
+msgstr "Bộ lọc"
+
+#: ui_main.filter_reports
+msgctxt "ui_main.filter_reports"
+msgid "Filter Reports"
+msgstr "Lọc báo cáo"
+
+#: ui_main.filter_reports_by
+msgctxt "ui_main.filter_reports_by"
+msgid "Filter Reports By"
+msgstr "Lọc báo cáo bởi"
+
+#: ui_main.filter_reports_contain
+msgctxt "ui_main.filter_reports_contain"
+msgid "Filter reports that contain"
+msgstr "Lọc các báo cáo chứa"
+
+#: ui_main.find
+msgctxt "ui_main.find"
+msgid "Find"
+msgstr "Tìm kiếm"
+
+#: ui_main.find_location
+msgctxt "ui_main.find_location"
+msgid "Find Location"
+msgstr "Địa điểm tìm kiếm"
+
+#: ui_main.first_name
+msgctxt "ui_main.first_name"
+msgid "First Name"
+msgstr "Tên"
+
+#: ui_main.force_run_scheduler
+msgctxt "ui_main.force_run_scheduler"
+msgid "Force Run Scheduler"
+msgstr "Thời gian bắt buộc chạy"
+
+#: ui_main.forgot_password
+msgctxt "ui_main.forgot_password"
+msgid "Forgot your password?"
+msgstr "Quên mật khẩu ư?"
+
+#: ui_main.form
+msgctxt "ui_main.form"
+msgid "Form"
+msgstr "Mẫu đơn"
+
+#: ui_main.forms
+msgctxt "ui_main.forms"
+msgid "Forms"
+msgstr "Mẫu đơn"
+
+#: ui_main.form_description
+msgctxt "ui_main.form_description"
+msgid "Form Description"
+msgstr "Miêu tả mẫu đơn"
+
+#: ui_main.form_edit
+msgctxt "ui_main.form_edit"
+msgid "Edit this Form"
+msgstr "Sửa mẫu đơn này"
+
+#: ui_main.form_has_been
+msgctxt "ui_main.form_has_been"
+msgid "The form has been"
+msgstr "Mẫu đơn đã được"
+
+#: ui_main.form_title
+msgctxt "ui_main.form_title"
+msgid "Form Title"
+msgstr "Tiêu đề mẫu đơn"
+
+#: ui_main.from
+msgctxt "ui_main.from"
+msgid "From"
+msgstr "Từ"
+
+#: ui_main.full_name
+msgctxt "ui_main.full_name"
+msgid "Full Name"
+msgstr "Họ tên đầy đủ"
+
+#: ui_main.geolocation_available
+msgctxt "ui_main.geolocation_available"
+msgid "GeoLocation Available"
+msgstr "Địa chỉ địa lý hiện có"
+
+#: ui_main.geometry_color
+msgctxt "ui_main.geometry_color"
+msgid "Color"
+msgstr "Màu sắc"
+
+#: ui_main.geometry_comments
+msgctxt "ui_main.geometry_comments"
+msgid "Comments"
+msgstr "Bình luận"
+
+#: ui_main.geometry_label
+msgctxt "ui_main.geometry_label"
+msgid "Label"
+msgstr "Nhãn"
+
+#: ui_main.geometry_strokewidth
+msgctxt "ui_main.geometry_strokewidth"
+msgid "Stroke Width"
+msgstr "Độ rộng nét"
+
+#: ui_main.go
+msgctxt "ui_main.go"
+msgid "Go"
+msgstr "Đi đến"
+
+#: ui_main.hashtag
+msgctxt "ui_main.hashtag"
+msgid "Hashtag"
+msgstr "Hashtag"
+
+#: ui_main.has_been
+msgctxt "ui_main.has_been"
+msgid "Has Been"
+msgstr "đã được"
+
+#: ui_main.help
+msgctxt "ui_main.help"
+msgid "How to Help"
+msgstr "Giúp đỡ bằng cách nào"
+
+#: ui_main.hidden
+msgctxt "ui_main.hidden"
+msgid "Hidden"
+msgstr "Bị ẩn"
+
+#: ui_main.hide
+msgctxt "ui_main.hide"
+msgid "Hide"
+msgstr "Ẩn"
+
+#: ui_main.hide_this_message
+msgctxt "ui_main.hide_this_message"
+msgid "hide this message"
+msgstr "ẩn tin nhắn này"
+
+#: ui_main.home
+msgctxt "ui_main.home"
+msgid "Home"
+msgstr "Trang chủ"
+
+#: ui_main.Hourly
+msgctxt "ui_main.Hourly"
+msgid "Hourly"
+msgstr ""
+
+#: ui_main.how_to_report
+msgctxt "ui_main.how_to_report"
+msgid "How to Report"
+msgstr "Làm cách nào để báo cáo"
+
+#: ui_main.https
+msgctxt "ui_main.https"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: ui_main.id
+msgctxt "ui_main.id"
+msgid "ID"
+msgstr "Chỉ số"
+
+#: ui_main.identify_you
+msgctxt "ui_main.identify_you"
+msgid "Used to identify you on the site to other users."
+msgstr "Sử dụng để nhận dạng bạn trên các trang với những người sử dụng khác."
+
+#: ui_main.image
+msgctxt "ui_main.image"
+msgid "Image"
+msgstr "Hình ảnh"
+
+#: ui_main.images
+msgctxt "ui_main.images"
+msgid "Images"
+msgstr "Hình ảnh"
+
+#: ui_main.image_icon
+msgctxt "ui_main.image_icon"
+msgid "Image/Icon"
+msgstr "Hình ảnh/Biểu tượng"
+
+#: ui_main.inactive
+msgctxt "ui_main.inactive"
+msgid "Inactive"
+msgstr "Tắt kích hoạt"
+
+#: ui_main.inbox
+msgctxt "ui_main.inbox"
+msgid "Inbox"
+msgstr "Hộp thư"
+
+#: ui_main.incident
+msgctxt "ui_main.incident"
+msgid "Incident"
+msgstr "Ngẫu nhiên"
+
+#: ui_main.incidents_nearby
+msgctxt "ui_main.incidents_nearby"
+msgid "Incidents Nearby"
+msgstr "Ngẫu nhiên gần đây"
+
+#: ui_main.incident_location
+msgctxt "ui_main.incident_location"
+msgid "Incident Location"
+msgstr "Địa điểm ngẫu nhiên"
+
+#: ui_main.include
+msgctxt "ui_main.include"
+msgid "Include"
+msgstr "Bao gồm"
+
+#: ui_main.include_categories
+msgctxt "ui_main.include_categories"
+msgid "Include Categories"
+msgstr "Bao gồm phân loại"
+
+#: ui_main.include_custom_fields
+msgctxt "ui_main.include_custom_fields"
+msgid "Include Custom Fields"
+msgstr "Bao gồm trường tự chọn"
+
+#: ui_main.include_description
+msgctxt "ui_main.include_description"
+msgid "Include Description"
+msgstr "Bao gồm mô tả"
+
+#: ui_main.include_detail
+msgctxt "ui_main.include_detail"
+msgid "Include as much detail as possible"
+msgstr "Bao gồm càng nhiều thông tin càng tốt"
+
+#: ui_main.include_latitude
+msgctxt "ui_main.include_latitude"
+msgid "Include Latitude"
+msgstr "Bao gồm vĩ độ"
+
+#: ui_main.include_location_information
+msgctxt "ui_main.include_location_information"
+msgid "Include Location Information"
+msgstr "Bao gồm thông tin địa điểm"
+
+#: ui_main.include_longitude
+msgctxt "ui_main.include_longitude"
+msgid "Include Longitude"
+msgstr "Bao gồm kinh độ"
+
+#: ui_main.include_personal_info
+msgctxt "ui_main.include_personal_info"
+msgid "Include Personal Information"
+msgstr "Bao gồm thông tin cá nhân"
+
+#: ui_main.incoming_media
+msgctxt "ui_main.incoming_media"
+msgid "Incoming Media"
+msgstr "Media được gửi tới"
+
+#: ui_main.information_evaluation
+msgctxt "ui_main.information_evaluation"
+msgid "Information Evaluation"
+msgstr "Thử nghiệm thông tin"
+
+#: ui_main.input_location
+msgctxt "ui_main.input_location"
+msgid "Enter your precise location"
+msgstr "Điền vào vị trí chính xác của bạn"
+
+#: ui_main.insufficient_role
+msgctxt "ui_main.insufficient_role"
+msgid ""
+"Your account doesn't have the proper permission to fully log you in. Please "
+"contact the administrator."
+msgstr "Tài khoản của bạn không có quyền truy cập cao hơn để có thể ghi nhận mọi tác động. Hãy liên hệ người quản trị."
+
+#: ui_main.interval
+msgctxt "ui_main.interval"
+msgid "Interval"
+msgstr ""
+
+#: ui_main.in_response_to
+msgctxt "ui_main.in_response_to"
+msgid "In response to"
+msgstr "Để trả lời về"
+
+#: ui_main.ip_address
+msgctxt "ui_main.ip_address"
+msgid "IP Address"
+msgstr "Địa chỉ IP"
+
+#: ui_main.is_this_your_profile
+msgctxt "ui_main.is_this_your_profile"
+msgid "Is this your profile?"
+msgstr "Đây là hồ sơ của bạn?"
+
+#: ui_main.item
+msgctxt "ui_main.item"
+msgid "item"
+msgstr "đối tượng"
+
+#: ui_main.items
+msgctxt "ui_main.items"
+msgid "items"
+msgstr "đối tượng"
+
+#: ui_main.item_details
+msgctxt "ui_main.item_details"
+msgid "item_details"
+msgstr "item_details"
+
+#: ui_main.item_title
+msgctxt "ui_main.item_title"
+msgid "Item Title"
+msgstr "Tiêu đề đối tượng"
+
+#: ui_main.key
+msgctxt "ui_main.key"
+msgid "Key"
+msgstr "Khóa"
+
+#: ui_main.keywords
+msgctxt "ui_main.keywords"
+msgid "Keywords"
+msgstr "Từ khóa"
+
+#: ui_main.kml_kmz_file
+msgctxt "ui_main.kml_kmz_file"
+msgid "KMZ/KML File"
+msgstr "Tập tin KMZ/KML"
+
+#: ui_main.kml_kmz_upload
+msgctxt "ui_main.kml_kmz_upload"
+msgid "Upload KMZ/KML File"
+msgstr "Tải lên tập tin KMZ/KML"
+
+#: ui_main.kml_url
+msgctxt "ui_main.kml_url"
+msgid "KML URL"
+msgstr "KML URL"
+
+#: ui_main.laconica
+msgctxt "ui_main.laconica"
+msgid "Laconica"
+msgstr "Laconica"
+
+#: ui_main.language
+msgctxt "ui_main.language"
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+#: ui_main.last
+msgctxt "ui_main.last"
+msgid "Last"
+msgstr "Trước đó"
+
+#: ui_main.last_month
+msgctxt "ui_main.last_month"
+msgid "Last Month"
+msgstr "Tháng trước"
+
+#: ui_main.last_name
+msgctxt "ui_main.last_name"
+msgid "Last Name"
+msgstr "Họ"
+
+#: ui_main.last_year
+msgctxt "ui_main.last_year"
+msgid "Last Year"
+msgstr "Năm trước"
+
+#: ui_main.latitude
+msgctxt "ui_main.latitude"
+msgid "Latitude"
+msgstr "Vĩ độ"
+
+#: ui_main.layers
+msgctxt "ui_main.layers"
+msgid "Layers"
+msgstr "Lớp"
+
+#: ui_main.layers_filter
+msgctxt "ui_main.layers_filter"
+msgid "Other Layers"
+msgstr "Lớp khác"
+
+#: ui_main.layer_has_been
+msgctxt "ui_main.layer_has_been"
+msgid "The Layer Has Been"
+msgstr "Lớp đã bị"
+
+#: ui_main.layer_name
+msgctxt "ui_main.layer_name"
+msgid "Layer Name"
+msgstr "Tên lớp"
+
+#: ui_main.layer_url
+msgctxt "ui_main.layer_url"
+msgid "Layer URL"
+msgstr "Đường dẫn đến lớp"
+
+#: ui_main.leave_a_comment
+msgctxt "ui_main.leave_a_comment"
+msgid "Leave a Comment"
+msgstr "Để lại bình luận"
+
+#: ui_main.less_information
+msgctxt "ui_main.less_information"
+msgid "Less Information"
+msgstr "Ít thông ti"
+
+#: ui_main.level
+msgctxt "ui_main.level"
+msgid "Level"
+msgstr "Cấp độ"
+
+#: ui_main.level_has_been
+msgctxt "ui_main.level_has_been"
+msgid "This level has been"
+msgstr "Cấp độ này được"
+
+#: ui_main.level_name
+msgctxt "ui_main.level_name"
+msgid "Level Name"
+msgstr "Tên cấp độ"
+
+#: ui_main.limited
+msgctxt "ui_main.limited"
+msgid "Limited"
+msgstr "Hạn chế"
+
+#: ui_main.link
+msgctxt "ui_main.link"
+msgid "Link"
+msgstr "Đường liên kết"
+
+#: ui_main.list
+msgctxt "ui_main.list"
+msgid "List"
+msgstr "Danh sách"
+
+#: ui_main.loading_reports
+msgctxt "ui_main.loading_reports"
+msgid "Loading Reports"
+msgstr "Đang tải báo cáo"
+
+#: ui_main.location
+msgctxt "ui_main.location"
+msgid "Location"
+msgstr "Địa điểm"
+
+#: ui_main.locations
+msgctxt "ui_main.locations"
+msgid "Locations"
+msgstr "Địa điểm"
+
+#: ui_main.location_example
+msgctxt "ui_main.location_example"
+msgid "City, State and/or Country"
+msgstr "Thành phố, Bang và/hoặc quốc gia"
+
+#: ui_main.login
+msgctxt "ui_main.login"
+msgid "Login"
+msgstr "Đăng nhập"
+
+#: ui_main.login_account_creation_successful
+msgctxt "ui_main.login_account_creation_successful"
+msgid "Account created successfully. You may log in now."
+msgstr "Tài khoản đã được tạo thành công. Bạn có thể đăng nhập ngay bây giờ."
+
+#: ui_main.login_confirmation_sent
+msgctxt "ui_main.login_confirmation_sent"
+msgid "A confirmation has been sent to your email address."
+msgstr "Xác nhận đã được gửi đến địa chỉ email của bạn."
+
+#: ui_main.login_approval_required
+msgctxt "ui_main.login_approval_required"
+msgid ""
+"Account created. Your account must be approved by an admin before you can "
+"login."
+msgstr "Đã tạo xong tài khoản. Tài khoản của bạn phải được chấp thuận bởi quản trị viên trước khi bạn có thể đăng nhập vào."
+
+#: ui_main.login_email_doesnt_exist
+msgctxt "ui_main.login_email_doesnt_exist"
+msgid ""
+"Email address doesn't exist. Try a different address or create an account."
+msgstr "Địa chỉ email không tồn tại. Xin vui lòng thử một địa chỉ khác hoặc tạo một tài khoản."
+
+#: ui_main.login_select_openid
+msgctxt "ui_main.login_select_openid"
+msgid "Please click your account provider"
+msgstr "Xin vui lòng click vào nhà cung cấp tài khoản của bạn"
+
+#: ui_main.login_with
+msgctxt "ui_main.login_with"
+msgid "Login with"
+msgstr "Đăng nhập với"
+
+#: ui_main.login_userpass
+msgctxt "ui_main.login_userpass"
+msgid "Email and Password"
+msgstr "Email và mật khẩu"
+
+#: ui_main.login_openid
+msgctxt "ui_main.login_openid"
+msgid "OpenID"
+msgstr "OpenID"
+
+#: ui_main.login_signup
+msgctxt "ui_main.login_signup"
+msgid "Sign Up"
+msgstr "Đăng ký"
+
+#: ui_main.login_signup_click
+msgctxt "ui_main.login_signup_click"
+msgid "Create an Account"
+msgstr "Tạo một tài khoản"
+
+#: ui_main.login_signup_confirmation_message
+msgctxt "ui_main.login_signup_confirmation_message"
+msgid ""
+"Thank you for signing up at %1$s. To confirm your email address, please go "
+"to the following URL: %2$s"
+msgstr "Cảm ơn bạn đã đăng ký tại %1$s. Để có thể xác nhận email của mình, vui lòng truy cập đường dẫn sau: %2$s"
+
+#: ui_main.login_signup_confirmation_subject
+msgctxt "ui_main.login_signup_confirmation_subject"
+msgid "Signup Confirmation"
+msgstr "Xác nhận đăng ký"
+
+#: ui_main.login_signup_admin_approval_message
+msgctxt "ui_main.login_signup_admin_approval_message"
+msgid ""
+"An new user has signed up at %1$s. To approve their registration please go "
+"to the following URL: %2$s"
+msgstr "Một người dùng mới đã đăng ký tại %1$s. Để chấp thuận việc đăng ký này vui lòng truy cập vào đường dẫn sau: %2$s"
+
+#: ui_main.login_signup_admin_approval_subject
+msgctxt "ui_main.login_signup_admin_approval_subject"
+msgid "New User Approval"
+msgstr "Chấp thuận yêu cầu đăng ký"
+
+#: ui_main.login_signup_approval_message
+msgctxt "ui_main.login_signup_approval_message"
+msgid ""
+"Your user account has been approved for %1$s. To login go to the following "
+"URL: %2$s"
+msgstr "Tài khoản của bạn đã được chấp thuận về %1$s. Để có thể đăng nhập hãy truy cập vào đường dẫn sau: %2$s"
+
+#: ui_main.login_signup_approval_subject
+msgctxt "ui_main.login_signup_approval_subject"
+msgid "User account approved"
+msgstr "Đã chấp thuận tài khoản mới"
+
+#: ui_main.login_signup_text
+msgctxt "ui_main.login_signup_text"
+msgid "Create an account now to take advantage of more features on the site."
+msgstr "Tạo một tài khoản mới sẽ tận dụng được nhiều tính năng trên trang này"
+
+#: ui_main.longitude
+msgctxt "ui_main.longitude"
+msgid "Longitude"
+msgstr "Kinh độ"
+
+#: ui_main.map
+msgctxt "ui_main.map"
+msgid "Map"
+msgstr "Bản đồ"
+
+#: ui_main.mark_read
+msgctxt "ui_main.mark_read"
+msgid "Mark as Read"
+msgstr "Đánh dấu đã đọc"
+
+#: ui_main.mark_unread
+msgctxt "ui_main.mark_unread"
+msgid "Mark as Unread"
+msgstr "Đánh dấu chưa đọc"
+
+#: ui_main.maximum_filesize
+msgctxt "ui_main.maximum_filesize"
+msgid "Maximum filesize"
+msgstr "Kích thước tối đa của tập tin"
+
+#: ui_main.media
+msgctxt "ui_main.media"
+msgid "Media"
+msgstr "Media"
+
+#: ui_main.media_filter
+msgctxt "ui_main.media_filter"
+msgid "Media Filter"
+msgstr "Bộ lọc media"
+
+#: ui_main.members
+msgctxt "ui_main.members"
+msgid "Members"
+msgstr "Thành viên"
+
+#: ui_main.manage_your_account
+msgctxt "ui_main.manage_your_account"
+msgid "Manage Your Account"
+msgstr "Quản lý tài khoản"
+
+#: ui_main.message
+msgctxt "ui_main.message"
+msgid "Message"
+msgstr "Tin nhắn"
+
+#: ui_main.messages
+msgctxt "ui_main.messages"
+msgid "Messages"
+msgstr "Tin nhắn"
+
+#: ui_main.message_details
+msgctxt "ui_main.message_details"
+msgid "Message Details"
+msgstr "Chi tiết tin nhắn"
+
+#: ui_main.message_non_numeric_source
+msgctxt "ui_main.message_non_numeric_source"
+msgid "Message from a non-numeric source:"
+msgstr "Tin nhắn được gửi từ một nguồn không rõ số liệu:"
+
+#: ui_main.mobile
+msgctxt "ui_main.mobile"
+msgid "Mobile"
+msgstr "Di động"
+
+#: ui_main.modify
+msgctxt "ui_main.modify"
+msgid "Modify"
+msgstr "Chỉnh sửa"
+
+#: ui_main.modify_date
+msgctxt "ui_main.modify_date"
+msgid "Modify Date"
+msgstr "Chỉnh sửa ngày tháng"
+
+#: ui_main.month
+msgctxt "ui_main.month"
+msgid "month"
+msgstr "tháng"
+
+#: ui_main.Monthly
+msgctxt "ui_main.Monthly"
+msgid "Monthly"
+msgstr ""
+
+#: ui_main.more
+msgctxt "ui_main.more"
+msgid "More"
+msgstr "Các phần khác"
+
+#: ui_main.more_information
+msgctxt "ui_main.more_information"
+msgid "More Information"
+msgstr "Thông tin bổ sung"
+
+#: ui_main.multi_country_instance
+msgctxt "ui_main.multi_country_instance"
+msgid "Does this Ushahidi Deployment Span Multiple Countries"
+msgstr "Does this Ushahidi Deployment Span Multiple Countries"
+
+#: ui_main.must_confirm_email_address
+msgctxt "ui_main.must_confirm_email_address"
+msgid ""
+"You must confirm your email address to access this deployment. If you lost "
+"your confirmation email, you can request a new one below."
+msgstr "Bạn phải xác nhận email để có thể truy cập đến phần này. Nếu bạn mất thư xác nhận, bạn có thể yêu cầu gửi lại mã xác nhận một lần nữa bên dưới."
+
+#: ui_main.name
+msgctxt "ui_main.name"
+msgid "Name"
+msgstr "Tên"
+
+#: ui_main.nearby_report
+msgctxt "ui_main.nearby_report"
+msgid "Nearby Report"
+msgstr "Báo cáo gần đây"
+
+#: ui_main.new
+msgctxt "ui_main.new"
+msgid "New"
+msgstr "Mới"
+
+#: ui_main.news
+msgctxt "ui_main.news"
+msgid "News"
+msgstr "Tin tức"
+
+#: ui_main.news_feeds
+msgctxt "ui_main.news_feeds"
+msgid "News Feeds"
+msgstr "Tin tức feed"
+
+#: ui_main.news_source
+msgctxt "ui_main.news_source"
+msgid "News Source"
+msgstr "Nguồn tin tức"
+
+#: ui_main.new_category
+msgctxt "ui_main.new_category"
+msgid "New Category"
+msgstr "Tạo phân loại mới"
+
+#: ui_main.new_password
+msgctxt "ui_main.new_password"
+msgid "New Password"
+msgstr "Mật khẩu mới"
+
+#: ui_main.new_report
+msgctxt "ui_main.new_report"
+msgid "New Report"
+msgstr "Báo cáo mới"
+
+#: ui_main.next
+msgctxt "ui_main.next"
+msgid "Next"
+msgstr "Tiếp theo"
+
+#: ui_main.no
+msgctxt "ui_main.no"
+msgid "No"
+msgstr "Không đồng ý"
+
+#: ui_main.no_checkins
+msgctxt "ui_main.no_checkins"
+msgid "No checkins to display."
+msgstr "Không có thông tin về đăng nhập để hiển thị."
+
+#: ui_main.no_data
+msgctxt "ui_main.no_data"
+msgid "No data"
+msgstr "Không có dữ liệu"
+
+#: ui_main.none
+msgctxt "ui_main.none"
+msgid "None"
+msgstr "Không"
+
+#: ui_main.notices
+msgctxt "ui_main.notices"
+msgid "Notices"
+msgstr "Chú ý"
+
+#: ui_main.not_approved
+msgctxt "ui_main.not_approved"
+msgid "Not Approved"
+msgstr "Chưa được cho phép"
+
+#: ui_main.not_approved_singular
+msgctxt "ui_main.not_approved_singular"
+msgid "Not Approved"
+msgstr "Chưa được cho phép"
+
+#: ui_main.not_selected
+msgctxt "ui_main.not_selected"
+msgid "---Not Selected---"
+msgstr "---Chưa được chọn---"
+
+#: ui_main.not_spam
+msgctxt "ui_main.not_spam"
+msgid "not spam"
+msgstr "không phải spam"
+
+#: ui_main.not_specified
+msgctxt "ui_main.not_specified"
+msgid "Not Specified"
+msgstr "Chưa được xác định"
+
+#: ui_main.no_reports
+msgctxt "ui_main.no_reports"
+msgid "There are no reports"
+msgstr "Không có báo cáo nào"
+
+#: ui_main.no_results
+msgctxt "ui_main.no_results"
+msgid "There are no results"
+msgstr "Không có kết quả nào"
+
+#: ui_main.off
+msgctxt "ui_main.off"
+msgid "Off"
+msgstr "Tắt"
+
+#: ui_main.official_news
+msgctxt "ui_main.official_news"
+msgid "Official &amp; mainstream news"
+msgstr "Dòng &amp; tin tức chính thức"
+
+#: ui_main.on
+msgctxt "ui_main.on"
+msgid "On"
+msgstr "Mở"
+
+#: ui_main.option
+msgctxt "ui_main.option"
+msgid "Option"
+msgstr "Tùy chọn"
+
+#: ui_main.optional
+msgctxt "ui_main.optional"
+msgid "Optional"
+msgstr "Tùy chọn"
+
+#: ui_main.options
+msgctxt "ui_main.options"
+msgid "Options"
+msgstr "Tùy chọn"
+
+#: ui_main.organization
+msgctxt "ui_main.organization"
+msgid "Organization"
+msgstr "Tổ chức"
+
+#: ui_main.organizations
+msgctxt "ui_main.organizations"
+msgid "Organizations"
+msgstr "Tổ chức"
+
+#: ui_main.organization_description
+msgctxt "ui_main.organization_description"
+msgid "Organization Description"
+msgstr "Mô tả về tổ chức"
+
+#: ui_main.organization_email
+msgctxt "ui_main.organization_email"
+msgid "Organization Email"
+msgstr "Email tổ chức"
+
+#: ui_main.organization_has_been
+msgctxt "ui_main.organization_has_been"
+msgid "The Organization Has Been"
+msgstr "Tổ chức đã được"
+
+#: ui_main.organization_name
+msgctxt "ui_main.organization_name"
+msgid "Organization Name"
+msgstr "Tên tổ chức"
+
+#: ui_main.organization_phone_1
+msgctxt "ui_main.organization_phone_1"
+msgid "Organization Phone 1"
+msgstr "Điện thoại tổ chức 1"
+
+#: ui_main.organization_phone_2
+msgctxt "ui_main.organization_phone_2"
+msgid "Organization Phone 2"
+msgstr "Điện thoại tổ chức 2"
+
+#: ui_main.organization_website
+msgctxt "ui_main.organization_website"
+msgid "Organization Website"
+msgstr "Website của tổ chức"
+
+#: ui_main.original
+msgctxt "ui_main.original"
+msgid "Original"
+msgstr "Nguyên bản"
+
+#: ui_main.original_description
+msgctxt "ui_main.original_description"
+msgid "Original Description"
+msgstr "Mô tả nguyên bản"
+
+#: ui_main.original_title
+msgctxt "ui_main.original_title"
+msgid "Original Title"
+msgstr "Tiêu đề gốc"
+
+#: ui_main.other_ushahidi_instances
+msgctxt "ui_main.other_ushahidi_instances"
+msgid "Other Deployments"
+msgstr "Các tiến trình khác"
+
+#: ui_main.outbox
+msgctxt "ui_main.outbox"
+msgid "Outbox"
+msgstr "Hộp thư gửi đi"
+
+#: ui_main.outgoing
+msgctxt "ui_main.outgoing"
+msgid "Outgoing"
+msgstr "Đang gửi đi"
+
+#: ui_main.page
+msgctxt "ui_main.page"
+msgid "Page"
+msgstr "Trang"
+
+#: ui_main.pages
+msgctxt "ui_main.pages"
+msgid "Pages"
+msgstr "TRang"
+
+#: ui_main.page_description
+msgctxt "ui_main.page_description"
+msgid "Page Description"
+msgstr "Mô tả về trang"
+
+#: ui_main.page_has_been
+msgctxt "ui_main.page_has_been"
+msgid "The Page Has Been"
+msgstr "Trang đã bị"
+
+#: ui_main.page_tab_name
+msgctxt "ui_main.page_tab_name"
+msgid "Page Tab Name"
+msgstr "Tên tab của trang"
+
+#: ui_main.page_title
+msgctxt "ui_main.page_title"
+msgid "Page Title"
+msgstr "Tiêu đề trang"
+
+#: ui_main.parent_category
+msgctxt "ui_main.parent_category"
+msgid "Parent Category"
+msgstr "Phân loại gốc"
+
+#: ui_main.password
+msgctxt "ui_main.password"
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: ui_main.password_again
+msgctxt "ui_main.password_again"
+msgid "Verify Password"
+msgstr "Xác nhận mật khẩu"
+
+#: ui_main.password_changed_successfully
+msgctxt "ui_main.password_changed_successfully"
+msgid "Password changed successfully! Login below."
+msgstr "Mật khẩu đã được thay đổi thành công! Vui lòng đăng nhập trở lại bên dứoi"
+
+#: ui_main.password_forgot
+msgctxt "ui_main.password_forgot"
+msgid "Forgot your password?"
+msgstr "Quên mật khẩu?"
+
+#: ui_main.password_reset_confirm
+msgctxt "ui_main.password_reset_confirm"
+msgid "Check your email for the new password."
+msgstr "Kiểm tra email của bạn về mật khẩu mới."
+
+#: ui_main.password_save
+msgctxt "ui_main.password_save"
+msgid "Stay logged in on this computer?"
+msgstr "Giữ trạng thái đăng nhập trên máy tính này?"
+
+#: ui_main.past_month
+msgctxt "ui_main.past_month"
+msgid "Past Month"
+msgstr "Tháng trước đó"
+
+#: ui_main.past_year
+msgctxt "ui_main.past_year"
+msgid "Past Year"
+msgstr "Năm trước đó"
+
+#: ui_main.pending
+msgctxt "ui_main.pending"
+msgid "Pending"
+msgstr "Đang đợi"
+
+#: ui_main.per
+msgctxt "ui_main.per"
+msgid "per"
+msgstr "mỗi"
+
+#: ui_main.personal_information
+msgctxt "ui_main.personal_information"
+msgid "Personal Information <span>Optional.</span>"
+msgstr "<span>Tùy chọn</span>thông tin cá nhân."
+
+#: ui_main.phone
+msgctxt "ui_main.phone"
+msgid "Phone"
+msgstr "Điện thoại"
+
+#: ui_main.photos
+msgctxt "ui_main.photos"
+msgid "Photos"
+msgstr "Hình chụp"
+
+#: ui_main.pictures
+msgctxt "ui_main.pictures"
+msgid "Pictures"
+msgstr "Hình ảnh"
+
+#: ui_main.pictures_and_videos
+msgctxt "ui_main.pictures_and_videos"
+msgid "Pictures and Videos"
+msgstr "Hình ảnh và video"
+
+#: ui_main.pinpoint_location
+msgctxt "ui_main.pinpoint_location"
+msgid ""
+"* Search for your location using a location name OR latitude,longitude "
+"coordinates (format: 38.19, 85.61), OR click on the map to pinpoint the "
+"correct location."
+msgstr "* Tìm kiếm địa chỉ của bạn dựa vào tên địa điểm hoặc vị trí vĩ độ, kinh độ (theo định dạng: 38.19, 85.61), HOẶC click vào bản đồ và chọn phần địa điểm chính xác hiện tại của bạn."
+
+#: ui_main.play
+msgctxt "ui_main.play"
+msgid "Play"
+msgstr "Phát"
+
+#: ui_main.please_note
+msgctxt "ui_main.please_note"
+msgid "Please Note"
+msgstr "Để lại ghi chú"
+
+#: ui_main.plugins
+msgctxt "ui_main.plugins"
+msgid "Plugins"
+msgstr "Tiện ích"
+
+#: ui_main.plugin_url
+msgctxt "ui_main.plugin_url"
+msgid "Plugin Website"
+msgstr "Tiện ích Website"
+
+#: ui_main.public_profile
+msgctxt "ui_main.public_profile"
+msgid "Public Profile"
+msgstr "Hồ sơ công cộng"
+
+#: ui_main.public_profile_url
+msgctxt "ui_main.public_profile_url"
+msgid "Public Profile URL"
+msgstr "Đường dẫn đến hồ sơ công cộng"
+
+#: ui_main.preview
+msgctxt "ui_main.preview"
+msgid "Preview"
+msgstr "Xem thử"
+
+#: ui_main.preview_item
+msgctxt "ui_main.preview_item"
+msgid "Preview Item"
+msgstr "Xem thử đối tượng"
+
+#: ui_main.preview_message
+msgctxt "ui_main.preview_message"
+msgid "Preview Message"
+msgstr "Xem thử tin nhắn"
+
+#: ui_main.previous
+msgctxt "ui_main.previous"
+msgid "Previous"
+msgstr "Trước đó"
+
+#: ui_main.private
+msgctxt "ui_main.private"
+msgid "Private"
+msgstr "Riêng tư"
+
+#: ui_main.profile_color
+msgctxt "ui_main.profile_color"
+msgid "Profile Color"
+msgstr "Màu sắc hồ sơ"
+
+#: ui_main.profile_saved
+msgctxt "ui_main.profile_saved"
+msgid "Your Profile Has Been Saved"
+msgstr "Hồ sơ của bạn đã được lưu"
+
+#: ui_main.quick_stats
+msgctxt "ui_main.quick_stats"
+msgid "Quick Stats"
+msgstr "Trạng thái nhanh"
+
+#: ui_main.rating
+msgctxt "ui_main.rating"
+msgid "Rating"
+msgstr "Xếp hạng"
+
+#: ui_main.read
+msgctxt "ui_main.read"
+msgid "Read"
+msgstr "Đọc"
+
+#: ui_main.receive
+msgctxt "ui_main.receive"
+msgid "Receive"
+msgstr "Nhận"
+
+#: ui_main.receive_from
+msgctxt "ui_main.receive_from"
+msgid "Receive from"
+msgstr "Nhận từ"
+
+#: ui_main.receive_notifications
+msgctxt "ui_main.receive_notifications"
+msgid "Receive Notifications"
+msgstr "Thông báo nhận được"
+
+#: ui_main.recent_reports
+msgctxt "ui_main.recent_reports"
+msgid "Recent Reports"
+msgstr "Báo cáo gần đây"
+
+#: ui_main.refresh_news_feeds
+msgctxt "ui_main.refresh_news_feeds"
+msgid "Refresh News Feeds"
+msgstr "Cập nhật lại tin tức feed"
+
+#: ui_main.registered_email
+msgctxt "ui_main.registered_email"
+msgid "Registered Email"
+msgstr "Email đã đăng ký"
+
+#: ui_main.remove
+msgctxt "ui_main.remove"
+msgid "Remove"
+msgstr "Loại bỏ"
+
+#: ui_main.reply
+msgctxt "ui_main.reply"
+msgid "Reply"
+msgstr "Trả lời"
+
+#: ui_main.report
+msgctxt "ui_main.report"
+msgid "Report"
+msgstr "Báo cáo"
+
+#: ui_main.reports_listed
+msgctxt "ui_main.reports_listed"
+msgid "Reports <span>(from the map, listed in chronological order)</span>"
+msgstr "Báo cáo <span>(từ bản đồ, được liệt kê theo thứ tự niên đại)</span>"
+
+#: ui_main.reporter
+msgctxt "ui_main.reporter"
+msgid "Reporter"
+msgstr "Người báo cáo"
+
+#: ui_main.reporters
+msgctxt "ui_main.reporters"
+msgid "Reporters"
+msgstr "Người báo cáo"
+
+#: ui_main.reporter_date
+msgctxt "ui_main.reporter_date"
+msgid "Reporter Date"
+msgstr "Ngày người gửi báo cáo"
+
+#: ui_main.reporter_email
+msgctxt "ui_main.reporter_email"
+msgid "Reporter Email"
+msgstr "Email của người gửi báo cáo"
+
+#: ui_main.reporter_first_name
+msgctxt "ui_main.reporter_first_name"
+msgid "Reporter First Name"
+msgstr "Tên của người gửi báo cáo"
+
+#: ui_main.reporter_has_been
+msgctxt "ui_main.reporter_has_been"
+msgid "The Reporter Has Been"
+msgstr "Người báo cáo đã được"
+
+#: ui_main.reporter_ip
+msgctxt "ui_main.reporter_ip"
+msgid "Reporter IP Address"
+msgstr "Địa chỉ IP của người báo cáo"
+
+#: ui_main.reporter_last_name
+msgctxt "ui_main.reporter_last_name"
+msgid "Reporter Last Name"
+msgstr "Họ của người báo cáo"
+
+#: ui_main.reporter_level
+msgctxt "ui_main.reporter_level"
+msgid "Reporter Level"
+msgstr "Cấp độ người báo cáo"
+
+#: ui_main.reporter_levels
+msgctxt "ui_main.reporter_levels"
+msgid "Reporter Levels"
+msgstr "Cấp độ người báo cáo"
+
+#: ui_main.reporter_phone
+msgctxt "ui_main.reporter_phone"
+msgid "Reporter Phone"
+msgstr "Điện thoại người báo cáo"
+
+#: ui_main.reports
+msgctxt "ui_main.reports"
+msgid "Reports"
+msgstr "Báo cáo"
+
+#: ui_main.reports_btn_browse
+msgctxt "ui_main.reports_btn_browse"
+msgid "Browse"
+msgstr "Duyệt tìm"
+
+#: ui_main.reports_btn_submit
+msgctxt "ui_main.reports_btn_submit"
+msgid "Submit"
+msgstr "Đệ trình"
+
+#: ui_main.reports_by_this_user
+msgctxt "ui_main.reports_by_this_user"
+msgid "Reports By This User"
+msgstr "Báo cáo thực hiện bởi người dùng này"
+
+#: ui_main.reports_categories
+msgctxt "ui_main.reports_categories"
+msgid "Categories"
+msgstr "Phân loại"
+
+#: ui_main.reports_count
+msgctxt "ui_main.reports_count"
+msgid "%d Reports"
+msgstr "%d Báo cáo"
+
+#: ui_main.reports_date
+msgctxt "ui_main.reports_date"
+msgid "Date"
+msgstr "Ngày tháng"
+
+#: ui_main.reports_description
+msgctxt "ui_main.reports_description"
+msgid "Description"
+msgstr "Mô tả"
+
+#: ui_main.reports_download_csv
+msgctxt "ui_main.reports_download_csv"
+msgid "Reports will be downloaded in CSV format"
+msgstr "Báo cáo sẽ được tải về dưới định dạng CSV"
+
+#: ui_main.reports_email
+msgctxt "ui_main.reports_email"
+msgid "Email"
+msgstr "Email"
+
+#: ui_main.reports_features
+msgctxt "ui_main.reports_features"
+msgid "Features"
+msgstr "Tính năng"
+
+#: ui_main.reports_find_location
+msgctxt "ui_main.reports_find_location"
+msgid "Find a location near you"
+msgstr "Tìm một địa điểm gần bạn"
+
+#: ui_main.reports_first
+msgctxt "ui_main.reports_first"
+msgid "First Name"
+msgstr "Tên"
+
+#: ui_main.reports_last
+msgctxt "ui_main.reports_last"
+msgid "Last Name"
+msgstr "Họ"
+
+#: ui_main.reports_location_name
+msgctxt "ui_main.reports_location_name"
+msgid "Location Name"
+msgstr "Tên địa điểm"
+
+#: ui_main.reports_news
+msgctxt "ui_main.reports_news"
+msgid "News Source Link"
+msgstr "Đường dẫn đến nguồn tin"
+
+#: ui_main.reports_optional
+msgctxt "ui_main.reports_optional"
+msgid "Optional Information"
+msgstr "Thông tin tùy chọn"
+
+#: ui_main.reports_photos
+msgctxt "ui_main.reports_photos"
+msgid "Upload Photos"
+msgstr "Tải lên hình chụp"
+
+#: ui_main.reports_return
+msgctxt "ui_main.reports_return"
+msgid "Return to the reports page"
+msgstr "Quay trở lại trang báo cáo"
+
+#: ui_main.reports_select_city
+msgctxt "ui_main.reports_select_city"
+msgid "Select a City"
+msgstr "Chọn một thành phố"
+
+#: ui_main.reports_submitted
+msgctxt "ui_main.reports_submitted"
+msgid ""
+"Your Report has been submitted to our staff for review. We will get back to "
+"you shortly if necessary."
+msgstr "Báo cáo của bạn đã được đệ trình đến đội ngũ để xem xét. Chúng tôi sẽ trả lời bạn trong thời gian ngắn nhất có thể."
+
+#: ui_main.reports_submit_new
+msgctxt "ui_main.reports_submit_new"
+msgid "Submit a New Report"
+msgstr "Đệ trình một báo cáo mới"
+
+#: ui_main.reports_time
+msgctxt "ui_main.reports_time"
+msgid "Time"
+msgstr "Thời gian"
+
+#: ui_main.reports_timeline
+msgctxt "ui_main.reports_timeline"
+msgid "Reports Timeline"
+msgstr "Thời gian báo cáo"
+
+#: ui_main.reports_title
+msgctxt "ui_main.reports_title"
+msgid "Report Title"
+msgstr "Tiêu đề báo cáo"
+
+#: ui_main.reports_video
+msgctxt "ui_main.reports_video"
+msgid "Video link"
+msgstr "Đường liên kết video"
+
+#: ui_main.report_an_incident
+msgctxt "ui_main.report_an_incident"
+msgid "Report an Incident"
+msgstr "Báo cáo sự việc nào đó"
+
+#: ui_main.report_details
+msgctxt "ui_main.report_details"
+msgid "Report Details"
+msgstr "Chi tiết báo cáo"
+
+#: ui_main.report_option_1
+msgctxt "ui_main.report_option_1"
+msgid "By sending a message to"
+msgstr "Bằng cách gửi tin nhắn tới"
+
+#: ui_main.report_option_2
+msgctxt "ui_main.report_option_2"
+msgid "By sending an email"
+msgstr "Bằng cách gửi email"
+
+#: ui_main.report_option_3
+msgctxt "ui_main.report_option_3"
+msgid "By sending a tweet with the hashtag/s"
+msgstr "Bằng cách gửi tweet với mã hashtag/s"
+
+#: ui_main.report_option_4
+msgctxt "ui_main.report_option_4"
+msgid "By filling this form on our website."
+msgstr "Bằng việc điền vào lá đơn này trên website của chúng tôi."
+
+#: ui_main.report_option_external_apps
+msgctxt "ui_main.report_option_external_apps"
+msgid "By using an app"
+msgstr "Bằng việc sử dụng ứng dụng này"
+
+#: ui_main.report_saved
+msgctxt "ui_main.report_saved"
+msgid "Your Report Has Been Saved"
+msgstr "Báo cáo của bạn đã được lưu"
+
+#: ui_main.report_title
+msgctxt "ui_main.report_title"
+msgid "Report Title"
+msgstr "Tiêu đề báo cáo"
+
+#: ui_main.request_information
+msgctxt "ui_main.request_information"
+msgid "Request more information"
+msgstr "Yêu cầu gửi thêm thông tin"
+
+#: ui_main.request_location
+msgctxt "ui_main.request_location"
+msgid "Request location"
+msgstr "Yêu cầu về địa điểm"
+
+#: ui_main.required
+msgctxt "ui_main.required"
+msgid "Required"
+msgstr "Đã yêu cầu"
+
+#: ui_main.requirements
+msgctxt "ui_main.requirements"
+msgid "Requirements"
+msgstr "Các yêu cầu cần có"
+
+#: ui_main.resend_confirm_email
+msgctxt "ui_main.resend_confirm_email"
+msgid "Resend Confirmation Email"
+msgstr "Gửi lại email xác nhận"
+
+#: ui_main.reset
+msgctxt "ui_main.reset"
+msgid "Reset"
+msgstr "Thiết đặt lại"
+
+#: ui_main.reset_all_filters
+msgctxt "ui_main.reset_all_filters"
+msgid "Reset all filters"
+msgstr "Thiết đặt lại tất cả bộ lọc"
+
+#: ui_main.reset_password
+msgctxt "ui_main.reset_password"
+msgid "Reset Password"
+msgstr "Thiết đặt lại mật khẩu"
+
+#: ui_main.retrieve_city_names
+msgctxt "ui_main.retrieve_city_names"
+msgid "Retrieve city names for the selected country"
+msgstr "Nhận thông tin về tên thành phố của quốc gia được chọn"
+
+#: ui_main.riverid_information
+msgctxt "ui_main.riverid_information"
+msgid "Accounts managed by the %s service."
+msgstr "Tài khoản được quản lý bởi %s dịch vụ."
+
+#: ui_main.riverid_exists_login
+msgctxt "ui_main.riverid_exists_login"
+msgid ""
+"You already have an account managed by CrowdmapID! Try using your CrowdmapID"
+" email and password to login."
+msgstr "Bạn đã có tài khoản được quản lý bởi CrowdmapID! Hãy thử sử dụng email của CrowdmapID mà bạn có cùng mật khẩu để đăng nhập."
+
+#: ui_main.role
+msgctxt "ui_main.role"
+msgid "Role"
+msgstr "Vai trò"
+
+#: ui_main.rss
+msgctxt "ui_main.rss"
+msgid "RSS"
+msgstr "RSS"
+
+#: ui_main.save
+msgctxt "ui_main.save"
+msgid "Save"
+msgstr "Lưu"
+
+#: ui_main.saved
+msgctxt "ui_main.saved"
+msgid "Saved"
+msgstr "Đã lưu"
+
+#: ui_main.save_add_new
+msgctxt "ui_main.save_add_new"
+msgid "Save & Add New"
+msgstr "Lưu &Thêm mới"
+
+#: ui_main.save_close
+msgctxt "ui_main.save_close"
+msgid "Save & Close"
+msgstr "Lưu & Đóng lại"
+
+#: ui_main.save_report
+msgctxt "ui_main.save_report"
+msgid "Save Report"
+msgstr "Lưu lại báo cáo"
+
+#: ui_main.schedule
+msgctxt "ui_main.schedule"
+msgid "Schedule"
+msgstr "Thời khóa biểu"
+
+#: ui_main.scheduler
+msgctxt "ui_main.scheduler"
+msgid "Scheduler"
+msgstr "Người lập thời khóa biểu"
+
+#: ui_main.scheduler_day
+msgctxt "ui_main.scheduler_day"
+msgid "Day"
+msgstr "Ngày"
+
+#: ui_main.scheduler_hour
+msgctxt "ui_main.scheduler_hour"
+msgid "Hour"
+msgstr "Giờ"
+
+#: ui_main.scheduler_log
+msgctxt "ui_main.scheduler_log"
+msgid "Scheduler Log"
+msgstr "Nhật trình người lập thời khóa biểu"
+
+#: ui_main.scheduler_minute
+msgctxt "ui_main.scheduler_minute"
+msgid "Minute"
+msgstr "Phút"
+
+#: ui_main.scheduler_weekday
+msgctxt "ui_main.scheduler_weekday"
+msgid "Day of the Week"
+msgstr "Ngày trong tuần"
+
+#: ui_main.search
+msgctxt "ui_main.search"
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: ui_main.search_results
+msgctxt "ui_main.search_results"
+msgid "Search Results"
+msgstr "Tìm kết quả"
+
+#: ui_main.security_code
+msgctxt "ui_main.security_code"
+msgid "Security Code"
+msgstr "Mã an ninh"
+
+#: ui_main.select_all
+msgctxt "ui_main.select_all"
+msgid "Select All"
+msgstr "Chọn tất cả"
+
+#: ui_main.select_field_type
+msgctxt "ui_main.select_field_type"
+msgid "Select a Field Type"
+msgstr "Chọn một loại khung thông tin"
+
+#: ui_main.select_form_type
+msgctxt "ui_main.select_form_type"
+msgid "Select A Form Type"
+msgstr "Chọn một loại đơn"
+
+#: ui_main.select_in_map
+msgctxt "ui_main.select_in_map"
+msgid "Select in the map"
+msgstr "Chọn trong bản đồ"
+
+#: ui_main.select_multiple
+msgctxt "ui_main.select_multiple"
+msgid "Select as many as needed"
+msgstr "Chọn theo nhu cầu"
+
+#: ui_main.select_one
+msgctxt "ui_main.select_one"
+msgid "Please verify that you have checked an item"
+msgstr "Xin xác nhận bạn đã chọn đối tượng"
+
+#: ui_main.select_theme
+msgctxt "ui_main.select_theme"
+msgid "Select Theme"
+msgstr "Chọn giao diện"
+
+#: ui_main.send
+msgctxt "ui_main.send"
+msgid "Send"
+msgstr "Gửi"
+
+#: ui_main.send_confirmation
+msgctxt "ui_main.send_confirmation"
+msgid "Send Confirmation"
+msgstr "Xác nhận gửi"
+
+#: ui_main.sending_to
+msgctxt "ui_main.sending_to"
+msgid "Sending To"
+msgstr "Đang gửi đến"
+
+#: ui_main.sent
+msgctxt "ui_main.sent"
+msgid "Sent"
+msgstr "Đã gửi"
+
+#: ui_main.sent_by
+msgctxt "ui_main.sent_by"
+msgid "Sent by"
+msgstr "Được gửi bởi"
+
+#: ui_main.server_address
+msgctxt "ui_main.server_address"
+msgid "Server address"
+msgstr "Địa chỉ server"
+
+#: ui_main.server_type
+msgctxt "ui_main.server_type"
+msgid "Server type"
+msgstr "Loại server"
+
+#: ui_main.service
+msgctxt "ui_main.service"
+msgid "Service"
+msgstr "Dịch vụ"
+
+#: ui_main.service_username
+msgctxt "ui_main.service_username"
+msgid "Service Username"
+msgstr "Dịch vụ tên người dùng"
+
+#: ui_main.service_user_id
+msgctxt "ui_main.service_user_id"
+msgid "Service User ID"
+msgstr "Chỉ số dịch vụ người dùng"
+
+#: ui_main.share
+msgctxt "ui_main.share"
+msgid "Share"
+msgstr "Chia sẻ"
+
+#: ui_main.shared_data
+msgctxt "ui_main.shared_data"
+msgid "Shared data"
+msgstr "Dữ liệu được chia sẻ"
+
+#: ui_main.share_has_been
+msgctxt "ui_main.share_has_been"
+msgid "The share has been"
+msgstr "Việc chia sẻ đã được"
+
+#: ui_main.sharing
+msgctxt "ui_main.sharing"
+msgid "Sharing"
+msgstr "Đang chia sẻ"
+
+#: ui_main.shorter_map
+msgctxt "ui_main.shorter_map"
+msgid "Shorter Map"
+msgstr "Bản đồ ngắn hơn"
+
+#: ui_main.show
+msgctxt "ui_main.show"
+msgid "Show"
+msgstr "Hiển thị"
+
+#: ui_main.show_all
+msgctxt "ui_main.show_all"
+msgid "Show all"
+msgstr "Hiển thị tất cả"
+
+#: ui_main.show_messages
+msgctxt "ui_main.show_messages"
+msgid "Show Messages"
+msgstr "Hiển thị tin nhắn"
+
+#: ui_main.showing_reports_from
+msgctxt "ui_main.showing_reports_from"
+msgid "Showing Reports From <span class=\"time-period\">%1$s to %2$s</span>"
+msgstr "Đang hiển thị báo cáo từ <span class=\"time-period\">%1$s đến %2$s</span>"
+
+#: ui_main.site
+msgctxt "ui_main.site"
+msgid "Website"
+msgstr "Website"
+
+#: ui_main.site_email_address
+msgctxt "ui_main.site_email_address"
+msgid "site email address"
+msgstr "địa chỉ email của trang"
+
+#: ui_main.site_url
+msgctxt "ui_main.site_url"
+msgid "Site URL"
+msgstr "Đường dẫn"
+
+#: ui_main.smaller_map
+msgctxt "ui_main.smaller_map"
+msgid "Smaller Map"
+msgstr "Bản đồ nhỏ hơn"
+
+#: ui_main.sms
+msgctxt "ui_main.sms"
+msgid "SMS"
+msgstr "SMS"
+
+#: ui_main.sorry_no_badges
+msgctxt "ui_main.sorry_no_badges"
+msgid "Sorry, you do not have any badges."
+msgstr "Rất tiếc, bạn chưa có huy hiệu nào."
+
+#: ui_main.source
+msgctxt "ui_main.source"
+msgid "Source"
+msgstr "Nguồn"
+
+#: ui_main.source_name
+msgctxt "ui_main.source_name"
+msgid "Source name"
+msgstr "Tên nguồn"
+
+#: ui_main.sort
+msgctxt "ui_main.sort"
+msgid "Sort"
+msgstr "Sắp xếp"
+
+#: ui_main.sort_by
+msgctxt "ui_main.sort_by"
+msgid "Sort By"
+msgstr "Sắp xếp theo"
+
+#: ui_main.source_url
+msgctxt "ui_main.source_url"
+msgid "Source URL"
+msgstr "Đường dẫn đến nguồn"
+
+#: ui_main.spam
+msgctxt "ui_main.spam"
+msgid "Spam"
+msgstr "Spam"
+
+#: ui_main.ssl_support
+msgctxt "ui_main.ssl_support"
+msgid "SSL Support?"
+msgstr "Hỗ trợ SSL?"
+
+#: ui_main.start_point
+msgctxt "ui_main.start_point"
+msgid "From"
+msgstr "Từ"
+
+#: ui_main.step
+msgctxt "ui_main.step"
+msgid "Step"
+msgstr "Bước"
+
+#: ui_main.submit
+msgctxt "ui_main.submit"
+msgid "Submit a Report"
+msgstr "Đệ trình một báo cáo"
+
+#: ui_main.submitted_by
+msgctxt "ui_main.submitted_by"
+msgid "Submitted by <strong>%1$s</strong> via <strong>%2$s</strong>"
+msgstr "Được đệ trình bởi <strong>%1$s</strong> thông qua <strong>%2$s</strong>"
+
+#: ui_main.submit_sms
+msgctxt "ui_main.submit_sms"
+msgid "Submit via SMS"
+msgstr "Đệ trình thông qua SMS"
+
+#: ui_main.submit_sms1
+msgctxt "ui_main.submit_sms1"
+msgid "Send your SMS to"
+msgstr "Gửi SMS của bạn đến"
+
+#: ui_main.submit_sms2
+msgctxt "ui_main.submit_sms2"
+msgid "on your phone"
+msgstr "trên điện thoại"
+
+#: ui_main.success
+msgctxt "ui_main.success"
+msgid "Success!"
+msgstr "Thành công!"
+
+#: ui_main.successfuly_imported
+msgctxt "ui_main.successfuly_imported"
+msgid "Succesfully imported"
+msgstr "Đã nhập dữ liệu thành công"
+
+#: ui_main.surname
+msgctxt "ui_main.surname"
+msgid "Surname"
+msgstr "Tên"
+
+#: ui_main.survey
+msgctxt "ui_main.survey"
+msgid "Survey"
+msgstr "Khảo sát"
+
+#: ui_main.system
+msgctxt "ui_main.system"
+msgid "System"
+msgstr "Hệ thống"
+
+#: ui_main.taller_map
+msgctxt "ui_main.taller_map"
+msgid "Taller Map"
+msgstr "Bản đồ cao hơn"
+
+#: ui_main.tcp_port
+msgctxt "ui_main.tcp_port"
+msgid "TCP Port"
+msgstr "Cổng kết nối TCP"
+
+#: ui_main.themes
+msgctxt "ui_main.themes"
+msgid "Themes"
+msgstr "Giao diện"
+
+#: ui_main.theme_default
+msgctxt "ui_main.theme_default"
+msgid "Default Ushahidi Theme"
+msgstr "Sử dụng giao diện mặc định"
+
+#: ui_main.theme_settings
+msgctxt "ui_main.theme_settings"
+msgid "Theme Settings"
+msgstr "Thiết lập giao diện"
+
+#: ui_main.this
+msgctxt "ui_main.this"
+msgid "This"
+msgstr "Đây"
+
+#: ui_main.this_day
+msgctxt "ui_main.this_day"
+msgid "Today"
+msgstr "Hôm nay"
+
+#: ui_main.this_month
+msgctxt "ui_main.this_month"
+msgid "This Month"
+msgstr "Tháng này"
+
+#: ui_main.this_week
+msgctxt "ui_main.this_week"
+msgid "This Week"
+msgstr "Tuần này"
+
+#: ui_main.this_year
+msgctxt "ui_main.this_year"
+msgid "This Year"
+msgstr "Năm này"
+
+#: ui_main.this_is_your_profile
+msgctxt "ui_main.this_is_your_profile"
+msgid "This is your profile."
+msgstr "Đây là hồ sơ của bạn."
+
+#: ui_main.time
+msgctxt "ui_main.time"
+msgid "Time"
+msgstr "Thời gian"
+
+#: ui_main.title
+msgctxt "ui_main.title"
+msgid "Title "
+msgstr "Tiêu đề"
+
+#: ui_main.to
+msgctxt "ui_main.to"
+msgid "to"
+msgstr "đến"
+
+#: ui_main.today
+msgctxt "ui_main.today"
+msgid "Today"
+msgstr "Hôm nay"
+
+#: ui_main.today_at
+msgctxt "ui_main.today_at"
+msgid "Today at"
+msgstr "Hôm nay tại"
+
+#: ui_main.token
+msgctxt "ui_main.token"
+msgid "Token"
+msgstr "Token"
+
+#: ui_main.total_reports
+msgctxt "ui_main.total_reports"
+msgid "Total Reports"
+msgstr "Tổng số báo cáo"
+
+#: ui_main.translated
+msgctxt "ui_main.translated"
+msgid "Translated"
+msgstr "Đã được dịch"
+
+#: ui_main.translated_description
+msgctxt "ui_main.translated_description"
+msgid "Translated Description"
+msgstr "Mô tả đã được dịch"
+
+#: ui_main.translated_title
+msgctxt "ui_main.translated_title"
+msgid "Translated Title"
+msgstr "Tiêu đề đã được dịch"
+
+#: ui_main.translate_to
+msgctxt "ui_main.translate_to"
+msgid "Translate to"
+msgstr "Dịch sang"
+
+#: ui_main.translation
+msgctxt "ui_main.translation"
+msgid "Translation"
+msgstr "Dịch thuật"
+
+#: ui_main.translation_saved
+msgctxt "ui_main.translation_saved"
+msgid "Translation has been saved"
+msgstr "Dịch thuật đã được lưu"
+
+#: ui_main.trusted
+msgctxt "ui_main.trusted"
+msgid "Trusted"
+msgstr "Được tin tưởng"
+
+#: ui_main.type
+msgctxt "ui_main.type"
+msgid "Type"
+msgstr "Loại"
+
+#: ui_main.twitter
+msgctxt "ui_main.twitter"
+msgid "Twitter"
+msgstr "Twitter"
+
+#: ui_main.unable_send_email
+msgctxt "ui_main.unable_send_email"
+msgid "Unable to send email."
+msgstr "Không thể gửi email."
+
+#: ui_main.uncategorized_reports
+msgctxt "ui_main.uncategorized_reports"
+msgid "Uncategorized Reports"
+msgstr "Báo cáo chưa được phân loại"
+
+#: ui_main.unread
+msgctxt "ui_main.unread"
+msgid "unread"
+msgstr "chưa đọc"
+
+#: ui_main.unverified
+msgctxt "ui_main.unverified"
+msgid "Unverified"
+msgstr "Chưa xác nhận"
+
+#: ui_main.update_feeds
+msgctxt "ui_main.update_feeds"
+msgid "Update feeds"
+msgstr "Cập nhật feed"
+
+#: ui_main.upload
+msgctxt "ui_main.upload"
+msgid "Upload"
+msgstr "Tải lên"
+
+#: ui_main.upload_guide
+msgctxt "ui_main.upload_guide"
+msgid "View our report upload guides:-"
+msgstr "Xem hướng dẫn tải lên báo cáo của chúng tôi:-"
+
+#: ui_main.upload_docs_1
+msgctxt "ui_main.upload_docs_1"
+msgid "XML Upload guide"
+msgstr "Hướng dẫn tải lên XML"
+
+#: ui_main.upload_docs_2
+msgctxt "ui_main.upload_docs_2"
+msgid "CSV Upload guide"
+msgstr "Hướng dẫn tải lên CSV"
+
+#: ui_main.upload_file
+msgctxt "ui_main.upload_file"
+msgid "File to upload"
+msgstr "Tải lên tập tin"
+
+#: ui_main.upload_reports
+msgctxt "ui_main.upload_reports"
+msgid "Upload Reports"
+msgstr "Tải lên báo cáo"
+
+#: ui_main.upload_reports_custom_forms
+msgctxt "ui_main.upload_reports_custom_forms"
+msgid ""
+"Custom field columns must have their form_id appended to them e.g custom "
+"field Test, on the default form, whose id is 1, will be Test-1. During "
+"custom form field import, ensure that"
+msgstr "Custom field columns must have their form_id appended to them e.g custom field Test, on the default form, whose id is 1, will be Test-1. During custom form field import, ensure that"
+
+#: ui_main.upload_reports_detail_1
+msgctxt "ui_main.upload_reports_detail_1"
+msgid ""
+"With the form below, you can import incidents into the Ushahidi engine."
+msgstr "Với đơn bên dưới, bạn có thể nhập vào các dữ kiện của mình đến trung tâm xử lý của Ushahidi."
+
+#: ui_main.upload_reports_detail_2
+msgctxt "ui_main.upload_reports_detail_2"
+msgid "Reports must be uploaded in either CSV or XML format."
+msgstr "Báo cáo phải được tải lên ở định dạng CSV hoặc XML."
+
+#: ui_main.upload_reports_detail_3
+msgctxt "ui_main.upload_reports_detail_3"
+msgid ""
+"When incident ID already exists in the database, the entry in the CSV/XML "
+"file will be ignored."
+msgstr "Khi có một ID nào đó đã tồn tại trước đó trong cơ sở dữ liệu, phần khung thông tin trong tập tin CSV/XML sẽ được bỏ qua."
+
+#: ui_main.upload_reports_detail_4
+msgctxt "ui_main.upload_reports_detail_4"
+msgid "It must contain at least Incident Title and Incident Date."
+msgstr "Phải chứa tiêu đề và ngày tháng xảy ra sự kiện."
+
+#: ui_main.upload_reports_detail_4b
+msgctxt "ui_main.upload_reports_detail_4b"
+msgid ""
+"If no latitude and longitude columns are supplied, the location will be "
+"geocoded using the Google Geocoder."
+msgstr "Nếu không có vĩ độ và kinh độ cho cột số liệu, phần địa điểm sẽ được thiết lập bởi Google Geocoder."
+
+#: ui_main.upload_reports_detail_4c
+msgctxt "ui_main.upload_reports_detail_4c"
+msgid ""
+"If importing additional info i.e personal information and/or custom form "
+"fields"
+msgstr "Nếu nhập các dữ liệu bổ sung ví dụ như thông tin cá nhân và/hoặc khung thông tin mẫu đơn"
+
+#: ui_main.upload_reports_detail_4d
+msgctxt "ui_main.upload_reports_detail_4d"
+msgid ""
+"At least one of the personal information fields(name, surname,email) entries"
+" MUST exist. Empty records will not be imported"
+msgstr "Có ít nhất một khung thông tin cá nhân (tên, họ, email) PHẢI được liệt kê. Các khung thông tin rỗng sẽ không được nhập dữ liệu vào"
+
+#: ui_main.upload_reports_detail_4e
+msgctxt "ui_main.upload_reports_detail_4e"
+msgid ""
+"Your entries for dropdown fields, radio buttons and checkboxes match the "
+"options provided for the custom field on your instance"
+msgstr "Các khung thông tin của bạn cho menu xổ xuống, lựa chọn khoanh tròn và đánh dấu chọn vào các tùy chọn được cung cấp tùy theo trường hợp của bạn"
+
+#: ui_main.upload_reports_detail_4f
+msgctxt "ui_main.upload_reports_detail_4f"
+msgid ""
+"Checkbox options are separated by a comma e.g if your selected choice of "
+"fruits is apples,mangoes and grapes, your entry for this should be "
+"\"apples,mangoes,grapes\""
+msgstr "Đánh dấu tùy chọn được ngăn cách nhau bởi dấu phẩy, thí dụ nếu lựa chọn của bạn là trái cây và liên quan đến táo, xoài và nho, thì dòng thông tin bạn nên điền vào là \"táo,xoài,nho\""
+
+#: ui_main.upload_reports_detail_4g
+msgctxt "ui_main.upload_reports_detail_4g"
+msgid ""
+"Date field values are in the following format: mm/dd/yyyy e.g 3rd October "
+"2012 = 10/03/2012"
+msgstr "Khung giá trị ngày tháng nên ở định dạng: tt/nn/nnnn ví dụ ngày 3 tháng mười năm 2012 = 10/03/2012"
+
+#: ui_main.upload_reports_detail_5
+msgctxt "ui_main.upload_reports_detail_5"
+msgid "A Sample CSV Report"
+msgstr "Mẫu báo cáo CSV"
+
+#: ui_main.upload_reports_detail_6
+msgctxt "ui_main.upload_reports_detail_6"
+msgid ""
+"#,INCIDENT TITLE,INCIDENT "
+"DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED,LATITUDE,LONGITUDE<br "
+"/>\"1\",\"Suspected death in Nairobi\",\"2009-05-15 "
+"01:06:00\",\"Nairobi\",\"Three cases have been confirmed in C. del "
+"Uruguay\",\"DEATHS, CIVILIANS, \",YES,YES,\"-1.287\",\"36.821\""
+msgstr "#,INCIDENT TITLE,INCIDENT DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED,LATITUDE,LONGITUDE<br />\"1\",\"Suspected death in Nairobi\",\"2009-05-15 01:06:00\",\"Nairobi\",\"Three cases have been confirmed in C. del Uruguay\",\"DEATHS, CIVILIANS, \",YES,YES,\"-1.287\",\"36.821\""
+
+#: ui_main.upload_reports_detail_7
+msgctxt "ui_main.upload_reports_detail_7"
+msgid ""
+"\"2\",\"Looting\",\"2009-03-18 10:10:00\",\"Accra\",\"Looting happening "
+"everywhere\",\"RIOTS, DEATHS, PROPERTY LOSS, "
+"\",YES,NO,\"5.55\",\"-0.2166667\""
+msgstr "\"2\",\"Looting\",\"2009-03-18 10:10:00\",\"Accra\",\"Looting happening everywhere\",\"RIOTS, DEATHS, PROPERTY LOSS, \",YES,NO,\"5.55\",\"-0.2166667\""
+
+#: ui_main.upload_successful
+msgctxt "ui_main.upload_successful"
+msgid "Upload Successful"
+msgstr "Tải lên thành công"
+
+#: ui_main.upload_video
+msgctxt "ui_main.upload_video"
+msgid "Upload Video"
+msgstr "Tải lên video"
+
+#: ui_main.url
+msgctxt "ui_main.url"
+msgid "URL"
+msgstr "Đường dẫn"
+
+#: ui_main.user
+msgctxt "ui_main.user"
+msgid "User"
+msgstr "Người dùng"
+
+#: ui_main.username
+msgctxt "ui_main.username"
+msgid "Username"
+msgstr "Tên người dùng"
+
+#: ui_main.ushahidi_admin
+msgctxt "ui_main.ushahidi_admin"
+msgid "Ushahidi Admin"
+msgstr "Quản trị viên"
+
+#: ui_main.verification
+msgctxt "ui_main.verification"
+msgid "Verification"
+msgstr "Xác nhận"
+
+#: ui_main.verified
+msgctxt "ui_main.verified"
+msgid "Verified"
+msgstr "Đã xác nhận"
+
+#: ui_main.verified_reports
+msgctxt "ui_main.verified_reports"
+msgid "Verified Reports"
+msgstr "Báo cáo đã được xác nhận"
+
+#: ui_main.verify
+msgctxt "ui_main.verify"
+msgid "Verify"
+msgstr "Xác nhận"
+
+#: ui_main.verify_this_report
+msgctxt "ui_main.verify_this_report"
+msgid "Verify this Report"
+msgstr "Xác nhận báo cáo này"
+
+#: ui_main.version
+msgctxt "ui_main.version"
+msgid "Version"
+msgstr "Phiên bản"
+
+#: ui_main.via
+msgctxt "ui_main.via"
+msgid "via"
+msgstr "thông qua"
+
+#: ui_main.video
+msgctxt "ui_main.video"
+msgid "Video"
+msgstr "Video"
+
+#: ui_main.view
+msgctxt "ui_main.view"
+msgid "View"
+msgstr "Xem"
+
+#: ui_main.views
+msgctxt "ui_main.views"
+msgid "Views"
+msgstr "Xem"
+
+#: ui_main.view_all
+msgctxt "ui_main.view_all"
+msgid "View All"
+msgstr "Xem tất cả"
+
+#: ui_main.view_all_feeds
+msgctxt "ui_main.view_all_feeds"
+msgid "View all feeds"
+msgstr "Xem tất cả feed"
+
+#: ui_main.view_all_reports
+msgctxt "ui_main.view_all_reports"
+msgid "View all reports"
+msgstr "Xem tất cả báo cáo"
+
+#: ui_main.view_items
+msgctxt "ui_main.view_items"
+msgid "View Items"
+msgstr "Xem các đối tượng"
+
+#: ui_main.view_more
+msgctxt "ui_main.view_more"
+msgid "View More"
+msgstr "Xem thêm nữa"
+
+#: ui_main.view_public_profile
+msgctxt "ui_main.view_public_profile"
+msgid "View Public Profile"
+msgstr "Xem Hồ Sơ Công Cộng"
+
+#: ui_main.view_report
+msgctxt "ui_main.view_report"
+msgid "View Report"
+msgstr "Xem báo cáo"
+
+#: ui_main.view_reports
+msgctxt "ui_main.view_reports"
+msgid "View Reports"
+msgstr "Xem báo cáo"
+
+#: ui_main.view_video
+msgctxt "ui_main.view_video"
+msgid "View Video"
+msgstr "Xem video"
+
+#: ui_main.visible
+msgctxt "ui_main.visible"
+msgid "Visible"
+msgstr "Cho phép hiển thị"
+
+#: ui_main.waiting_approval
+msgctxt "ui_main.waiting_approval"
+msgid "Waiting Approval"
+msgstr "Đang đợi chấp thuận"
+
+#: ui_main.waiting_verification
+msgctxt "ui_main.waiting_verification"
+msgid "Waiting Verification"
+msgstr "Đang đợi xác nhận"
+
+#: ui_main.wider_map
+msgctxt "ui_main.wider_map"
+msgid "Wider Map"
+msgstr "Bản đồ rộng hơn"
+
+#: ui_main.web_form
+msgctxt "ui_main.web_form"
+msgid "Web Form"
+msgstr "Mẫu đơn web"
+
+#: ui_main.web
+msgctxt "ui_main.web"
+msgid "Web"
+msgstr "Web"
+
+#: ui_main.weight
+msgctxt "ui_main.weight"
+msgid "Weight"
+msgstr "Cân nặng"
+
+#: ui_main.Weekly
+msgctxt "ui_main.Weekly"
+msgid "Weekly"
+msgstr ""
+
+#: ui_main.yes
+msgctxt "ui_main.yes"
+msgid "Yes"
+msgstr "Đồng ý"
+
+#: ui_main.yesterday
+msgctxt "ui_main.yesterday"
+msgid "Yesterday"
+msgstr "Ngày hôm qua"
+
+#: ui_main.your_dashboard
+msgctxt "ui_main.your_dashboard"
+msgid "Your Dashboard"
+msgstr "Bảng điều khiển của bạn"
+
+#: ui_main.your_file
+msgctxt "ui_main.your_file"
+msgid "Your file"
+msgstr "Tập tin của bạn"
+
+#: ui_main.zoom_in
+msgctxt "ui_main.zoom_in"
+msgid "Zoom In"
+msgstr "Phóng to"
+
+#: ui_main.zoom_out
+msgctxt "ui_main.zoom_out"
+msgid "Zoom Out"
+msgstr "Thu nhỏ"

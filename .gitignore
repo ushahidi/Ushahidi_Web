@@ -1,5 +1,6 @@
 .*swp
 .htaccess
+.vagrant
 *~
 *.DS_Store
 application/logs/*
@@ -10,3 +11,4 @@ application/config/config.php
 application/config/database.php
 application/config/encryption.php
 tests/phpunit/phpunit.xml
+config/deploy/id_rsa_deploy

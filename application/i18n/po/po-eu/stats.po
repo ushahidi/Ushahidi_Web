@@ -1,0 +1,200 @@
+# 
+# Translators:
+# Theklan <galder158@hotmail.com>, 2013
+# gerkoon <gerkoon@gmail.com>, 2013
+# sutokia <sutokia@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-05-21 13:24+0000\n"
+"Last-Translator: sutokia <sutokia@gmail.com>\n"
+"Language-Team: Basque (http://www.transifex.com/ushahidi/ushahidi-v2/language/eu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: eu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: stats.approved
+msgctxt "stats.approved"
+msgid "Approved"
+msgstr "Onartua"
+
+#: stats.categories
+msgctxt "stats.categories"
+msgid "Categories"
+msgstr "Kategoriak"
+
+#: stats.category_impact
+msgctxt "stats.category_impact"
+msgid "Category Impact"
+msgstr "Kategoria arrakasta"
+
+#: stats.category_impact_description
+msgctxt "stats.category_impact_description"
+msgid ""
+"This chart gives you a linear view of the reports by category over time.  "
+"Scroll from left to right to see a comparative view of the different "
+"categories. Mouse over the graph for more details."
+msgstr "Estatistika honetan txostenen lerro ikuspegia duzu denboran zehar. Mugi sagua ezkerretik eskubira ikuspegi konparatiboa eskuratzeko kategoria ezberdinetan. Sagua grafikoaren gainean detaile gehiago lortzeko."
+
+#: stats.choose_date_range
+msgctxt "stats.choose_date_range"
+msgid "Choose a date range."
+msgstr "Aukeratu denbora tarte bat."
+
+#: stats.countries
+msgctxt "stats.countries"
+msgid "Countries"
+msgstr "Herriak"
+
+#: stats.country
+msgctxt "stats.country"
+msgid "Country"
+msgstr "Herria"
+
+#: stats.country_breakdown
+msgctxt "stats.country_breakdown"
+msgid "Country Breakdown"
+msgstr "Herri matxura"
+
+#: stats.description
+msgctxt "stats.description"
+msgid ""
+"This is the statistics section and will contain a general description here "
+"soon. For now, browse around using the sub category links above."
+msgstr "Hau estatistiken sekzioa da eta deskribapen orokorra izango du laster. Momentuz nabigatzen has zaitezke gainean dauden azpi kategoriak erabiltzen."
+
+#: stats.error
+msgctxt "stats.error"
+msgid "Error"
+msgstr "Akatza"
+
+#: stats.glossary
+msgctxt "stats.glossary"
+msgid "Glossary"
+msgstr "Hiztegia"
+
+#: stats.hit_summary
+msgctxt "stats.hit_summary"
+msgid "Hit Summary"
+msgstr "Ikustaldi laburpena"
+
+#: stats.legend
+msgctxt "stats.legend"
+msgid "Legend"
+msgstr "Legenda"
+
+#: stats.pageviews
+msgctxt "stats.pageviews"
+msgid "Pageviews"
+msgstr "Bisitaldiak"
+
+#: stats.pageviews_description
+msgctxt "stats.pageviews_description"
+msgid "The total number of pages that visitors have viewed on your site"
+msgstr "Zure orrialdeko bisitariek ikusi dituzten orrialdeen kopurua"
+
+#: stats.reports
+msgctxt "stats.reports"
+msgid "Reports"
+msgstr "Txostenak"
+
+#: stats.reports_categories
+msgctxt "stats.reports_categories"
+msgid "Reports Categories"
+msgstr "Txosten kategoriak"
+
+#: stats.reports_statistics
+msgctxt "stats.reports_statistics"
+msgid "Reports Statistics"
+msgstr "Txostenen estatistikak"
+
+#: stats.reports_status
+msgctxt "stats.reports_status"
+msgid "Reports Status"
+msgstr "Txostenen egoera"
+
+#: stats.report_punchcard
+msgctxt "stats.report_punchcard"
+msgid "Report Punchcard"
+msgstr "Orri zulatu txostena"
+
+#: stats.report_stats
+msgctxt "stats.report_stats"
+msgid "Report Stats"
+msgstr "Estatistiken txostena"
+
+#: stats.stats_not_setup
+msgctxt "stats.stats_not_setup"
+msgid "Stats Not Set Up"
+msgstr "Estatistikak ez dira ezarri"
+
+#: stats.time_range_1
+msgctxt "stats.time_range_1"
+msgid "1 Month"
+msgstr "Hilabete 1"
+
+#: stats.time_range_2
+msgctxt "stats.time_range_2"
+msgid "3 Months"
+msgstr "3 hilabete"
+
+#: stats.time_range_3
+msgctxt "stats.time_range_3"
+msgid "6 Months"
+msgstr "6 hilabete"
+
+#: stats.time_range_all
+msgctxt "stats.time_range_all"
+msgid "All"
+msgstr "Denak"
+
+#: stats.unapproved
+msgctxt "stats.unapproved"
+msgid "Unapproved"
+msgstr "Aprobatu gabeak"
+
+#: stats.unique_visitors
+msgctxt "stats.unique_visitors"
+msgid "Unique Visitors"
+msgstr "Bisitari bakarrak"
+
+#: stats.unique_visitors_description
+msgctxt "stats.unique_visitors_description"
+msgid ""
+"The number of individuals coming to your deployment. Unique visitors are "
+"determined using cookies. Visitors that do not have cookies enabled will be "
+"identified using a simple heuristic taking into account IP address, "
+"resolution, browser, plugins, OS, etc."
+msgstr "Zure hedapenera etorritako banakakoen kopurua. Bisitari bakarrak \"cookie\"-en bidez zehazten dira. \"Cookie\"-ak aktibaturik ez dituzten bisitariak identifikatzeko haien IP helbide, ebazpen, nabigatzaile, plugin, SO eta abarretik egindako heuristiko soil bat erabiliko da."
+
+#: stats.unverified
+msgctxt "stats.unverified"
+msgid "Unverified"
+msgstr "Ziurtatu gabeak"
+
+#: stats.verified
+msgctxt "stats.verified"
+msgid "Verified"
+msgstr "Ziurtatua"
+
+#: stats.visitor_summary
+msgctxt "stats.visitor_summary"
+msgid "Visitor Summary"
+msgstr "Bisitarien laburpena"
+
+#: stats.visits
+msgctxt "stats.visits"
+msgid "Visits"
+msgstr "Bisitak"
+
+#: stats.visits_description
+msgctxt "stats.visits_description"
+msgid ""
+"A visit is a record of a unique visitor coming to the site more than 30 "
+"minutes past his/her last pageview."
+msgstr "Bisitaldi bat bisitari batek azken orrialde ikusitik gutxienez 30 minutu pasa direnean gordetzen da."

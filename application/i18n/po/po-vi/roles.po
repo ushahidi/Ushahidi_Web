@@ -1,0 +1,63 @@
+# 
+# Translators:
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-07-10 10:35+0000\n"
+"Last-Translator: Anh Phan <vietnamesel10n@gmail.com>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: roles.description.length
+msgctxt "roles.description.length"
+msgid ""
+"The Description field must be at least 3 and no more 100 characters long."
+msgstr "Phần khung thông tin Mô Tả phải có ít nhất 3 ký tự và tối đa 100 ký tự về độ dài."
+
+#: roles.description.required
+msgctxt "roles.description.required"
+msgid "The Description field is required."
+msgstr "Phần khung thông tin về Mô Tả không được để trống."
+
+#: roles.name.alpha_numeric
+msgctxt "roles.name.alpha_numeric"
+msgid "The Name field must only contain letters or numbers."
+msgstr "Phần khung thông tin Tên chỉ được chứa các ký tự hoặc số."
+
+#: roles.name.length
+msgctxt "roles.name.length"
+msgid "The Name field must be at least 2 and no more than 30 characters long."
+msgstr "Phần khung thông tin Tên phải có ít nhất 2 ký tự hoặc tối đa 30 ký tự về độ dài."
+
+#: roles.name.nomodify
+msgctxt "roles.name.nomodify"
+msgid "SuperAdmin Role Cannot Be Modified."
+msgstr "Quyền Quản Trị Viên Đứng Đầu không thể được hiệu chỉnh"
+
+#: roles.name.required
+msgctxt "roles.name.required"
+msgid "The Name field is required."
+msgstr "Phần khung thông tin Tên không được để trống."
+
+#: roles.access_level.numeric
+msgctxt "roles.access_level.numeric"
+msgid "Access Level field must be a number between 0 - 100."
+msgstr "Phần khung thông tin Cấp Độ Truy Cập phải có giá trị từ 0 - 100."
+
+#: roles.access_level.required
+msgctxt "roles.access_level.required"
+msgid "Access Level field must be a number between 0 - 100."
+msgstr "Phần khung thông tin Cấp Độ Truy Cập phải có giá trị từ 0 - 100."
+
+#: roles.permissions.numeric
+msgctxt "roles.permissions.numeric"
+msgid "Permissions field must be a number between 0 - 100."
+msgstr "Phần khung thông tin Quyền Hạn phải có giá trị từ 0 - 100."

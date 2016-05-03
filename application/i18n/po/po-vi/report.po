@@ -1,0 +1,394 @@
+# 
+# Translators:
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-08-22 06:26+0000\n"
+"PO-Revision-Date: 2013-08-22 09:01+0000\n"
+"Last-Translator: Anh Phan <vietnamesel10n@gmail.com>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: report.comments_form_error
+msgctxt "report.comments_form_error"
+msgid "error!"
+msgstr "lỗi!"
+
+#: report.country_name.single_country
+msgctxt "report.country_name.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the report "
+"location is within the country %s."
+msgstr "Việc thi hành này chỉ gói gọn trong một quốc gia. Hãy chắc rằng địa điểm báo cáo nằm trong quốc gia %s."
+
+#: report.custom_field.values
+msgctxt "report.custom_field.values"
+msgid "Please enter a valid value for the \"%s\" field."
+msgstr "Vui lòng điền vào một giá trị hợp lệ cho phần khung thông tin của \"%s\"."
+
+#: report.custom_field.numeric
+msgctxt "report.custom_field.numeric"
+msgid "The \"%s\" field must be numeric."
+msgstr "Phần khung thông tin \"%s\" phải ở dạng số."
+
+#: report.custom_field.required
+msgctxt "report.custom_field.required"
+msgid "The \"%s\" field is required."
+msgstr "Phần khung thông tin \"%s\" không được để trống."
+
+#: report.custom_field.not_exist
+msgctxt "report.custom_field.not_exist"
+msgid "The \"%s\" field is does not exist."
+msgstr "Phần khung thông tin \"%s\" không tồn tại."
+
+#: report.custom_field.permission
+msgctxt "report.custom_field.permission"
+msgid "The \"%s\" field cannot be edited by your account."
+msgstr "Tài khoản của bạn không thể chỉnh sửa phần khung thông tin \"%s\"."
+
+#: report.custom_field.email
+msgctxt "report.custom_field.email"
+msgid "The \"%s\" field must contain a valid email address."
+msgstr "Phần khung thông tin \"%s\" phải chứa một địa chỉ email hợp lệ."
+
+#: report.custom_field.phone
+msgctxt "report.custom_field.phone"
+msgid "The \"%s\" field must contain a valid phone number."
+msgstr "Phần khung thông tin \"%s\" phải chứa một số điện thoại hợp lệ."
+
+#: report.custom_field.date_mmddyyyy
+msgctxt "report.custom_field.date_mmddyyyy"
+msgid "The \"%s\" field must contain a valid date (MM/DD/YYYY)."
+msgstr "Phần khung thông tin \"%s\" phải chứa một dạng ngày tháng hợp lệ (TT/NgNg/NNNN)."
+
+#: report.custom_field.date_ddmmyyyy
+msgctxt "report.custom_field.date_ddmmyyyy"
+msgid "The \"%s\" field must contain a valid date (DD/MM/YYYY)."
+msgstr "Phần khung thông tin \"%s\" phải chứa một dạng ngày tháng hợp lệ (TT/NgNg/NNNN)."
+
+#: report.data_include.between
+msgctxt "report.data_include.between"
+msgid "Please select a valid item to include in the download."
+msgstr "Xin chọn một đối tượng hợp lệ trong phần tải về."
+
+#: report.data_include.numeric
+msgctxt "report.data_include.numeric"
+msgid "Please select a valid item to include in the download."
+msgstr "Xin vui lòng lựa chọn một đối tượng hợp lệ trong phần tải về."
+
+#: report.data_active.between
+msgctxt "report.data_active.between"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Xin vui lòng chọn \"Các Báo Cáo Đang Đợi Chấp Nhận\" hoặc \"Chấp Nhận Báo Cáo\" hoặc cả hai."
+
+#: report.data_active.numeric
+msgctxt "report.data_active.numeric"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Xin vui lòng chọn \"Các Báo Cáo Đang Đợi Chấp Nhận\" hoặc \"Chấp Nhận Báo Cáo\" hoặc cả hai."
+
+#: report.data_active.required
+msgctxt "report.data_active.required"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Xin vui lòng chọn \"Các Báo Cáo Đang Đợi Chấp Nhận\" hoặc \"Chấp Nhận Báo Cáo\" hoặc cả hai."
+
+#: report.data_verified.between
+msgctxt "report.data_verified.between"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Xin vui lòng chọn \"Các Báo Cáo Đang Đợi Xác Nhận\" hoặc \"Báo Cáo Đã Được Xác Nhận\" hoặc cả hai."
+
+#: report.data_verified.numeric
+msgctxt "report.data_verified.numeric"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Xin vui lòng chọn \"Các Báo Cáo Đang Đợi Xác Nhận\" hoặc \"Báo Cáo Đã Được Xác Nhận\" hoặc cả hai."
+
+#: report.data_verified.required
+msgctxt "report.data_verified.required"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Xin vui lòng chọn \"Các Báo Cáo Đang Đợi Chấp Nhận\" hoặc \"Chấp Nhận Báo Cáo\" hoặc cả hai."
+
+#: report.data_point.between
+msgctxt "report.data_point.between"
+msgid "Please select a valid type of report to download."
+msgstr "Xin vui lòng chọn một loại báo cáo hợp lệ để tải về."
+
+#: report.data_point.numeric
+msgctxt "report.data_point.numeric"
+msgid "Please select a valid type of report to download."
+msgstr "Xin vui lòng chọn một loại báo cáo hợp lệ để tải về."
+
+#: report.data_point.required
+msgctxt "report.data_point.required"
+msgid "Please select a valid type of report to download."
+msgstr "Xin vui lòng chọn một loại báo cáo hợp lệ để tải về."
+
+#: report.format.required
+msgctxt "report.format.required"
+msgid "You must select a download format. Select either CSV or XML."
+msgstr "Bạn phải chọn một định dạng để tải về. Chọn hoặc CSV hoặc XML."
+
+#: report.format.valid
+msgctxt "report.format.valid"
+msgid "Please select a valid format to download your reports in"
+msgstr "Xin vui lòng chọn một loại báo cáo hợp lệ để tải về ở"
+
+#: report.from_date.date_mmddyyyy
+msgctxt "report.from_date.date_mmddyyyy"
+msgid "The FROM date field does not appear to contain a valid date."
+msgstr "Phần khung thông tin về ngày gửi TỪ không chứa định dạng tập tin hợp lệ."
+
+#: report.from_date.range
+msgctxt "report.from_date.range"
+msgid "Please enter a valid FROM date. It cannot be greater than today."
+msgstr "Xin vui lòng điền vào giá trị ngày hợp lệ của Gửi Từ. Ngày này không thể lớn hơn ngày hiện tại."
+
+#: report.incident_active.between
+msgctxt "report.incident_active.between"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Xin điền vào giá trị hợp lệ để Chấp Nhận Báo Cáo Này"
+
+#: report.incident_active.required
+msgctxt "report.incident_active.required"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Xin điền vào giá trị hợp lệ để Chấp Nhận Báo Cáo Này"
+
+#: report.incident_ampm.validvalues
+msgctxt "report.incident_ampm.validvalues"
+msgid "The am/pm field does not appear to contain a valid value."
+msgstr "Phần khung thông tin về sáng/tối không chứa giá trị hợp lệ."
+
+#: report.incident_category.numeric
+msgctxt "report.incident_category.numeric"
+msgid "The \"Categories\" field does not appear to contain a valid category."
+msgstr "Phần khung thông tin về \"Phân Loại\" không chứa định dạng phân loại hợp lệ."
+
+#: report.incident_category.required
+msgctxt "report.incident_category.required"
+msgid "The \"Categories\" field is required."
+msgstr "Phần khung thông tin về \"Phân Loại\" không được để trống."
+
+#: report.incident_date.date_ddmmyyyy
+msgctxt "report.incident_date.date_ddmmyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "Phần khung thông tin về ngày tháng không chứa định dạng tập tin hợp lệ."
+
+#: report.incident_date.date_mmddyyyy
+msgctxt "report.incident_date.date_mmddyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "Phần khung thông tin về ngày tháng không chứa định dạng tập tin hợp lệ."
+
+#: report.incident_date.required
+msgctxt "report.incident_date.required"
+msgid "The date field is required."
+msgstr "Phần khung thông tin ngày tháng không được để trống."
+
+#: report.incident_description.required
+msgctxt "report.incident_description.required"
+msgid "The \"Description\" field is required."
+msgstr "Phần khung thông tin về \"Mô Tả\" không được để trống."
+
+#: report.incident_hour.between
+msgctxt "report.incident_hour.between"
+msgid "The hour field does not appear to contain a valid hour."
+msgstr "Phần khung thông tin về giờ chứa định dạng giờ không hợp lệ."
+
+#: report.incident_hour.required
+msgctxt "report.incident_hour.required"
+msgid "The hour field is required."
+msgstr "Phần khung thông tin về giờ không được để trống."
+
+#: report.incident_information.alpha
+msgctxt "report.incident_information.alpha"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Xin vui lòng điền vào một giá trị hợp lệ cho phần Xác Suất Thông Tin."
+
+#: report.incident_information.length
+msgctxt "report.incident_information.length"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Xin vui lòng điền vào một giá trị hợp lệ cho phần Xác Suất Thông Tin."
+
+#: report.incident_minute.between
+msgctxt "report.incident_minute.between"
+msgid "The minute field does not appear to contain a valid value."
+msgstr "Phần khung thông tin về phút chứa dạng phút không hợp lệ."
+
+#: report.incident_minute.required
+msgctxt "report.incident_minute.required"
+msgid "The minute field is required."
+msgstr "Phần khung thông tin về phút không được để trống."
+
+#: report.incident_news.url
+msgctxt "report.incident_news.url"
+msgid "The news source links field does not appear to contain a valid URL."
+msgstr "Phần liên kết đường dẫn đến nguồn tin không chứa đường dẫn hợp lệ."
+
+#: report.incident_photo.size
+msgctxt "report.incident_photo.size"
+msgid "Please ensure that photo upload sizes are limited to 2MB."
+msgstr "Hãy chắc rằng hình ảnh được tải lên có kích thước tối đa là 2MB."
+
+#: report.incident_photo.type
+msgctxt "report.incident_photo.type"
+msgid ""
+"The Upload Photos field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "Phần khung thông tin về hỉnh ảnh tải lên chứa định dạng hình ảnh không hợp lệ. Chỉ chấp nhận các định dạng .JPG, .PNG và .GIF."
+
+#: report.incident_photo.valid
+msgctxt "report.incident_photo.valid"
+msgid "The Upload Photos field does not appear to contain a valid file."
+msgstr "Phần khung thông tin về hình ảnh được tải lên chứa định dạng tập tin không hợp lệ."
+
+#: report.incident_source.alpha
+msgctxt "report.incident_source.alpha"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Xin vui lòng điền vào một giá trị hợp lệ cho Độ Tin Cậy Về Nguồn Tin."
+
+#: report.incident_source.length
+msgctxt "report.incident_source.length"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Xin vui lòng điền vào một giá trị hợp lệ cho Độ Tin Cậy Về Nguồn Tin."
+
+#: report.incident_title.length
+msgctxt "report.incident_title.length"
+msgid ""
+"The \"Report Title\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "Phần khung thông tin \"Tiêu Đề Báo Cáo\" phải chứa ít nhất 3 ký tự và tối đa 200 ký tự về độ dài."
+
+#: report.incident_title.required
+msgctxt "report.incident_title.required"
+msgid "The \"Report Title\" field is required."
+msgstr "Phần khung thông tin \"Tiêu Đề Báo Cáo\" không được để trống."
+
+#: report.incident_title.csrf
+msgctxt "report.incident_title.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a report?"
+msgstr "Đây có thể là tấn công dạng CSRF. Bạn có muốn tạo/chỉnh sửa báo cáo về việc này không?"
+
+#: report.incident_verified.between
+msgctxt "report.incident_verified.between"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Xin điền vào giá trị hợp lệ để Xác Nhận Báo Cáo Này"
+
+#: report.incident_verified.required
+msgctxt "report.incident_verified.required"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Xin điền vào giá trị hợp lệ để Xác Nhận Báo Cáo Này"
+
+#: report.incident_video.url
+msgctxt "report.incident_video.url"
+msgid "The video links field does not appear to contain a valid URL."
+msgstr "Phần liên kết đường dẫn video không chứa đường dẫn hợp lệ."
+
+#: report.latitude.between
+msgctxt "report.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "Phần khung thông tin về vĩ độ không chứa định dạng vĩ độ hợp lệ."
+
+#: report.latitude.required
+msgctxt "report.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Phần khung thông tin về vĩ độ không được để trống. Xin vui lòng click vào bản đồ để chọn địa điểm."
+
+#: report.locale.alpha_dash
+msgctxt "report.locale.alpha_dash"
+msgid "The locale field has an incorrect value. "
+msgstr "Phần khung thông tin ngôn ngữ chứa giá trị không hợp lệ."
+
+#: report.locale.exists
+msgctxt "report.locale.exists"
+msgid "This report already has a translation for this language."
+msgstr "Báo cáo này đã có phần chuyển ngữ dành cho dạng ngôn ngữ này."
+
+#: report.locale.length
+msgctxt "report.locale.length"
+msgid "The locale field has an incorrect value. "
+msgstr "Phần khung thông tin ngôn ngữ chứa giá trị không hợp lệ."
+
+#: report.locale.locale
+msgctxt "report.locale.locale"
+msgid ""
+"The Original Report and the Translation have the same locale (language)."
+msgstr "Báo Cáo Gốc và phần Dịch có cùng ngôn ngữ với nhau (ngôn ngữ bản địa)."
+
+#: report.locale.required
+msgctxt "report.locale.required"
+msgid "The locale is required."
+msgstr "Phần khung thông tin ngôn ngữ không được để trống."
+
+#: report.location_name.length
+msgctxt "report.location_name.length"
+msgid ""
+"The \"Location Name\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "Phần khung thông tin \"Tên Địa Điểm\" phải có ít nhất 3 ký tự và tối đa 200 ký tự về độ dài."
+
+#: report.location_name.required
+msgctxt "report.location_name.required"
+msgid "The \"Location Name\" field is required."
+msgstr "Phần khung thông tin \"Tên Địa Điểm\" không được để trống."
+
+#: report.longitude.between
+msgctxt "report.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "Phần khung thông tin về kinh độ không chứa định dạng kinh độ hợp lệ."
+
+#: report.longitude.required
+msgctxt "report.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Phần khung thông tin về kinh độ không được để trống. Xin vui lòng click vào bản đồ để chọn địa điểm."
+
+#: report.person_email.email
+msgctxt "report.person_email.email"
+msgid "The email field does not appear to contain a valid email address."
+msgstr "Phần khung thông tin email dường như chứa địa chỉ email không hợp lệ."
+
+#: report.person_email.length
+msgctxt "report.person_email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "Phần khung thông tin email phải có ít nhất 4 ký tự và tối đa 64 ký tự về độ dài."
+
+#: report.person_first.length
+msgctxt "report.person_first.length"
+msgid ""
+"The first name field must be at least 3 and no more 100 characters long."
+msgstr "Phần khung thông tin tên phải có ít nhất 3 ký tự và tối đa 100 ký tự về độ dài."
+
+#: report.person_last.length
+msgctxt "report.person_last.length"
+msgid ""
+"The last name field must be at least 2 and no more 100 characters long."
+msgstr "Phần khung thông tin họ phải có ít nhất 2 ký tự và tối đa 100 ký tự về độ dài."
+
+#: report.to_date.date_mmddyyyy
+msgctxt "report.to_date.date_mmddyyyy"
+msgid "The TO date field does not appear to contain a valid date."
+msgstr "Phần khung thông tin về ngày gửi ĐẾN không chứa định dạng tập tin hợp lệ."
+
+#: report.to_date.range
+msgctxt "report.to_date.range"
+msgid "Please enter a valid TO date. It cannot be greater than today."
+msgstr "Xin vui lòng điền vào giá trị ngày hợp lệ của Gửi ĐẾN. Ngày này không thể lớn hơn ngày hiện tại."
+
+#: report.to_date.range_greater
+msgctxt "report.to_date.range_greater"
+msgid "Your FROM date cannot be greater than your TO date."
+msgstr "Ngày GỬI TỪ không được lớn hơn ngày GỬI ĐẾN."

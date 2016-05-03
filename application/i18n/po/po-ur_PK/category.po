@@ -1,0 +1,89 @@
+#. extracted from en_US/category.php, ur_PK/category.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-20 22:18+0000\n"
+"PO-Revision-Date: 2012-09-20 22:18+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: ur_PK\n"
+
+#: category.category_color.length
+msgctxt "category.category_color.length"
+msgid "The color field must be 6 characters long."
+msgstr ""
+
+#: category.category_color.required
+msgctxt "category.category_color.required"
+msgid "The color field is required."
+msgstr ""
+
+#: category.category_description.required
+msgctxt "category.category_description.required"
+msgid "The description field is required."
+msgstr ""
+
+#: category.category_image.size
+msgctxt "category.category_image.size"
+msgid "Please ensure that image uploads sizes are limited to 50KB."
+msgstr ""
+
+#: category.category_image.type
+msgctxt "category.category_image.type"
+msgid "The image field does not appear to contain a valid image. The only accepted formats are .JPG, .PNG and .GIF."
+msgstr ""
+
+#: category.category_image.valid
+msgctxt "category.category_image.valid"
+msgid "The image field does not appear to contain a valid file"
+msgstr ""
+
+#: category.category_title.length
+msgctxt "category.category_title.length"
+msgid "The title field must be at least 3 and no more 80 characters long."
+msgstr ""
+
+#: category.category_title.required
+msgctxt "category.category_title.required"
+msgid "The title field is required."
+msgstr ""
+
+#: category.parent_id.already_parent
+msgctxt "category.parent_id.already_parent"
+msgid "You cannot subcategorize a category with subcategories."
+msgstr ""
+
+#: category.parent_id.exists
+msgctxt "category.parent_id.exists"
+msgid "The parent category does not exist."
+msgstr ""
+
+#: category.parent_id.numeric
+msgctxt "category.parent_id.numeric"
+msgid "The parent category field must be numeric."
+msgstr ""
+
+#: category.parent_id.parent_trusted
+msgctxt "category.parent_id.parent_trusted"
+msgid "The parent category cannot be a special category"
+msgstr ""
+
+#: category.parent_id.required
+msgctxt "category.parent_id.required"
+msgid "The parent category field is required."
+msgstr ""
+
+#: category.parent_id.same
+msgctxt "category.parent_id.same"
+msgid "The category and the parent category cannot be the same."
+msgstr ""
+
+#: category.parent_id.special
+msgctxt "category.parent_id.special"
+msgid "Special categories cannot be subcategorised."
+msgstr ""
+

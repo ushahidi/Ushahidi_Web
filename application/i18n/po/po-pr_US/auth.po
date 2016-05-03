@@ -1,0 +1,223 @@
+#. extracted from en_US/auth.php, pr_US/auth.php
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-15 04:40+0000\n"
+"PO-Revision-Date: 2012-08-15 04:40+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: pr_US\n"
+
+#: auth.email.email
+msgctxt "auth.email.email"
+msgid "The email you entered is not a valid email address."
+msgstr "è,ò,ù,à"
+
+#: auth.email.exists
+msgctxt "auth.email.exists"
+msgid "Sorry, a user account already exists for this email address."
+msgstr "è,ò,ù,à"
+
+#: auth.email.length
+msgctxt "auth.email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "è,ò,ù,à"
+
+#: auth.email.required
+msgctxt "auth.email.required"
+msgid "The email field is required."
+msgstr "è,ò,ù,à"
+
+#: auth.name.length
+msgctxt "auth.name.length"
+msgid "The name field must be at least 3 and no more 100 characters long."
+msgstr "è,ò,ù,à"
+
+#: auth.name.required
+msgctxt "auth.name.required"
+msgid "The name field is required."
+msgstr "è,ò,ù,à"
+
+#: auth.name.standard_text
+msgctxt "auth.name.standard_text"
+msgid "The username field contains disallowed characters."
+msgstr "è,ò,ù,à"
+
+#: auth.current_password.length
+msgctxt "auth.current_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr ""
+
+#: auth.current_password.login error
+msgctxt "auth.current_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr ""
+
+#: auth.current_password.matches
+msgctxt "auth.current_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr ""
+
+#: auth.current_password.required
+msgctxt "auth.current_password.required"
+msgid "The password field is required."
+msgstr ""
+
+#: auth.current_password.alpha_dash
+msgctxt "auth.current_password.alpha_dash"
+msgid "The password field must have alphabetical characters, the # and @ symbols, numbers, underscores and dashes only"
+msgstr ""
+
+#: auth.current_password.incorrect
+msgctxt "auth.current_password.incorrect"
+msgid "The current password you entered for your account is incorrect. Please try again."
+msgstr ""
+
+#: auth.new_password.length
+msgctxt "auth.new_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr ""
+
+#: auth.new_password.login error
+msgctxt "auth.new_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr ""
+
+#: auth.new_password.matches
+msgctxt "auth.new_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr ""
+
+#: auth.new_password.required
+msgctxt "auth.new_password.required"
+msgid "The password field is required."
+msgstr ""
+
+#: auth.new_password.alpha_dash
+msgctxt "auth.new_password.alpha_dash"
+msgid "The password field must have alphabetical characters, the # and @ symbols, numbers, underscores and dashes only"
+msgstr ""
+
+#: auth.password.default
+msgctxt "auth.password.default"
+msgid "There has been an error attempting to log you in."
+msgstr ""
+
+#: auth.password.length
+msgctxt "auth.password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "è,ò,ù,à"
+
+#: auth.password.login error
+msgctxt "auth.password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr ""
+
+#: auth.password.matches
+msgctxt "auth.password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "è,ò,ù,à"
+
+#: auth.password.required
+msgctxt "auth.password.required"
+msgid "The password field is required."
+msgstr "è,ò,ù,à"
+
+#: auth.password.riverid server down
+msgctxt "auth.password.riverid server down"
+msgid "The authentication server is down. Please try again later."
+msgstr ""
+
+#: auth.password.alpha_dash
+msgctxt "auth.password.alpha_dash"
+msgid "The password field must have alphabetical characters, the # and @ symbols, numbers, underscores and dashes only"
+msgstr ""
+
+#: auth.password_confirm.matches
+msgctxt "auth.password_confirm.matches"
+msgid "The password confirmation field must match the password field."
+msgstr "è,ò,ù,à"
+
+#: auth.resetemail.email
+msgctxt "auth.resetemail.email"
+msgid "The email you entered is not a valid email address."
+msgstr "è,ò,ù,à"
+
+#: auth.resetemail.invalid
+msgctxt "auth.resetemail.invalid"
+msgid "Sorry, we don't have your email address"
+msgstr "è,ò,ù,à"
+
+#: auth.resetemail.required
+msgctxt "auth.resetemail.required"
+msgid "The email field is required."
+msgstr "è,ò,ù,à"
+
+#: auth.role.superadmin_modify
+msgctxt "auth.role.superadmin_modify"
+msgid "Only a superadmin may modify a superadmin or upgrade a user to admin."
+msgstr ""
+
+#: auth.roles.alpha_numeric
+msgctxt "auth.roles.alpha_numeric"
+msgid "Invalid role format."
+msgstr "è,ò,ù,à"
+
+#: auth.roles.length
+msgctxt "auth.roles.length"
+msgid "The role field must be at least 5 and no more than 30 characters long."
+msgstr "è,ò,ù,à"
+
+#: auth.roles.required
+msgctxt "auth.roles.required"
+msgid "You must define at least one role."
+msgstr "è,ò,ù,à"
+
+#: auth.roles.values
+msgctxt "auth.roles.values"
+msgid "You must select either ADMIN or USER role."
+msgstr "è,ò,ù,à"
+
+#: auth.username.admin
+msgctxt "auth.username.admin"
+msgid "The admin user role cannot be modified."
+msgstr "è,ò,ù,à"
+
+#: auth.username.alpha_numeric
+msgctxt "auth.username.alpha_numeric"
+msgid "The public profile URL field must only contain numbers and letters."
+msgstr ""
+
+#: auth.username.exists
+msgctxt "auth.username.exists"
+msgid "Sorry, this public profile URL is already in use."
+msgstr "è,ò,ù,à"
+
+#: auth.username.length
+msgctxt "auth.username.length"
+msgid "The public profile URL field must be at least 2 and no more 100 characters long."
+msgstr "è,ò,ù,à"
+
+#: auth.username.login error
+msgctxt "auth.username.login error"
+msgid "Please check that you entered the correct public profile URL."
+msgstr ""
+
+#: auth.username.required
+msgctxt "auth.username.required"
+msgid "The public profile URL field is required."
+msgstr "è,ò,ù,à"
+
+#: auth.username.superadmin
+msgctxt "auth.username.superadmin"
+msgid "The super admin role cannot be modified."
+msgstr "è,ò,ù,à"
+
+#: auth.username.csrf
+msgctxt "auth.username.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a user?"
+msgstr ""
+

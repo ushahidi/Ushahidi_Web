@@ -1,0 +1,47 @@
+# 
+# Translators:
+# jose sabastizagal <jsabastizagal@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-08-09 02:02+0000\n"
+"Last-Translator: jose sabastizagal <jsabastizagal@gmail.com>\n"
+"Language-Team: Spanish (Peru) (http://www.transifex.com/ushahidi/ushahidi-v2/language/es_PE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_PE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: private_message.parent_id.numeric
+msgctxt "private_message.parent_id.numeric"
+msgid "Parent ID must be numeric"
+msgstr "El Parent ID debe ser numérico"
+
+#: private_message.private_to.required
+msgctxt "private_message.private_to.required"
+msgid "The To field is required"
+msgstr "El campo \"A:\" es obligatorio"
+
+#: private_message.private_to.exists
+msgctxt "private_message.private_to.exists"
+msgid "The user you are try to send a message to does not exist"
+msgstr "El usuario al que deseas enviar el mensaje, no existe"
+
+#: private_message.private_subject.required
+msgctxt "private_message.private_subject.required"
+msgid "The subject field is required"
+msgstr "El campo \"Asunto\" es obligatorio."
+
+#: private_message.private_subject.length
+msgctxt "private_message.private_subject.length"
+msgid "Subject must be between 3 and 150 characters"
+msgstr "El Asunto debe tener entre 3 y 150 caracteres"
+
+#: private_message.private_message.required
+msgctxt "private_message.private_message.required"
+msgid "The message field is required"
+msgstr "El campo \"Mensaje\" es obligatorio"

@@ -1,0 +1,253 @@
+# 
+# Translators:
+# Iker Ibarguren, 2013
+# Iruneakoa <iruneakoa@yopmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-19 16:10+0000\n"
+"Last-Translator: Iker Ibarguren\n"
+"Language-Team: Basque (http://www.transifex.com/ushahidi/ushahidi-v2/language/eu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: eu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: auth.email.email
+msgctxt "auth.email.email"
+msgid "The email you entered is not a valid email address."
+msgstr "Sartutako posta ez da baliozko posta"
+
+#: auth.email.exists
+msgctxt "auth.email.exists"
+msgid "Sorry, a user account already exists for this email address."
+msgstr "Barkatu, helbide posta honen erabiltzaile-kontua existitzen da jada"
+
+#: auth.email.length
+msgctxt "auth.email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "Postaren eremuak gutxienez 4 eta gehienez 64 karaktere izan behar ditu."
+
+#: auth.email.required
+msgctxt "auth.email.required"
+msgid "The email field is required."
+msgstr "Postaren eremua betetzea beharrezkoa da."
+
+#: auth.name.length
+msgctxt "auth.name.length"
+msgid "The name field must be at least 3 and no more 100 characters long."
+msgstr "Izenaren eremuak gutxienez 3 eta gehienez 100 karaktere izan behar ditu."
+
+#: auth.name.required
+msgctxt "auth.name.required"
+msgid "The name field is required."
+msgstr "Izenaren eremua betetzea beharrezkoa da."
+
+#: auth.name.standard_text
+msgctxt "auth.name.standard_text"
+msgid "The username field contains disallowed characters."
+msgstr "Erabiltzaile-izenaren eremuak debekatutako karaktereak dauzka."
+
+#: auth.current_password.length
+msgctxt "auth.current_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "Pasahitzaren eremuak gutxienez 8 karaktere izan behar ditu."
+
+#: auth.current_password.login error
+msgctxt "auth.current_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Mesedez, ziurtatu sartutako posta eta pasahitza egokiak direla."
+
+#: auth.current_password.matches
+msgctxt "auth.current_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Mesedez, pasahitz berdina sartu bi pasahitz eremuetan."
+
+#: auth.current_password.required
+msgctxt "auth.current_password.required"
+msgid "The password field is required."
+msgstr "Pasahitzaren eremua betetzea beharrezkoa da."
+
+#: auth.current_password.alpha_dash
+msgctxt "auth.current_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "Pasahitza eremuak alfabetoaren karaktereak, # eta @ ikurrak, zenbakiak, azpimarrak eta marratxoak bakarrik eduki behar ditu"
+
+#: auth.current_password.incorrect
+msgctxt "auth.current_password.incorrect"
+msgid ""
+"The current password you entered for your account is incorrect. Please try "
+"again."
+msgstr "Sartu duzun pasahitza okerra da. Mesedez, saiatu berriz."
+
+#: auth.new_password.length
+msgctxt "auth.new_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "Pasahitzaren eremuak gutxienez 8 karaktere izan behar ditu."
+
+#: auth.new_password.login error
+msgctxt "auth.new_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Mesedez, ziurtatu sartutako posta eta pasahitza egokiak direla."
+
+#: auth.new_password.matches
+msgctxt "auth.new_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Mesedez, pasahitz berdina sartu bi pasahitz eremuetan."
+
+#: auth.new_password.required
+msgctxt "auth.new_password.required"
+msgid "The password field is required."
+msgstr "Pasahitzaren eremua betetzea beharrezkoa da."
+
+#: auth.new_password.alpha_dash
+msgctxt "auth.new_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "Pasahitza eremuak alfabetoaren karaktereak, # eta @ ikurrak, zenbakiak, azpimarrak eta marratxoak bakarrik eduki behar ditu"
+
+#: auth.password.default
+msgctxt "auth.password.default"
+msgid "There has been an error attempting to log you in."
+msgstr "Saioa hasterakoan errore bat egon da."
+
+#: auth.password.length
+msgctxt "auth.password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "Pasahitzaren eremuak gutxienez 8 karaktere izan behar ditu."
+
+#: auth.password.login error
+msgctxt "auth.password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Mesedez, ziurtatu sartutako posta eta pasahitza egokiak direla."
+
+#: auth.password.matches
+msgctxt "auth.password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Mesedez, pasahitz berdina sartu bi pasahitz eremuetan."
+
+#: auth.password.required
+msgctxt "auth.password.required"
+msgid "The password field is required."
+msgstr "Pasahitzaren eremua betetzea beharrezkoa da."
+
+#: auth.password.riverid server down
+msgctxt "auth.password.riverid server down"
+msgid "The authentication server is down. Please try again later."
+msgstr "Autentikazio zerbitzaria erorita dago. Saiatu berriro beranduago."
+
+#: auth.password.riverid
+msgctxt "auth.password.riverid"
+msgid "%s"
+msgstr "%s"
+
+#: auth.password.alpha_dash
+msgctxt "auth.password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "Pasahitza eremuak alfabetoaren karaktereak, # eta @ ikurrak, zenbakiak, azpimarrak eta marratxoak bakarrik eduki behar ditu"
+
+#: auth.password_confirm.matches
+msgctxt "auth.password_confirm.matches"
+msgid "The password confirmation field must match the password field."
+msgstr "Pasahitza berrespena eremuak eta pasahitza eremuak berdinak izan behar dute."
+
+#: auth.resetemail.email
+msgctxt "auth.resetemail.email"
+msgid "The email you entered is not a valid email address."
+msgstr "Sartutako posta ez da baliozko posta"
+
+#: auth.resetemail.invalid
+msgctxt "auth.resetemail.invalid"
+msgid "Sorry, we don't have your email address"
+msgstr "Barkatu, ez daukagu zure e-posta helbidea"
+
+#: auth.resetemail.required
+msgctxt "auth.resetemail.required"
+msgid "The email field is required."
+msgstr "Postaren eremua betetzea beharrezkoa da."
+
+#: auth.role.superadmin_modify
+msgctxt "auth.role.superadmin_modify"
+msgid "Only a superadmin may modify a superadmin or upgrade a user to admin."
+msgstr "Bakarrik superadmin erabiltzaileak alda dezake superadmin erabiltzailea edo erabiltzaile bat superadmin bihutu."
+
+#: auth.roles.alpha_numeric
+msgctxt "auth.roles.alpha_numeric"
+msgid "Invalid role format."
+msgstr "Rol formatu baliogabea."
+
+#: auth.roles.length
+msgctxt "auth.roles.length"
+msgid "The role field must be at least 5 and no more than 30 characters long."
+msgstr "Rol eremuak gutxienez 5 eta gehienez 30 karaktere izan behar ditu."
+
+#: auth.roles.required
+msgctxt "auth.roles.required"
+msgid "You must define at least one role."
+msgstr "Gutxienez rol bat definitu behar duzu."
+
+#: auth.roles.values
+msgctxt "auth.roles.values"
+msgid "You must select either ADMIN or USER role."
+msgstr "ADMIN edo USER rola aukeratu behar duzu."
+
+#: auth.token.invalid
+msgctxt "auth.token.invalid"
+msgid "The forgotten password token is invalid"
+msgstr "Ahaztutako pasahitz tokena baliogabea da"
+
+#: auth.token.required
+msgctxt "auth.token.required"
+msgid "Forgotten password token was required"
+msgstr "Ahaztuta pasahitz tokena beharrezkoa da"
+
+#: auth.username.admin
+msgctxt "auth.username.admin"
+msgid "The admin user role cannot be modified."
+msgstr "Admin rola ezin da editatu."
+
+#: auth.username.alpha_numeric
+msgctxt "auth.username.alpha_numeric"
+msgid "The public profile URL field must only contain numbers and letters."
+msgstr "Profil Publiko URL eremuak zenbakiak eta letrak bakarrik eduki behar ditu."
+
+#: auth.username.exists
+msgctxt "auth.username.exists"
+msgid "Sorry, this public profile URL is already in use."
+msgstr "Barkatu, profil publiko URL hau dagoeneko erabiltzen da."
+
+#: auth.username.length
+msgctxt "auth.username.length"
+msgid ""
+"The public profile URL field must be at least 2 and no more 100 characters "
+"long."
+msgstr "Profil publiko URL eremuak gutxienez 2 eta gehienez 100 karaktere izan behar ditu."
+
+#: auth.username.login error
+msgctxt "auth.username.login error"
+msgid "Please check that you entered the correct public profile URL."
+msgstr "Mesedez, ziurtatu profil publiko URL zuzena sartu duzula."
+
+#: auth.username.required
+msgctxt "auth.username.required"
+msgid "The public profile URL field is required."
+msgstr "Profil publiko URL eremua beharrezkoa da."
+
+#: auth.username.superadmin
+msgctxt "auth.username.superadmin"
+msgid "The super admin role cannot be modified."
+msgstr "Super Admin rola ezin da editatu."
+
+#: auth.username.csrf
+msgctxt "auth.username.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a user?"
+msgstr "CSRF eraso posible bat. Seguru hau sortu/editatu nahi duzula?"

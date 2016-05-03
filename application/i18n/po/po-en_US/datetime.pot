@@ -1,0 +1,213 @@
+#. extracted from en_US/datetime.php, en_US/datetime.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: datetime.am
+msgctxt "datetime.am"
+msgid "am"
+msgstr ""
+
+#: datetime.friday.abbv
+msgctxt "datetime.friday.abbv"
+msgid "Fri"
+msgstr ""
+
+#: datetime.friday.full
+msgctxt "datetime.friday.full"
+msgid "Friday"
+msgstr ""
+
+#: datetime.monday.abbv
+msgctxt "datetime.monday.abbv"
+msgid "Mon"
+msgstr ""
+
+#: datetime.monday.full
+msgctxt "datetime.monday.full"
+msgid "Monday"
+msgstr ""
+
+#: datetime.pm
+msgctxt "datetime.pm"
+msgid "pm"
+msgstr ""
+
+#: datetime.saturday.abbv
+msgctxt "datetime.saturday.abbv"
+msgid "Sat"
+msgstr ""
+
+#: datetime.saturday.full
+msgctxt "datetime.saturday.full"
+msgid "Saturday"
+msgstr ""
+
+#: datetime.sunday.abbv
+msgctxt "datetime.sunday.abbv"
+msgid "Sun"
+msgstr ""
+
+#: datetime.sunday.full
+msgctxt "datetime.sunday.full"
+msgid "Sunday"
+msgstr ""
+
+#: datetime.thursday.abbv
+msgctxt "datetime.thursday.abbv"
+msgid "Thu"
+msgstr ""
+
+#: datetime.thursday.full
+msgctxt "datetime.thursday.full"
+msgid "Thursday"
+msgstr ""
+
+#: datetime.tuesday.abbv
+msgctxt "datetime.tuesday.abbv"
+msgid "Tue"
+msgstr ""
+
+#: datetime.tuesday.full
+msgctxt "datetime.tuesday.full"
+msgid "Tuesday"
+msgstr ""
+
+#: datetime.wednesday.abbv
+msgctxt "datetime.wednesday.abbv"
+msgid "Wed"
+msgstr ""
+
+#: datetime.wednesday.full
+msgctxt "datetime.wednesday.full"
+msgid "Wednesday"
+msgstr ""
+
+#: datetime.january.abbv
+msgctxt "datetime.january.abbv"
+msgid "Jan"
+msgstr ""
+
+#: datetime.january.full
+msgctxt "datetime.january.full"
+msgid "January"
+msgstr ""
+
+#: datetime.february.abbv
+msgctxt "datetime.february.abbv"
+msgid "Feb"
+msgstr ""
+
+#: datetime.february.full
+msgctxt "datetime.february.full"
+msgid "February"
+msgstr ""
+
+#: datetime.march.abbv
+msgctxt "datetime.march.abbv"
+msgid "Mar"
+msgstr ""
+
+#: datetime.march.full
+msgctxt "datetime.march.full"
+msgid "March"
+msgstr ""
+
+#: datetime.april.abbv
+msgctxt "datetime.april.abbv"
+msgid "Apr"
+msgstr ""
+
+#: datetime.april.full
+msgctxt "datetime.april.full"
+msgid "April"
+msgstr ""
+
+#: datetime.may.abbv
+msgctxt "datetime.may.abbv"
+msgid "May"
+msgstr ""
+
+#: datetime.may.full
+msgctxt "datetime.may.full"
+msgid "May"
+msgstr ""
+
+#: datetime.june.abbv
+msgctxt "datetime.june.abbv"
+msgid "Jun"
+msgstr ""
+
+#: datetime.june.full
+msgctxt "datetime.june.full"
+msgid "June"
+msgstr ""
+
+#: datetime.july.abbv
+msgctxt "datetime.july.abbv"
+msgid "Jul"
+msgstr ""
+
+#: datetime.july.full
+msgctxt "datetime.july.full"
+msgid "July"
+msgstr ""
+
+#: datetime.august.abbv
+msgctxt "datetime.august.abbv"
+msgid "Aug"
+msgstr ""
+
+#: datetime.august.full
+msgctxt "datetime.august.full"
+msgid "August"
+msgstr ""
+
+#: datetime.september.abbv
+msgctxt "datetime.september.abbv"
+msgid "Sep"
+msgstr ""
+
+#: datetime.september.full
+msgctxt "datetime.september.full"
+msgid "September"
+msgstr ""
+
+#: datetime.october.abbv
+msgctxt "datetime.october.abbv"
+msgid "Oct"
+msgstr ""
+
+#: datetime.october.full
+msgctxt "datetime.october.full"
+msgid "October"
+msgstr ""
+
+#: datetime.november.abbv
+msgctxt "datetime.november.abbv"
+msgid "Nov"
+msgstr ""
+
+#: datetime.november.full
+msgctxt "datetime.november.full"
+msgid "November"
+msgstr ""
+
+#: datetime.december.abbv
+msgctxt "datetime.december.abbv"
+msgid "Dec"
+msgstr ""
+
+#: datetime.december.full
+msgctxt "datetime.december.full"
+msgid "December"
+msgstr ""
+

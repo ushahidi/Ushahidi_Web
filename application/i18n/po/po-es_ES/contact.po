@@ -1,0 +1,77 @@
+# 
+# Translators:
+# Marta Gimeno <kurnigd@hotmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Spanish (Spain) (http://www.transifex.com/ushahidi/ushahidi-v2/language/es_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: contact.captcha.default
+msgctxt "contact.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Introduce un código de seguridad válido."
+
+#: contact.captcha.valid
+msgctxt "contact.captcha.valid"
+msgid "Please enter a valid security code."
+msgstr "Introduce un código de seguridad válido."
+
+#: contact.captcha.required
+msgctxt "contact.captcha.required"
+msgid "Please enter the security code."
+msgstr "Introduce el código de seguridad."
+
+#: contact.contact_email.email
+msgctxt "contact.contact_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "La dirección escrita en el campo Correo Electrónico es incorrecta."
+
+#: contact.contact_email.length
+msgctxt "contact.contact_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "El campo Correo Electrónico debe tener una longitud de 4-64 caracteres."
+
+#: contact.contact_email.required
+msgctxt "contact.contact_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "El campo Correo Electrónico es obligatorio si la casilla de verificación está marcada."
+
+#: contact.contact_message.required
+msgctxt "contact.contact_message.required"
+msgid "The message field is required."
+msgstr "El campo Mensaje es obligatorio."
+
+#: contact.contact_name.length
+msgctxt "contact.contact_name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "El campo Nombre debe contener al menos 3 caracteres."
+
+#: contact.contact_name.required
+msgctxt "contact.contact_name.required"
+msgid "The name field is required."
+msgstr "El campo Nombre es obligatorio."
+
+#: contact.contact_subject.length
+msgctxt "contact.contact_subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr "El campo Asunto debe contener al menos 3 caracteres."
+
+#: contact.contact_subject.required
+msgctxt "contact.contact_subject.required"
+msgid "The subject field is required."
+msgstr "El campo Asunto es obligatorio."
+
+#: contact.email_send.failed
+msgctxt "contact.email_send.failed"
+msgid "There was an error sending your message."
+msgstr "Se ha producido un error al enviar el mensaje."

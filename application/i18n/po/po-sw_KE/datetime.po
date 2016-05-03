@@ -1,0 +1,216 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Swahili (Kenya) (http://www.transifex.com/ushahidi/ushahidi-v2/language/sw_KE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sw_KE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: datetime.am
+msgctxt "datetime.am"
+msgid "am"
+msgstr "asubuhi"
+
+#: datetime.friday.abbv
+msgctxt "datetime.friday.abbv"
+msgid "Fri"
+msgstr "Ijumaa"
+
+#: datetime.friday.full
+msgctxt "datetime.friday.full"
+msgid "Friday"
+msgstr "Ijumaa"
+
+#: datetime.monday.abbv
+msgctxt "datetime.monday.abbv"
+msgid "Mon"
+msgstr "Jumatatu"
+
+#: datetime.monday.full
+msgctxt "datetime.monday.full"
+msgid "Monday"
+msgstr "Jumatatu"
+
+#: datetime.pm
+msgctxt "datetime.pm"
+msgid "pm"
+msgstr "jioni"
+
+#: datetime.saturday.abbv
+msgctxt "datetime.saturday.abbv"
+msgid "Sat"
+msgstr "Jumamosi"
+
+#: datetime.saturday.full
+msgctxt "datetime.saturday.full"
+msgid "Saturday"
+msgstr "Jumamosi"
+
+#: datetime.sunday.abbv
+msgctxt "datetime.sunday.abbv"
+msgid "Sun"
+msgstr "Jumapili"
+
+#: datetime.sunday.full
+msgctxt "datetime.sunday.full"
+msgid "Sunday"
+msgstr "Jumapili"
+
+#: datetime.thursday.abbv
+msgctxt "datetime.thursday.abbv"
+msgid "Thu"
+msgstr "Alhamisi"
+
+#: datetime.thursday.full
+msgctxt "datetime.thursday.full"
+msgid "Thursday"
+msgstr "Alhamisi"
+
+#: datetime.tuesday.abbv
+msgctxt "datetime.tuesday.abbv"
+msgid "Tue"
+msgstr "Jumanne"
+
+#: datetime.tuesday.full
+msgctxt "datetime.tuesday.full"
+msgid "Tuesday"
+msgstr "Jumanne"
+
+#: datetime.wednesday.abbv
+msgctxt "datetime.wednesday.abbv"
+msgid "Wed"
+msgstr "Jumatano"
+
+#: datetime.wednesday.full
+msgctxt "datetime.wednesday.full"
+msgid "Wednesday"
+msgstr "Jumatano"
+
+#: datetime.january.abbv
+msgctxt "datetime.january.abbv"
+msgid "Jan"
+msgstr "Jan"
+
+#: datetime.january.full
+msgctxt "datetime.january.full"
+msgid "January"
+msgstr "Januari"
+
+#: datetime.february.abbv
+msgctxt "datetime.february.abbv"
+msgid "Feb"
+msgstr "Feb"
+
+#: datetime.february.full
+msgctxt "datetime.february.full"
+msgid "February"
+msgstr "Februari"
+
+#: datetime.march.abbv
+msgctxt "datetime.march.abbv"
+msgid "Mar"
+msgstr "Machi"
+
+#: datetime.march.full
+msgctxt "datetime.march.full"
+msgid "March"
+msgstr "Machi"
+
+#: datetime.april.abbv
+msgctxt "datetime.april.abbv"
+msgid "Apr"
+msgstr "Apr"
+
+#: datetime.april.full
+msgctxt "datetime.april.full"
+msgid "April"
+msgstr "Aprili"
+
+#: datetime.may.abbv
+msgctxt "datetime.may.abbv"
+msgid "May"
+msgstr "Mei"
+
+#: datetime.may.full
+msgctxt "datetime.may.full"
+msgid "May"
+msgstr "Mei"
+
+#: datetime.june.abbv
+msgctxt "datetime.june.abbv"
+msgid "Jun"
+msgstr "Juni"
+
+#: datetime.june.full
+msgctxt "datetime.june.full"
+msgid "June"
+msgstr "Juni"
+
+#: datetime.july.abbv
+msgctxt "datetime.july.abbv"
+msgid "Jul"
+msgstr "Julai"
+
+#: datetime.july.full
+msgctxt "datetime.july.full"
+msgid "July"
+msgstr "Julai"
+
+#: datetime.august.abbv
+msgctxt "datetime.august.abbv"
+msgid "Aug"
+msgstr "Agosti"
+
+#: datetime.august.full
+msgctxt "datetime.august.full"
+msgid "August"
+msgstr "Agosti"
+
+#: datetime.september.abbv
+msgctxt "datetime.september.abbv"
+msgid "Sep"
+msgstr "Sep"
+
+#: datetime.september.full
+msgctxt "datetime.september.full"
+msgid "September"
+msgstr "Septemba"
+
+#: datetime.october.abbv
+msgctxt "datetime.october.abbv"
+msgid "Oct"
+msgstr "Okt"
+
+#: datetime.october.full
+msgctxt "datetime.october.full"
+msgid "October"
+msgstr "Oktoba"
+
+#: datetime.november.abbv
+msgctxt "datetime.november.abbv"
+msgid "Nov"
+msgstr "Nov"
+
+#: datetime.november.full
+msgctxt "datetime.november.full"
+msgid "November"
+msgstr "Novemba"
+
+#: datetime.december.abbv
+msgctxt "datetime.december.abbv"
+msgid "Dec"
+msgstr "Des"
+
+#: datetime.december.full
+msgctxt "datetime.december.full"
+msgid "December"
+msgstr "Desemba"

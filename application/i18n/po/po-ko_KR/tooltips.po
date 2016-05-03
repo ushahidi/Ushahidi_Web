@@ -1,0 +1,585 @@
+# 
+# Translators:
+# Jungkwan Kim <donationsurvey@gmail.com>, 2012
+# Seokwon Yang <seokwon@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Korean (Korea) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ko_KR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: tooltips.actions.add_to_category
+msgctxt "tooltips.actions.add_to_category"
+msgid ""
+"This adds the report to additional categories. If you select Category 1 here"
+" and the report already has Category 2 attached to it, the report will then "
+"have both Category 1 and Category 2."
+msgstr "이 기능은 하나의 리포트에 추가 카테고리를 설정할 수 있게 합니다. 예를 들면 카테고리 1을 선택하고 카테고리 2를 추가로 선택하면, 해당 리포트는 2개의 카테고리에 속하게 됩니다."
+
+#: tooltips.actions.approve
+msgctxt "tooltips.actions.approve"
+msgid "Approves a report or not. If approved, it will show up publicly."
+msgstr "리포트를 승인 또는 하지 않음. 만약 승인하면 리포트는 공개됩니다."
+
+#: tooltips.actions.assign_badge
+msgctxt "tooltips.actions.assign_badge"
+msgid ""
+"You will be able to assign a badge to the triggering user. Pick the badge "
+"that gets assigned here."
+msgstr "사용자에게 배지를 지정할 수 있습니다. 지정할 배지를 선택하세요."
+
+#: tooltips.actions.between_times
+msgctxt "tooltips.actions.between_times"
+msgid ""
+"This is a range of hours and/or minutes between two times in 24 hour format."
+" If you input an earlier time in the second field, it will be flipped with "
+"the first. These times must be within a single day. Also, this time is "
+"checked against the time you have configured on your site in site settings "
+"and <strong>not</strong> necessarily the timezone of the user interacting "
+"with your deployment. Leave this at 00:00 to 00:00 to ignore this qualifier."
+msgstr "24시간 형식으로 시간 범위를 지정할 수 있습니다. 나중의 시간이 앞에 설정한 시간보다 빠르면 오류가 발생합니다. 또한, 시간은 하루 내 이어야 합니다. 그리고 설정한 시간은 사이트 설정에서 설정한 사이트 시간을 기준으로 하며, 사용자의 타임존을 필요로 하지는 않습니다. 시간을 입력하지 않으려면 00:00에서 00:00의 형식으로 놔두면 됩니다."
+
+#: tooltips.actions.category
+msgctxt "tooltips.actions.category"
+msgid ""
+"If you would like to activate triggers only when a certain category is being"
+" used, you can set that here. This will allow a trigger to be activated if "
+"only one of the categories is used. For instace, if you select Category 1 "
+"and Category 2 here and a report is submitted using Category 2 and Category "
+"3, it will pass the test."
+msgstr "만약에 특정 카테고리가 사용이 될 때 트리거를 활성화하고자 한다면 여기서 설정을 할 수 있습니다. 카테고리 중의 하나가 사용될 경우에만 활성화 될 것입니다. 예를 들면 카테고리 1과 카테고리 2를 선택하고 리포트가 카테고리 2와 카테고리 3에 등록되면, 그것은 테스트를 통과 할 것입니다."
+
+#: tooltips.actions.days_of_the_week
+msgctxt "tooltips.actions.days_of_the_week"
+msgid ""
+"If these actions happen on certain days of the week, set that here. Keep in "
+"mind the day is determined by the timezone configured on your deployment. "
+"Hold shift, command, or control for multiple day selection."
+msgstr "여기서 설정을 통해 특정 요일에 이것들을 실행되게 할 수 있습니다. 당신의 배치상의 타임존을 반드시 고려해야 합니다. shift키와 command 또는 control키를 동시에 누르면 중복 요일 선택이 가능합니다."
+
+#: tooltips.actions.email_body
+msgctxt "tooltips.actions.email_body"
+msgid "Body of the email that will be sent."
+msgstr "이메일의 본문이 전송됩니다."
+
+#: tooltips.actions.email_subject
+msgctxt "tooltips.actions.email_subject"
+msgid "Subject of email that will be sent."
+msgstr "이메일의 제목이 전송됩니다."
+
+#: tooltips.actions.feed_id
+msgctxt "tooltips.actions.feed_id"
+msgid ""
+"The feed can be all feeds or a specific feeds. If you would only like "
+"specific feeds to activate a trigger, you will want to select them here. "
+"Otherwise, you will want to leave this as \"all\""
+msgstr "피드는 전부 또는 일부가 될 수 있습니다. 만약, 특정 피드로 활성화 하고자 할 경우, 여기서 선택해 주세요. 아니면, 전체를 선택할 수 도 있습니다."
+
+#: tooltips.actions.from
+msgctxt "tooltips.actions.from"
+msgid ""
+"Twitter author username (or multiple usernames separated by commas). If you "
+"would like to activate triggers only for twitter messages from a particular "
+"user, enter their username here (not including @)"
+msgstr "트위터 사용자이름(2명이상의 사용자이름은 콤마로 구분해주세요). 만약에 특정 사용자의 트위터 메시지로만 활성화 하고자 할 경우 사용자이름을 @를 빼고 입력해주세요."
+
+#: tooltips.actions.keywords
+msgctxt "tooltips.actions.keywords"
+msgid ""
+"You can choose to leave this blank if you do not want to check against "
+"keywords. If you add words here, you will need to separate them with a comma"
+" (,). For example, if you want to activate a trigger when someone mentions "
+"\"love\" or \"peace\" in their message, you will want to add \"love, peace\""
+" in the keywords box."
+msgstr "키워드를 입력하길 원하지 않으면 빈칸으로 두어도 됩니다. 만약, 단어를 입력하고자 하면, 콤마(,)로 구분하면 됩니다. 예를 들어 \"love\"또는\"peace\"를 메시지에 넣고자 하면, \"love,peace\"의 형태로 구분 입력하면 됩니다."
+
+#: tooltips.actions.location
+msgctxt "tooltips.actions.location"
+msgid ""
+"You can either select anywhere or a specific location. If you select a "
+"specific location, you will be asked to draw a box around the area that "
+"qualifies an action. For example, if you want this trigger to be activated "
+"when someone submits a report in Brazil, you will select \"specific area\" "
+"and then draw the box around Brazil. You can make these boxes as small or as"
+" large as you would like. You can also draw multiple boxes."
+msgstr "다양한 지역 선택이 가능합니다. 만약, 특정 지역을 선택하고 해당 지역에서만 리포트를 받을 수 있습니다. 예를 들어 누군가로부터 브라질에 관련한 리포트를 받길 원하면, \"특정지역\"을 선택하고, 브라질 주위에 박스를 그려 이를 설정할 수 있습니다. 이 박스의 크기는 자유롭게 설정할 수 있으며, 1개 이상의 박스를 그릴 수 있습니다."
+
+#: tooltips.actions.on_specific_count
+msgctxt "tooltips.actions.on_specific_count"
+msgid ""
+"This qualifier will activate the trigger on the N-th count either for the "
+"entire collective user base or for each individual user. Leave this blank to"
+" ignore it."
+msgstr "이것은 전체 유저 베이스 또는 개별 유저 중 하나에서 특정번째에서 작동되게 할 수 있습니다. 사용하지 않으려면 빈칸으로 두면 됩니다."
+
+#: tooltips.actions.report_title
+msgctxt "tooltips.actions.report_title"
+msgid "This is the default title to add to the report."
+msgstr "리포트의 기본 제목입니다."
+
+#: tooltips.actions.response
+msgctxt "tooltips.actions.response"
+msgid ""
+"If all of the qualifiers above are passed, the trigger will initiate a "
+"response. This can range from approving a report to emailing a user. Select "
+"the response here to activate additional options for the specific responses."
+msgstr "만약, 모든 통과자들이 통과하면, 트리거는 응답을 시작합니다. 이것은 리포트를 승인하고 이메일로 사용자에게 알리는 것을 말합니다. 여기서 세부적인 응답내용을 추가하고 설정할 수 있습니다."
+
+#: tooltips.actions.send_to
+msgctxt "tooltips.actions.send_to"
+msgid ""
+"If you select \"Triggering User\", the email will be sent to the user who "
+"performed the action. If you select the radio button next to the input box, "
+"you will be able to enter a custom email address. This is useful if you are "
+"setting up triggers to notify people when certain parts of the map are "
+"seeing reports, check ins or some other activity."
+msgstr "만약, 트리거 사용자를 선택하면, 특정 액션을 실행한 사용자에게 이메일을 보냅니다. 만약,  라디오 버튼을 선택하면 이메일 주소를 입력할 수 있습니다. 이것은 특정 지역상의 리포트를 보거나 체크인등 하는 이들에게 트리거 할 수 있게 해줍니다."
+
+#: tooltips.actions.specific_days
+msgctxt "tooltips.actions.specific_days"
+msgid ""
+"You can select multiple days here. Dates are determined by your deployment "
+"timezone setting. In order to default to all dates, do not select any dates."
+msgstr "복수일을 이곳에서 지정할 수 있습니다. 날짜는 개발 시간대에 의해 정해집니다. 모든 일 선택을 기본으로 하기 위해서는 어떤 날짜도 선택하지 마세요."
+
+#: tooltips.actions.trigger
+msgctxt "tooltips.actions.trigger"
+msgid ""
+"The trigger is the core component of setting up your Action Triggers. This "
+"is where you determine if you would like something to happen when someone "
+"submits a report, performs a check in, etc. You will be able to filter "
+"responses to these actions after selecting one."
+msgstr "트리거는 액션트리거 설정의 주요 구성요소입니다. 누군가 리포트를 제출하고, 체크인등을 실행할 때 특정 활동이 일어날 수 있도록 결정할 수 있습니다. 그리고 하나를 선택한 후 이러한 액션에 대해 필터링 할 수 있습니다."
+
+#: tooltips.actions.user
+msgctxt "tooltips.actions.user"
+msgid ""
+"The user can be anyone or a specific user. If you would only like specific "
+"users to activate a trigger, you will want to select them here. Otherwise, "
+"you will want to leave this as \"anyone\" since most triggers are set up for"
+" all users interacting with the system"
+msgstr "트리거 사용자는 누구나 또는 특정사용자가 될 수 있습니다. 만약, 특정사용자에게 트리거가 활성화되게 하려면, 여기서 선택해야 합니다. 아니면, 모든사용자에게 트리거를 설정되게 됩니다."
+
+#: tooltips.actions.verify
+msgctxt "tooltips.actions.verify"
+msgid "Marks a report as verified or not."
+msgstr "확인되었거나 확인 되지 않은 리포트를 표시합니다."
+
+#: tooltips.change_picture
+msgctxt "tooltips.change_picture"
+msgid ""
+"Profile pages on this site use Gravatar. By clicking on your image, you will"
+" be taken to the Gravatar website where you can change your profile picture."
+msgstr "프로파일 페이지는 Gravatar를 이용합니다. 이미지를 클릭하면 Gravatar로 이동해서 프로파일 이미지를 변경할 수 있습니다."
+
+#: tooltips.default_value
+msgctxt "tooltips.default_value"
+msgid "Separate each value with a comma, e.g. value1, value2."
+msgstr "각각의 값은 콤마로 구분합니다. 예시 값1, 값2"
+
+#: tooltips.radio_choices
+msgctxt "tooltips.radio_choices"
+msgid ""
+"Separate each value with a comma, e.g. value1, value2. In case you want to "
+"set a default value, end your list of options with :: e.g If you want to "
+"make value3 the default, it will be value1, value2, value3::value3"
+msgstr "각각의 값은 콤마로 구분됩니다. 예: 값1, 값2 . 만약 기본값을 설정하고 싶으면 해당 옵션 마지막에 :: 를 표기하면됩니다. 예를 들어 값1, 값2, 값3::값2 로 표기하면 값2가 기본값이 됩니다."
+
+#: tooltips.dropdown_choices
+msgctxt "tooltips.dropdown_choices"
+msgid "Separate each choice item with a comma, e.g. Item 1, Item 2 etc."
+msgstr "각각의 아이템들은 콤마로 구분합니다. 예시 아이템1. 아이템2"
+
+#: tooltips.private_to
+msgctxt "tooltips.private_to"
+msgid "Start typing to list members."
+msgstr "회원목록을 입력합니다."
+
+#: tooltips.private_subject
+msgctxt "tooltips.private_subject"
+msgid "Private message subject"
+msgstr "개인메시지 제목"
+
+#: tooltips.private_message
+msgctxt "tooltips.private_message"
+msgid "Private message"
+msgstr "개인메시지"
+
+#: tooltips.profile_color
+msgctxt "tooltips.profile_color"
+msgid ""
+"You can select a color that will show up under your profile picture on your "
+"public profile. This color will also be the color dot that shows up on the "
+"map for your checkins."
+msgstr "공개된 프로파일상 사진배경의 색상을 선택할 수 있습니다. 또한 체크인할 때 나타는 점도 이 색상으로 표시됩니다. "
+
+#: tooltips.profile_email
+msgctxt "tooltips.profile_email"
+msgid "Your email address"
+msgstr "이메일주소"
+
+#: tooltips.profile_name
+msgctxt "tooltips.profile_name"
+msgid ""
+"This is one of the ways that you are identified on the website. Keep in mind"
+" that this is public!"
+msgstr "웹사이트 상에서 당신을 식별할 수 있는 방법 중 하나입니다. 공개되는 정보이오니, 꼭 한번 더 생각하세요."
+
+#: tooltips.profile_new_password
+msgctxt "tooltips.profile_new_password"
+msgid ""
+"If set, this will be your new password. Leave this field blank if you wish "
+"to keep your current password."
+msgstr "빈칸으로 남겨주면 현재 암호를 사용하고, 그렇지 않으면 새로운 암호를 설정할 수 있습니다."
+
+#: tooltips.profile_new_users_password
+msgctxt "tooltips.profile_new_users_password"
+msgid ""
+"This is a requirement when creating a new user and will be the users "
+"password. You should inform your new user to change their password after "
+"logging in for the first time."
+msgstr "새 사용자 생성시 필요한 사항입니다. 새 사용자가 첫 로그인 후 비밀번호를 재설정할 수 있도록 알려주세요."
+
+#: tooltips.profile_notify
+msgctxt "tooltips.profile_notify"
+msgid ""
+"Selecting YES lets you get alerts via email when new reports or comments are"
+" posted on your website."
+msgstr "\"네\"를 선택하면 새로운 리포트나 댓글이 있을 때, 이메일로 알림을 보내줍니다."
+
+#: tooltips.profile_password
+msgctxt "tooltips.profile_password"
+msgid ""
+"Your current password. We require you enter your password to prevent any "
+"unauthorized changes to your account."
+msgstr "계정에 대해 허가되지 않은 변경 시에는 현재 암호를 입력해야 합니다."
+
+#: tooltips.profile_public
+msgctxt "tooltips.profile_public"
+msgid ""
+"Your profile can be viewed by anyone on the Internet if you check this "
+"option. This is also the easiest way to show off the reports you've "
+"submitted, your checkins, badges, etc all on one page."
+msgstr "이 옵션을 체크하면 당신의 프로파일은 공개됩니다. 또한 당신이 올린 리포트, 체크인, 배지 등을 하나의 페이지에 보여줄 수 있는 쉬운 방법입니다."
+
+#: tooltips.profile_public_url
+msgctxt "tooltips.profile_public_url"
+msgid "This is the address where your public profile can be found."
+msgstr "이 주소는 당신의 공개 프로파일에서 찾을 수 있습니다."
+
+#: tooltips.profile_username
+msgctxt "tooltips.profile_username"
+msgid "Your username cannot be changed."
+msgstr "사용자명 변경할 수 없습니다."
+
+#: tooltips.settings_access_level
+msgctxt "tooltips.settings_access_level"
+msgid ""
+"Access Levels are used to restrict access to custom form field data. Higher "
+"access levels can access fields from lower levels. Superadmin has the "
+"highest access level (100). Public data is displayed at the lowest access "
+"level (0). Members have access level 10. Admin is access level 90 by "
+"default."
+msgstr "접근 레벨은 특정 폼 필드 데이터에 대한 접근을 제한합니다. 상위 레벨은 하위 레벨의 필드 폼에 대해 접근이 가능합니다. 슈퍼관리자는 가장 높은(100) 레벨입니다. 공개된 데이터는 가장 낮은 레벨(0)입니다. 일반사용자는 접근권한이 10입니다. 관리자는 접근권한이 90이 기본입니다."
+
+#: tooltips.settings_alert_email
+msgctxt "tooltips.settings_alert_email"
+msgid "This is the email address that will be used to send email alerts."
+msgstr "이 이메일은 알림을 받는 주소로 사용됩니다."
+
+#: tooltips.settings_allow_alerts
+msgctxt "tooltips.settings_allow_alerts"
+msgid "Allow users to subscribe for alerts via the web."
+msgstr "사용자가 웹을 통해 알림을 받을 수 있도록 허용합니다."
+
+#: tooltips.settings_allow_clustering
+msgctxt "tooltips.settings_allow_clustering"
+msgid "This allows bundling of similar reports into a single dot on the map"
+msgstr "유사한 리포트를 하나의 점으로 묶어 보여줍니다."
+
+#: tooltips.settings_allow_comments
+msgctxt "tooltips.settings_allow_comments"
+msgid "Allow users to comment on reports on the main site."
+msgstr "사용자의 댓글을 허용합니다."
+
+#: tooltips.settings_allow_feed
+msgctxt "tooltips.settings_allow_feed"
+msgid "This allows RSS News feeds to be displayed on the main site."
+msgstr "메인 사이트에서 RSS 뉴스 피드가 노출됩니다."
+
+#: tooltips.settings_allow_feed_category
+msgctxt "tooltips.settings_allow_feed_category"
+msgid "This allows creating new Category from RSS News feeds."
+msgstr ""
+
+#: tooltips.settings_allow_reports
+msgctxt "tooltips.settings_allow_reports"
+msgid "Allow users to submit information via the web form."
+msgstr "웹양식을 통해 정보를 제출할 수 있습니다."
+
+#: tooltips.settings_api_default_record_limit
+msgctxt "tooltips.settings_api_default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "API 요청당 기본 레코드 숫자"
+
+#: tooltips.settings_api_max_record_limit
+msgctxt "tooltips.settings_api_max_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "API 요청당 최대 레코드 숫자"
+
+#: tooltips.settings_api_max_requests_per_ip
+msgctxt "tooltips.settings_api_max_requests_per_ip"
+msgid "Maximum number of API requests per IP address"
+msgstr "IP 주소당 최대 API 요청 숫자"
+
+#: tooltips.settings_banner
+msgctxt "tooltips.settings_banner"
+msgid ""
+"The site banner shows up at the top of the front end of your website if the "
+"theme you are using supports it. The recommended size for this banner will "
+"depend on the theme you are using. Keep in mind that this will replace the "
+"site title and tagline at the top of the page."
+msgstr "이 사이트의 배너는 프론트 페이지의 상단에 나타납니다-테마지원 시. 추천하는 배너의 사이즈는 현재 사용중인 테마에 따라 다릅니다. 배너 적용 시 사이트 제목과 태그라인을 대체합니다."
+
+#: tooltips.settings_blocks_per_row
+msgctxt "tooltips.settings_blocks_per_row"
+msgid "Number of Block columns that will be displayed on each row."
+msgstr "각 열당 표시되는 칸 수."
+
+#: tooltips.settings_cache_pages
+msgctxt "tooltips.settings_cache_pages"
+msgid ""
+"Enable or disable page caching. This makes pages display faster by cutting "
+"response times. We recommend using caching on high traffic sites. **Remember"
+" that reports will be populated on the front end based on the schedule you "
+"set below (Cache Lifetime)."
+msgstr "페이지를 임시저장할 것인지를 설정합니다. 이 옵션을 활성화하면 페이지 로딩이 빨라집니다. 따라서 "
+
+#: tooltips.settings_cache_pages_lifetime
+msgctxt "tooltips.settings_cache_pages_lifetime"
+msgid "Set the lifetime of the cache."
+msgstr "캐쉬 보관 시간 설정"
+
+#: tooltips.settings_checkins
+msgctxt "tooltips.settings_checkins"
+msgid ""
+"This setting enables checkins on your deployment. This is a simplified "
+"report type that is not moderated before it goes on the homepage and "
+"requires your site to be configured a certain way. When you enable this, "
+"make sure your timezone setting is on UTC and your theme supports checkins. "
+"When you enable this, checkin-only themes will become enabled under your "
+"addons/themes settings page."
+msgstr "이 셋팅은 현재 배치에서 체크인을 가능하게 합니다. 이것은 홈페이지에서 요구하는 특정한 방식을 따르지 않아도 되는 매우 간단한 리포트 방식입니다. 만약, 이 기능을 사용하려면 타임존-UTC기준- 과 테마가 지원하는 지 확인해야 합니다. 사용중일 때, 체크인 전용 테마는 Addons 메뉴에서 확인 가능합니다."
+
+#: tooltips.settings_configure_map
+msgctxt "tooltips.settings_configure_map"
+msgid "Set the map to cover a specific location."
+msgstr "지도가 특정 위치를 커버할 수 있도록 설정"
+
+#: tooltips.settings_default_category_colors
+msgctxt "tooltips.settings_default_category_colors"
+msgid "Set one color code for all the categories on the site."
+msgstr "모든 카테고리에 하나의 색상코드를 설정"
+
+#: tooltips.settings_default_category_icons
+msgctxt "tooltips.settings_default_category_icons"
+msgid "Set one icon for all the categories on the site."
+msgstr "모든 카테고리에 하나의 아이콘을 설정"
+
+#: tooltips.settings_default_location
+msgctxt "tooltips.settings_default_location"
+msgid "This is the country the site is being deployed."
+msgstr "지도상 기본 국가를 설정합니다."
+
+#: tooltips.settings_display_contact
+msgctxt "tooltips.settings_display_contact"
+msgid "Turn the Contact Tab on or off on the main site."
+msgstr "메인사이트에서 문의하기 메뉴 ON&OFF"
+
+#: tooltips.settings_display_howtohelp
+msgctxt "tooltips.settings_display_howtohelp"
+msgid "Turn the How to Help Tab on or off on the main site."
+msgstr "메인사이트에서 도움말 메뉴 ON&OFF"
+
+#: tooltips.settings_display_items_per_page
+msgctxt "tooltips.settings_display_items_per_page"
+msgid "This is the number of reports displayed per page on the main site."
+msgstr "메인사이트에서 페이지당 보여 줄 리포트 숫자"
+
+#: tooltips.settings_display_items_per_page_admin
+msgctxt "tooltips.settings_display_items_per_page_admin"
+msgid ""
+"This is the number of reports displayed per page on the admin Back End."
+msgstr "관리자페이지에서 페이지당 보여 줄 리포트 숫자"
+
+#: tooltips.settings_flsms_download
+msgctxt "tooltips.settings_flsms_download"
+msgid "This is the hub for incoming messages."
+msgstr "이것은 수신되는 메시지의 허브입니다."
+
+#: tooltips.settings_flsms_synchronize
+msgctxt "tooltips.settings_flsms_synchronize"
+msgid "This synchronizes the messages in the hub with the Ushahidi platform."
+msgstr "허브를 통해 들어오는 메시지는 우샤히디 플랫폼과 동기화됩니다."
+
+#: tooltips.settings_flsms_text_1
+msgctxt "tooltips.settings_flsms_text_1"
+msgid "Phone numbers through which the text messages are received."
+msgstr "문자메시지를 보낸 전화번호"
+
+#: tooltips.settings_google_analytics
+msgctxt "tooltips.settings_google_analytics"
+msgid "Tracks visitors of your site. Get detailed visitor statistics."
+msgstr "방문자에 대한 자세한 통계를 가져옵니다."
+
+#: tooltips.settings_locale
+msgctxt "tooltips.settings_locale"
+msgid "Sets the language that will be used in the site."
+msgstr "사이트의 기본 언어를 설정합니다."
+
+#: tooltips.settings_manually_approve_users
+msgctxt "tooltips.settings_manually_approve_users"
+msgid ""
+"If you set this option to yes, you must approve every individual user who "
+"creates an account on your site by assigning them roles (ie. Member, Admin, "
+"Superadmin)."
+msgstr "\"네\"를 선택하면, 모든 개인 사용자들이 설정에 따라 자신의 계정을 만들 수 있도록 허용하는 것입니다. (ex. 일반사용자, 관리자, 슈퍼관리자 로 설정할 수 있습니다.)"
+
+#: tooltips.settings_map_provider
+msgctxt "tooltips.settings_map_provider"
+msgid "This defines which map is to be used on the site."
+msgstr "사이트에서 사용될 지도를 설정합니다."
+
+#: tooltips.settings_map_timeline
+msgctxt "tooltips.settings_map_timeline"
+msgid ""
+"This shows the timeline based on the date and time reports were submitted"
+msgstr "리포트가 수신된 날짜와 시간에 따른 타임라인입니다."
+
+#: tooltips.settings_private_deployment
+msgctxt "tooltips.settings_private_deployment"
+msgid ""
+"Setting this value to true or yes will make your deployment private so only "
+"users with accounts that you specify will be able to access the deployment."
+msgstr "이 값을 \"사실\" 또는 \"네\"로 설정하면, 특정 사용자만 이 배치에 접근할 수 있습니다."
+
+#: tooltips.settings_require_email_confirmation
+msgctxt "tooltips.settings_require_email_confirmation"
+msgid ""
+"Users will be emailed with a confirmation link to click before they are "
+"allowed to log into the deployment if this is set to yes. If you enable this"
+" after your deployment has accepted users, they will be prompted to confirm "
+"their account before they will be allowed to continue using it."
+msgstr "\"네\"로 옵션이 설정되어 있으면, 사용자들이 이 배치에 접근하기 위해서는 이메일로 확인링크를 받아 확인해야 합니다. 만약, 이 옵션이 사용자가 사용중일 때 설정되면, 사용자는 확인창을 통해 계속 사용할 것인지 확인하게 됩니다."
+
+#: tooltips.settings_server_host
+msgctxt "tooltips.settings_server_host"
+msgid "This is where the emails reside"
+msgstr "이메일이 있는 곳"
+
+#: tooltips.settings_server_password
+msgctxt "tooltips.settings_server_password"
+msgid "This is the password for the email address that receives reports."
+msgstr "리포트를 수신하는 이메일의 암호입니다."
+
+#: tooltips.settings_server_port
+msgctxt "tooltips.settings_server_port"
+msgid ""
+"This is required to accept incoming connections from the email address."
+msgstr "이메일주소를 통해 들어오는 연결을 허용하는 것이 필요합니다."
+
+#: tooltips.settings_server_ssl_support
+msgctxt "tooltips.settings_server_ssl_support"
+msgid "This is required to enhance a secure connection."
+msgstr "보안연결을 강화하기 위해서 필요합니다."
+
+#: tooltips.settings_server_type
+msgctxt "tooltips.settings_server_type"
+msgid "This is required to retrieve e-mails from the host server."
+msgstr "호스트 서버에서 이메일을 검색하기 위해 필요합니다."
+
+#: tooltips.settings_server_username
+msgctxt "tooltips.settings_server_username"
+msgid "This is the email address that receives reports."
+msgstr "리포트를 받는 이메일주소입니다."
+
+#: tooltips.settings_share_site_stats
+msgctxt "tooltips.settings_share_site_stats"
+msgid ""
+"Hit statistics are stored on a server controlled by Ushahidi. By enabling "
+"this option, you gain access to hit statistics directly in your admin panel."
+" By disabling it, you will stop collecting statistics and will be unable to "
+"recover traffic stats collected while this is turned off."
+msgstr "사이트 통계는 우샤히디에 의해 서버에 저장됩니다. 옵션을 \"사용\"으로 설정하면 관리자 패널에서 통계 메뉴를 통해 볼 수 있습니다. \"사용안함\"으로 설정하면 통계 수치 수집이 중단됩니다. 물론, 중단된 기간 동안의 통계수치는 복구 또는 확인 할 수 없습니다."
+
+#: tooltips.settings_site_copyright_statement
+msgctxt "tooltips.settings_site_copyright_statement"
+msgid ""
+"Do others have the right to republish text, images, video and/or design "
+"themes that you and your users create? Go to "
+"https://creativecommons.org/choose/ if you are interested in specifying what"
+" others are able to do with your work. And remember to be specific about "
+"what elements of the site you are licensing!"
+msgstr "사이트내에서 유저가 생성한 문자, 이미지, 비디오 등에 대한 재배포 권리를 다른이에게 부여하길 원한다면, https://creativecommons.org/choose/ 를 방문한 후 원하는 조건의 라이센스를 선택한 후 적용하세요."
+
+#: tooltips.settings_site_email
+msgctxt "tooltips.settings_site_email"
+msgid ""
+"This is the email address that will receive email reports and messages from "
+"the contact form."
+msgstr "이메일 리포트와 문의하기를 통해 들어오는 메시지를 받는 이메일입니다."
+
+#: tooltips.settings_site_message
+msgctxt "tooltips.settings_site_message"
+msgid ""
+"This is text that will appear above the map on the homepage. This is useful "
+"for giving important information to visitors on the site. To remove the box,"
+" simply delete the message here."
+msgstr "이 메시지는 메인 페이지 지도 위에 게시됩니다. 사이트에 대한 중요한 정보를 방문자에게 전달할 때 유용합니다. 박스를 제거하면 메시지도 지울 수 있습니다."
+
+#: tooltips.settings_site_name
+msgctxt "tooltips.settings_site_name"
+msgid "This is the name of the site that appears at the top of the main site."
+msgstr "메인사이트 상단에 표시되는 이름입니다."
+
+#: tooltips.settings_site_submit_report_message
+msgctxt "tooltips.settings_site_submit_report_message"
+msgid ""
+"This is a message that will show up on the submit report page. This is good "
+"for disclaimers or further instructions for your visitors who are reporting."
+msgstr "리포트 제출 페이지에 나타나는 메시지입니다. 면책조항이나 사용방법을 사용자에게 알려줄 때 유용합니다."
+
+#: tooltips.settings_site_tagline
+msgctxt "tooltips.settings_site_tagline"
+msgid "In a few words, explain what this site is about."
+msgstr "간단한 단어로 사이트를 설명해주세요. 주요 키워드로 설명하는 것을 추천합니다."
+
+#: tooltips.settings_site_timezone
+msgctxt "tooltips.settings_site_timezone"
+msgid ""
+"This is the timezone that your site will operate on. This has an impact on "
+"any actions you have set up that utilize time and date, as well as the "
+"default current time for reports on the front and back end of the site."
+msgstr "당신의 사이트가 운영될 지역의 타임존을 선택하세요. 설정 이후 사이트내의 모든 실행은 설정된 타임존에 의해 영향을 받게 됩니다."
+
+#: tooltips.settings_twitter_configuration
+msgctxt "tooltips.settings_twitter_configuration"
+msgid "Set the twitter hashtag that will be used on a tweet"
+msgstr "트위터 해쉬태그를 설정해주세요.(예시: #Ushahidi)"
+
+#: tooltips.feed_geolocation_user
+msgctxt "tooltips.feed_geolocation_user"
+msgid ""
+"If you want to geocode your feed entries, grab a user http://geonames.org, "
+"enable the free webservices and enter it here. Leave empty to disable this "
+"function.<br /><br />Beware of the the use limits!"
+msgstr ""

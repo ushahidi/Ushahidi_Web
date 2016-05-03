@@ -1,0 +1,395 @@
+# 
+# Translators:
+# Suwandi Ahmad <ahmad.suwandi@gmail.com>, 2013
+# Suwandi Ahmad <ahmad.suwandi@gmail.com>, 2013
+# Vasanthi Hargyono <va.santhi@yahoo.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-08-22 06:26+0000\n"
+"PO-Revision-Date: 2015-06-10 02:36+0000\n"
+"Last-Translator: Vasanthi Hargyono <va.santhi@yahoo.com>\n"
+"Language-Team: Indonesian (Indonesia) (http://www.transifex.com/ushahidi/ushahidi-v2/language/id_ID/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id_ID\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: report.comments_form_error
+msgctxt "report.comments_form_error"
+msgid "error!"
+msgstr "error!"
+
+#: report.country_name.single_country
+msgctxt "report.country_name.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the report "
+"location is within the country %s."
+msgstr "Pengembangan ini hanya mencakup satu negara saja. Pastikan posisi dalam laporan masuk dalam wilayah negara %s."
+
+#: report.custom_field.values
+msgctxt "report.custom_field.values"
+msgid "Please enter a valid value for the \"%s\" field."
+msgstr "Masukkan nilai pada kolom \"%s\" yang tepat."
+
+#: report.custom_field.numeric
+msgctxt "report.custom_field.numeric"
+msgid "The \"%s\" field must be numeric."
+msgstr "Kolom \"%s\" harus berupa angka. "
+
+#: report.custom_field.required
+msgctxt "report.custom_field.required"
+msgid "The \"%s\" field is required."
+msgstr "Kolom \"%s\" wajib diisi."
+
+#: report.custom_field.not_exist
+msgctxt "report.custom_field.not_exist"
+msgid "The \"%s\" field is does not exist."
+msgstr "Kolom \"%s\" tidak ditemukan."
+
+#: report.custom_field.permission
+msgctxt "report.custom_field.permission"
+msgid "The \"%s\" field cannot be edited by your account."
+msgstr "Anda tidak diperkenankan menyunting kolom \"%s\"."
+
+#: report.custom_field.email
+msgctxt "report.custom_field.email"
+msgid "The \"%s\" field must contain a valid email address."
+msgstr "Kolom \"%s\" harus berisi alamat surel yang benar."
+
+#: report.custom_field.phone
+msgctxt "report.custom_field.phone"
+msgid "The \"%s\" field must contain a valid phone number."
+msgstr "Kolom \"%s\" harus berisi nomor telepon seluler yang benar."
+
+#: report.custom_field.date_mmddyyyy
+msgctxt "report.custom_field.date_mmddyyyy"
+msgid "The \"%s\" field must contain a valid date (MM/DD/YYYY)."
+msgstr "Kolom \"%s\" harus berupa tanggal dalam format yang tepat (MM/DD/YYYY)."
+
+#: report.custom_field.date_ddmmyyyy
+msgctxt "report.custom_field.date_ddmmyyyy"
+msgid "The \"%s\" field must contain a valid date (DD/MM/YYYY)."
+msgstr "Kolom \"%s\" harus berupa tanggal dalam format yang tepat (DD/MM/YYYY)."
+
+#: report.data_include.between
+msgctxt "report.data_include.between"
+msgid "Please select a valid item to include in the download."
+msgstr "Pastikan hanya memilih bagian yang tepat untuk diunduh."
+
+#: report.data_include.numeric
+msgctxt "report.data_include.numeric"
+msgid "Please select a valid item to include in the download."
+msgstr "Pastikan hanya memilih bagian yang tepat untuk diunduh."
+
+#: report.data_active.between
+msgctxt "report.data_active.between"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Pilih \"Laporan yang Menunggu Disetujui\" atau \"Laporan yang Disetujui\" atau keduanya."
+
+#: report.data_active.numeric
+msgctxt "report.data_active.numeric"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Pilih \"Laporan yang Menunggu Disetujui\" atau \"Laporan yang Disetujui\" atau keduanya."
+
+#: report.data_active.required
+msgctxt "report.data_active.required"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Pilih \"Laporan yang Menunggu Disetujui\" atau \"Laporan yang Disetujui\" atau keduanya."
+
+#: report.data_verified.between
+msgctxt "report.data_verified.between"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Pilih \"Laporan yang Menunggu Diperiksa\" atau \"Laporan yang Sudah Diperiksa\" atau keduanya."
+
+#: report.data_verified.numeric
+msgctxt "report.data_verified.numeric"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Pilih \"Laporan yang Menunggu Diperiksa\" atau \"Laporan yang Sudah Diperiksa\" atau keduanya."
+
+#: report.data_verified.required
+msgctxt "report.data_verified.required"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Pilih \"Laporan yang Menunggu Diperiksa\" atau \"Laporan yang Sudah Diperiksa\" atau keduanya."
+
+#: report.data_point.between
+msgctxt "report.data_point.between"
+msgid "Please select a valid type of report to download."
+msgstr "Pastikan memilih laporan yang tepat untuk diunduh."
+
+#: report.data_point.numeric
+msgctxt "report.data_point.numeric"
+msgid "Please select a valid type of report to download."
+msgstr "Pastikan memilih laporan yang tepat untuk diunduh."
+
+#: report.data_point.required
+msgctxt "report.data_point.required"
+msgid "Please select a valid type of report to download."
+msgstr "Pastikan memilih jenis laporan yang tepat untuk diunduh."
+
+#: report.format.required
+msgctxt "report.format.required"
+msgid "You must select a download format. Select either CSV or XML."
+msgstr "Anda harus memilih format file untuk diunduh, bisa CSV atau XML."
+
+#: report.format.valid
+msgctxt "report.format.valid"
+msgid "Please select a valid format to download your reports in"
+msgstr "Masukkan format file yang hendak Anda unduh dalam"
+
+#: report.from_date.date_mmddyyyy
+msgctxt "report.from_date.date_mmddyyyy"
+msgid "The FROM date field does not appear to contain a valid date."
+msgstr "Kolom SEJAK pada tanggal tidak benar."
+
+#: report.from_date.range
+msgctxt "report.from_date.range"
+msgid "Please enter a valid FROM date. It cannot be greater than today."
+msgstr "Masukkan kolom SEJAK yang benar pada tanggal. Tidak boleh lebih dari saat ini."
+
+#: report.incident_active.between
+msgctxt "report.incident_active.between"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Isi kolom Setujui Laporan Ini dengan benar."
+
+#: report.incident_active.required
+msgctxt "report.incident_active.required"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Isi kolom Setujui Laporan Ini dengan benar."
+
+#: report.incident_ampm.validvalues
+msgctxt "report.incident_ampm.validvalues"
+msgid "The am/pm field does not appear to contain a valid value."
+msgstr "Kolom AM/PM tidak benar."
+
+#: report.incident_category.numeric
+msgctxt "report.incident_category.numeric"
+msgid "The \"Categories\" field does not appear to contain a valid category."
+msgstr "Kolom Kategori tidak benar."
+
+#: report.incident_category.required
+msgctxt "report.incident_category.required"
+msgid "The \"Categories\" field is required."
+msgstr "Kolom Kategori wajib diisi."
+
+#: report.incident_date.date_ddmmyyyy
+msgctxt "report.incident_date.date_ddmmyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "Kolom tanggal tidak benar."
+
+#: report.incident_date.date_mmddyyyy
+msgctxt "report.incident_date.date_mmddyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "Kolom tanggal tidak benar."
+
+#: report.incident_date.required
+msgctxt "report.incident_date.required"
+msgid "The date field is required."
+msgstr "Kolom tanggal wajib diisi."
+
+#: report.incident_description.required
+msgctxt "report.incident_description.required"
+msgid "The \"Description\" field is required."
+msgstr "Kolom keterangan wajib diisi."
+
+#: report.incident_hour.between
+msgctxt "report.incident_hour.between"
+msgid "The hour field does not appear to contain a valid hour."
+msgstr "Kolom jam tidak benar."
+
+#: report.incident_hour.required
+msgctxt "report.incident_hour.required"
+msgid "The hour field is required."
+msgstr "Kolom jam wajib diisi."
+
+#: report.incident_information.alpha
+msgctxt "report.incident_information.alpha"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Pastikan yang tertera dalam kolom Peluang Informasi sudah benar."
+
+#: report.incident_information.length
+msgctxt "report.incident_information.length"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Pastikan yang tertera dalam kolom Peluang Informasi sudah benar."
+
+#: report.incident_minute.between
+msgctxt "report.incident_minute.between"
+msgid "The minute field does not appear to contain a valid value."
+msgstr "Kolom menit tidak benar."
+
+#: report.incident_minute.required
+msgctxt "report.incident_minute.required"
+msgid "The minute field is required."
+msgstr "Kolom menit wajib diisi."
+
+#: report.incident_news.url
+msgctxt "report.incident_news.url"
+msgid "The news source links field does not appear to contain a valid URL."
+msgstr "Alamat pada kolom tautan sumber berita tidak benar."
+
+#: report.incident_photo.size
+msgctxt "report.incident_photo.size"
+msgid "Please ensure that photo upload sizes are limited to 2MB."
+msgstr "Pastikan besar foto yang diunggah tidak lebih dari 2 MB."
+
+#: report.incident_photo.type
+msgctxt "report.incident_photo.type"
+msgid ""
+"The Upload Photos field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "Isi kolom Unggah Foto tidak benar. Format yang berlaku hanya .JPG, .PNG dan .GIF."
+
+#: report.incident_photo.valid
+msgctxt "report.incident_photo.valid"
+msgid "The Upload Photos field does not appear to contain a valid file."
+msgstr "Isi kolom Unggah Foto tidak benar."
+
+#: report.incident_source.alpha
+msgctxt "report.incident_source.alpha"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Masukkan Kehandalan Sumber yang tepat."
+
+#: report.incident_source.length
+msgctxt "report.incident_source.length"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Masukkan Kehandalan Sumber yang tepat."
+
+#: report.incident_title.length
+msgctxt "report.incident_title.length"
+msgid ""
+"The \"Report Title\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "Panjang \"Judul Laporan\" setidaknya 3 karakter dan tidak lebih dari 200 karakter."
+
+#: report.incident_title.required
+msgctxt "report.incident_title.required"
+msgid "The \"Report Title\" field is required."
+msgstr "Kolom \"Judul Laporan\" wajib diisi."
+
+#: report.incident_title.csrf
+msgctxt "report.incident_title.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a report?"
+msgstr "Ada kemungkinan serangan CSRF. Apakah Anda yakin hendak membuat/menyunting laporan?"
+
+#: report.incident_verified.between
+msgctxt "report.incident_verified.between"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Isi kolom \"Periksa Laporan Ini\" dengan tepat."
+
+#: report.incident_verified.required
+msgctxt "report.incident_verified.required"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Isi kolom \"Periksa Laporan Ini\" dengan tepat."
+
+#: report.incident_video.url
+msgctxt "report.incident_video.url"
+msgid "The video links field does not appear to contain a valid URL."
+msgstr "Alamat tautan video tidak benar."
+
+#: report.latitude.between
+msgctxt "report.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "Isi kolom Lintang salah."
+
+#: report.latitude.required
+msgctxt "report.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Kolom Lintang wajib diisi. Klik lokasi pada peta."
+
+#: report.locale.alpha_dash
+msgctxt "report.locale.alpha_dash"
+msgid "The locale field has an incorrect value. "
+msgstr "Kolom pengaturan lokal tidak tepat."
+
+#: report.locale.exists
+msgctxt "report.locale.exists"
+msgid "This report already has a translation for this language."
+msgstr "Laporan ini sudah diterjemahkan dalam bahasa ini."
+
+#: report.locale.length
+msgctxt "report.locale.length"
+msgid "The locale field has an incorrect value. "
+msgstr "Kolom pengaturan lokal tidak tepat."
+
+#: report.locale.locale
+msgctxt "report.locale.locale"
+msgid ""
+"The Original Report and the Translation have the same locale (language)."
+msgstr "Bahasa Laporan Asli dan Terjemahan memiliki bahasa (lokal) yang sama."
+
+#: report.locale.required
+msgctxt "report.locale.required"
+msgid "The locale is required."
+msgstr "Kolom pengaturan lokal wajib diisi."
+
+#: report.location_name.length
+msgctxt "report.location_name.length"
+msgid ""
+"The \"Location Name\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "Kolom \"Nama Lokasi\" setidaknya 3 karakter dan tidak lebih dari 200 karakter."
+
+#: report.location_name.required
+msgctxt "report.location_name.required"
+msgid "The \"Location Name\" field is required."
+msgstr "Kolom \"Nama Lokasi\" wajib diisi."
+
+#: report.longitude.between
+msgctxt "report.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "Kolom Bujur tidak benar."
+
+#: report.longitude.required
+msgctxt "report.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Kolom Bujur wajib diisi. Klik lokasi pada peta."
+
+#: report.person_email.email
+msgctxt "report.person_email.email"
+msgid "The email field does not appear to contain a valid email address."
+msgstr "Alamat surel Anda tidak benar."
+
+#: report.person_email.length
+msgctxt "report.person_email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "Alamat surel setidaknya terdiri dari 4 karakter dan tidak lebih dari 64 karakter."
+
+#: report.person_first.length
+msgctxt "report.person_first.length"
+msgid ""
+"The first name field must be at least 3 and no more 100 characters long."
+msgstr "Kolom nama pertama setidaknya 3 karakter dan tidak lebih dari 100 karakter."
+
+#: report.person_last.length
+msgctxt "report.person_last.length"
+msgid ""
+"The last name field must be at least 2 and no more 100 characters long."
+msgstr "Kolom nama keluarga setidaknya 2 karakter dan tidak lebih dari 100 karakter."
+
+#: report.to_date.date_mmddyyyy
+msgctxt "report.to_date.date_mmddyyyy"
+msgid "The TO date field does not appear to contain a valid date."
+msgstr "Kolom SAMPAI pada tanggal tidak benar."
+
+#: report.to_date.range
+msgctxt "report.to_date.range"
+msgid "Please enter a valid TO date. It cannot be greater than today."
+msgstr "Masukkan kolom SAMPAI pada tanggal yang tepat. Tidak boleh melebihi hari ini."
+
+#: report.to_date.range_greater
+msgctxt "report.to_date.range_greater"
+msgid "Your FROM date cannot be greater than your TO date."
+msgstr "Kolom SEJAK pada rentang waktu tidak boleh melebihi kolom SAMPAI."

@@ -1,0 +1,301 @@
+# 
+# Translators:
+# Jiří Vírava <appukonrad@gmail.com>, 2013
+# Jiří Vírava <appukonrad@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-14 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Czech (Czech Republic) (http://www.transifex.com/ushahidi/ushahidi-v2/language/cs_CZ/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs_CZ\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: upgrade.upgrade.between
+msgctxt "upgrade.upgrade.between"
+msgid "Invalid input data. It can either be 0 for No or 1 for Yes."
+msgstr "Invalid input data. It can either be 0 for No and 1 for Yes."
+
+#: upgrade.upgrade_automatic
+msgctxt "upgrade.upgrade_automatic"
+msgid "Automatic Upgrade"
+msgstr "Automatická aktualizace"
+
+#: upgrade.upgrade_available
+msgctxt "upgrade.upgrade_available"
+msgid "Available Updates"
+msgstr "Dostupné aktualizace"
+
+#: upgrade.upgrade_continue_btn_text
+msgctxt "upgrade.upgrade_continue_btn_text"
+msgid "Continue"
+msgstr "Pokračovat"
+
+#: upgrade.upgrade_db_btn_text
+msgctxt "upgrade.upgrade_db_btn_text"
+msgid "Upgrade"
+msgstr "Aktualizovat"
+
+#: upgrade.upgrade_db_text_1
+msgctxt "upgrade.upgrade_db_text_1"
+msgid "So, I'm going to upgrade your database from version"
+msgstr "Chystáte se aktualizovat databázi z verze"
+
+#: upgrade.upgrade_db_text_2
+msgctxt "upgrade.upgrade_db_text_2"
+msgid "to the newest database version"
+msgstr "na nejnovější verzi"
+
+#: upgrade.upgrade_db_text_3
+msgctxt "upgrade.upgrade_db_text_3"
+msgid "Click on the \"Upgrade\" button and just chillax as I perform the magic."
+msgstr "Klikněte na tlačítko Aktualizovat a počkejte až se aktualizace provede."
+
+#: upgrade.upgrade_db_text_4
+msgctxt "upgrade.upgrade_db_text_4"
+msgid ""
+"Oh, also if you want me to backup your database, just tick the check button "
+"below and I will do that for you in a breeze."
+msgstr "Přejete-li si zálohovat databázi, zaškrtněte příslušné políčko."
+
+#: upgrade.upgrade_db_text_5
+msgctxt "upgrade.upgrade_db_text_5"
+msgid ""
+"Backup database before upgrade? (<strong style=\"color:#FF0000;\">Highly "
+"recommended</strong>)"
+msgstr "Zálohovat databázi před aktualizací? (<strong style=\"color:#FF0000;\">Silně doporučujeme!</strong>)"
+
+#: upgrade.upgrade_db_title
+msgctxt "upgrade.upgrade_db_title"
+msgid "Ushahidi database upgrade"
+msgstr "Databáze aktualizována"
+
+#: upgrade.upgrade_db_info
+msgctxt "upgrade.upgrade_db_info"
+msgid ""
+"Ushahidi has been updated! Before you continue, you need to update your "
+"database to the newest version (%s)."
+msgstr "Ushahidi bylo aktualizováno! Než budete pokračovat, budete muset zaktualizovat databázi na nejnovější verzi (%s)."
+
+#: upgrade.upgrade_db_up_to_date
+msgctxt "upgrade.upgrade_db_up_to_date"
+msgid "Your database version is up to date."
+msgstr "Vaše verze databáze aktuální."
+
+#: upgrade.upgrade_failed
+msgctxt "upgrade.upgrade_failed"
+msgid "Upgrade failed at some point"
+msgstr "Aktualizace selhala"
+
+#: upgrade.upgrade_manual
+msgctxt "upgrade.upgrade_manual"
+msgid "Manual Upgrade"
+msgstr "Manuální aktualizace"
+
+#: upgrade.upgrade_status
+msgctxt "upgrade.upgrade_status"
+msgid "Ushahidi upgrade status"
+msgstr "Průběh aktualizace"
+
+#: upgrade.upgrade_text_1
+msgctxt "upgrade.upgrade_text_1"
+msgid ""
+"The instructions below detail how to manually upgrade your Ushahidi "
+"deploymentl"
+msgstr "Následující instrukce popisují, jak manuálně aktualizovat Váš systém Ushahidi"
+
+#: upgrade.upgrade_text_2
+msgctxt "upgrade.upgrade_text_2"
+msgid "<dl><dt><strong>Download</strong></dt>"
+msgstr "en_US: <strong>Krok 1:</strong> Stáhněte si poslední sestavení Ushahidi na stránkách <a href=\"http://download.ushahidi.com/\">http://download.ushahidi.com</a>"
+
+#: upgrade.upgrade_text_3
+msgctxt "upgrade.upgrade_text_3"
+msgid "<dd>- Download the most recent Ushahidi build from"
+msgstr "<strong>Krok 2:</strong> Vyberte si mód, v jakém se připojíte k Vašemu webovému serveru (telnet, ftp, ssh) a nahraďte obsah složek soubory z nejnovějšího sestavení. <strong>Všechny KROMĚ:</strong>"
+
+#: upgrade.upgrade_text_4
+msgctxt "upgrade.upgrade_text_4"
+msgid ""
+"<dt><strong>Backup</strong></dt><dd>- .htaccess, "
+"./applications/config/config.php, ./applications/config/database.php and "
+"./applications/config/auth.php files. </dd><dd>- Just in case something goes"
+" wrong, it's recommended you make an entire backup of your Ushahidi "
+"deployment.</dd><dt><strong>Copy files</strong></dt><dd>- Extract the "
+"downloaded zip file</dd><dd>- Depending on the operating system running the "
+"web server, use your preferred tool/mode (e.g. Telnet, FTP, SSH) to login to"
+" the webserver and replace the contents of all the folders with the newest "
+"from the recent build.</dd><dt><strong>Upgrde database</strong></dt><dd>- "
+"First determine your database schema version by looking at the "
+"<strong>db_version</strong> value in the settings table or look at the "
+"Ushahidi upgrade information at the top of this page. </dd><dd>- If you are "
+"at version 25, you need to upgrade from 25-26, 26-27, 27-28 and so on up to "
+"the latest SQL file in your <strong>/sql</strong> directory.</dd><dd>- With "
+"your database client, upgrade the database by executing the appropriate "
+"upgradex-x.sql file.</dd></dl>"
+msgstr "<strong>Krok 4:</strong> Klikněte na tlačítko <strong>\"Pokračovat\"</strong> pro aktualizaci nezbytných tabulek."
+
+#: upgrade.upgrade_tables
+msgctxt "upgrade.upgrade_tables"
+msgid ""
+"<strong>Step 3:</strong> Look inside the <strong>sql</strong> folder. "
+"Manuall run the upgrade<xx>-<xx>.sql file starting from the current db "
+"version of your install through to the final sql upgrade file."
+msgstr "<strong> Krok 3: </strong> Podívejte se dovnitř <strong> sql </strong> složky. Manuall run the upgrade<xx>-.<xx>sql soubory od aktuální verze db vaší instalace, až po finální aktualizační SQL soubor."
+
+#: upgrade.upgrade_text_5
+msgctxt "upgrade.upgrade_text_5"
+msgid ""
+"<strong>Step 4:</strong> Click on the <strong>\"Continue\"</strong> button "
+"to upgrade the necessary tables."
+msgstr "Pro automatickou aktualizaci klikněte na tlačítko níže"
+
+#: upgrade.upgrade_text_6
+msgctxt "upgrade.upgrade_text_6"
+msgid "For automatic upgrade, click on the button below."
+msgstr "Pro automatickou aktualizaci, klikněte na níže uvedené tlačítko."
+
+#: upgrade.upgrade_title_text
+msgctxt "upgrade.upgrade_title_text"
+msgid ""
+"You are currently using Ushahidi v%1$s with database version %2$d running on"
+" %3$s"
+msgstr "V současné době používáte Ushahidi v%1$s na databázi verze %2$d běžící na %3$s"
+
+#: upgrade.upgrading
+msgctxt "upgrade.upgrading"
+msgid "Upgrading"
+msgstr "Aktualizuji"
+
+#: upgrade.upgrade_ftp_text
+msgctxt "upgrade.upgrade_ftp_text"
+msgid ""
+"To continue with the easy upgrade, the following information is required for"
+" the FTP server that your website is hosted on."
+msgstr "Chcete-li pokračovat v jednoduché aktualizaci, jsou potřebné následující informace pro FTP server, kde je váš web umístěn."
+
+#: upgrade.upgrade_ftp_hostname
+msgctxt "upgrade.upgrade_ftp_hostname"
+msgid "FTP Hostname: <span>Example: \"localhost\"</span>"
+msgstr "FTP jméno hsotitele:"
+
+#: upgrade.upgrade_ftp_password
+msgctxt "upgrade.upgrade_ftp_password"
+msgid "FTP Password:"
+msgstr "FTP heslo:"
+
+#: upgrade.upgrade_ftp_username
+msgctxt "upgrade.upgrade_ftp_username"
+msgid "FTP User Name:"
+msgstr "FTP uživatelské jméno:"
+
+#: upgrade.upgrade_status_info
+msgctxt "upgrade.upgrade_status_info"
+msgid "You have the latest version of Ushahidi."
+msgstr "Máte nejnovější verzi Ushahidi."
+
+#: upgrade.upgrade_status_info_2
+msgctxt "upgrade.upgrade_status_info_2"
+msgid "You do not need to upgrade."
+msgstr "Nemusíte aktualizovat."
+
+#: upgrade.upgrade_db_version
+msgctxt "upgrade.upgrade_db_version"
+msgid "Database version: %d"
+msgstr "Verze databáze: %d"
+
+#: upgrade.upgrade_warning_software_version
+msgctxt "upgrade.upgrade_warning_software_version"
+msgid "Warning: Software version in version.php and database do not match."
+msgstr "Upozornění: Verze softwaru ve version.php a v databázi se neshodují."
+
+#: upgrade.upgrade_warning_db_version
+msgctxt "upgrade.upgrade_warning_db_version"
+msgid "Warning: Database version in version.php and database do not match."
+msgstr "Upozornění: Verze databáze ve version.php a databáze se neshodují."
+
+#: upgrade.upgrade_database
+msgctxt "upgrade.upgrade_database"
+msgid "Database:"
+msgstr "Databáze:"
+
+#: upgrade.ushahidi_release_version
+msgctxt "upgrade.ushahidi_release_version"
+msgid "Ushahidi %s"
+msgstr "Ushahidi %s"
+
+#: upgrade.beta
+msgctxt "upgrade.beta"
+msgid "BETA!"
+msgstr "BETA!"
+
+#: upgrade.download
+msgctxt "upgrade.download"
+msgid "Downloading latest version of ushahidi..."
+msgstr "Stahování nejnovější verze Ushahidi ..."
+
+#: upgrade.log_file
+msgctxt "upgrade.log_file"
+msgid "Log File"
+msgstr "Soubor Logu"
+
+#: upgrade.successfully_downloaded
+msgctxt "upgrade.successfully_downloaded"
+msgid "Successfully Downloaded. Unpacking..."
+msgstr "Úspěšně Staženo. Rozbalování ..."
+
+#: upgrade.failed_downloading
+msgctxt "upgrade.failed_downloading"
+msgid "Failed downloading."
+msgstr "Stahování se nezdařilo."
+
+#: upgrade.successfully_unpacked
+msgctxt "upgrade.successfully_unpacked"
+msgid "Successfully Unpacked. Copying files..."
+msgstr "Úspěšně Rozbaleno. Kopírování souborů ..."
+
+#: upgrade.failed_unpacking
+msgctxt "upgrade.failed_unpacking"
+msgid "Failed unpacking."
+msgstr "Rozbalování se nezdařilo."
+
+#: upgrade.successfully_copied
+msgctxt "upgrade.successfully_copied"
+msgid "Successfully Copied. Upgrading Database..."
+msgstr "Úspěšně zkopírováno. Aktualizace databáze ..."
+
+#: upgrade.failed_copying
+msgctxt "upgrade.failed_copying"
+msgid "Failed copying files."
+msgstr "Kopírování souborů se nezdařilo."
+
+#: upgrade.backup_success
+msgctxt "upgrade.backup_success"
+msgid "Database backup and upgrade successful."
+msgstr "Úspěšná záloha a aktualizace databáze."
+
+#: upgrade.backup_failed
+msgctxt "upgrade.backup_failed"
+msgid "Failed backing up database."
+msgstr "Záloha databáze se nezdařila."
+
+#: upgrade.dbupgrade_success
+msgctxt "upgrade.dbupgrade_success"
+msgid "Database upgrade successful."
+msgstr "Úspěšní aktualizace databáze."
+
+#: upgrade.deleting_files
+msgctxt "upgrade.deleting_files"
+msgid "Deleting downloaded files..."
+msgstr "Mazání stažených souborů ..."
+
+#: upgrade.upgrade_success
+msgctxt "upgrade.upgrade_success"
+msgid "UPGRADE SUCCESSFUL. View <a href=\"%s\" target=\"_blank\">Log File</a>"
+msgstr "AKTUALIZACE ÚSPĚŠNÁ. Zobrazit <a href=\"%s\" target=\"_blank\">Soubor Logu</a>"

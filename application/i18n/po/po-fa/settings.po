@@ -1,0 +1,860 @@
+# 
+# Translators:
+# Mshahid <marjoon@gmail.com>, 2013
+# snp <saharnp@stanford.edu>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-03-12 06:26+0000\n"
+"PO-Revision-Date: 2014-03-12 06:20+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Persian (http://www.transifex.com/projects/p/ushahidi-v2/language/fa/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fa\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: settings.allow_comments.between
+msgctxt "settings.allow_comments.between"
+msgid "The allow comments field does not appear to contain a valid value."
+msgstr "فیلد \"قبول نظرات\" به نظر شامل یک مقدار معتبر نمی باشد."
+
+#: settings.allow_comments.required
+msgctxt "settings.allow_comments.required"
+msgid "The allow comments field is required."
+msgstr "فیلد \"قبول نظرات\" باید پُر شود."
+
+#: settings.allow_feed.between
+msgctxt "settings.allow_feed.between"
+msgid "The include feed field does not appear to contain a valid value."
+msgstr "فیلد \"فید را شامل شو\" به نظر شامل یک مقدار معتبر نمی باشد."
+
+#: settings.allow_feed.required
+msgctxt "settings.allow_feed.required"
+msgid "The include feed field is required."
+msgstr "فیلد \"فید را شامل شو\" باید پُر شود."
+
+#: settings.allow_feed_category.between
+msgctxt "settings.allow_feed_category.between"
+msgid ""
+"The include feed category field does not appear to contain a valid value."
+msgstr ""
+
+#: settings.allow_feed_category.required
+msgctxt "settings.allow_feed_category.required"
+msgid "The include feed category field is required."
+msgstr ""
+
+#: settings.allow_alerts.between
+msgctxt "settings.allow_alerts.between"
+msgid "The allow alerts field does not appear to contain a valid value."
+msgstr "فیلد \"قبول هشدارها\" به نظر شامل یک مقدار معتبر نمی باشد."
+
+#: settings.allow_alerts.required
+msgctxt "settings.allow_alerts.required"
+msgid "The allow alerts field is required."
+msgstr "فیلد \"قبول هشدارها\" باید پُر شود."
+
+#: settings.allow_reports.between
+msgctxt "settings.allow_reports.between"
+msgid "The allow reports field does not appear to contain a valid value."
+msgstr "فیلد \"قبول گزارش ها\" به نظر شامل یک مقدار معتبر نمی باشد."
+
+#: settings.allow_reports.required
+msgctxt "settings.allow_reports.required"
+msgid "The allow reports field is required."
+msgstr "فیلد \"قبول گزارشات\" باید پُر شود."
+
+#: settings.allow_stat_sharing.between
+msgctxt "settings.allow_stat_sharing.between"
+msgid "The stat sharing field does not appear to contain a valid value."
+msgstr "فیلد \"اشتراک گذاری آمار\" به نظر شامل یک مقدار معتبر نمی باشد."
+
+#: settings.allow_stat_sharing.required
+msgctxt "settings.allow_stat_sharing.required"
+msgid "The stat sharing field is required."
+msgstr "فیلد \"اشتراک گذاری آمار\" باید پُر شود."
+
+#: settings.api.default_record_limit
+msgctxt "settings.api.default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "پیش فرض تعداد رکوردی که با هر درخواست API  آورده می شود"
+
+#: settings.api.maximum_record_limit
+msgctxt "settings.api.maximum_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "حداکثر تعداد رکوردی که با هر درخواست API  آورده می شود"
+
+#: settings.api.maximum_requests_per_ip_address
+msgctxt "settings.api.maximum_requests_per_ip_address"
+msgid "Maximum number of API requests per IP address"
+msgstr "حداکثر تعداد درخواست های API برای هر آدرس API"
+
+#: settings.api_akismet.alpha_numeric
+msgctxt "settings.api_akismet.alpha_numeric"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "ظاهرا فیلد Akismet شامل یک مقدار معتبر نمی باشد."
+
+#: settings.api_akismet.length
+msgctxt "settings.api_akismet.length"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "ظاهرا فیلد Akismet شامل یک مقدار معتبر نمی باشد."
+
+#: settings.banner_image.type
+msgctxt "settings.banner_image.type"
+msgid ""
+"The Site Banner field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr ""
+
+#: settings.banner_image.size
+msgctxt "settings.banner_image.size"
+msgid "Please ensure that \"Banner Image\" size is less than 250 KB."
+msgstr ""
+
+#: settings.banner_image.valid
+msgctxt "settings.banner_image.valid"
+msgid "The \"Banner Image\" field does not appear to contain a valid file."
+msgstr ""
+
+#: settings.cache_pages.between
+msgctxt "settings.cache_pages.between"
+msgid "The cache pages field is required."
+msgstr "فیلد صفحات مخزن باید پر شود."
+
+#: settings.cache_pages.required
+msgctxt "settings.cache_pages.required"
+msgid "The cache pages field does not appear to contain a valid value."
+msgstr "ظاهرا فیلد صفحات مخزن شامل مقدار معتبری نمی باشد."
+
+#: settings.cache_pages_lifetime.in_array
+msgctxt "settings.cache_pages_lifetime.in_array"
+msgid ""
+"The cache pages lifetime field does not appear to contain a valid value."
+msgstr "ظاهرا فیلد طول عمر صفحات مخزن شامل یک مقدار معتبر نمی باشد."
+
+#: settings.cache_pages_lifetime.required
+msgctxt "settings.cache_pages_lifetime.required"
+msgid "The cache pages lifetime field is required."
+msgstr "فیلد طول عمر صفحات  مخزن باید پر شود."
+
+#: settings.cleanurl.clean_url_disabled
+msgctxt "settings.cleanurl.clean_url_disabled"
+msgid ""
+"It looks like your server is not configured to handle clean URLs. You will "
+"need to change the configuration of your server before you can enable clean "
+"URLs. See more info on how to enable clean URLs at <a "
+"href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-"
+"rewrite\" target=\"_blank\">this forum post</a>"
+msgstr "به نظر می رسد سرور شما برای به کار بردن URL های پاک تنظیم نشده است. باید تنظیمات سرور خود را تغییر دهید تا URL های پاک را فعال کنید.  برای دریافت اطلاعات بیشتر از چگونگی فعال سازی URL  های پاک  به این پست <a href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite\" target=\"_blank\"> رجوع کنید. </a>"
+
+#: settings.cleanurl.clean_url_enabled
+msgctxt "settings.cleanurl.clean_url_enabled"
+msgid ""
+"This option makes Ushahidi to be accessed via \"clean\" URLs (without "
+"\"index.php\" in the URL)."
+msgstr "این گزینه  امکان دسترسی به یوشهیدی توسط URL های پاک را فعال می کند (بدون \"index.php\" در URL)"
+
+#: settings.cleanurl.enable_clean_url
+msgctxt "settings.cleanurl.enable_clean_url"
+msgid "Enable Clean URLs"
+msgstr "فعال کردن URL  های پاک"
+
+#: settings.cleanurl.title
+msgctxt "settings.cleanurl.title"
+msgid "Clean URLs"
+msgstr "URL  های پاک"
+
+#: settings.clickatell_api.length
+msgctxt "settings.clickatell_api.length"
+msgid "The Clickatell API number field must be no more 20 characters long."
+msgstr "فیلد شماره ی API Clickatell نباید بیشتر از 20 نویسه باشد."
+
+#: settings.clickatell_api.required
+msgctxt "settings.clickatell_api.required"
+msgid "The Clickatell API number field is required."
+msgstr "فیلد شماره Clickatell API باید پر شود."
+
+#: settings.clickatell_password.length
+msgctxt "settings.clickatell_password.length"
+msgid ""
+"The Clickatell Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "فیلد گذرواژه Clickatell  باید حداقل 5 و حداکثر 50 نویسه باشد."
+
+#: settings.clickatell_password.required
+msgctxt "settings.clickatell_password.required"
+msgid "The Clickatell Password field is required."
+msgstr "فیلد نام کاربری Clickatell باید پر شود."
+
+#: settings.clickatell_username.length
+msgctxt "settings.clickatell_username.length"
+msgid "The Clickatell Username field must be no more 50 characters long."
+msgstr "فیلد نام کاربری Clickatells نباید بیشتر از 50 نویسه باشد."
+
+#: settings.clickatell_username.required
+msgctxt "settings.clickatell_username.required"
+msgid "The Clickatell Username field is required."
+msgstr "فیلد نام کاربری Clickatell  باید پر شود. "
+
+#: settings.configure_map
+msgctxt "settings.configure_map"
+msgid "Configure Map"
+msgstr "تنظیم نقشه"
+
+#: settings.default_location
+msgctxt "settings.default_location"
+msgid "Default Location"
+msgstr "مکان پیش فرض"
+
+#: settings.default_map_all.alpha_numeric
+msgctxt "settings.default_map_all.alpha_numeric"
+msgid "The color feed field does not appear to contain a valid value."
+msgstr "ظاهرا فیلد رنگ شامل یک مقدار معتبر نمی باشد."
+
+#: settings.default_map_all.length
+msgctxt "settings.default_map_all.length"
+msgid "The color field must be no more 6 characters long."
+msgstr "فیلد رنگ نباید بیشتر از 6 نویسه باشد."
+
+#: settings.default_map_all.required
+msgctxt "settings.default_map_all.required"
+msgid "The color field is required."
+msgstr "فیلد رنگ باید پر شود."
+
+#: settings.default_map_view
+msgctxt "settings.default_map_view"
+msgid "Default Map View"
+msgstr "نمای پیش فرض نقشه"
+
+#: settings.default_zoom_level
+msgctxt "settings.default_zoom_level"
+msgid "Default Zoom Level"
+msgstr "رده ی زوم پیش فرض"
+
+#: settings.download_city_list
+msgctxt "settings.download_city_list"
+msgid "Retrieve Cities From Geonames"
+msgstr "بازیابی شهرها از نام جغرافیایی "
+
+#: settings.email_host.length
+msgctxt "settings.email_host.length"
+msgid "The Mail server port field is too long."
+msgstr "فیلد سرور ایمیل بیش از حد طولانی است."
+
+#: settings.email_host.numeric
+msgctxt "settings.email_host.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "فیلد درگاه سرور ایمیل فقط می تواند شامل عدد باشد."
+
+#: settings.email_password.length
+msgctxt "settings.email_password.length"
+msgid ""
+"The Mail Server Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "گذرواژه سرور ایمیل باید حداقل 5 و حداکثر 50 نویسه باشد."
+
+#: settings.email_password.required
+msgctxt "settings.email_password.required"
+msgid "The Mail Server Password field is required."
+msgstr "گذرواژه ی سرور ایمیل باید پر شود."
+
+#: settings.email_port.length
+msgctxt "settings.email_port.length"
+msgid "The Mail server port field is too long."
+msgstr "فیلد درگاه سرور ایمیل بیش از حد طولانی است."
+
+#: settings.email_port.numeric
+msgctxt "settings.email_port.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "فیلد درگاه سرور ایمیل باید فقط شامل کاراکتر عدد باشد."
+
+#: settings.email_servertype.length
+msgctxt "settings.email_servertype.length"
+msgid "The Mail server port field is too long."
+msgstr "فیلد درگاه سرور ایمیل بیش از حد طولانی است."
+
+#: settings.email_servertype.required
+msgctxt "settings.email_servertype.required"
+msgid "The Mail Server Type field is required."
+msgstr "فیلد نوع سرور ایمیل باید پر شود."
+
+#: settings.email_username.length
+msgctxt "settings.email_username.length"
+msgid "The Mail Server Username field must be no more 50 characters long."
+msgstr "فیلد نام کاربری سرور ایمیل باید حداکثر 50 نویسه باشد."
+
+#: settings.email_username.required
+msgctxt "settings.email_username.required"
+msgid "The Mail Server Username field is required."
+msgstr "نام کاربری سرور ایمیل باید پر شود."
+
+#: settings.facebook.title
+msgctxt "settings.facebook.title"
+msgid "Facebook Setup Options"
+msgstr "گزینه های تنظیم فیس بوک"
+
+#: settings.facebook.description
+msgctxt "settings.facebook.description"
+msgid ""
+"To get the information below you will need to create a new Facebook "
+"application at"
+msgstr "برای دریافت اطلاعات زیر باید یک درخواست فیس بوک جدید ایجاد کنید. "
+
+#: settings.facebook.description_2
+msgctxt "settings.facebook.description_2"
+msgid ""
+"These settings allow users to login via Facebook, this <strong>does "
+"not</strong> create a facebook application for your deployment"
+msgstr ""
+
+#: settings.facebook.app_id
+msgctxt "settings.facebook.app_id"
+msgid "Facebook App ID"
+msgstr "Facebook App ID"
+
+#: settings.facebook.app_secret
+msgctxt "settings.facebook.app_secret"
+msgid "Facebook App Secret"
+msgstr "Facebook App Secret"
+
+#: settings.google_analytics.length
+msgctxt "settings.google_analytics.length"
+msgid ""
+"The Google Analytics field must contain a valid Web Property ID in the "
+"format UA-XXXXX-XX."
+msgstr "فیلد Google Analytics  باید شامل یک Web Property ID معتبر در قالب UA-XXXXX-XX باشد."
+
+#: settings.https.enable_https
+msgctxt "settings.https.enable_https"
+msgid "Enable HTTPS"
+msgstr "فعال سازی HTTPS"
+
+#: settings.https.https_disabled
+msgctxt "settings.https.https_disabled"
+msgid ""
+"This option makes Ushahidi be accessed in unsecure mode; "
+"<strong>without</strong> \"https://\" in the URL prefix"
+msgstr "این گزینه  امکان دسترسی به یوشهیدی در حالت ناامن را فعال می کند;  بدون ورود  <strong>https</strong>   پیش از URL"
+
+#: settings.https.https_enabled
+msgctxt "settings.https.https_enabled"
+msgid ""
+"This option makes Ushahidi be accessed in secure mode; with "
+"<strong>https</strong> in the URL prefix"
+msgstr "این گزینه  امکان دسترسی به یوشهیدی در حالت امن را فعال می کند;  با ورود  <strong>https</strong>   پیش از URL"
+
+#: settings.https.title
+msgctxt "settings.https.title"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: settings.items_per_page.between
+msgctxt "settings.items_per_page.between"
+msgid ""
+"The items per page (Frontend) field does not appear to contain a valid "
+"value."
+msgstr "ظاهرا فیلد موارد در صفحه (Frontend) شامل مقدار معتبر نمی باشد."
+
+#: settings.items_per_page.required
+msgctxt "settings.items_per_page.required"
+msgid "The items per page (Frontend) field is required."
+msgstr "فیلد موارد در صفحه (Frontend)  باید پر شود."
+
+#: settings.items_per_page_admin.between
+msgctxt "settings.items_per_page_admin.between"
+msgid ""
+"The items per page (Admin) field does not appear to contain a valid value."
+msgstr "ظاهرا فیلد موارد در صفحه (ادمین)  شامل یک مقدار معتبر نمی باشد. "
+
+#: settings.items_per_page_admin.required
+msgctxt "settings.items_per_page_admin.required"
+msgid "The items per page (Admin) field is required."
+msgstr "فیلد موارد در هر صفحه (ادمین) باید پر شود."
+
+#: settings.map.default_location
+msgctxt "settings.map.default_location"
+msgid ""
+"Setting up your map provider is a straight- forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "تنظیم تامین کننده ی  نقشه فرآیند آسانی است. یک تامین کننده انتخاب کنید، از سایت تامین کننده یک کلید API  بگیرید و کلید API خود را وارد کنید. "
+
+#: settings.map.zoom
+msgctxt "settings.map.zoom"
+msgid "Zoom Level"
+msgstr "رده ی زوم"
+
+#: settings.map_provider.choose
+msgctxt "settings.map_provider.choose"
+msgid "Select a Map Provider"
+msgstr "یک تامین کننده نقشه انتخاب کنید."
+
+#: settings.map_provider.enter_api
+msgctxt "settings.map_provider.enter_api"
+msgid "Enter the new API Key"
+msgstr "وارد کردن کلید API"
+
+#: settings.map_provider.get_api
+msgctxt "settings.map_provider.get_api"
+msgid "Get an API Key"
+msgstr "دریافت کلید API  "
+
+#: settings.map_provider.info
+msgctxt "settings.map_provider.info"
+msgid ""
+"Setting up your map provider is a straight-forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "تنظیم تامین کننده ی  نقشه فرآیند آسانی است. یک تامین کننده انتخاب کنید، از سایت تامین کننده یک کلید API  بگیرید و کلید API خود را وارد کنید. "
+
+#: settings.map_provider.name
+msgctxt "settings.map_provider.name"
+msgid "Map provider"
+msgstr "تامین کننده نقشه"
+
+#: settings.map_timeline
+msgctxt "settings.map_timeline"
+msgid "Map Timeline"
+msgstr "محور زمانی نقشه "
+
+#: settings.map_settings
+msgctxt "settings.map_settings"
+msgid "Map Settings"
+msgstr "تنظیمات نقشه"
+
+#: settings.multiple_countries
+msgctxt "settings.multiple_countries"
+msgid "Does this Ushahidi Deployment span multiple countries?"
+msgstr "آیا این گسترش یوشهیدی شامل چند کشور می‌شود؟"
+
+#: settings.select_default_location
+msgctxt "settings.select_default_location"
+msgid "Please select a default country"
+msgstr "کشور پیش فرض خود را انتخاب کنید"
+
+#: settings.set_location
+msgctxt "settings.set_location"
+msgid "Click and drag the map to set your exact location"
+msgstr "بر روی نقشه کلیک کرده و بکشید تا مکان دقیق خود را مشخص کنید."
+
+#: settings.site.allow_clustering
+msgctxt "settings.site.allow_clustering"
+msgid "Cluster Reports on Map"
+msgstr "گزارش های خوشه ای روی نقشه "
+
+#: settings.site.allow_comments
+msgctxt "settings.site.allow_comments"
+msgid "Allow Users to Submit Comments to Reports"
+msgstr "اجازه ی ثبت نظر بر گزارش به کاربرها"
+
+#: settings.site.allow_feed
+msgctxt "settings.site.allow_feed"
+msgid "Include RSS News Feed on Website"
+msgstr "شامل کردن فید اخبار RSS در سایت"
+
+#: settings.site.allow_feed_category
+msgctxt "settings.site.allow_feed_category"
+msgid "Create New Category from Feeds"
+msgstr ""
+
+#: settings.site.allow_alerts
+msgctxt "settings.site.allow_alerts"
+msgid "Allow Users To Subscribe For Alerts"
+msgstr "اجازه ی اشتراک برای دریافت هشدار ها به کاربرها"
+
+#: settings.site.allow_reports
+msgctxt "settings.site.allow_reports"
+msgid "Allow Users To Submit Reports"
+msgstr "اجازه ی ثبت گزارش به کاربرها"
+
+#: settings.site.api_akismet
+msgctxt "settings.site.api_akismet"
+msgid "Akismet Key"
+msgstr "کلید Akismet"
+
+#: settings.site.banner
+msgctxt "settings.site.banner"
+msgid "Site Banner"
+msgstr "برنمای سایت"
+
+#: settings.site.blocks_per_row
+msgctxt "settings.site.blocks_per_row"
+msgid "Blocks Per Row"
+msgstr "بلوک ها در هر ردیف"
+
+#: settings.site.cache_pages
+msgctxt "settings.site.cache_pages"
+msgid "Cache Pages"
+msgstr "صفحات مخزن"
+
+#: settings.site.cache_pages_lifetime
+msgctxt "settings.site.cache_pages_lifetime"
+msgid "Cache Pages Lifetime"
+msgstr "طول عمر صفحات مخزن"
+
+#: settings.site.checkins
+msgctxt "settings.site.checkins"
+msgid "Enable Checkins"
+msgstr "فعال کردن ورودها"
+
+#: settings.site.copyright_statement
+msgctxt "settings.site.copyright_statement"
+msgid "Site Copyright Statement"
+msgstr "بیانیه ی حق نسخه برداری سایت"
+
+#: settings.site.default_category_colors
+msgctxt "settings.site.default_category_colors"
+msgid "Default Color For All Categories"
+msgstr "رنگ پیش فرض برای تمام دسته ها"
+
+#: settings.site.default_category_icons
+msgctxt "settings.site.default_category_icons"
+msgid "Default Icon For All Categories"
+msgstr "نمایه ی پیش فرض برای تمام دسته ها "
+
+#: settings.site.delete_banner_image
+msgctxt "settings.site.delete_banner_image"
+msgid "Delete Banner Image"
+msgstr "پاک کردن تصویر  برنما"
+
+#: settings.site.delete_default_map_all_icon
+msgctxt "settings.site.delete_default_map_all_icon"
+msgid "Delete Default Icon"
+msgstr "پاک کردن نمایه ی پیش فرض"
+
+#: settings.site.display_contact_page
+msgctxt "settings.site.display_contact_page"
+msgid "Display Contact Page"
+msgstr "نمایش صفحه ی ارتباط"
+
+#: settings.site.display_howtohelp_page
+msgctxt "settings.site.display_howtohelp_page"
+msgid "Display \"How to Help\" Page"
+msgstr "نمایش صفحه \" چگونگی کمک\""
+
+#: settings.site.email_alerts
+msgctxt "settings.site.email_alerts"
+msgid "Alerts Email Address"
+msgstr "هشدار های نشانی ایمیل"
+
+#: settings.site.email_notice
+msgctxt "settings.site.email_notice"
+msgid ""
+"<span>In order to receive reports by email, please configure your email "
+"account settings.</span>"
+msgstr "<span> برای دریافت گزارش توسط ایمیل، لطفا تنظیمات حساب کاربری ایمیل خود را تغییر دهید."
+
+#: settings.site.email_site
+msgctxt "settings.site.email_site"
+msgid "Site Email Address"
+msgstr "نشانی ایمیل سایت"
+
+#: settings.site.google_analytics
+msgctxt "settings.site.google_analytics"
+msgid "Google Analytics"
+msgstr "آمار تحلیلی گوگل"
+
+#: settings.site.google_analytics_example
+msgctxt "settings.site.google_analytics_example"
+msgid "Web Property ID - Format: UA-XXXXX-XX"
+msgstr "Web Property ID در قالب : UA-XXXXX-XX"
+
+#: settings.site.items_per_page
+msgctxt "settings.site.items_per_page"
+msgid "Items Per Page - Front End"
+msgstr "تعداد موارد در صفحه - Front End"
+
+#: settings.site.items_per_page_admin
+msgctxt "settings.site.items_per_page_admin"
+msgid "Items Per Page - Admin"
+msgstr "تعداد موارد در صفحه - ادمین"
+
+#: settings.site.kismet_notice
+msgctxt "settings.site.kismet_notice"
+msgid ""
+"Prevent comment spam using <a href=\"http://akismet.com/\" "
+"target=\"_blank\">Akismet</a> from Automattic. <BR />You can get a free API "
+"key by registering for a <a href=\"http://en.wordpress.com/api-keys/\" "
+"target=\"_blank\">WordPress.com user account</a>"
+msgstr "از نظرات جفنگ توسط <a href=\"http://akismet.com/\" target=\"_blank\">Akismet</a> از Automattic جلوگیری کنید.  <BR /> با ایجاد حساب کاربری در  <a href=\"http://en.wordpress.com/api-keys/\" target=\"_blank\">WordPress.com  می توانید کلید مجانی API  دریافت کنید. </a>"
+
+#: settings.site.laconica_configuration
+msgctxt "settings.site.laconica_configuration"
+msgid "Laconica Credentials"
+msgstr "اعتبار نامه Laconia"
+
+#: settings.site.laconica_site
+msgctxt "settings.site.laconica_site"
+msgid "Laconica Site "
+msgstr " سایت Laconia"
+
+#: settings.site.language
+msgctxt "settings.site.language"
+msgid "Site Language"
+msgstr "زبان سایت"
+
+#: settings.site.manually_approve_users
+msgctxt "settings.site.manually_approve_users"
+msgid "Manually Approve Users"
+msgstr "تایید دستی کاربرها"
+
+#: settings.site.message
+msgctxt "settings.site.message"
+msgid "Site Message"
+msgstr "پیغام سایت"
+
+#: settings.site.name
+msgctxt "settings.site.name"
+msgid "Site Name"
+msgstr "نام سایت"
+
+#: settings.site.private_deployment
+msgctxt "settings.site.private_deployment"
+msgid "Private Deployment"
+msgstr "پیاده سازی شخصی "
+
+#: settings.site.require_email_confirmation
+msgctxt "settings.site.require_email_confirmation"
+msgid "Require User Email Confirmation"
+msgstr "درخواست تایید ایمیل کاربر"
+
+#: settings.site.submit_report_message
+msgctxt "settings.site.submit_report_message"
+msgid "Submit Report Message"
+msgstr "ثبت گزارش"
+
+#: settings.site.share_site_stats
+msgctxt "settings.site.share_site_stats"
+msgid "Enable Statistics (Stored on Ushahidi's server)"
+msgstr "آمار (ذخیره شده بر روی سرور یوشهیدی)  را فعال کنید"
+
+#: settings.site.tagline
+msgctxt "settings.site.tagline"
+msgid "Site Tagline"
+msgstr "برچسب سایت"
+
+#: settings.site.timezone
+msgctxt "settings.site.timezone"
+msgid "Timezone"
+msgstr "منطقه ی زمانی"
+
+#: settings.site.title
+msgctxt "settings.site.title"
+msgid "Site Settings"
+msgstr "تنظیمات سایت"
+
+#: settings.site.twitter_configuration
+msgctxt "settings.site.twitter_configuration"
+msgid "Twitter Search Terms"
+msgstr "گزاره های جستجوی توییتر"
+
+#: settings.site.twitter_hashtags
+msgctxt "settings.site.twitter_hashtags"
+msgid "Hashtags - Separate with commas "
+msgstr "هشتگ ها باید با ویرگول جدا شوند. "
+
+#: settings.site.feed_geolocation_user
+msgctxt "settings.site.feed_geolocation_user"
+msgid "Feeds geolocation - Geonames username"
+msgstr ""
+
+#: settings.site_email.email
+msgctxt "settings.site_email.email"
+msgid "The site email field does not appear to contain a valid email address."
+msgstr "ظاهرا یک نشانی معتبر در فیلد ایمیل سایت وارد نشده است."
+
+#: settings.site_email.length
+msgctxt "settings.site_email.length"
+msgid ""
+"The site email field must be at least 4 and no more 100 characters long."
+msgstr "فیلد ایمیل سایت باید حداقل 4 و حداکثر 100 نویسه باشد."
+
+#: settings.site_name.length
+msgctxt "settings.site_name.length"
+msgid "The site name field must be at least 3 and no more 50 characters long."
+msgstr "فیلد نام مکان باید حداقل 3 و حداکثر 50 نویسه باشد"
+
+#: settings.site_name.required
+msgctxt "settings.site_name.required"
+msgid "The site name field is required."
+msgstr "فیلد نام سایت باید پر شود."
+
+#: settings.site_tagline.length
+msgctxt "settings.site_tagline.length"
+msgid "The tagline field must be at least 3 and no more 100 characters long."
+msgstr "فیلد برچسب باید حداقل 3 و حداکثر 100 نویسه باشد."
+
+#: settings.site_tagline.required
+msgctxt "settings.site_tagline.required"
+msgid "The tagline field is required."
+msgstr "فیلد برچسب  باید پر شود. "
+
+#: settings.sms.clickatell_api
+msgctxt "settings.sms.clickatell_api"
+msgid "Your Clickatell API Number"
+msgstr "شماره ی Clickatell API   شما"
+
+#: settings.sms.clickatell_check_balance
+msgctxt "settings.sms.clickatell_check_balance"
+msgid "Check Your Clickatell Credit Balance"
+msgstr "میزان اعتبار Clickatel تان را چک کنید."
+
+#: settings.sms.clickatell_load_balance
+msgctxt "settings.sms.clickatell_load_balance"
+msgid "Load Credit Balance"
+msgstr "بارگذاری  میزان اعتبار "
+
+#: settings.sms.clickatell_password
+msgctxt "settings.sms.clickatell_password"
+msgid "Your Clickatell Password"
+msgstr "گذرواژه Clickatell شما"
+
+#: settings.sms.clickatell_text_1
+msgctxt "settings.sms.clickatell_text_1"
+msgid ""
+"Sign up for Clickatells service by <a "
+"href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" "
+"target=\"_blank\">clicking here</a>"
+msgstr "برای  ثبت نام  در خدمات Clickatells در  <a href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" target=\"_blank\">اینجا </a> کلیک کنید."
+
+#: settings.sms.clickatell_text_2
+msgctxt "settings.sms.clickatell_text_2"
+msgid "Enter your Clickatell access information below"
+msgstr "اطلاعات دسترسی Clickatell  خود را اینجا وارد کنید."
+
+#: settings.sms.clickatell_username
+msgctxt "settings.sms.clickatell_username"
+msgid "Your Clickatell User Name"
+msgstr "نام کاربری Clickatell  شما"
+
+#: settings.sms.flsms_description
+msgctxt "settings.sms.flsms_description"
+msgid ""
+"FrontlineSMS is free and open source software that enables users to send and"
+" receive text messages with large groups of people through mobile phones. "
+"Click on the box below to download the latest version from FrontlineSMS.com."
+msgstr ""
+
+#: settings.sms.flsms_download
+msgctxt "settings.sms.flsms_download"
+msgid "Download and install FrontlineSMS"
+msgstr ""
+
+#: settings.sms.flsms_instructions
+msgctxt "settings.sms.flsms_instructions"
+msgid ""
+"Detailed instructions on how to send SMS from your FronlineSMS installation "
+"are available <strong><a "
+"href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" "
+"target=\"_blank\">here</a></strong>. The URL and API Key below are required "
+"to set up the sync with FrontlineSMS."
+msgstr ""
+
+#: settings.sms.flsms_link
+msgctxt "settings.sms.flsms_link"
+msgid "Copy and paste this into the FrontlineSMS \"Address\" field"
+msgstr ""
+
+#: settings.sms.flsms_key
+msgctxt "settings.sms.flsms_key"
+msgid "Copy and paste this into the FrontlineSMS \"Ushahidi API Key\" field"
+msgstr ""
+
+#: settings.sms.flsms_synchronize
+msgctxt "settings.sms.flsms_synchronize"
+msgid "Connecting FrontlineSMS to this Ushahidi deployment"
+msgstr ""
+
+#: settings.sms.flsms_text_1
+msgctxt "settings.sms.flsms_text_1"
+msgid "Enter phone number(s) connected to Frontline SMS in the field(s) below"
+msgstr "شماره تلفن (های) متصل به Frontline SMS را در فیلد (های) زیر وارد کنید."
+
+#: settings.sms.flsms_text_2
+msgctxt "settings.sms.flsms_text_2"
+msgid "Enter the number without any + or dashes below"
+msgstr "عدد مورد نظر را بدون علامت +  یا خط فاصله وارد کنید."
+
+#: settings.sms.option_1
+msgctxt "settings.sms.option_1"
+msgid "Option 1: Use Frontline SMS"
+msgstr "گزینه 1: استفاده از Frontline SMS"
+
+#: settings.sms.option_2
+msgctxt "settings.sms.option_2"
+msgid "Option 2: Use a Global SMS Gateway"
+msgstr "گزینه 2: استفاده از دروازه جهانی sms"
+
+#: settings.sms.title
+msgctxt "settings.sms.title"
+msgid "SMS Setup Options"
+msgstr "گزینه های تنظیم sms"
+
+#: settings.sms_no1.length
+msgctxt "settings.sms_no1.length"
+msgid "The phone 1 field does not appear to contain a valid value."
+msgstr "ظاهر در ا فیلد تلفن 1 مقدار معتبری وارد نشده است. "
+
+#: settings.sms_no1.numeric
+msgctxt "settings.sms_no1.numeric"
+msgid "The phone 1 field should contain numbers only."
+msgstr "فیلد تلفن 1 فقط می تواند شامل کاراکتر عدد باشد."
+
+#: settings.sms_no2.length
+msgctxt "settings.sms_no2.length"
+msgid "The phone 2 field is too long."
+msgstr "فیلد تلفن 2 بیش از حد طولانی است."
+
+#: settings.sms_no2.numeric
+msgctxt "settings.sms_no2.numeric"
+msgid "The phone 2 field should contain numbers only."
+msgstr "فیلد تلفن 2 فقط می تواند شامل کاراکتر عدد باشد."
+
+#: settings.sms_no3.length
+msgctxt "settings.sms_no3.length"
+msgid "The phone 3 field is too long."
+msgstr "فیلد تلفن 3 بیش از حد طولانی است."
+
+#: settings.sms_no3.numeric
+msgctxt "settings.sms_no3.numeric"
+msgid "The phone 3 field should contain numbers only."
+msgstr "فیلد تلفن 3 فقط می تواند شامل کاراکتر عدد باشد."
+
+#: settings.twitter.title
+msgctxt "settings.twitter.title"
+msgid "Twitter Setup Options"
+msgstr ""
+
+#: settings.twitter.description
+msgctxt "settings.twitter.description"
+msgid ""
+"To get the information below, set up your deployment as a new Twitter "
+"application at"
+msgstr ""
+
+#: settings.twitter.api_key
+msgctxt "settings.twitter.api_key"
+msgid "Consumer Key"
+msgstr ""
+
+#: settings.twitter.api_key_secret
+msgctxt "settings.twitter.api_key_secret"
+msgid "Consumer secret"
+msgstr ""
+
+#: settings.twitter.token
+msgctxt "settings.twitter.token"
+msgid "Access Token"
+msgstr ""
+
+#: settings.twitter.token_secret
+msgctxt "settings.twitter.token_secret"
+msgid "Access Token Secret"
+msgstr ""
+
+#: settings.test_settings
+msgctxt "settings.test_settings"
+msgid "Test settings"
+msgstr ""

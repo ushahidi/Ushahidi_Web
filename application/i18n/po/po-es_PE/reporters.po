@@ -1,0 +1,72 @@
+# 
+# Translators:
+# jose sabastizagal <jsabastizagal@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-08-10 02:20+0000\n"
+"Last-Translator: jose sabastizagal <jsabastizagal@gmail.com>\n"
+"Language-Team: Spanish (Peru) (http://www.transifex.com/ushahidi/ushahidi-v2/language/es_PE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_PE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: reporters.latitude.between
+msgctxt "reporters.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "El campo latitud parece no contener una latitud válida."
+
+#: reporters.latitude.required
+msgctxt "reporters.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "El campo latitud es requerido. Por favor haga click en el mapa para seleccionar una ubicación."
+
+#: reporters.level_id.numeric
+msgctxt "reporters.level_id.numeric"
+msgid "The Reporter Level field does not appear to contain a valid Level."
+msgstr "El campo Nivel de Reporte parece no contener una nivel válido."
+
+#: reporters.level_id.required
+msgctxt "reporters.level_id.required"
+msgid "The Reporter Level field does not appear to contain a valid Level."
+msgstr "El campo Nivel de Reporte parece no contener una nivel válido."
+
+#: reporters.location_name.length
+msgctxt "reporters.location_name.length"
+msgid ""
+"The location name field must be at least 3 and no more 200 characters long."
+msgstr "El campo nombre de ubicación debe tener al menos 3 y no más de 200 caracteres de largo."
+
+#: reporters.location_name.required
+msgctxt "reporters.location_name.required"
+msgid "The location name field is required."
+msgstr "El campo ubicación es requerido."
+
+#: reporters.longitude.between
+msgctxt "reporters.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "El campo longitud parece no contener una longitud válida."
+
+#: reporters.longitude.required
+msgctxt "reporters.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "El campo longitud es obligatorio. Por favor haga click en el mapa para seleccionar una ubicación."
+
+#: reporters.reporter_id.numeric
+msgctxt "reporters.reporter_id.numeric"
+msgid "Invalid Reporter"
+msgstr "Informante no válido"
+
+#: reporters.reporter_id.required
+msgctxt "reporters.reporter_id.required"
+msgid "Invalid Reporter"
+msgstr "Informante no válido"

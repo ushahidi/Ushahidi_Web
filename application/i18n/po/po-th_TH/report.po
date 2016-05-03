@@ -1,0 +1,394 @@
+# 
+# Translators:
+# Boripat Lebel <inactive+boripatlebel@transifex.com>, 2014
+# Ngamnet_review <ngamnetaektasaeng@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-08-22 06:26+0000\n"
+"PO-Revision-Date: 2014-09-03 05:07+0000\n"
+"Last-Translator: Ngamnet_review <ngamnetaektasaeng@gmail.com>\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/ushahidi/ushahidi-v2/language/th_TH/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th_TH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: report.comments_form_error
+msgctxt "report.comments_form_error"
+msgid "error!"
+msgstr "ผิดพลาด!"
+
+#: report.country_name.single_country
+msgctxt "report.country_name.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the report "
+"location is within the country %s."
+msgstr "การใช้งานนี้ครอบคลุมภายในประเทศเดียวเท่านั้น โปรดตรวจสอบให้แน่ใจว่าสถานที่รายงานอยู่ในประเทศนั้น%s"
+
+#: report.custom_field.values
+msgctxt "report.custom_field.values"
+msgid "Please enter a valid value for the \"%s\" field."
+msgstr "กรุณาป้อนค่าที่ถูกต้องในช่อง \"%s\" "
+
+#: report.custom_field.numeric
+msgctxt "report.custom_field.numeric"
+msgid "The \"%s\" field must be numeric."
+msgstr "ฟิล์ด \"%s\" จะต้องเป็นตัวเลข"
+
+#: report.custom_field.required
+msgctxt "report.custom_field.required"
+msgid "The \"%s\" field is required."
+msgstr "จำเป็นต้องป้อนข้อมูลในฟิล์ด\"%s\""
+
+#: report.custom_field.not_exist
+msgctxt "report.custom_field.not_exist"
+msgid "The \"%s\" field is does not exist."
+msgstr "ฟิล์ด \"%s\" ไม่ปรากฏข้อมูล"
+
+#: report.custom_field.permission
+msgctxt "report.custom_field.permission"
+msgid "The \"%s\" field cannot be edited by your account."
+msgstr "บัญชีของคุณไม่สามารถแก้ไข \"%s\""
+
+#: report.custom_field.email
+msgctxt "report.custom_field.email"
+msgid "The \"%s\" field must contain a valid email address."
+msgstr "ฟิล์ด \"%s\" จะต้องมีที่อยู่อีเมลที่ถูกต้อง"
+
+#: report.custom_field.phone
+msgctxt "report.custom_field.phone"
+msgid "The \"%s\" field must contain a valid phone number."
+msgstr "ฟิล์ด \"%s\" จะต้องมีหมายเลขโทรศัพท์ที่ถูกต้อง"
+
+#: report.custom_field.date_mmddyyyy
+msgctxt "report.custom_field.date_mmddyyyy"
+msgid "The \"%s\" field must contain a valid date (MM/DD/YYYY)."
+msgstr "ฟิล์ด \"%s\" จะต้องมีวันที่ถูกต้อง (วัน/เดือน/ ปี)"
+
+#: report.custom_field.date_ddmmyyyy
+msgctxt "report.custom_field.date_ddmmyyyy"
+msgid "The \"%s\" field must contain a valid date (DD/MM/YYYY)."
+msgstr "ฟิล์ด  \"%s\" จะต้องมีวันที่ถูกต้อง (วัน/เดือน/ ปี)"
+
+#: report.data_include.between
+msgctxt "report.data_include.between"
+msgid "Please select a valid item to include in the download."
+msgstr "กรุณาเลือกรายการที่ปรากฏเพื่อทำการดาวน์โหลด"
+
+#: report.data_include.numeric
+msgctxt "report.data_include.numeric"
+msgid "Please select a valid item to include in the download."
+msgstr "กรุณาเลือกรายการที่ปรากฏเพื่อทำการดาวน์โหลด"
+
+#: report.data_active.between
+msgctxt "report.data_active.between"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "กรุณาเลือก \"รายงานรอการอนุมัติ\" หรือ \"รายงานได้รับการอนุมัติ\" หรือทั้งสองอย่าง"
+
+#: report.data_active.numeric
+msgctxt "report.data_active.numeric"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "กรุณาเลือก \"รายงานรอการอนุมัติ\" หรือ \"รายงานได้รับการอนุมัติ\" หรือทั้งสองอย่าง"
+
+#: report.data_active.required
+msgctxt "report.data_active.required"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "กรุณาเลือก \"รายงานรอการอนุมัติ\" หรือ \"รายงานได้รับการอนุมัติ\" หรือทั้งสองอย่าง"
+
+#: report.data_verified.between
+msgctxt "report.data_verified.between"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "กรุณาเลือก \"รายงานรอการตรวจสอบ\" หรือ \"รายงานได้รับการตรวจสอบ\" หรือทั้งสองอย่าง"
+
+#: report.data_verified.numeric
+msgctxt "report.data_verified.numeric"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "กรุณาเลือก \"รายงานรอการตรวจสอบ\" หรือ \"รายงานได้รับการตรวจสอบ\" หรือทั้งสองอย่าง"
+
+#: report.data_verified.required
+msgctxt "report.data_verified.required"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "กรุณาเลือก \"รายงานรอการตรวจสอบ\" หรือ \"รายงานได้รับการตรวจสอบ\" หรือทั้งสองอย่าง"
+
+#: report.data_point.between
+msgctxt "report.data_point.between"
+msgid "Please select a valid type of report to download."
+msgstr "กรุณาเลือกรายงานที่ปรากฏเพื่อการดาวน์โหลด"
+
+#: report.data_point.numeric
+msgctxt "report.data_point.numeric"
+msgid "Please select a valid type of report to download."
+msgstr "กรุณาเลือกรายงานที่ปรากฏเพื่อการดาวน์โหลด"
+
+#: report.data_point.required
+msgctxt "report.data_point.required"
+msgid "Please select a valid type of report to download."
+msgstr "กรุณาเลือกรายงานที่ปรากฏเพื่อการดาวน์โหลด"
+
+#: report.format.required
+msgctxt "report.format.required"
+msgid "You must select a download format. Select either CSV or XML."
+msgstr "คุณต้องเลือกรูปแบบการดาวน์โหลด เลือกอย่างใดอย่างหนึ่ง CSV หรือ XML"
+
+#: report.format.valid
+msgctxt "report.format.valid"
+msgid "Please select a valid format to download your reports in"
+msgstr "กรุณาเลือกรูปแบบที่ปรากฏเพื่อดาวน์โหลดยังรายงานของคุณ"
+
+#: report.from_date.date_mmddyyyy
+msgctxt "report.from_date.date_mmddyyyy"
+msgid "The FROM date field does not appear to contain a valid date."
+msgstr "ฟิล์ดวันที่ \"จาก\" ไม่ปรากฏวันที่ที่ถูกต้อง"
+
+#: report.from_date.range
+msgctxt "report.from_date.range"
+msgid "Please enter a valid FROM date. It cannot be greater than today."
+msgstr "กรุณาป้อนวันที่ที่ถูกต้อง และไม่สามารถจะเกินวันนี้ได้"
+
+#: report.incident_active.between
+msgctxt "report.incident_active.between"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "กรุณาใส่ค่าที่ถูกต้องในการอนุมัติรายงานนี้"
+
+#: report.incident_active.required
+msgctxt "report.incident_active.required"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "กรุณาใส่ค่าที่ถูกต้องในการอนุมัติรายงานนี้"
+
+#: report.incident_ampm.validvalues
+msgctxt "report.incident_ampm.validvalues"
+msgid "The am/pm field does not appear to contain a valid value."
+msgstr "ฟิล์ด am/pm ไม่ปรากฏค่าที่ถูกต้อง"
+
+#: report.incident_category.numeric
+msgctxt "report.incident_category.numeric"
+msgid "The \"Categories\" field does not appear to contain a valid category."
+msgstr "ช่อง \"หมวดหมู่\" ไม่ปรากฏหมวดหมู่ที่ถูกต้อง"
+
+#: report.incident_category.required
+msgctxt "report.incident_category.required"
+msgid "The \"Categories\" field is required."
+msgstr "จำเป็นต้องใส่ \"หมวดหมู่\" "
+
+#: report.incident_date.date_ddmmyyyy
+msgctxt "report.incident_date.date_ddmmyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "ฟิลด์วันที่ไม่ปรากฏวันที่ถูกต้อง"
+
+#: report.incident_date.date_mmddyyyy
+msgctxt "report.incident_date.date_mmddyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "ฟิลด์วันที่ไม่ปรากฏวันที่ถูกต้อง"
+
+#: report.incident_date.required
+msgctxt "report.incident_date.required"
+msgid "The date field is required."
+msgstr "จำเป็นต้องใส่ฟิลด์วันที่"
+
+#: report.incident_description.required
+msgctxt "report.incident_description.required"
+msgid "The \"Description\" field is required."
+msgstr "จำเป็นต้องใส่ \"คำอธิบาย\""
+
+#: report.incident_hour.between
+msgctxt "report.incident_hour.between"
+msgid "The hour field does not appear to contain a valid hour."
+msgstr "ช่องชั่วโมงไม่ปรากฏชั่วโมงที่ถูกต้อง"
+
+#: report.incident_hour.required
+msgctxt "report.incident_hour.required"
+msgid "The hour field is required."
+msgstr "จำเป็นต้องใส่ชั่วโมง"
+
+#: report.incident_information.alpha
+msgctxt "report.incident_information.alpha"
+msgid "Please enter a valid value for Information Probability."
+msgstr "กรุณาใส่ค่าที่ถูกต้องสำหรับความน่าจะเป็นของข้อมูล"
+
+#: report.incident_information.length
+msgctxt "report.incident_information.length"
+msgid "Please enter a valid value for Information Probability."
+msgstr "กรุณาใส่ค่าที่ถูกต้องสำหรับความน่าจะเป็นของข้อมูล"
+
+#: report.incident_minute.between
+msgctxt "report.incident_minute.between"
+msgid "The minute field does not appear to contain a valid value."
+msgstr "ช่องนาทีไม่ปรากฏค่าที่ถูกต้อง"
+
+#: report.incident_minute.required
+msgctxt "report.incident_minute.required"
+msgid "The minute field is required."
+msgstr "จำเป็นต้องใส่นาที"
+
+#: report.incident_news.url
+msgctxt "report.incident_news.url"
+msgid "The news source links field does not appear to contain a valid URL."
+msgstr "URL ที่เชื่อมโยงแหล่งข่าวไม่ถูกต้อง"
+
+#: report.incident_photo.size
+msgctxt "report.incident_photo.size"
+msgid "Please ensure that photo upload sizes are limited to 2MB."
+msgstr "โปรดตรวจสอบว่าภาพมีขนาดการอัปโหลดไม่เกิน 2MB"
+
+#: report.incident_photo.type
+msgctxt "report.incident_photo.type"
+msgid ""
+"The Upload Photos field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "รูปแบบภาพที่จะให้อัพโหลดไม่ถูกต้อง รูปแบบภาพที่ใช้ได้คือ .JPG, .PNG และ .GIF"
+
+#: report.incident_photo.valid
+msgctxt "report.incident_photo.valid"
+msgid "The Upload Photos field does not appear to contain a valid file."
+msgstr "ภาพที่ให้อัพโหลดไม่ถูกต้อง"
+
+#: report.incident_source.alpha
+msgctxt "report.incident_source.alpha"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "กรุณาใส่ค่าที่ถูกต้องสำหรับความน่าเชื่อถือของแหล่งที่มา"
+
+#: report.incident_source.length
+msgctxt "report.incident_source.length"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "กรุณาใส่ค่าที่ถูกต้องสำหรับความน่าเชื่อถือของแหล่งที่มา"
+
+#: report.incident_title.length
+msgctxt "report.incident_title.length"
+msgid ""
+"The \"Report Title\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "\"ชื่อเรื่องของรายงาน\" ต้องมีอย่างน้อย 3 และไม่เกิน 200 ตัวอักษร"
+
+#: report.incident_title.required
+msgctxt "report.incident_title.required"
+msgid "The \"Report Title\" field is required."
+msgstr "จำเป็นต้องใส่ \"ชื่อรายงาน\""
+
+#: report.incident_title.csrf
+msgctxt "report.incident_title.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a report?"
+msgstr "เป็นไปได้ว่าอาจจะมีการโจมตี CSRF คุณต้องการสร้าง/แก้ไขรายงานจริงหรือไม่"
+
+#: report.incident_verified.between
+msgctxt "report.incident_verified.between"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "กรุณาใส่ค่าที่ถูกต้องในการตรวจสอบรายงานนี้"
+
+#: report.incident_verified.required
+msgctxt "report.incident_verified.required"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "กรุณาใส่ค่าที่ถูกต้องในการตรวจสอบรายงานนี้"
+
+#: report.incident_video.url
+msgctxt "report.incident_video.url"
+msgid "The video links field does not appear to contain a valid URL."
+msgstr "ช่องวิดีโอลิงก์ไม่ปรากฏ URL ที่ถูกต้อง"
+
+#: report.latitude.between
+msgctxt "report.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "ช่องละติจูดไม่ปรากฏละติจูดที่ถูกต้อง"
+
+#: report.latitude.required
+msgctxt "report.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "จำเป็นต้องใส่ละติจูด กรุณาคลิกแผนที่เพื่อระบุตำแหน่ง"
+
+#: report.locale.alpha_dash
+msgctxt "report.locale.alpha_dash"
+msgid "The locale field has an incorrect value. "
+msgstr "ช่องสถานที่มีค่าที่ไม่ถูกต้อง"
+
+#: report.locale.exists
+msgctxt "report.locale.exists"
+msgid "This report already has a translation for this language."
+msgstr "รายงานนี้มีการแปลเป็นภาษานี้แล้ว"
+
+#: report.locale.length
+msgctxt "report.locale.length"
+msgid "The locale field has an incorrect value. "
+msgstr "ช่องสถานที่มีค่าที่ไม่ถูกต้อง"
+
+#: report.locale.locale
+msgctxt "report.locale.locale"
+msgid ""
+"The Original Report and the Translation have the same locale (language)."
+msgstr "รายงานต้นฉบับและที่แปลมีสถานที่เกิดเหตุที่เดียวกัน (ภาษาท้องถิ่น)"
+
+#: report.locale.required
+msgctxt "report.locale.required"
+msgid "The locale is required."
+msgstr "จำเป็นต้องระบุสถานที่เกิดเหตุ"
+
+#: report.location_name.length
+msgctxt "report.location_name.length"
+msgid ""
+"The \"Location Name\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "ช่อง \"ตั้งชื่อ\" ต้องมีอย่างน้อย 3 และไม่เกิน 200 ตัวอักษร"
+
+#: report.location_name.required
+msgctxt "report.location_name.required"
+msgid "The \"Location Name\" field is required."
+msgstr "จำเป็นต้องใส่ \"ชื่อสถานที่\""
+
+#: report.longitude.between
+msgctxt "report.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "ช่องลองจิจูดไม่ปรากฏลองจิจูดที่ถูกต้อง"
+
+#: report.longitude.required
+msgctxt "report.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "จำเป็นต้องใส่ลองจิจูด กรุณาคลิกบนแผนที่เพื่อระบุตำแหน่ง"
+
+#: report.person_email.email
+msgctxt "report.person_email.email"
+msgid "The email field does not appear to contain a valid email address."
+msgstr "ช่องอีเมลไม่ปรากฏที่อยู่อีเมลที่ถูกต้อง"
+
+#: report.person_email.length
+msgctxt "report.person_email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "ช่องอีเมล์ต้องมีอย่างน้อย 4 และไม่เกิน 64 ตัวอักษร"
+
+#: report.person_first.length
+msgctxt "report.person_first.length"
+msgid ""
+"The first name field must be at least 3 and no more 100 characters long."
+msgstr "ช่องสำหรับชื่อต้องมีอย่างน้อย 3 และไม่มากกว่า 100 ตัวอักษร"
+
+#: report.person_last.length
+msgctxt "report.person_last.length"
+msgid ""
+"The last name field must be at least 2 and no more 100 characters long."
+msgstr "ช่องสำหรับนามสกุลต้องมีอย่างน้อย 2 และไม่มากกว่า 100 ตัวอักษร"
+
+#: report.to_date.date_mmddyyyy
+msgctxt "report.to_date.date_mmddyyyy"
+msgid "The TO date field does not appear to contain a valid date."
+msgstr "ช่องวันที่ \"ถึง\" ไม่ปรากฏวันที่ที่ถูกต้อง"
+
+#: report.to_date.range
+msgctxt "report.to_date.range"
+msgid "Please enter a valid TO date. It cannot be greater than today."
+msgstr "จำเป็นต้องใส่วันที่ และไม่สามารถจะเกินวันนี้ได้"
+
+#: report.to_date.range_greater
+msgctxt "report.to_date.range_greater"
+msgid "Your FROM date cannot be greater than your TO date."
+msgstr "วันที่จากไม่สามารถมากกว่าวันที่ถึง"

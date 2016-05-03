@@ -1,0 +1,3171 @@
+# 
+# Translators:
+# Krystian Hoffman <krystian.hoffman@gmail.com>, 2013
+# T68 <tlindstrom68@gmail.com>, 2013
+# T68 <tlindstrom68@gmail.com>, 2012-2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/ushahidi/ushahidi-v2/language/sv_SE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_main.about
+msgctxt "ui_main.about"
+msgid "About "
+msgstr "Om "
+
+#: ui_main.access
+msgctxt "ui_main.access"
+msgid "Access"
+msgstr "Tillg&aring;ng"
+
+#: ui_main.access_limits
+msgctxt "ui_main.access_limits"
+msgid "Access Limits"
+msgstr "Tillg&aring;ngsbegr&auml;nsningar"
+
+#: ui_main.account_name
+msgctxt "ui_main.account_name"
+msgid "Account Name"
+msgstr "Konto"
+
+#: ui_main.actions
+msgctxt "ui_main.actions"
+msgid "Actions"
+msgstr "H&auml;ndelser"
+
+#: ui_main.action_confirm
+msgctxt "ui_main.action_confirm"
+msgid "This action cannot be undone. Are you sure you want to continue?"
+msgstr "Detta kan inte &aringngras. &Auml;r du s&auml;ker p&aring att du vill forts&auml;tta?"
+
+#: ui_main.activate
+msgctxt "ui_main.activate"
+msgid "Activate"
+msgstr "Aktivera"
+
+#: ui_main.active
+msgctxt "ui_main.active"
+msgid "Active"
+msgstr "Aktiv"
+
+#: ui_main.add
+msgctxt "ui_main.add"
+msgid "Add"
+msgstr "L&auml;gg till"
+
+#: ui_main.added_by
+msgctxt "ui_main.added_by"
+msgid "Added By"
+msgstr "Skapad av"
+
+#: ui_main.additional_data
+msgctxt "ui_main.additional_data"
+msgid "Additional Data"
+msgstr "Mer information"
+
+#: ui_main.additional_reports
+msgctxt "ui_main.additional_reports"
+msgid "Additional Reports"
+msgstr "Ytterligare rapporter"
+
+#: ui_main.add_edit
+msgctxt "ui_main.add_edit"
+msgid "Add/Edit"
+msgstr "L&auml;gg till/Redigera"
+
+#: ui_main.add_field
+msgctxt "ui_main.add_field"
+msgid "Add a Field"
+msgstr "L&auml;gg till f&auml;lt"
+
+#: ui_main.add_language
+msgctxt "ui_main.add_language"
+msgid "Add Language"
+msgstr "L&auml;gg till spr&aring;k"
+
+#: ui_main.add_new
+msgctxt "ui_main.add_new"
+msgid "Add New"
+msgstr "L&auml;gg till ny"
+
+#: ui_main.add_new_category
+msgctxt "ui_main.add_new_category"
+msgid "Add New Category"
+msgstr "L&auml;gg till kategori"
+
+#: ui_main.add_translation
+msgctxt "ui_main.add_translation"
+msgid "Add Translation"
+msgstr "L&auml;gg till &ouml;vers&auml;ttning"
+
+#: ui_main.admin
+msgctxt "ui_main.admin"
+msgid "Administration"
+msgstr "Administration"
+
+#: ui_main.alerts
+msgctxt "ui_main.alerts"
+msgid "Get Alerts"
+msgstr "F&aring; meddelanden"
+
+#: ui_main.alerts_alert_me
+msgctxt "ui_main.alerts_alert_me"
+msgid "Alert me if a report is filed in, or around:"
+msgstr "G&ouml;r mig uppm&auml;rksam p&aring om en rapport sparats:"
+
+#: ui_main.alerts_btn_send
+msgctxt "ui_main.alerts_btn_send"
+msgid "Save My Alert"
+msgstr "Spara mina meddelanden"
+
+#: ui_main.alerts_email
+msgctxt "ui_main.alerts_email"
+msgid "Email address:"
+msgstr "e-postadress:"
+
+#: ui_main.alerts_enter_email
+msgctxt "ui_main.alerts_enter_email"
+msgid "enter email address"
+msgstr "ange e-postadress"
+
+#: ui_main.alerts_enter_mobile
+msgctxt "ui_main.alerts_enter_mobile"
+msgid "enter mobile number with country code"
+msgstr "ange mobilnummer med landskod"
+
+#: ui_main.alerts_get
+msgctxt "ui_main.alerts_get"
+msgid "Get Alerts"
+msgstr "H&auml;mta meddelanden"
+
+#: ui_main.alert_has_been
+msgctxt "ui_main.alert_has_been"
+msgid "Alert has been"
+msgstr "Underrättelse har skickats"
+
+#: ui_main.alerts_mobile_phone
+msgctxt "ui_main.alerts_mobile_phone"
+msgid "Mobile phone:"
+msgstr "Mobiltelefon:"
+
+#: ui_main.alerts_place_spot
+msgctxt "ui_main.alerts_place_spot"
+msgid ""
+"Or place a spot on the map below, and we will alert you when a report is "
+"submitted within 20 kilometers."
+msgstr "Eller, markera en punkt p&aring kartan nedan s&aring kommer vi att meddela dig n&auml;r n&aring;got rapporterats inom 20 km fr&aring;n denna punkt."
+
+#: ui_main.alerts_place_spot2
+msgctxt "ui_main.alerts_place_spot2"
+msgid ""
+"If you can't find your location, please click on the map to pinpoint the "
+"correct location."
+msgstr "Om du inte kan hitta platsen, klicka på kartan och markera rätt plats."
+
+#: ui_main.alerts_rss
+msgctxt "ui_main.alerts_rss"
+msgid "RSS Feeds (copy the URL below)"
+msgstr "RSS Feed (kopiera url:en nedan)"
+
+#: ui_main.alerts_select_city
+msgctxt "ui_main.alerts_select_city"
+msgid "Select a city"
+msgstr "V&auml;lj stad"
+
+#: ui_main.alerts_step1_select_city
+msgctxt "ui_main.alerts_step1_select_city"
+msgid "<strong>Step 1:</strong> Select your city or location:"
+msgstr "<strong>Steg 1:</strong> V&auml;lj stad eller plats:"
+
+#: ui_main.alerts_step2_send_alerts
+msgctxt "ui_main.alerts_step2_send_alerts"
+msgid "<strong>Step 2:</strong> Send alerts to my:"
+msgstr "<strong>Steg 2:</strong> Skicka meddelande till min:"
+
+#: ui_main.alerts_step3_select_catgories
+msgctxt "ui_main.alerts_step3_select_catgories"
+msgid "<strong>Step 3 (Optional):</strong> Select Categories"
+msgstr "<strong>Steg 3 (Frivilligt):</strong> Välj Kategorier"
+
+#: ui_main.alert_confirm_previous
+msgctxt "ui_main.alert_confirm_previous"
+msgid "Confirm A Previous Alert Request"
+msgstr "Bekr&auml;fta tidigare beg&auml;ran"
+
+#: ui_main.alert_saved
+msgctxt "ui_main.alert_saved"
+msgid "Your Alert Has Been Saved!"
+msgstr "Din h&auml;ndelse har sparats!"
+
+#: ui_main.all
+msgctxt "ui_main.all"
+msgid "All"
+msgstr "Att g&ouml;ra"
+
+#: ui_main.allowed
+msgctxt "ui_main.allowed"
+msgid "Allowed"
+msgstr "Till&aring;ten"
+
+#: ui_main.allowed_tags
+msgctxt "ui_main.allowed_tags"
+msgid "Allowed HTML tags: \"%s\"."
+msgstr "Tillåtna HTML taggar: \"%s\"."
+
+#: ui_main.allowed_iframes
+msgctxt "ui_main.allowed_iframes"
+msgid "Iframes are only allowed from: %s."
+msgstr "Iframes är endast tillåtna från: %s."
+
+#: ui_main.all_categories
+msgctxt "ui_main.all_categories"
+msgid "All Categories"
+msgstr "Alla kategorier"
+
+#: ui_main.all_time
+msgctxt "ui_main.all_time"
+msgid "All Time"
+msgstr "Hela perioden"
+
+#: ui_main.and
+msgctxt "ui_main.and"
+msgid "and"
+msgstr "och"
+
+#: ui_main.api
+msgctxt "ui_main.api"
+msgid "API"
+msgstr "API"
+
+#: ui_main.approve
+msgctxt "ui_main.approve"
+msgid "Approve"
+msgstr "Godk&auml;nn"
+
+#: ui_main.approved
+msgctxt "ui_main.approved"
+msgid "Approved"
+msgstr "Godk&auml;nd"
+
+#: ui_main.approved_reports
+msgctxt "ui_main.approved_reports"
+msgid "Approved Reports"
+msgstr "Godk&auml;nda rapporter"
+
+#: ui_main.approve_this_report
+msgctxt "ui_main.approve_this_report"
+msgid "Approve this Report"
+msgstr "Godk&auml;nn denna rapport"
+
+#: ui_main.approximate
+msgctxt "ui_main.approximate"
+msgid "Approximate"
+msgstr "Ungef&auml;r"
+
+#: ui_main.archive
+msgctxt "ui_main.archive"
+msgid "Archive"
+msgstr "Arkiv"
+
+#: ui_main.archived
+msgctxt "ui_main.archived"
+msgid "Archived"
+msgstr "Arkiverade"
+
+#: ui_main.ascending
+msgctxt "ui_main.ascending"
+msgid "Ascending"
+msgstr "Stigande"
+
+#: ui_main.at
+msgctxt "ui_main.at"
+msgid "at"
+msgstr "vid"
+
+#: ui_main.author
+msgctxt "ui_main.author"
+msgid "Author"
+msgstr "Skribent"
+
+#: ui_main.auto_checkin
+msgctxt "ui_main.auto_checkin"
+msgid "Auto Checkin"
+msgstr "Automatisk Incheckning"
+
+#: ui_main.Auto
+msgctxt "ui_main.Auto"
+msgid "Auto"
+msgstr ""
+
+#: ui_main.avg_reports_per_day
+msgctxt "ui_main.avg_reports_per_day"
+msgid "Avg Reports Per Day"
+msgstr "Rapporter Per Dag i Genomsnitt"
+
+#: ui_main.awaiting_approval
+msgctxt "ui_main.awaiting_approval"
+msgid "Awaiting Approval"
+msgstr "V&auml;ntar p&aring godk&auml;nnande"
+
+#: ui_main.awaiting_verification
+msgctxt "ui_main.awaiting_verification"
+msgid "Awaiting Verification"
+msgstr "V&auml;ntar p&aring verifiering"
+
+#: ui_main.badge
+msgctxt "ui_main.badge"
+msgid "Badge"
+msgstr "Emblem"
+
+#: ui_main.badges
+msgctxt "ui_main.badges"
+msgid "Badges"
+msgstr "Emblem"
+
+#: ui_main.badge_image
+msgctxt "ui_main.badge_image"
+msgid "Badge Image"
+msgstr "Emblembild"
+
+#: ui_main.badge_image_upload_your_own
+msgctxt "ui_main.badge_image_upload_your_own"
+msgid "Or you can upload your own badge image instead."
+msgstr "Eller så kan du istället ladda upp din egna emblembild"
+
+#: ui_main.badge_pack
+msgctxt "ui_main.badge_pack"
+msgid "Badge Pack"
+msgstr "Emblempack"
+
+#: ui_main.badge_select
+msgctxt "ui_main.badge_select"
+msgid "Select a Badge"
+msgstr "Välj Emblem"
+
+#: ui_main.blog
+msgctxt "ui_main.blog"
+msgid "Blog"
+msgstr "Blogg"
+
+#: ui_main.browse_profiles
+msgctxt "ui_main.browse_profiles"
+msgid "Browse Profiles"
+msgstr "Bläddra Bland Profiler"
+
+#: ui_main.cancel
+msgctxt "ui_main.cancel"
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: ui_main.categories
+msgctxt "ui_main.categories"
+msgid "Categories"
+msgstr "Kategorier"
+
+#: ui_main.category
+msgctxt "ui_main.category"
+msgid "Category"
+msgstr "Kategori"
+
+#: ui_main.category_filter
+msgctxt "ui_main.category_filter"
+msgid "Category Filter"
+msgstr "Kategorifilter"
+
+#: ui_main.category_has_been
+msgctxt "ui_main.category_has_been"
+msgid "The category has been "
+msgstr "Kategorin har "
+
+#: ui_main.category_name
+msgctxt "ui_main.category_name"
+msgid "Category Name"
+msgstr "Kategorinamn"
+
+#: ui_main.change_date_range
+msgctxt "ui_main.change_date_range"
+msgid "Change Date Range"
+msgstr "Ändra Datumsintervall"
+
+#: ui_main.change_password
+msgctxt "ui_main.change_password"
+msgid "Change Password"
+msgstr "Ändra Lösenord"
+
+#: ui_main.change_picture
+msgctxt "ui_main.change_picture"
+msgid "Change My Picture"
+msgstr "Ändra Min Bild"
+
+#: ui_main.choose
+msgctxt "ui_main.choose"
+msgid "Choose a"
+msgstr "V&auml;lj en"
+
+#: ui_main.choose_data_points
+msgctxt "ui_main.choose_data_points"
+msgid "Choose data points to download"
+msgstr "V&auml;lj data att ladda ner"
+
+#: ui_main.choose_date_range
+msgctxt "ui_main.choose_date_range"
+msgid "Or choose your own date range"
+msgstr "Eller välj ett eget datumintervall"
+
+#: ui_main.choose_field_type
+msgctxt "ui_main.choose_field_type"
+msgid "Choose field type"
+msgstr "V&auml;lj f&auml;lttyp"
+
+#: ui_main.cleanurl
+msgctxt "ui_main.cleanurl"
+msgid "Clean URLs"
+msgstr "Rena URL:er "
+
+#: ui_main.clear
+msgctxt "ui_main.clear"
+msgid "Clear"
+msgstr "Rensa"
+
+#: ui_main.clear_map
+msgctxt "ui_main.clear_map"
+msgid "Clear Map"
+msgstr "Rensa kartan"
+
+#: ui_main.close
+msgctxt "ui_main.close"
+msgid "Close"
+msgstr "St&auml;ng"
+
+#: ui_main.clusters
+msgctxt "ui_main.clusters"
+msgid "clusters"
+msgstr "samling"
+
+#: ui_main.color
+msgctxt "ui_main.color"
+msgid "Color"
+msgstr "F&auml;rg"
+
+#: ui_main.comment
+msgctxt "ui_main.comment"
+msgid "Comment"
+msgstr "Kommentar"
+
+#: ui_main.comments
+msgctxt "ui_main.comments"
+msgid "Comments"
+msgstr "Kommentarer"
+
+#: ui_main.comment_details
+msgctxt "ui_main.comment_details"
+msgid "Comment Details"
+msgstr "Kommentardetaljer"
+
+#: ui_main.configuration_saved
+msgctxt "ui_main.configuration_saved"
+msgid "Your Settings Have Been Saved!"
+msgstr "Dina inst&auml;llningar har sparats!"
+
+#: ui_main.configure
+msgctxt "ui_main.configure"
+msgid "Configure"
+msgstr "Konfigurera"
+
+#: ui_main.confirm_email_successful
+msgctxt "ui_main.confirm_email_successful"
+msgid ""
+"You have successfully confirmed your email address! Please login below."
+msgstr "Du har framgångsrikt bekräftat din e-postsadress! Logga in nedanför."
+
+#: ui_main.confirm_email_successful_and_approval
+msgctxt "ui_main.confirm_email_successful_and_approval"
+msgid ""
+"You have successfully confirmed your email address! An administrator must "
+"approve your account before you login"
+msgstr "Du har framgångsrikt bekräftat din e-postadress! En administratör måste godkänna ditt konto innan du loggar in"
+
+#: ui_main.confirm_email_failed
+msgctxt "ui_main.confirm_email_failed"
+msgid ""
+"Email confirmation failed! You can request a new email confirmation below."
+msgstr "E-post bekräftelse misslyckades! Du kan begära en ny e-post bekräftelse nedanför."
+
+#: ui_main.contact
+msgctxt "ui_main.contact"
+msgid "Contact Us"
+msgstr "Kontakta oss"
+
+#: ui_main.contact_code
+msgctxt "ui_main.contact_code"
+msgid "Security Code"
+msgstr "Säkerhetskod"
+
+#: ui_main.contact_email
+msgctxt "ui_main.contact_email"
+msgid "Your Email Address"
+msgstr "Din e-postadress"
+
+#: ui_main.contact_message
+msgctxt "ui_main.contact_message"
+msgid "Message"
+msgstr "Meddelande"
+
+#: ui_main.contact_message_has_send
+msgctxt "ui_main.contact_message_has_send"
+msgid "Your Message Has Been Sent!"
+msgstr "Ditt Meddelande Har Skickats!"
+
+#: ui_main.contact_name
+msgctxt "ui_main.contact_name"
+msgid "Your Name"
+msgstr "Ditt namn"
+
+#: ui_main.contact_phone
+msgctxt "ui_main.contact_phone"
+msgid "Your Phone Number"
+msgstr "Ditt telefonnummer"
+
+#: ui_main.contact_send
+msgctxt "ui_main.contact_send"
+msgid "Send Message"
+msgstr "Sänd meddelande"
+
+#: ui_main.contact_subject
+msgctxt "ui_main.contact_subject"
+msgid "Message Subject"
+msgstr "Meddelandets Ämne"
+
+#: ui_main.copyright
+msgctxt "ui_main.copyright"
+msgid "Copyright ©"
+msgstr "Copyright © 2010 Ushahidi.com. All Rights Reserved."
+
+#: ui_main.create
+msgctxt "ui_main.create"
+msgid "Create"
+msgstr "Skapa"
+
+#: ui_main.create_edit
+msgctxt "ui_main.create_edit"
+msgid "Create/Edit"
+msgstr "Skapa/Redigera"
+
+#: ui_main.create_new
+msgctxt "ui_main.create_new"
+msgid "Create New"
+msgstr "Skapa ny"
+
+#: ui_main.create_new_password
+msgctxt "ui_main.create_new_password"
+msgid "Create New Password"
+msgstr "Skapa Nytt Lösenord"
+
+#: ui_main.create_report
+msgctxt "ui_main.create_report"
+msgid "Create Report"
+msgstr "Skapa rapport"
+
+#: ui_main.credibility
+msgctxt "ui_main.credibility"
+msgid "Credibility"
+msgstr "Trov&auml;rdighet"
+
+#: ui_main.current_password
+msgctxt "ui_main.current_password"
+msgid "Current Password"
+msgstr "Nuvarande Lösenord"
+
+#: ui_main.custom_fields
+msgctxt "ui_main.custom_fields"
+msgid "Custom Fields"
+msgstr "Anpassade fält"
+
+#: ui_main.data
+msgctxt "ui_main.data"
+msgid "Information"
+msgstr "Information"
+
+#: ui_main.date
+msgctxt "ui_main.date"
+msgid "Date"
+msgstr "Datum"
+
+#: ui_main.date_format
+msgctxt "ui_main.date_format"
+msgid "(mm/dd/yyyy)"
+msgstr "(mm/dd/åååå)"
+
+#: ui_main.date_time
+msgctxt "ui_main.date_time"
+msgid "Date & Time"
+msgstr "Datum & Tid"
+
+#: ui_main.day
+msgctxt "ui_main.day"
+msgid "day"
+msgstr "Dag"
+
+#: ui_main.Daily
+msgctxt "ui_main.Daily"
+msgid "Daily"
+msgstr ""
+
+#: ui_main.deactivate
+msgctxt "ui_main.deactivate"
+msgid "Deactivate"
+msgstr "Inaktivera"
+
+#: ui_main.default_location_name
+msgctxt "ui_main.default_location_name"
+msgid "Nairobi, Kenya"
+msgstr "Malm&ouml;, Sverige"
+
+#: ui_main.delete
+msgctxt "ui_main.delete"
+msgid "Delete"
+msgstr "Ta bort"
+
+#: ui_main.deleted
+msgctxt "ui_main.deleted"
+msgid "Deleted"
+msgstr "Borttagen"
+
+#: ui_main.deletes
+msgctxt "ui_main.deletes"
+msgid "Deletes"
+msgstr "Tar bort"
+
+#: ui_main.delete_disabled
+msgctxt "ui_main.delete_disabled"
+msgid "Delete Disabled"
+msgstr "Ta bort inaktiverade"
+
+#: ui_main.delete_last
+msgctxt "ui_main.delete_last"
+msgid "Delete Last"
+msgstr "Radera senaste "
+
+#: ui_main.delete_report
+msgctxt "ui_main.delete_report"
+msgid "Delete this Report"
+msgstr "Ta bort denna rapport"
+
+#: ui_main.delete_selected
+msgctxt "ui_main.delete_selected"
+msgid "Delete Selected"
+msgstr "Radera vald"
+
+#: ui_main.delete_spam
+msgctxt "ui_main.delete_spam"
+msgid "Delete Spam"
+msgstr "Ta bort spam"
+
+#: ui_main.demo
+msgctxt "ui_main.demo"
+msgid "Demo"
+msgstr "Demo"
+
+#: ui_main.description
+msgctxt "ui_main.description"
+msgid "Description"
+msgstr "Beskrivning"
+
+#: ui_main.descending
+msgctxt "ui_main.descending"
+msgid "Descending"
+msgstr "Fallande"
+
+#: ui_main.detailed_location_example
+msgctxt "ui_main.detailed_location_example"
+msgid "Example: Corner of City Market, 5th Street & 4th Avenue, Johannesburg"
+msgstr "Exempel: H&ouml;rnan vid bokhandeln, Hamngatan & &Ouml;stergatan, Malm&ouml;"
+
+#: ui_main.details
+msgctxt "ui_main.details"
+msgid "Details"
+msgstr "Detaljer"
+
+#: ui_main.direct_report
+msgctxt "ui_main.direct_report"
+msgid "Direct Report"
+msgstr "Direktrapport"
+
+#: ui_main.disabled
+msgctxt "ui_main.disabled"
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+#: ui_main.disapprove
+msgctxt "ui_main.disapprove"
+msgid "Unapprove"
+msgstr "Icke godk&auml;nd"
+
+#: ui_main.download_reports
+msgctxt "ui_main.download_reports"
+msgid "Download Reports"
+msgstr "Ladda ner rapporter"
+
+#: ui_main.download
+msgctxt "ui_main.download"
+msgid "Download"
+msgstr "Ladda ned"
+
+#: ui_main.edit
+msgctxt "ui_main.edit"
+msgid "Edit"
+msgstr "Redigera"
+
+#: ui_main.edit_form_fields
+msgctxt "ui_main.edit_form_fields"
+msgid "Edit Form Fields"
+msgstr "Redigera formul&auml;rf&auml;lt"
+
+#: ui_main.edit_report
+msgctxt "ui_main.edit_report"
+msgid "Edit Report"
+msgstr "Redigera rapport"
+
+#: ui_main.email
+msgctxt "ui_main.email"
+msgid "Email"
+msgstr "E-post"
+
+#: ui_main.email_address
+msgctxt "ui_main.email_address"
+msgid "Email Address"
+msgstr "E-postadress"
+
+#: ui_main.email_configuration
+msgctxt "ui_main.email_configuration"
+msgid "Mail Server Settings"
+msgstr "Mailserverinst&auml;llningar"
+
+#: ui_main.email_server_host
+msgctxt "ui_main.email_server_host"
+msgid "Mail Server Host"
+msgstr "Mailserverv&auml;rd"
+
+#: ui_main.email_server_password
+msgctxt "ui_main.email_server_password"
+msgid "Mail Server Password"
+msgstr "Mailserver l&ouml;senord"
+
+#: ui_main.email_server_port
+msgctxt "ui_main.email_server_port"
+msgid "Mail Server Port"
+msgstr "Mailserverport"
+
+#: ui_main.email_server_ssl_support
+msgctxt "ui_main.email_server_ssl_support"
+msgid "Mail Server SSL support"
+msgstr "Mailserver SSL-st&ouml;d"
+
+#: ui_main.email_server_type
+msgctxt "ui_main.email_server_type"
+msgid "Mail Server Type"
+msgstr "Mailservertyp"
+
+#: ui_main.email_server_username
+msgctxt "ui_main.email_server_username"
+msgid "Mail Server Username"
+msgstr "Mailserver anv&auml;ndarnamn"
+
+#: ui_main.email_settings_comment_0
+msgctxt "ui_main.email_settings_comment_0"
+msgid "so your settings have to be associated with this email address"
+msgstr "s&aring dina inst&auml;llningar m&aring;ste st&auml;mma &ouml;verens med denna adress"
+
+#: ui_main.email_settings_comment_00
+msgctxt "ui_main.email_settings_comment_00"
+msgid ""
+"In order to receive reports by email, please input your email account "
+"settings below. Please note that emails will be received at your"
+msgstr "F&ouml;r att f&aring rapporter via e-post, skriv in dina kontouppgifter f&ouml;r e-postadressen nedan. E-post mottages av din"
+
+#: ui_main.email_settings_comment_1
+msgctxt "ui_main.email_settings_comment_1"
+msgid "Some servers require a complete email address"
+msgstr "N&aring;gra servrar kr&auml;ver en fullst&auml;ndig e-postadress"
+
+#: ui_main.email_settings_comment_2
+msgctxt "ui_main.email_settings_comment_2"
+msgid "Email account password"
+msgstr "E-postkontots l&ouml;senord"
+
+#: ui_main.email_settings_comment_3
+msgctxt "ui_main.email_settings_comment_3"
+msgid "Common ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "Vanliga portar: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: ui_main.email_settings_comment_4
+msgctxt "ui_main.email_settings_comment_4"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "Exampel: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: ui_main.email_settings_comment_5
+msgctxt "ui_main.email_settings_comment_5"
+msgid "Examples: pop3, imap"
+msgstr "Exampel: pop3, imap"
+
+#: ui_main.email_settings_comment_6
+msgctxt "ui_main.email_settings_comment_6"
+msgid "Enable or disable SSL connections"
+msgstr "Aktivera eller inaktivera SSL-anslutning"
+
+#: ui_main.empty
+msgctxt "ui_main.empty"
+msgid "---EMPTY---"
+msgstr "---- TOM ----"
+
+#: ui_main.end_point
+msgctxt "ui_main.end_point"
+msgid "to"
+msgstr "till"
+
+#: ui_main.error
+msgctxt "ui_main.error"
+msgid "Error!"
+msgstr "Fel!"
+
+#: ui_main.example
+msgctxt "ui_main.example"
+msgid "Example"
+msgstr "Exampel"
+
+#: ui_main.example_country
+msgctxt "ui_main.example_country"
+msgid "Kenya"
+msgstr "Sverige"
+
+#: ui_main.external_apps
+msgctxt "ui_main.external_apps"
+msgid "External Apps"
+msgstr "Mobilappar"
+
+#: ui_main.external_video_link
+msgctxt "ui_main.external_video_link"
+msgid "External Video Link"
+msgstr "Länk till video (youtube, Vimeo osv)"
+
+#: ui_main.facebook
+msgctxt "ui_main.facebook"
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ui_main.feed
+msgctxt "ui_main.feed"
+msgid "Feed"
+msgstr "Fl&ouml;de"
+
+#: ui_main.feedback
+msgctxt "ui_main.feedback"
+msgid "Provide Feedback"
+msgstr "Ge feedback"
+
+#: ui_main.feedback_reports
+msgctxt "ui_main.feedback_reports"
+msgid "Please give us feedback about your experience by sending an email to "
+msgstr ""
+
+#: ui_main.feeds
+msgctxt "ui_main.feeds"
+msgid "Feeds"
+msgstr "Fl&ouml;den"
+
+#: ui_main.feed_has_been
+msgctxt "ui_main.feed_has_been"
+msgid "The feed has been"
+msgstr "Fl&ouml;det har "
+
+#: ui_main.feed_items
+msgctxt "ui_main.feed_items"
+msgid "Feed Items"
+msgstr "Fl&ouml;desposter"
+
+#: ui_main.feed_name
+msgctxt "ui_main.feed_name"
+msgid "Feed Name"
+msgstr "Fl&ouml;desnamn"
+
+#: ui_main.feed_url
+msgctxt "ui_main.feed_url"
+msgid "Feed URL"
+msgstr "Fl&ouml;des-URL"
+
+#: ui_main.field_unused
+msgctxt "ui_main.field_unused"
+msgid "Unused field"
+msgstr "Oanv&auml;nt f&auml;lt"
+
+#: ui_main.file
+msgctxt "ui_main.file"
+msgid "File"
+msgstr "Fil"
+
+#: ui_main.file_over_max_allowed
+msgctxt "ui_main.file_over_max_allowed"
+msgid "Your file is over the maximum allowed filesize."
+msgstr "Din fil är för stor"
+
+#: ui_main.filters
+msgctxt "ui_main.filters"
+msgid "Filters"
+msgstr "Filter"
+
+#: ui_main.filter_reports
+msgctxt "ui_main.filter_reports"
+msgid "Filter Reports"
+msgstr "Filtrera rapporter"
+
+#: ui_main.filter_reports_by
+msgctxt "ui_main.filter_reports_by"
+msgid "Filter Reports By"
+msgstr "Filtrera rapporter efter"
+
+#: ui_main.filter_reports_contain
+msgctxt "ui_main.filter_reports_contain"
+msgid "Filter reports that contain"
+msgstr "Filtrera rapporter som innehåller"
+
+#: ui_main.find
+msgctxt "ui_main.find"
+msgid "Find"
+msgstr "Hitta"
+
+#: ui_main.find_location
+msgctxt "ui_main.find_location"
+msgid "Find Location"
+msgstr "Hitta plats"
+
+#: ui_main.first_name
+msgctxt "ui_main.first_name"
+msgid "First Name"
+msgstr "F&ouml;rnamn"
+
+#: ui_main.force_run_scheduler
+msgctxt "ui_main.force_run_scheduler"
+msgid "Force Run Scheduler"
+msgstr "Schemaläggare för Tvingade Körningar"
+
+#: ui_main.forgot_password
+msgctxt "ui_main.forgot_password"
+msgid "Forgot your password?"
+msgstr "Gl&ouml;mt ditt l&ouml;senord?"
+
+#: ui_main.form
+msgctxt "ui_main.form"
+msgid "Form"
+msgstr "Formul&auml;r"
+
+#: ui_main.forms
+msgctxt "ui_main.forms"
+msgid "Forms"
+msgstr "Formul&auml;r"
+
+#: ui_main.form_description
+msgctxt "ui_main.form_description"
+msgid "Form Description"
+msgstr "Formul&auml;rbeskrivning"
+
+#: ui_main.form_edit
+msgctxt "ui_main.form_edit"
+msgid "Edit this Form"
+msgstr "Redigera detta formul&auml;r"
+
+#: ui_main.form_has_been
+msgctxt "ui_main.form_has_been"
+msgid "The form has been"
+msgstr "Formul&auml;ret har"
+
+#: ui_main.form_title
+msgctxt "ui_main.form_title"
+msgid "Form Title"
+msgstr "Formul&auml;rrubrik"
+
+#: ui_main.from
+msgctxt "ui_main.from"
+msgid "From"
+msgstr "Fr&aring;n"
+
+#: ui_main.full_name
+msgctxt "ui_main.full_name"
+msgid "Full Name"
+msgstr "Fullst&auml;ndigt namn"
+
+#: ui_main.geolocation_available
+msgctxt "ui_main.geolocation_available"
+msgid "GeoLocation Available"
+msgstr "GeoLocation tillg&auml;ngligt"
+
+#: ui_main.geometry_color
+msgctxt "ui_main.geometry_color"
+msgid "Color"
+msgstr "Färg"
+
+#: ui_main.geometry_comments
+msgctxt "ui_main.geometry_comments"
+msgid "Comments"
+msgstr "Kommentarer"
+
+#: ui_main.geometry_label
+msgctxt "ui_main.geometry_label"
+msgid "Label"
+msgstr "Etikett"
+
+#: ui_main.geometry_strokewidth
+msgctxt "ui_main.geometry_strokewidth"
+msgid "Stroke Width"
+msgstr "Penseltjocklek"
+
+#: ui_main.go
+msgctxt "ui_main.go"
+msgid "Go"
+msgstr "Gå"
+
+#: ui_main.hashtag
+msgctxt "ui_main.hashtag"
+msgid "Hashtag"
+msgstr "Hashtag"
+
+#: ui_main.has_been
+msgctxt "ui_main.has_been"
+msgid "Has Been"
+msgstr "Har"
+
+#: ui_main.help
+msgctxt "ui_main.help"
+msgid "How to Help"
+msgstr "Hur hj&auml;lper man"
+
+#: ui_main.hidden
+msgctxt "ui_main.hidden"
+msgid "Hidden"
+msgstr "Gömd"
+
+#: ui_main.hide
+msgctxt "ui_main.hide"
+msgid "Hide"
+msgstr "d&ouml;lj"
+
+#: ui_main.hide_this_message
+msgctxt "ui_main.hide_this_message"
+msgid "hide this message"
+msgstr "d&ouml;lj meddelande"
+
+#: ui_main.home
+msgctxt "ui_main.home"
+msgid "Home"
+msgstr "Hem"
+
+#: ui_main.Hourly
+msgctxt "ui_main.Hourly"
+msgid "Hourly"
+msgstr ""
+
+#: ui_main.how_to_report
+msgctxt "ui_main.how_to_report"
+msgid "How to Report"
+msgstr "Hur rapporterar man"
+
+#: ui_main.https
+msgctxt "ui_main.https"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: ui_main.id
+msgctxt "ui_main.id"
+msgid "ID"
+msgstr "ID"
+
+#: ui_main.identify_you
+msgctxt "ui_main.identify_you"
+msgid "Used to identify you on the site to other users."
+msgstr "Används för att identifiera dig på sidan för andra användare."
+
+#: ui_main.image
+msgctxt "ui_main.image"
+msgid "Image"
+msgstr "Bild"
+
+#: ui_main.images
+msgctxt "ui_main.images"
+msgid "Images"
+msgstr "Bilder"
+
+#: ui_main.image_icon
+msgctxt "ui_main.image_icon"
+msgid "Image/Icon"
+msgstr "Bild/Ikon"
+
+#: ui_main.inactive
+msgctxt "ui_main.inactive"
+msgid "Inactive"
+msgstr "Inaktiv"
+
+#: ui_main.inbox
+msgctxt "ui_main.inbox"
+msgid "Inbox"
+msgstr "Brevlåda"
+
+#: ui_main.incident
+msgctxt "ui_main.incident"
+msgid "Incident"
+msgstr "Incident"
+
+#: ui_main.incidents_nearby
+msgctxt "ui_main.incidents_nearby"
+msgid "Incidents Nearby"
+msgstr "Rapporter i n&auml;rheten"
+
+#: ui_main.incident_location
+msgctxt "ui_main.incident_location"
+msgid "Incident Location"
+msgstr "Plats f&ouml;r rapporten"
+
+#: ui_main.include
+msgctxt "ui_main.include"
+msgid "Include"
+msgstr "Inkludera"
+
+#: ui_main.include_categories
+msgctxt "ui_main.include_categories"
+msgid "Include Categories"
+msgstr "Inkludera kategorier"
+
+#: ui_main.include_custom_fields
+msgctxt "ui_main.include_custom_fields"
+msgid "Include Custom Fields"
+msgstr "Inkludera skräddarsydda fält"
+
+#: ui_main.include_description
+msgctxt "ui_main.include_description"
+msgid "Include Description"
+msgstr "Inkludera beskrivning"
+
+#: ui_main.include_detail
+msgctxt "ui_main.include_detail"
+msgid "Include as much detail as possible"
+msgstr "Inkludera s&aring m&aring;nga detaljer som m&ouml;jligt"
+
+#: ui_main.include_latitude
+msgctxt "ui_main.include_latitude"
+msgid "Include Latitude"
+msgstr "Inkludera latitud"
+
+#: ui_main.include_location_information
+msgctxt "ui_main.include_location_information"
+msgid "Include Location Information"
+msgstr "Inkludera information om plats"
+
+#: ui_main.include_longitude
+msgctxt "ui_main.include_longitude"
+msgid "Include Longitude"
+msgstr "Inkludera longitud"
+
+#: ui_main.include_personal_info
+msgctxt "ui_main.include_personal_info"
+msgid "Include Personal Information"
+msgstr "Ange personlig information"
+
+#: ui_main.incoming_media
+msgctxt "ui_main.incoming_media"
+msgid "Incoming Media"
+msgstr "Inkommande media"
+
+#: ui_main.information_evaluation
+msgctxt "ui_main.information_evaluation"
+msgid "Information Evaluation"
+msgstr "Information utv&auml;rdering"
+
+#: ui_main.input_location
+msgctxt "ui_main.input_location"
+msgid "Enter your precise location"
+msgstr "Ange din exakta position"
+
+#: ui_main.insufficient_role
+msgctxt "ui_main.insufficient_role"
+msgid ""
+"Your account doesn't have the proper permission to fully log you in. Please "
+"contact the administrator."
+msgstr "Ditt konto har inte behörighet för att logga in. Var god kontakta administratören."
+
+#: ui_main.interval
+msgctxt "ui_main.interval"
+msgid "Interval"
+msgstr ""
+
+#: ui_main.in_response_to
+msgctxt "ui_main.in_response_to"
+msgid "In response to"
+msgstr "Svar till"
+
+#: ui_main.ip_address
+msgctxt "ui_main.ip_address"
+msgid "IP Address"
+msgstr "IP Adress"
+
+#: ui_main.is_this_your_profile
+msgctxt "ui_main.is_this_your_profile"
+msgid "Is this your profile?"
+msgstr "Är detta din profil?"
+
+#: ui_main.item
+msgctxt "ui_main.item"
+msgid "item"
+msgstr "post"
+
+#: ui_main.items
+msgctxt "ui_main.items"
+msgid "items"
+msgstr "poster"
+
+#: ui_main.item_details
+msgctxt "ui_main.item_details"
+msgid "item_details"
+msgstr "postdetaljer"
+
+#: ui_main.item_title
+msgctxt "ui_main.item_title"
+msgid "Item Title"
+msgstr "Postrubrik"
+
+#: ui_main.key
+msgctxt "ui_main.key"
+msgid "Key"
+msgstr "Nyckel"
+
+#: ui_main.keywords
+msgctxt "ui_main.keywords"
+msgid "Keywords"
+msgstr "Nyckelord"
+
+#: ui_main.kml_kmz_file
+msgctxt "ui_main.kml_kmz_file"
+msgid "KMZ/KML File"
+msgstr "KMZ/KML Fil"
+
+#: ui_main.kml_kmz_upload
+msgctxt "ui_main.kml_kmz_upload"
+msgid "Upload KMZ/KML File"
+msgstr "Ladda upp KMZ/KML Fil"
+
+#: ui_main.kml_url
+msgctxt "ui_main.kml_url"
+msgid "KML URL"
+msgstr "KML URL"
+
+#: ui_main.laconica
+msgctxt "ui_main.laconica"
+msgid "Laconica"
+msgstr "Laconica"
+
+#: ui_main.language
+msgctxt "ui_main.language"
+msgid "Language"
+msgstr "Spr&aring;k"
+
+#: ui_main.last
+msgctxt "ui_main.last"
+msgid "Last"
+msgstr "Senaste"
+
+#: ui_main.last_month
+msgctxt "ui_main.last_month"
+msgid "Last Month"
+msgstr "Senaste m&aring;naden"
+
+#: ui_main.last_name
+msgctxt "ui_main.last_name"
+msgid "Last Name"
+msgstr "Efternamn"
+
+#: ui_main.last_year
+msgctxt "ui_main.last_year"
+msgid "Last Year"
+msgstr "Senaste &aringret"
+
+#: ui_main.latitude
+msgctxt "ui_main.latitude"
+msgid "Latitude"
+msgstr "Latitud"
+
+#: ui_main.layers
+msgctxt "ui_main.layers"
+msgid "Layers"
+msgstr "Lager"
+
+#: ui_main.layers_filter
+msgctxt "ui_main.layers_filter"
+msgid "Other Layers"
+msgstr "Andra lager"
+
+#: ui_main.layer_has_been
+msgctxt "ui_main.layer_has_been"
+msgid "The Layer Has Been"
+msgstr "Lagret har"
+
+#: ui_main.layer_name
+msgctxt "ui_main.layer_name"
+msgid "Layer Name"
+msgstr "Lagernamn"
+
+#: ui_main.layer_url
+msgctxt "ui_main.layer_url"
+msgid "Layer URL"
+msgstr "Lager-URL"
+
+#: ui_main.leave_a_comment
+msgctxt "ui_main.leave_a_comment"
+msgid "Leave a Comment"
+msgstr "Skriv en kommentar"
+
+#: ui_main.less_information
+msgctxt "ui_main.less_information"
+msgid "Less Information"
+msgstr "Mindre Information"
+
+#: ui_main.level
+msgctxt "ui_main.level"
+msgid "Level"
+msgstr "Niv&aring"
+
+#: ui_main.level_has_been
+msgctxt "ui_main.level_has_been"
+msgid "This level has been"
+msgstr "Denna niv&aring har"
+
+#: ui_main.level_name
+msgctxt "ui_main.level_name"
+msgid "Level Name"
+msgstr "Niv&aring;namn"
+
+#: ui_main.limited
+msgctxt "ui_main.limited"
+msgid "Limited"
+msgstr "Begr&auml;nsad"
+
+#: ui_main.link
+msgctxt "ui_main.link"
+msgid "Link"
+msgstr "L&auml;nk"
+
+#: ui_main.list
+msgctxt "ui_main.list"
+msgid "List"
+msgstr "Lista"
+
+#: ui_main.loading_reports
+msgctxt "ui_main.loading_reports"
+msgid "Loading Reports"
+msgstr "Laddar Rapporter"
+
+#: ui_main.location
+msgctxt "ui_main.location"
+msgid "Location"
+msgstr "Plats"
+
+#: ui_main.locations
+msgctxt "ui_main.locations"
+msgid "Locations"
+msgstr "Platser"
+
+#: ui_main.location_example
+msgctxt "ui_main.location_example"
+msgid "City, State and/or Country"
+msgstr "Stad, Stat eller Land"
+
+#: ui_main.login
+msgctxt "ui_main.login"
+msgid "Login"
+msgstr "Logga in"
+
+#: ui_main.login_account_creation_successful
+msgctxt "ui_main.login_account_creation_successful"
+msgid "Account created successfully. You may log in now."
+msgstr "Kontot har framgångsrikt skapats. Du kan nu logga in."
+
+#: ui_main.login_confirmation_sent
+msgctxt "ui_main.login_confirmation_sent"
+msgid "A confirmation has been sent to your email address."
+msgstr "En bekräftelse har skickats till din e-postadress."
+
+#: ui_main.login_approval_required
+msgctxt "ui_main.login_approval_required"
+msgid ""
+"Account created. Your account must be approved by an admin before you can "
+"login."
+msgstr "Konton skapat. Ditt konto måste godkännas av en administratör innan du kan logga in."
+
+#: ui_main.login_email_doesnt_exist
+msgctxt "ui_main.login_email_doesnt_exist"
+msgid ""
+"Email address doesn't exist. Try a different address or create an account."
+msgstr "E-postadressen existerar inte. Prova en annan adress eller skapa ett konto."
+
+#: ui_main.login_select_openid
+msgctxt "ui_main.login_select_openid"
+msgid "Please click your account provider"
+msgstr "Var god tryck på din kontoleverantör"
+
+#: ui_main.login_with
+msgctxt "ui_main.login_with"
+msgid "Login with"
+msgstr "Logga in med"
+
+#: ui_main.login_userpass
+msgctxt "ui_main.login_userpass"
+msgid "Email and Password"
+msgstr "E-post och Lösenord"
+
+#: ui_main.login_openid
+msgctxt "ui_main.login_openid"
+msgid "OpenID"
+msgstr "OpenID"
+
+#: ui_main.login_signup
+msgctxt "ui_main.login_signup"
+msgid "Sign Up"
+msgstr "Registrera"
+
+#: ui_main.login_signup_click
+msgctxt "ui_main.login_signup_click"
+msgid "Create an Account"
+msgstr "Skapa ett Konto"
+
+#: ui_main.login_signup_confirmation_message
+msgctxt "ui_main.login_signup_confirmation_message"
+msgid ""
+"Thank you for signing up at %1$s. To confirm your email address, please go "
+"to the following URL: %2$s"
+msgstr "Tack för att du registrerade dig på %1$s. För att bekräfta din e-postadress, var god och tryck här: %2$s"
+
+#: ui_main.login_signup_confirmation_subject
+msgctxt "ui_main.login_signup_confirmation_subject"
+msgid "Signup Confirmation"
+msgstr "Registreringsbekräftelse"
+
+#: ui_main.login_signup_admin_approval_message
+msgctxt "ui_main.login_signup_admin_approval_message"
+msgid ""
+"An new user has signed up at %1$s. To approve their registration please go "
+"to the following URL: %2$s"
+msgstr "En ny användare registrerade på %1$s. För att godkänna registreringen, tryck här %2$s"
+
+#: ui_main.login_signup_admin_approval_subject
+msgctxt "ui_main.login_signup_admin_approval_subject"
+msgid "New User Approval"
+msgstr "Godkännande av nya Användare"
+
+#: ui_main.login_signup_approval_message
+msgctxt "ui_main.login_signup_approval_message"
+msgid ""
+"Your user account has been approved for %1$s. To login go to the following "
+"URL: %2$s"
+msgstr "Ditt användarkonto på %1$s har godkänts. För att logga in, tryck här %2$s"
+
+#: ui_main.login_signup_approval_subject
+msgctxt "ui_main.login_signup_approval_subject"
+msgid "User account approved"
+msgstr "Ditt konto har godkänts"
+
+#: ui_main.login_signup_text
+msgctxt "ui_main.login_signup_text"
+msgid "Create an account now to take advantage of more features on the site."
+msgstr "Skapa ett konto för att ta del utav fler funktioner på sidan."
+
+#: ui_main.longitude
+msgctxt "ui_main.longitude"
+msgid "Longitude"
+msgstr "Longitud"
+
+#: ui_main.map
+msgctxt "ui_main.map"
+msgid "Map"
+msgstr "Karta"
+
+#: ui_main.mark_read
+msgctxt "ui_main.mark_read"
+msgid "Mark as Read"
+msgstr "Markera som l&auml;st"
+
+#: ui_main.mark_unread
+msgctxt "ui_main.mark_unread"
+msgid "Mark as Unread"
+msgstr "Markera som ol&auml;st"
+
+#: ui_main.maximum_filesize
+msgctxt "ui_main.maximum_filesize"
+msgid "Maximum filesize"
+msgstr "Maximal filstorlek"
+
+#: ui_main.media
+msgctxt "ui_main.media"
+msgid "Media"
+msgstr "Media"
+
+#: ui_main.media_filter
+msgctxt "ui_main.media_filter"
+msgid "Media Filter"
+msgstr "Mediafilter"
+
+#: ui_main.members
+msgctxt "ui_main.members"
+msgid "Members"
+msgstr "Medlemmar"
+
+#: ui_main.manage_your_account
+msgctxt "ui_main.manage_your_account"
+msgid "Manage Your Account"
+msgstr "Hantera Ditt Konto"
+
+#: ui_main.message
+msgctxt "ui_main.message"
+msgid "Message"
+msgstr "Meddelande"
+
+#: ui_main.messages
+msgctxt "ui_main.messages"
+msgid "Messages"
+msgstr "Meddelanden"
+
+#: ui_main.message_details
+msgctxt "ui_main.message_details"
+msgid "Message Details"
+msgstr "Meddelandedetaljer"
+
+#: ui_main.message_non_numeric_source
+msgctxt "ui_main.message_non_numeric_source"
+msgid "Message from a non-numeric source:"
+msgstr "Meddelande från en icke-numerisk källa:"
+
+#: ui_main.mobile
+msgctxt "ui_main.mobile"
+msgid "Mobile"
+msgstr "Mobil"
+
+#: ui_main.modify
+msgctxt "ui_main.modify"
+msgid "Modify"
+msgstr "Modifiera"
+
+#: ui_main.modify_date
+msgctxt "ui_main.modify_date"
+msgid "Modify Date"
+msgstr "&Auml;ndra datum"
+
+#: ui_main.month
+msgctxt "ui_main.month"
+msgid "month"
+msgstr "månad"
+
+#: ui_main.Monthly
+msgctxt "ui_main.Monthly"
+msgid "Monthly"
+msgstr ""
+
+#: ui_main.more
+msgctxt "ui_main.more"
+msgid "More"
+msgstr "Mer"
+
+#: ui_main.more_information
+msgctxt "ui_main.more_information"
+msgid "More Information"
+msgstr "Mer Information"
+
+#: ui_main.multi_country_instance
+msgctxt "ui_main.multi_country_instance"
+msgid "Does this Ushahidi Deployment Span Multiple Countries"
+msgstr "Sp&auml;nner denna Ushahidi Instans &ouml;ver flera l&auml;nder"
+
+#: ui_main.must_confirm_email_address
+msgctxt "ui_main.must_confirm_email_address"
+msgid ""
+"You must confirm your email address to access this deployment. If you lost "
+"your confirmation email, you can request a new one below."
+msgstr "Du måste bekräfta din e-postadress för att få tillträde. Om ditt bekräftelsemejl har försvunnit, kan du begära ett nytt nedanför. "
+
+#: ui_main.name
+msgctxt "ui_main.name"
+msgid "Name"
+msgstr "Namn"
+
+#: ui_main.nearby_report
+msgctxt "ui_main.nearby_report"
+msgid "Nearby Report"
+msgstr "Närliggande Rapport"
+
+#: ui_main.new
+msgctxt "ui_main.new"
+msgid "New"
+msgstr "Ny"
+
+#: ui_main.news
+msgctxt "ui_main.news"
+msgid "News"
+msgstr "Nyheter"
+
+#: ui_main.news_feeds
+msgctxt "ui_main.news_feeds"
+msgid "News Feeds"
+msgstr "Nyhetsfl&ouml;den"
+
+#: ui_main.news_source
+msgctxt "ui_main.news_source"
+msgid "News Source"
+msgstr "Nyhetsk&auml;lla"
+
+#: ui_main.new_category
+msgctxt "ui_main.new_category"
+msgid "New Category"
+msgstr "Ny kategori"
+
+#: ui_main.new_password
+msgctxt "ui_main.new_password"
+msgid "New Password"
+msgstr "Nytt l&ouml;senord"
+
+#: ui_main.new_report
+msgctxt "ui_main.new_report"
+msgid "New Report"
+msgstr "Ny rapport"
+
+#: ui_main.next
+msgctxt "ui_main.next"
+msgid "Next"
+msgstr "NÄsta"
+
+#: ui_main.no
+msgctxt "ui_main.no"
+msgid "No"
+msgstr "Nej"
+
+#: ui_main.no_checkins
+msgctxt "ui_main.no_checkins"
+msgid "No checkins to display."
+msgstr "Inga incheckningar att visa"
+
+#: ui_main.no_data
+msgctxt "ui_main.no_data"
+msgid "No data"
+msgstr "Ingen data"
+
+#: ui_main.none
+msgctxt "ui_main.none"
+msgid "None"
+msgstr "Ingen"
+
+#: ui_main.notices
+msgctxt "ui_main.notices"
+msgid "Notices"
+msgstr "Meddelanden"
+
+#: ui_main.not_approved
+msgctxt "ui_main.not_approved"
+msgid "Not Approved"
+msgstr "Inte godk&auml;nd"
+
+#: ui_main.not_approved_singular
+msgctxt "ui_main.not_approved_singular"
+msgid "Not Approved"
+msgstr "Inte godk&auml;nd"
+
+#: ui_main.not_selected
+msgctxt "ui_main.not_selected"
+msgid "---Not Selected---"
+msgstr "---Inget Valt---"
+
+#: ui_main.not_spam
+msgctxt "ui_main.not_spam"
+msgid "not spam"
+msgstr "inte_spam"
+
+#: ui_main.not_specified
+msgctxt "ui_main.not_specified"
+msgid "Not Specified"
+msgstr "Inte Specificierat"
+
+#: ui_main.no_reports
+msgctxt "ui_main.no_reports"
+msgid "There are no reports"
+msgstr "Det finns inga rapporter"
+
+#: ui_main.no_results
+msgctxt "ui_main.no_results"
+msgid "There are no results"
+msgstr "Inga resultat"
+
+#: ui_main.off
+msgctxt "ui_main.off"
+msgid "Off"
+msgstr "Av"
+
+#: ui_main.official_news
+msgctxt "ui_main.official_news"
+msgid "Official &amp; mainstream news"
+msgstr "Officiella nyheter"
+
+#: ui_main.on
+msgctxt "ui_main.on"
+msgid "On"
+msgstr "På"
+
+#: ui_main.option
+msgctxt "ui_main.option"
+msgid "Option"
+msgstr "Alternativ"
+
+#: ui_main.optional
+msgctxt "ui_main.optional"
+msgid "Optional"
+msgstr "Valfri"
+
+#: ui_main.options
+msgctxt "ui_main.options"
+msgid "Options"
+msgstr "Alternativ"
+
+#: ui_main.organization
+msgctxt "ui_main.organization"
+msgid "Organization"
+msgstr "Organisation"
+
+#: ui_main.organizations
+msgctxt "ui_main.organizations"
+msgid "Organizations"
+msgstr "Organisationer"
+
+#: ui_main.organization_description
+msgctxt "ui_main.organization_description"
+msgid "Organization Description"
+msgstr "Organisationsbeskrivning"
+
+#: ui_main.organization_email
+msgctxt "ui_main.organization_email"
+msgid "Organization Email"
+msgstr "Organisation e-post"
+
+#: ui_main.organization_has_been
+msgctxt "ui_main.organization_has_been"
+msgid "The Organization Has Been"
+msgstr "Organisation har"
+
+#: ui_main.organization_name
+msgctxt "ui_main.organization_name"
+msgid "Organization Name"
+msgstr "Organisationnamn"
+
+#: ui_main.organization_phone_1
+msgctxt "ui_main.organization_phone_1"
+msgid "Organization Phone 1"
+msgstr "Organisation Telefon 1"
+
+#: ui_main.organization_phone_2
+msgctxt "ui_main.organization_phone_2"
+msgid "Organization Phone 2"
+msgstr "Organisation Telefon 2"
+
+#: ui_main.organization_website
+msgctxt "ui_main.organization_website"
+msgid "Organization Website"
+msgstr "Organisation Hemsida"
+
+#: ui_main.original
+msgctxt "ui_main.original"
+msgid "Original"
+msgstr "Original"
+
+#: ui_main.original_description
+msgctxt "ui_main.original_description"
+msgid "Original Description"
+msgstr "Originalbeskrivning"
+
+#: ui_main.original_title
+msgctxt "ui_main.original_title"
+msgid "Original Title"
+msgstr "Originalrubrik"
+
+#: ui_main.other_ushahidi_instances
+msgctxt "ui_main.other_ushahidi_instances"
+msgid "Other Deployments"
+msgstr "ANDRA USHAHIDI INSTANSER"
+
+#: ui_main.outbox
+msgctxt "ui_main.outbox"
+msgid "Outbox"
+msgstr "Utkorg"
+
+#: ui_main.outgoing
+msgctxt "ui_main.outgoing"
+msgid "Outgoing"
+msgstr "Utg&aring;ende"
+
+#: ui_main.page
+msgctxt "ui_main.page"
+msgid "Page"
+msgstr "Sida"
+
+#: ui_main.pages
+msgctxt "ui_main.pages"
+msgid "Pages"
+msgstr "Sidor"
+
+#: ui_main.page_description
+msgctxt "ui_main.page_description"
+msgid "Page Description"
+msgstr "Sidbeskrivning"
+
+#: ui_main.page_has_been
+msgctxt "ui_main.page_has_been"
+msgid "The Page Has Been"
+msgstr "Sidan har"
+
+#: ui_main.page_tab_name
+msgctxt "ui_main.page_tab_name"
+msgid "Page Tab Name"
+msgstr "Sidfliksnamn"
+
+#: ui_main.page_title
+msgctxt "ui_main.page_title"
+msgid "Page Title"
+msgstr "Sidrubrik"
+
+#: ui_main.parent_category
+msgctxt "ui_main.parent_category"
+msgid "Parent Category"
+msgstr "&Ouml;verliggande kategori"
+
+#: ui_main.password
+msgctxt "ui_main.password"
+msgid "Password"
+msgstr "L&ouml;senord"
+
+#: ui_main.password_again
+msgctxt "ui_main.password_again"
+msgid "Verify Password"
+msgstr "Skriv l&ouml;senordet igen"
+
+#: ui_main.password_changed_successfully
+msgctxt "ui_main.password_changed_successfully"
+msgid "Password changed successfully! Login below."
+msgstr "Lösenordet bytades framgångsrikt! Logga in nedanför."
+
+#: ui_main.password_forgot
+msgctxt "ui_main.password_forgot"
+msgid "Forgot your password?"
+msgstr "Gl&ouml;mt ditt l&ouml;senord?"
+
+#: ui_main.password_reset_confirm
+msgctxt "ui_main.password_reset_confirm"
+msgid "Check your email for the new password."
+msgstr "Kontrollera din e-post f&ouml;r nytt l&ouml;senord."
+
+#: ui_main.password_save
+msgctxt "ui_main.password_save"
+msgid "Stay logged in on this computer?"
+msgstr "Forts&auml;tt vara inloggad p&aring; denna dator?"
+
+#: ui_main.past_month
+msgctxt "ui_main.past_month"
+msgid "Past Month"
+msgstr "Senaste m&aring;naden"
+
+#: ui_main.past_year
+msgctxt "ui_main.past_year"
+msgid "Past Year"
+msgstr "Senaste &aring;ret"
+
+#: ui_main.pending
+msgctxt "ui_main.pending"
+msgid "Pending"
+msgstr "Avvaktande"
+
+#: ui_main.per
+msgctxt "ui_main.per"
+msgid "per"
+msgstr "per"
+
+#: ui_main.personal_information
+msgctxt "ui_main.personal_information"
+msgid "Personal Information <span>Optional.</span>"
+msgstr "Personlig information <span>Frivilligt..</span>"
+
+#: ui_main.phone
+msgctxt "ui_main.phone"
+msgid "Phone"
+msgstr "Telefon"
+
+#: ui_main.photos
+msgctxt "ui_main.photos"
+msgid "Photos"
+msgstr "Foton"
+
+#: ui_main.pictures
+msgctxt "ui_main.pictures"
+msgid "Pictures"
+msgstr "Bilder"
+
+#: ui_main.pictures_and_videos
+msgctxt "ui_main.pictures_and_videos"
+msgid "Pictures and Videos"
+msgstr "Bilder och videor"
+
+#: ui_main.pinpoint_location
+msgctxt "ui_main.pinpoint_location"
+msgid ""
+"* Search for your location using a location name OR latitude,longitude "
+"coordinates (format: 38.19, 85.61), OR click on the map to pinpoint the "
+"correct location."
+msgstr "* S&ouml;k efter din plats, eller klicka p&aring kartan f&ouml;r att s&auml;tta exakt position"
+
+#: ui_main.play
+msgctxt "ui_main.play"
+msgid "Play"
+msgstr "Spela"
+
+#: ui_main.please_note
+msgctxt "ui_main.please_note"
+msgid "Please Note"
+msgstr "Observera"
+
+#: ui_main.plugins
+msgctxt "ui_main.plugins"
+msgid "Plugins"
+msgstr "Tillägg"
+
+#: ui_main.plugin_url
+msgctxt "ui_main.plugin_url"
+msgid "Plugin Website"
+msgstr "Sida med Tillägg"
+
+#: ui_main.public_profile
+msgctxt "ui_main.public_profile"
+msgid "Public Profile"
+msgstr "Publik Profil"
+
+#: ui_main.public_profile_url
+msgctxt "ui_main.public_profile_url"
+msgid "Public Profile URL"
+msgstr "Publik Profil URL"
+
+#: ui_main.preview
+msgctxt "ui_main.preview"
+msgid "Preview"
+msgstr "F&ouml;rhandsgranska"
+
+#: ui_main.preview_item
+msgctxt "ui_main.preview_item"
+msgid "Preview Item"
+msgstr "F&ouml;rhandsgranska post"
+
+#: ui_main.preview_message
+msgctxt "ui_main.preview_message"
+msgid "Preview Message"
+msgstr "F&ouml;rhandsgranska meddelande"
+
+#: ui_main.previous
+msgctxt "ui_main.previous"
+msgid "Previous"
+msgstr "FÖREGÅENDE"
+
+#: ui_main.private
+msgctxt "ui_main.private"
+msgid "Private"
+msgstr "Visas ej"
+
+#: ui_main.profile_color
+msgctxt "ui_main.profile_color"
+msgid "Profile Color"
+msgstr "Profilfärg"
+
+#: ui_main.profile_saved
+msgctxt "ui_main.profile_saved"
+msgid "Your Profile Has Been Saved"
+msgstr "Din profil har sparats"
+
+#: ui_main.quick_stats
+msgctxt "ui_main.quick_stats"
+msgid "Quick Stats"
+msgstr "Snabbstatistik"
+
+#: ui_main.rating
+msgctxt "ui_main.rating"
+msgid "Rating"
+msgstr "Gradering"
+
+#: ui_main.read
+msgctxt "ui_main.read"
+msgid "Read"
+msgstr "L&auml;s"
+
+#: ui_main.receive
+msgctxt "ui_main.receive"
+msgid "Receive"
+msgstr "Ta emot"
+
+#: ui_main.receive_from
+msgctxt "ui_main.receive_from"
+msgid "Receive from"
+msgstr "Ta emot fr&aring;n"
+
+#: ui_main.receive_notifications
+msgctxt "ui_main.receive_notifications"
+msgid "Receive Notifications"
+msgstr "Ta emot meddelande"
+
+#: ui_main.recent_reports
+msgctxt "ui_main.recent_reports"
+msgid "Recent Reports"
+msgstr "Senaste rapporterna"
+
+#: ui_main.refresh_news_feeds
+msgctxt "ui_main.refresh_news_feeds"
+msgid "Refresh News Feeds"
+msgstr "Uppdatera nyhetsfl&ouml;de"
+
+#: ui_main.registered_email
+msgctxt "ui_main.registered_email"
+msgid "Registered Email"
+msgstr "Registrerad E-postadress"
+
+#: ui_main.remove
+msgctxt "ui_main.remove"
+msgid "Remove"
+msgstr "ta bort"
+
+#: ui_main.reply
+msgctxt "ui_main.reply"
+msgid "Reply"
+msgstr "Svara"
+
+#: ui_main.report
+msgctxt "ui_main.report"
+msgid "Report"
+msgstr "Rapportera"
+
+#: ui_main.reports_listed
+msgctxt "ui_main.reports_listed"
+msgid "Reports <span>(from the map, listed in chronological order)</span>"
+msgstr "Rapporter <span>(från kartan i kronologisk ordning)</span>"
+
+#: ui_main.reporter
+msgctxt "ui_main.reporter"
+msgid "Reporter"
+msgstr "Rapport&ouml;r"
+
+#: ui_main.reporters
+msgctxt "ui_main.reporters"
+msgid "Reporters"
+msgstr "Rapport&ouml;rer"
+
+#: ui_main.reporter_date
+msgctxt "ui_main.reporter_date"
+msgid "Reporter Date"
+msgstr "Rapport&ouml;r datum"
+
+#: ui_main.reporter_email
+msgctxt "ui_main.reporter_email"
+msgid "Reporter Email"
+msgstr "Rapport&ouml;r e-post"
+
+#: ui_main.reporter_first_name
+msgctxt "ui_main.reporter_first_name"
+msgid "Reporter First Name"
+msgstr "Rapport&ouml;r f&ouml;rnamn"
+
+#: ui_main.reporter_has_been
+msgctxt "ui_main.reporter_has_been"
+msgid "The Reporter Has Been"
+msgstr "Rapporten har"
+
+#: ui_main.reporter_ip
+msgctxt "ui_main.reporter_ip"
+msgid "Reporter IP Address"
+msgstr "Rapport&ouml;r IP Adress"
+
+#: ui_main.reporter_last_name
+msgctxt "ui_main.reporter_last_name"
+msgid "Reporter Last Name"
+msgstr "Rapport&ouml;r efternamn"
+
+#: ui_main.reporter_level
+msgctxt "ui_main.reporter_level"
+msgid "Reporter Level"
+msgstr "Reporterniv&aring"
+
+#: ui_main.reporter_levels
+msgctxt "ui_main.reporter_levels"
+msgid "Reporter Levels"
+msgstr "Reporterniv&aring;er"
+
+#: ui_main.reporter_phone
+msgctxt "ui_main.reporter_phone"
+msgid "Reporter Phone"
+msgstr "Rapport&ouml;r telefon"
+
+#: ui_main.reports
+msgctxt "ui_main.reports"
+msgid "Reports"
+msgstr "Rapporter"
+
+#: ui_main.reports_btn_browse
+msgctxt "ui_main.reports_btn_browse"
+msgid "Browse"
+msgstr "Bl&auml;ddra"
+
+#: ui_main.reports_btn_submit
+msgctxt "ui_main.reports_btn_submit"
+msgid "Submit"
+msgstr "Skicka"
+
+#: ui_main.reports_by_this_user
+msgctxt "ui_main.reports_by_this_user"
+msgid "Reports By This User"
+msgstr "Rapporter Från Denna Användare"
+
+#: ui_main.reports_categories
+msgctxt "ui_main.reports_categories"
+msgid "Categories"
+msgstr "Kategorisera"
+
+#: ui_main.reports_count
+msgctxt "ui_main.reports_count"
+msgid "%d Reports"
+msgstr "%d Rapporter"
+
+#: ui_main.reports_date
+msgctxt "ui_main.reports_date"
+msgid "Date"
+msgstr "Datum"
+
+#: ui_main.reports_description
+msgctxt "ui_main.reports_description"
+msgid "Description"
+msgstr "Beskrivning"
+
+#: ui_main.reports_download_csv
+msgctxt "ui_main.reports_download_csv"
+msgid "Reports will be downloaded in CSV format"
+msgstr "Rapporter kommer att sparas ner i CSV format"
+
+#: ui_main.reports_email
+msgctxt "ui_main.reports_email"
+msgid "Email"
+msgstr "E-post"
+
+#: ui_main.reports_features
+msgctxt "ui_main.reports_features"
+msgid "Features"
+msgstr "Funktioner"
+
+#: ui_main.reports_find_location
+msgctxt "ui_main.reports_find_location"
+msgid "Find a location near you"
+msgstr "Hitta en plats n&auml;ra dig"
+
+#: ui_main.reports_first
+msgctxt "ui_main.reports_first"
+msgid "First Name"
+msgstr "F&ouml;rnamn"
+
+#: ui_main.reports_last
+msgctxt "ui_main.reports_last"
+msgid "Last Name"
+msgstr "Efternamn"
+
+#: ui_main.reports_location_name
+msgctxt "ui_main.reports_location_name"
+msgid "Location Name"
+msgstr "F&ouml;rfina platsnamnet"
+
+#: ui_main.reports_news
+msgctxt "ui_main.reports_news"
+msgid "News Source Link"
+msgstr "L&auml;nk nyhetsk&auml;lla"
+
+#: ui_main.reports_optional
+msgctxt "ui_main.reports_optional"
+msgid "Optional Information"
+msgstr "Valfri information"
+
+#: ui_main.reports_photos
+msgctxt "ui_main.reports_photos"
+msgid "Upload Photos"
+msgstr "Ladda upp bilder"
+
+#: ui_main.reports_return
+msgctxt "ui_main.reports_return"
+msgid "Return to the reports page"
+msgstr "Tillbaka till rapportsidan"
+
+#: ui_main.reports_select_city
+msgctxt "ui_main.reports_select_city"
+msgid "Select a City"
+msgstr "V&auml;lj stad"
+
+#: ui_main.reports_submitted
+msgctxt "ui_main.reports_submitted"
+msgid ""
+"Your Report has been submitted to our staff for review. We will get back to "
+"you shortly if necessary."
+msgstr "Din rapport har skickats in f&ouml;r granskning. Vi &aring;terkommer till dig snarast om det finns behov."
+
+#: ui_main.reports_submit_new
+msgctxt "ui_main.reports_submit_new"
+msgid "Submit a New Report"
+msgstr "Skicka in ny rapport"
+
+#: ui_main.reports_time
+msgctxt "ui_main.reports_time"
+msgid "Time"
+msgstr "Tid"
+
+#: ui_main.reports_timeline
+msgctxt "ui_main.reports_timeline"
+msgid "Reports Timeline"
+msgstr "Tidslinje"
+
+#: ui_main.reports_title
+msgctxt "ui_main.reports_title"
+msgid "Report Title"
+msgstr "Rapportrubrik"
+
+#: ui_main.reports_video
+msgctxt "ui_main.reports_video"
+msgid "Video link"
+msgstr "Videol&auml;nk"
+
+#: ui_main.report_an_incident
+msgctxt "ui_main.report_an_incident"
+msgid "Report an Incident"
+msgstr "Rapportera in en h&auml;ndelse"
+
+#: ui_main.report_details
+msgctxt "ui_main.report_details"
+msgid "Report Details"
+msgstr "Rapportdetaljer"
+
+#: ui_main.report_option_1
+msgctxt "ui_main.report_option_1"
+msgid "By sending a message to"
+msgstr "Genom att skicka ett meddelande till"
+
+#: ui_main.report_option_2
+msgctxt "ui_main.report_option_2"
+msgid "By sending an email"
+msgstr "Genom att skicka e-post till "
+
+#: ui_main.report_option_3
+msgctxt "ui_main.report_option_3"
+msgid "By sending a tweet with the hashtag/s"
+msgstr "Genom att skriva in en tweet med hashtaggen/arna"
+
+#: ui_main.report_option_4
+msgctxt "ui_main.report_option_4"
+msgid "By filling this form on our website."
+msgstr "Genom att fylla i detta formul&auml;r"
+
+#: ui_main.report_option_external_apps
+msgctxt "ui_main.report_option_external_apps"
+msgid "By using an app"
+msgstr "Med en app för mobilen "
+
+#: ui_main.report_saved
+msgctxt "ui_main.report_saved"
+msgid "Your Report Has Been Saved"
+msgstr "Din rapport har sparats"
+
+#: ui_main.report_title
+msgctxt "ui_main.report_title"
+msgid "Report Title"
+msgstr "Rapportrubrik"
+
+#: ui_main.request_information
+msgctxt "ui_main.request_information"
+msgid "Request more information"
+msgstr "Efterfr&aring;ga mer information"
+
+#: ui_main.request_location
+msgctxt "ui_main.request_location"
+msgid "Request location"
+msgstr "Efterfr&aring;ga plats"
+
+#: ui_main.required
+msgctxt "ui_main.required"
+msgid "Required"
+msgstr "Nödvändig"
+
+#: ui_main.requirements
+msgctxt "ui_main.requirements"
+msgid "Requirements"
+msgstr "Krav"
+
+#: ui_main.resend_confirm_email
+msgctxt "ui_main.resend_confirm_email"
+msgid "Resend Confirmation Email"
+msgstr "Skicka om E-post Bekräftelse"
+
+#: ui_main.reset
+msgctxt "ui_main.reset"
+msgid "Reset"
+msgstr "Rensa"
+
+#: ui_main.reset_all_filters
+msgctxt "ui_main.reset_all_filters"
+msgid "Reset all filters"
+msgstr "Återställ alla filter"
+
+#: ui_main.reset_password
+msgctxt "ui_main.reset_password"
+msgid "Reset Password"
+msgstr "Nollst&auml;ll l&ouml;senord"
+
+#: ui_main.retrieve_city_names
+msgctxt "ui_main.retrieve_city_names"
+msgid "Retrieve city names for the selected country"
+msgstr "H&auml;mta st&auml;der f&ouml;r valt land"
+
+#: ui_main.riverid_information
+msgctxt "ui_main.riverid_information"
+msgid "Accounts managed by the %s service."
+msgstr "Hanterade konton av %s tjänsten."
+
+#: ui_main.riverid_exists_login
+msgctxt "ui_main.riverid_exists_login"
+msgid ""
+"You already have an account managed by CrowdmapID! Try using your CrowdmapID"
+" email and password to login."
+msgstr "Du har redan ett konto som hanteras av CrowdmapID! Försök använda din CrowdmapID e-postadress och ditt lösenord för att logga in."
+
+#: ui_main.role
+msgctxt "ui_main.role"
+msgid "Role"
+msgstr "Roll"
+
+#: ui_main.rss
+msgctxt "ui_main.rss"
+msgid "RSS"
+msgstr "RSS"
+
+#: ui_main.save
+msgctxt "ui_main.save"
+msgid "Save"
+msgstr "Spara"
+
+#: ui_main.saved
+msgctxt "ui_main.saved"
+msgid "Saved"
+msgstr "Sparad"
+
+#: ui_main.save_add_new
+msgctxt "ui_main.save_add_new"
+msgid "Save & Add New"
+msgstr "Spara & lägg till ny"
+
+#: ui_main.save_close
+msgctxt "ui_main.save_close"
+msgid "Save & Close"
+msgstr "SPARA & STÄNG"
+
+#: ui_main.save_report
+msgctxt "ui_main.save_report"
+msgid "Save Report"
+msgstr "Spara rapport"
+
+#: ui_main.schedule
+msgctxt "ui_main.schedule"
+msgid "Schedule"
+msgstr "Schema"
+
+#: ui_main.scheduler
+msgctxt "ui_main.scheduler"
+msgid "Scheduler"
+msgstr "Schemaläggare"
+
+#: ui_main.scheduler_day
+msgctxt "ui_main.scheduler_day"
+msgid "Day"
+msgstr "Dag"
+
+#: ui_main.scheduler_hour
+msgctxt "ui_main.scheduler_hour"
+msgid "Hour"
+msgstr "Timme"
+
+#: ui_main.scheduler_log
+msgctxt "ui_main.scheduler_log"
+msgid "Scheduler Log"
+msgstr "Schemarläggarlogg"
+
+#: ui_main.scheduler_minute
+msgctxt "ui_main.scheduler_minute"
+msgid "Minute"
+msgstr "Minut"
+
+#: ui_main.scheduler_weekday
+msgctxt "ui_main.scheduler_weekday"
+msgid "Day of the Week"
+msgstr "Veckodag"
+
+#: ui_main.search
+msgctxt "ui_main.search"
+msgid "Search"
+msgstr "S&Ouml;K"
+
+#: ui_main.search_results
+msgctxt "ui_main.search_results"
+msgid "Search Results"
+msgstr "S&ouml;kresultat"
+
+#: ui_main.security_code
+msgctxt "ui_main.security_code"
+msgid "Security Code"
+msgstr "S&auml;kerhetskod"
+
+#: ui_main.select_all
+msgctxt "ui_main.select_all"
+msgid "Select All"
+msgstr "V&auml;lj alla"
+
+#: ui_main.select_field_type
+msgctxt "ui_main.select_field_type"
+msgid "Select a Field Type"
+msgstr "V&auml;lj f&auml;lttyp"
+
+#: ui_main.select_form_type
+msgctxt "ui_main.select_form_type"
+msgid "Select A Form Type"
+msgstr "V&auml;lj formul&auml;rtyp"
+
+#: ui_main.select_in_map
+msgctxt "ui_main.select_in_map"
+msgid "Select in the map"
+msgstr "V&auml;lj p&aring karta"
+
+#: ui_main.select_multiple
+msgctxt "ui_main.select_multiple"
+msgid "Select as many as needed"
+msgstr "V&auml;lj s&aring m&aring;nga som beh&ouml;vs"
+
+#: ui_main.select_one
+msgctxt "ui_main.select_one"
+msgid "Please verify that you have checked an item"
+msgstr "Kontrollera att du valt en post"
+
+#: ui_main.select_theme
+msgctxt "ui_main.select_theme"
+msgid "Select Theme"
+msgstr "V&auml;lj tema"
+
+#: ui_main.send
+msgctxt "ui_main.send"
+msgid "Send"
+msgstr "Skicka"
+
+#: ui_main.send_confirmation
+msgctxt "ui_main.send_confirmation"
+msgid "Send Confirmation"
+msgstr "Skicka bekräftelse"
+
+#: ui_main.sending_to
+msgctxt "ui_main.sending_to"
+msgid "Sending To"
+msgstr "Skickar till"
+
+#: ui_main.sent
+msgctxt "ui_main.sent"
+msgid "Sent"
+msgstr "Skickat"
+
+#: ui_main.sent_by
+msgctxt "ui_main.sent_by"
+msgid "Sent by"
+msgstr "Skickat av"
+
+#: ui_main.server_address
+msgctxt "ui_main.server_address"
+msgid "Server address"
+msgstr "Serveradress"
+
+#: ui_main.server_type
+msgctxt "ui_main.server_type"
+msgid "Server type"
+msgstr "Servertyp"
+
+#: ui_main.service
+msgctxt "ui_main.service"
+msgid "Service"
+msgstr "Tj&auml;nst"
+
+#: ui_main.service_username
+msgctxt "ui_main.service_username"
+msgid "Service Username"
+msgstr "Tj&auml;nstens anv&auml;ndarnamn"
+
+#: ui_main.service_user_id
+msgctxt "ui_main.service_user_id"
+msgid "Service User ID"
+msgstr "Tj&auml;nstens anv&auml;ndar-ID"
+
+#: ui_main.share
+msgctxt "ui_main.share"
+msgid "Share"
+msgstr "Dela"
+
+#: ui_main.shared_data
+msgctxt "ui_main.shared_data"
+msgid "Shared data"
+msgstr "Delat data"
+
+#: ui_main.share_has_been
+msgctxt "ui_main.share_has_been"
+msgid "The share has been"
+msgstr "Delningen har"
+
+#: ui_main.sharing
+msgctxt "ui_main.sharing"
+msgid "Sharing"
+msgstr "Delar"
+
+#: ui_main.shorter_map
+msgctxt "ui_main.shorter_map"
+msgid "Shorter Map"
+msgstr "Kortare karta"
+
+#: ui_main.show
+msgctxt "ui_main.show"
+msgid "Show"
+msgstr "Visa"
+
+#: ui_main.show_all
+msgctxt "ui_main.show_all"
+msgid "Show all"
+msgstr "Visa alla"
+
+#: ui_main.show_messages
+msgctxt "ui_main.show_messages"
+msgid "Show Messages"
+msgstr "Visa meddelanden"
+
+#: ui_main.showing_reports_from
+msgctxt "ui_main.showing_reports_from"
+msgid "Showing Reports From <span class=\"time-period\">%1$s to %2$s</span>"
+msgstr "Visar rapporter från <span class=\"time-period\">%1$s till %2$s</span>"
+
+#: ui_main.site
+msgctxt "ui_main.site"
+msgid "Website"
+msgstr "Websajt"
+
+#: ui_main.site_email_address
+msgctxt "ui_main.site_email_address"
+msgid "site email address"
+msgstr "sajtens e-postadress"
+
+#: ui_main.site_url
+msgctxt "ui_main.site_url"
+msgid "Site URL"
+msgstr "Sajtens URL"
+
+#: ui_main.smaller_map
+msgctxt "ui_main.smaller_map"
+msgid "Smaller Map"
+msgstr "Mindre karta"
+
+#: ui_main.sms
+msgctxt "ui_main.sms"
+msgid "SMS"
+msgstr "SMS"
+
+#: ui_main.sorry_no_badges
+msgctxt "ui_main.sorry_no_badges"
+msgid "Sorry, you do not have any badges."
+msgstr "Tyvärr har du inga emblem."
+
+#: ui_main.source
+msgctxt "ui_main.source"
+msgid "Source"
+msgstr "K&auml;lla"
+
+#: ui_main.source_name
+msgctxt "ui_main.source_name"
+msgid "Source name"
+msgstr "K&auml;llans namn"
+
+#: ui_main.sort
+msgctxt "ui_main.sort"
+msgid "Sort"
+msgstr "Sortera"
+
+#: ui_main.sort_by
+msgctxt "ui_main.sort_by"
+msgid "Sort By"
+msgstr "Sortera efter"
+
+#: ui_main.source_url
+msgctxt "ui_main.source_url"
+msgid "Source URL"
+msgstr "K&auml;llans URL"
+
+#: ui_main.spam
+msgctxt "ui_main.spam"
+msgid "Spam"
+msgstr "Spam"
+
+#: ui_main.ssl_support
+msgctxt "ui_main.ssl_support"
+msgid "SSL Support?"
+msgstr "SSL-st&ouml;d?"
+
+#: ui_main.start_point
+msgctxt "ui_main.start_point"
+msgid "From"
+msgstr "Fr&aring;n"
+
+#: ui_main.step
+msgctxt "ui_main.step"
+msgid "Step"
+msgstr "Steg"
+
+#: ui_main.submit
+msgctxt "ui_main.submit"
+msgid "Submit a Report"
+msgstr "Skicka in en rapport"
+
+#: ui_main.submitted_by
+msgctxt "ui_main.submitted_by"
+msgid "Submitted by <strong>%1$s</strong> via <strong>%2$s</strong>"
+msgstr "Skickat av <strong>%1$s</strong> via <strong>%2$s</strong>"
+
+#: ui_main.submit_sms
+msgctxt "ui_main.submit_sms"
+msgid "Submit via SMS"
+msgstr "Skicka in via SMS"
+
+#: ui_main.submit_sms1
+msgctxt "ui_main.submit_sms1"
+msgid "Send your SMS to"
+msgstr "Skicka ditt SMS till"
+
+#: ui_main.submit_sms2
+msgctxt "ui_main.submit_sms2"
+msgid "on your phone"
+msgstr "p&aring din telefon"
+
+#: ui_main.success
+msgctxt "ui_main.success"
+msgid "Success!"
+msgstr "Det lyckades!"
+
+#: ui_main.successfuly_imported
+msgctxt "ui_main.successfuly_imported"
+msgid "Succesfully imported"
+msgstr "Import lyckades"
+
+#: ui_main.surname
+msgctxt "ui_main.surname"
+msgid "Surname"
+msgstr "Efternamn"
+
+#: ui_main.survey
+msgctxt "ui_main.survey"
+msgid "Survey"
+msgstr "Undersökning"
+
+#: ui_main.system
+msgctxt "ui_main.system"
+msgid "System"
+msgstr "System"
+
+#: ui_main.taller_map
+msgctxt "ui_main.taller_map"
+msgid "Taller Map"
+msgstr "Högre karta"
+
+#: ui_main.tcp_port
+msgctxt "ui_main.tcp_port"
+msgid "TCP Port"
+msgstr "TCP-port"
+
+#: ui_main.themes
+msgctxt "ui_main.themes"
+msgid "Themes"
+msgstr "Teman"
+
+#: ui_main.theme_default
+msgctxt "ui_main.theme_default"
+msgid "Default Ushahidi Theme"
+msgstr "Standard Ushahidi tema"
+
+#: ui_main.theme_settings
+msgctxt "ui_main.theme_settings"
+msgid "Theme Settings"
+msgstr "Temainst&auml;llningar"
+
+#: ui_main.this
+msgctxt "ui_main.this"
+msgid "This"
+msgstr "Denna/detta"
+
+#: ui_main.this_day
+msgctxt "ui_main.this_day"
+msgid "Today"
+msgstr "Idag"
+
+#: ui_main.this_month
+msgctxt "ui_main.this_month"
+msgid "This Month"
+msgstr "Denna m&aring;nad"
+
+#: ui_main.this_week
+msgctxt "ui_main.this_week"
+msgid "This Week"
+msgstr "Denna vecka"
+
+#: ui_main.this_year
+msgctxt "ui_main.this_year"
+msgid "This Year"
+msgstr "Detta &aringr"
+
+#: ui_main.this_is_your_profile
+msgctxt "ui_main.this_is_your_profile"
+msgid "This is your profile."
+msgstr "Detta är din profil."
+
+#: ui_main.time
+msgctxt "ui_main.time"
+msgid "Time"
+msgstr "tid"
+
+#: ui_main.title
+msgctxt "ui_main.title"
+msgid "Title "
+msgstr "RUBRIK "
+
+#: ui_main.to
+msgctxt "ui_main.to"
+msgid "to"
+msgstr "till"
+
+#: ui_main.today
+msgctxt "ui_main.today"
+msgid "Today"
+msgstr "Idag"
+
+#: ui_main.today_at
+msgctxt "ui_main.today_at"
+msgid "Today at"
+msgstr "Idag klockan"
+
+#: ui_main.token
+msgctxt "ui_main.token"
+msgid "Token"
+msgstr "Pollett"
+
+#: ui_main.total_reports
+msgctxt "ui_main.total_reports"
+msgid "Total Reports"
+msgstr "Totalt antal rapporter"
+
+#: ui_main.translated
+msgctxt "ui_main.translated"
+msgid "Translated"
+msgstr "&Ouml;versatt"
+
+#: ui_main.translated_description
+msgctxt "ui_main.translated_description"
+msgid "Translated Description"
+msgstr "&Ouml;versatt beskrivning"
+
+#: ui_main.translated_title
+msgctxt "ui_main.translated_title"
+msgid "Translated Title"
+msgstr "&Ouml;versatt rubrik"
+
+#: ui_main.translate_to
+msgctxt "ui_main.translate_to"
+msgid "Translate to"
+msgstr "&Ouml;vers&auml;tt till"
+
+#: ui_main.translation
+msgctxt "ui_main.translation"
+msgid "Translation"
+msgstr "&Ouml;vers&auml;ttning"
+
+#: ui_main.translation_saved
+msgctxt "ui_main.translation_saved"
+msgid "Translation has been saved"
+msgstr "&Ouml;vers&auml;ttning har sparats"
+
+#: ui_main.trusted
+msgctxt "ui_main.trusted"
+msgid "Trusted"
+msgstr "Pålitlig"
+
+#: ui_main.type
+msgctxt "ui_main.type"
+msgid "Type"
+msgstr "Typ"
+
+#: ui_main.twitter
+msgctxt "ui_main.twitter"
+msgid "Twitter"
+msgstr "Twitter"
+
+#: ui_main.unable_send_email
+msgctxt "ui_main.unable_send_email"
+msgid "Unable to send email."
+msgstr "Det gick inte att skicka e-post."
+
+#: ui_main.uncategorized_reports
+msgctxt "ui_main.uncategorized_reports"
+msgid "Uncategorized Reports"
+msgstr "Okategoriserade rapporter"
+
+#: ui_main.unread
+msgctxt "ui_main.unread"
+msgid "unread"
+msgstr "Ol&auml;st"
+
+#: ui_main.unverified
+msgctxt "ui_main.unverified"
+msgid "Unverified"
+msgstr "Obekräftad"
+
+#: ui_main.update_feeds
+msgctxt "ui_main.update_feeds"
+msgid "Update feeds"
+msgstr "Updatera fl&ouml;den"
+
+#: ui_main.upload
+msgctxt "ui_main.upload"
+msgid "Upload"
+msgstr "Ladda upp"
+
+#: ui_main.upload_guide
+msgctxt "ui_main.upload_guide"
+msgid "View our report upload guides:-"
+msgstr "Se våra riktlinjer för rapportuppladdning:- "
+
+#: ui_main.upload_docs_1
+msgctxt "ui_main.upload_docs_1"
+msgid "XML Upload guide"
+msgstr "Uppladdningsguide  XML"
+
+#: ui_main.upload_docs_2
+msgctxt "ui_main.upload_docs_2"
+msgid "CSV Upload guide"
+msgstr "Uppladdningsguide CSV"
+
+#: ui_main.upload_file
+msgctxt "ui_main.upload_file"
+msgid "File to upload"
+msgstr "Fil att ladda upp"
+
+#: ui_main.upload_reports
+msgctxt "ui_main.upload_reports"
+msgid "Upload Reports"
+msgstr "Ladda upp rapporter"
+
+#: ui_main.upload_reports_custom_forms
+msgctxt "ui_main.upload_reports_custom_forms"
+msgid ""
+"Custom field columns must have their form_id appended to them e.g custom "
+"field Test, on the default form, whose id is 1, will be Test-1. During "
+"custom form field import, ensure that"
+msgstr "Skräddarsydda fältkolumner måste ha deras form_id infogade t.ex. fältet Test, på standard formuläret, vars ID är 1, kommer blir Test-1. Under importering av skräddarsydda fält, se till att"
+
+#: ui_main.upload_reports_detail_1
+msgctxt "ui_main.upload_reports_detail_1"
+msgid ""
+"With the form below, you can import incidents into the Ushahidi engine."
+msgstr "Med formul&auml;ret nedan, kan du importera h&auml;ndelser till Ushahidimotorn"
+
+#: ui_main.upload_reports_detail_2
+msgctxt "ui_main.upload_reports_detail_2"
+msgid "Reports must be uploaded in either CSV or XML format."
+msgstr "Rapporten måste laddas up i antingen CSV eller XML format."
+
+#: ui_main.upload_reports_detail_3
+msgctxt "ui_main.upload_reports_detail_3"
+msgid ""
+"When incident ID already exists in the database, the entry in the CSV/XML "
+"file will be ignored."
+msgstr "När incident ID redan existerar i databasen kommer noteringen i CSV/XML filen att ignoreras."
+
+#: ui_main.upload_reports_detail_4
+msgctxt "ui_main.upload_reports_detail_4"
+msgid "It must contain at least Incident Title and Incident Date."
+msgstr "Den m&aring;ste inneh&aring;lla &aringtminstone h&auml;ndelserubrik och datum"
+
+#: ui_main.upload_reports_detail_4b
+msgctxt "ui_main.upload_reports_detail_4b"
+msgid ""
+"If no latitude and longitude columns are supplied, the location will be "
+"geocoded using the Google Geocoder."
+msgstr "Om ingen position har angetts kommer platsen att geokodas med Google Geocoder"
+
+#: ui_main.upload_reports_detail_4c
+msgctxt "ui_main.upload_reports_detail_4c"
+msgid ""
+"If importing additional info i.e personal information and/or custom form "
+"fields"
+msgstr "Om ytterligare information ska importeras t.ex personlig information och/eller skräddarsydda formulärfält"
+
+#: ui_main.upload_reports_detail_4d
+msgctxt "ui_main.upload_reports_detail_4d"
+msgid ""
+"At least one of the personal information fields(name, surname,email) entries"
+" MUST exist. Empty records will not be imported"
+msgstr "Åtminstone ett av fälten för personlig information(namn, efternamn, e-post) MÅSTE existera. Tomma protokoll kommer inte att importeras"
+
+#: ui_main.upload_reports_detail_4e
+msgctxt "ui_main.upload_reports_detail_4e"
+msgid ""
+"Your entries for dropdown fields, radio buttons and checkboxes match the "
+"options provided for the custom field on your instance"
+msgstr "Din indata för formulärfälten stämmer överens med de konfigurationsval givna för denna instansen. "
+
+#: ui_main.upload_reports_detail_4f
+msgctxt "ui_main.upload_reports_detail_4f"
+msgid ""
+"Checkbox options are separated by a comma e.g if your selected choice of "
+"fruits is apples,mangoes and grapes, your entry for this should be "
+"\"apples,mangoes,grapes\""
+msgstr "Valen för kryssruta separeras med ett kommatecken t.ex. om dina val för frukter är äpplen,mongon och vindruvor, så ska du skriva \"äpplen,mangon,vindruvor\"  "
+
+#: ui_main.upload_reports_detail_4g
+msgctxt "ui_main.upload_reports_detail_4g"
+msgid ""
+"Date field values are in the following format: mm/dd/yyyy e.g 3rd October "
+"2012 = 10/03/2012"
+msgstr "Värden för datumfälten har följande format: mm/dd/åååå t.ex. 3:e Oktober 2012 = 10/03/2012"
+
+#: ui_main.upload_reports_detail_5
+msgctxt "ui_main.upload_reports_detail_5"
+msgid "A Sample CSV Report"
+msgstr "Ett exempel p&aring CSV Report"
+
+#: ui_main.upload_reports_detail_6
+msgctxt "ui_main.upload_reports_detail_6"
+msgid ""
+"#,INCIDENT TITLE,INCIDENT "
+"DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED,LATITUDE,LONGITUDE<br "
+"/>\"1\",\"Suspected death in Nairobi\",\"2009-05-15 "
+"01:06:00\",\"Nairobi\",\"Three cases have been confirmed in C. del "
+"Uruguay\",\"DEATHS, CIVILIANS, \",YES,YES,\"-1.287\",\"36.821\""
+msgstr "#,H&Auml;NDELSERUBRIK,H&Auml;NDELSEDATUM,PLATS,BESKRIVNING,KATEGORI,GODK&Auml;ND,VERIFIERAD<br />\n\t\t\t\t\t\"1\",\"Olycka i Lund\",\"2010-11-15 01:06:00\",\"Lund\",\"Bilolycka p&aring E22\",\"SN&Ouml;STORM, OLYCKA, \",YES,YES"
+
+#: ui_main.upload_reports_detail_7
+msgctxt "ui_main.upload_reports_detail_7"
+msgid ""
+"\"2\",\"Looting\",\"2009-03-18 10:10:00\",\"Accra\",\"Looting happening "
+"everywhere\",\"RIOTS, DEATHS, PROPERTY LOSS, "
+"\",YES,NO,\"5.55\",\"-0.2166667\""
+msgstr "\"2\",\"D&ouml;dsskjutning\",\"2010-11-16 19:10:00\",\"Malm&ouml;\",\"D&ouml;dsskjutning i Roseng&aring;rd\",\"SKOTTLOSSNING, MORD, \",YES,NO"
+
+#: ui_main.upload_successful
+msgctxt "ui_main.upload_successful"
+msgid "Upload Successful"
+msgstr "Uppladdning OK"
+
+#: ui_main.upload_video
+msgctxt "ui_main.upload_video"
+msgid "Upload Video"
+msgstr "Ladda upp video"
+
+#: ui_main.url
+msgctxt "ui_main.url"
+msgid "URL"
+msgstr "URL"
+
+#: ui_main.user
+msgctxt "ui_main.user"
+msgid "User"
+msgstr "Anv&auml;ndare"
+
+#: ui_main.username
+msgctxt "ui_main.username"
+msgid "Username"
+msgstr "Anv&auml;ndarnamn"
+
+#: ui_main.ushahidi_admin
+msgctxt "ui_main.ushahidi_admin"
+msgid "Ushahidi Admin"
+msgstr "Ushahidi Administratör"
+
+#: ui_main.verification
+msgctxt "ui_main.verification"
+msgid "Verification"
+msgstr "Bekräftelse"
+
+#: ui_main.verified
+msgctxt "ui_main.verified"
+msgid "Verified"
+msgstr "Verifierad"
+
+#: ui_main.verified_reports
+msgctxt "ui_main.verified_reports"
+msgid "Verified Reports"
+msgstr "Verifierade rapporter"
+
+#: ui_main.verify
+msgctxt "ui_main.verify"
+msgid "Verify"
+msgstr "Verifiera"
+
+#: ui_main.verify_this_report
+msgctxt "ui_main.verify_this_report"
+msgid "Verify this Report"
+msgstr "Verifiera denna rapport"
+
+#: ui_main.version
+msgctxt "ui_main.version"
+msgid "Version"
+msgstr "Version"
+
+#: ui_main.via
+msgctxt "ui_main.via"
+msgid "via"
+msgstr "via"
+
+#: ui_main.video
+msgctxt "ui_main.video"
+msgid "Video"
+msgstr "Video"
+
+#: ui_main.view
+msgctxt "ui_main.view"
+msgid "View"
+msgstr "Visa"
+
+#: ui_main.views
+msgctxt "ui_main.views"
+msgid "Views"
+msgstr "visningar"
+
+#: ui_main.view_all
+msgctxt "ui_main.view_all"
+msgid "View All"
+msgstr "Visa alla"
+
+#: ui_main.view_all_feeds
+msgctxt "ui_main.view_all_feeds"
+msgid "View all feeds"
+msgstr "Visa alla fl&ouml;den"
+
+#: ui_main.view_all_reports
+msgctxt "ui_main.view_all_reports"
+msgid "View all reports"
+msgstr "Visa alla rapporter"
+
+#: ui_main.view_items
+msgctxt "ui_main.view_items"
+msgid "View Items"
+msgstr "Visa post"
+
+#: ui_main.view_more
+msgctxt "ui_main.view_more"
+msgid "View More"
+msgstr "Visa fler"
+
+#: ui_main.view_public_profile
+msgctxt "ui_main.view_public_profile"
+msgid "View Public Profile"
+msgstr "Se Publik Profil"
+
+#: ui_main.view_report
+msgctxt "ui_main.view_report"
+msgid "View Report"
+msgstr "Visa rapport"
+
+#: ui_main.view_reports
+msgctxt "ui_main.view_reports"
+msgid "View Reports"
+msgstr "Visa rapporter"
+
+#: ui_main.view_video
+msgctxt "ui_main.view_video"
+msgid "View Video"
+msgstr "Se Video"
+
+#: ui_main.visible
+msgctxt "ui_main.visible"
+msgid "Visible"
+msgstr "Synlig"
+
+#: ui_main.waiting_approval
+msgctxt "ui_main.waiting_approval"
+msgid "Waiting Approval"
+msgstr "V&auml;ntar p&aring godk&auml;nnande"
+
+#: ui_main.waiting_verification
+msgctxt "ui_main.waiting_verification"
+msgid "Waiting Verification"
+msgstr "V&auml;ntar p&aring verifiering"
+
+#: ui_main.wider_map
+msgctxt "ui_main.wider_map"
+msgid "Wider Map"
+msgstr "Bredare karta"
+
+#: ui_main.web_form
+msgctxt "ui_main.web_form"
+msgid "Web Form"
+msgstr "Webb Formulär"
+
+#: ui_main.web
+msgctxt "ui_main.web"
+msgid "Web"
+msgstr "Webb"
+
+#: ui_main.weight
+msgctxt "ui_main.weight"
+msgid "Weight"
+msgstr "Vikt"
+
+#: ui_main.Weekly
+msgctxt "ui_main.Weekly"
+msgid "Weekly"
+msgstr ""
+
+#: ui_main.yes
+msgctxt "ui_main.yes"
+msgid "Yes"
+msgstr "Ja"
+
+#: ui_main.yesterday
+msgctxt "ui_main.yesterday"
+msgid "Yesterday"
+msgstr "Ig&aring;r"
+
+#: ui_main.your_dashboard
+msgctxt "ui_main.your_dashboard"
+msgid "Your Dashboard"
+msgstr "Din kontrollpanel"
+
+#: ui_main.your_file
+msgctxt "ui_main.your_file"
+msgid "Your file"
+msgstr "Din fil"
+
+#: ui_main.zoom_in
+msgctxt "ui_main.zoom_in"
+msgid "Zoom In"
+msgstr "Zooma in"
+
+#: ui_main.zoom_out
+msgctxt "ui_main.zoom_out"
+msgid "Zoom Out"
+msgstr "Zooma ut"

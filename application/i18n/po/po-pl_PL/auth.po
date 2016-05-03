@@ -1,0 +1,253 @@
+# 
+# Translators:
+# Lidia Cibor <lidka.cibor@gmail.com>, 2013
+# michalmacki <michalmacki@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-19 16:10+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Polish (Poland) (http://www.transifex.com/ushahidi/ushahidi-v2/language/pl_PL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl_PL\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: auth.email.email
+msgctxt "auth.email.email"
+msgid "The email you entered is not a valid email address."
+msgstr "Pole adresu email nie zawiera ważnego adresu emailowego"
+
+#: auth.email.exists
+msgctxt "auth.email.exists"
+msgid "Sorry, a user account already exists for this email address."
+msgstr "Przepraszamy, dla tego adresu emailowego już istnieje konto  użytkownika."
+
+#: auth.email.length
+msgctxt "auth.email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "Adres emailowy musi mieć co najmniej  4 i nie więcej niż 64 znaki."
+
+#: auth.email.required
+msgctxt "auth.email.required"
+msgid "The email field is required."
+msgstr "Pole adresu emailowego musi być wypełnione."
+
+#: auth.name.length
+msgctxt "auth.name.length"
+msgid "The name field must be at least 3 and no more 100 characters long."
+msgstr "Pełna nazwa pola musi mieć co najmniej 3 i nie więcej niż 100 znaków."
+
+#: auth.name.required
+msgctxt "auth.name.required"
+msgid "The name field is required."
+msgstr "Wymagane jest wypełnienie pełnej nazwa pola."
+
+#: auth.name.standard_text
+msgctxt "auth.name.standard_text"
+msgid "The username field contains disallowed characters."
+msgstr "Pole nazwy użytkownika zawiera niedozwolone znaki."
+
+#: auth.current_password.length
+msgctxt "auth.current_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "Hasło musi mieć co najmniej 8 znaków."
+
+#: auth.current_password.login error
+msgctxt "auth.current_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Proszę sprawdzić, czy e-mail i hasło są poprawne."
+
+#: auth.current_password.matches
+msgctxt "auth.current_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Proszę wpisać dwukrotnie to samo hasło."
+
+#: auth.current_password.required
+msgctxt "auth.current_password.required"
+msgid "The password field is required."
+msgstr "Pole \"hasło\" jest wymagane."
+
+#: auth.current_password.alpha_dash
+msgctxt "auth.current_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "Hasło może składać się wyłącznie z liter, cyfr lub znaków # @ - _"
+
+#: auth.current_password.incorrect
+msgctxt "auth.current_password.incorrect"
+msgid ""
+"The current password you entered for your account is incorrect. Please try "
+"again."
+msgstr "Podano złe hasło."
+
+#: auth.new_password.length
+msgctxt "auth.new_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "Hasło musi mieć co najmniej 8 znaków."
+
+#: auth.new_password.login error
+msgctxt "auth.new_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Proszę sprawdzić, czy podany e-mail i hasło są poprawne."
+
+#: auth.new_password.matches
+msgctxt "auth.new_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Proszę wpisać dwukrotnie to samo hasło."
+
+#: auth.new_password.required
+msgctxt "auth.new_password.required"
+msgid "The password field is required."
+msgstr "Pole \"hasło\" jest wymagane."
+
+#: auth.new_password.alpha_dash
+msgctxt "auth.new_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "Hasło może składać się wyłącznie z liter, cyfr lub znaków # @ - _"
+
+#: auth.password.default
+msgctxt "auth.password.default"
+msgid "There has been an error attempting to log you in."
+msgstr "Wystąpił błąd logowania."
+
+#: auth.password.length
+msgctxt "auth.password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "Pole hasła musi mieć co najmniej 5 i nie więcej niż 16 znaków."
+
+#: auth.password.login error
+msgctxt "auth.password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Sprawdź, czy wprowadziłeś właściwe hasło."
+
+#: auth.password.matches
+msgctxt "auth.password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Wprowadź to samo hasło w obydwu polach hasła."
+
+#: auth.password.required
+msgctxt "auth.password.required"
+msgid "The password field is required."
+msgstr "Pole hasła musi być wypełnione."
+
+#: auth.password.riverid server down
+msgctxt "auth.password.riverid server down"
+msgid "The authentication server is down. Please try again later."
+msgstr "Serwer nie działa. Spróbuj później."
+
+#: auth.password.riverid
+msgctxt "auth.password.riverid"
+msgid "%s"
+msgstr "%s"
+
+#: auth.password.alpha_dash
+msgctxt "auth.password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr "Hasło może składać się wyłącznie z liter, cyfr lub znaków # @ - _"
+
+#: auth.password_confirm.matches
+msgctxt "auth.password_confirm.matches"
+msgid "The password confirmation field must match the password field."
+msgstr "Pole potwierdzenia hasła musi odpowiadać polu hasła."
+
+#: auth.resetemail.email
+msgctxt "auth.resetemail.email"
+msgid "The email you entered is not a valid email address."
+msgstr "Pole adresu emailowego prawdopodobnie nie zawiera ważnego adresu emailowego"
+
+#: auth.resetemail.invalid
+msgctxt "auth.resetemail.invalid"
+msgid "Sorry, we don't have your email address"
+msgstr "Przepraszamy, nie mamy twojego adresu emailowego"
+
+#: auth.resetemail.required
+msgctxt "auth.resetemail.required"
+msgid "The email field is required."
+msgstr "Pole adresu emailowego musi być wypełnione."
+
+#: auth.role.superadmin_modify
+msgctxt "auth.role.superadmin_modify"
+msgid "Only a superadmin may modify a superadmin or upgrade a user to admin."
+msgstr "Tylko superadministrator może zmienić konto superadministratora lub awansować użytkownika na administratora."
+
+#: auth.roles.alpha_numeric
+msgctxt "auth.roles.alpha_numeric"
+msgid "Invalid role format."
+msgstr "Niewłaściwe pole formatu."
+
+#: auth.roles.length
+msgctxt "auth.roles.length"
+msgid "The role field must be at least 5 and no more than 30 characters long."
+msgstr "Pole Roli musi składać się z minimum 5 znaków i maksymalnie z 30."
+
+#: auth.roles.required
+msgctxt "auth.roles.required"
+msgid "You must define at least one role."
+msgstr "Musisz zdefiniować co najmniej jedną funkcję."
+
+#: auth.roles.values
+msgctxt "auth.roles.values"
+msgid "You must select either ADMIN or USER role."
+msgstr "Musisz wybrać funkcję albo ADMINISTRATORA, albo UŻYTKOWNIKA."
+
+#: auth.token.invalid
+msgctxt "auth.token.invalid"
+msgid "The forgotten password token is invalid"
+msgstr "Nieprawidłowy token podczas odzyskiwania hasła."
+
+#: auth.token.required
+msgctxt "auth.token.required"
+msgid "Forgotten password token was required"
+msgstr "Do odzyskania hasła potrzebny jest token"
+
+#: auth.username.admin
+msgctxt "auth.username.admin"
+msgid "The admin user role cannot be modified."
+msgstr "Funkcja administratora/użytkownika nie może być zmodyfikowana."
+
+#: auth.username.alpha_numeric
+msgctxt "auth.username.alpha_numeric"
+msgid "The public profile URL field must only contain numbers and letters."
+msgstr "URL profilu publicznego może zawierać tylko litery i cyfry."
+
+#: auth.username.exists
+msgctxt "auth.username.exists"
+msgid "Sorry, this public profile URL is already in use."
+msgstr "Przepraszamy, ta nazwa użytkownika jest już używana."
+
+#: auth.username.length
+msgctxt "auth.username.length"
+msgid ""
+"The public profile URL field must be at least 2 and no more 100 characters "
+"long."
+msgstr "Pole nazwy użytkownika musi mieć co najmniej 2 i nie więcej niż 16 znaków."
+
+#: auth.username.login error
+msgctxt "auth.username.login error"
+msgid "Please check that you entered the correct public profile URL."
+msgstr "Sprawdź, czy wprowadziłeś właściwą nazwę użytkownika."
+
+#: auth.username.required
+msgctxt "auth.username.required"
+msgid "The public profile URL field is required."
+msgstr "Pole nazwy użytkownika musi być wypełnione."
+
+#: auth.username.superadmin
+msgctxt "auth.username.superadmin"
+msgid "The super admin role cannot be modified."
+msgstr "Rola superadministratora nie może być zmodyfikowana."
+
+#: auth.username.csrf
+msgctxt "auth.username.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a user?"
+msgstr "Podejrzenie ataku CSRF! Czy rzeczywiście chcesz utworzyć/zmienić użytkownika?"

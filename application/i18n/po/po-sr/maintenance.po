@@ -1,0 +1,19 @@
+#. extracted from en_US/maintenance.php, sr/maintenance.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-25 00:10+0000\n"
+"PO-Revision-Date: 2012-09-25 00:10+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: sr\n"
+
+#: maintenance.message
+msgctxt "maintenance.message"
+msgid "Sorry, our site is currently down for maintenance. Please try again in a few minutes."
+msgstr ""
+

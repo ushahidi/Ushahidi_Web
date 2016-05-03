@@ -1,0 +1,37 @@
+# 
+# Translators:
+# Suwandi Ahmad <ahmad.suwandi@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2015-05-20 07:14+0000\n"
+"Last-Translator: Vasanthi Hargyono <va.santhi@yahoo.com>\n"
+"Language-Team: Indonesian (Indonesia) (http://www.transifex.com/ushahidi/ushahidi-v2/language/id_ID/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id_ID\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: page.page_title.required
+msgctxt "page.page_title.required"
+msgid "Please enter a Page Title."
+msgstr "Masukkan Judul Halaman."
+
+#: page.page_title.length
+msgctxt "page.page_title.length"
+msgid "Page Title must be at least 3 and no more than 150 characters long."
+msgstr "Panjang Judul Halaman setidaknya 3 karakter dan tidak boleh lebih dari 150 karakter."
+
+#: page.page_tab.required
+msgctxt "page.page_tab.required"
+msgid "Please enter a Page Tab Name."
+msgstr "Masukkan nama Tab Halaman."
+
+#: page.page_description.required
+msgctxt "page.page_description.required"
+msgid "Please enter a Page Description."
+msgstr "Masukkan Keterangan Halaman."

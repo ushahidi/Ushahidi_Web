@@ -792,8 +792,7 @@ class reports_Core {
 				$category_ids = implode(",", $category_ids);
 			
 				array_push(self::$params,
-					'(c.id IN ('.$category_ids.') OR c.parent_id IN ('.$category_ids.'))',
-					'c.category_visible = 1'
+					'(c.id IN ('.$category_ids.') OR c.parent_id IN ('.$category_ids.'))'
 				);
 			}
 		}

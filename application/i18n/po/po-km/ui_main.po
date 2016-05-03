@@ -1,0 +1,3176 @@
+# 
+# Translators:
+# APC & Open Institute < techinfo@apc.org ; Vannak Aphimongkul Eng <vannak.eng@gmail.com>, 2012
+# Ath Ell <ellsomath@gmail.com>, 2013
+# Ben Hass <benhass+transifex@gmail.com>, 2013
+# Seng Sutha <sutha@open.org.kh>, 2013
+# Sokhem Khoem <sokhem@open.org.kh>, 2014
+# Sok Sophea <sksophea@gmail.com>, 2013
+# apctech <techinfo@apc.org>, 2012
+# Vantharith Oum <vantharith.oum@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Khmer (http://www.transifex.com/ushahidi/ushahidi-v2/language/km/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: km\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_main.about
+msgctxt "ui_main.about"
+msgid "About "
+msgstr "អំពី"
+
+#: ui_main.access
+msgctxt "ui_main.access"
+msgid "Access"
+msgstr "ចូល​ដំណើរការ"
+
+#: ui_main.access_limits
+msgctxt "ui_main.access_limits"
+msgid "Access Limits"
+msgstr "ដែន​កំណត់​ការ​ចូល​ដំណើរការ"
+
+#: ui_main.account_name
+msgctxt "ui_main.account_name"
+msgid "Account Name"
+msgstr "ឈ្មោះ​គណនី"
+
+#: ui_main.actions
+msgctxt "ui_main.actions"
+msgid "Actions"
+msgstr "សកម្មភាព"
+
+#: ui_main.action_confirm
+msgctxt "ui_main.action_confirm"
+msgid "This action cannot be undone. Are you sure you want to continue?"
+msgstr "សកម្មភាព​នេះ​មិន​អាច​មិនធ្វើវិញ​បាន​ទេ ។ តើ​អ្នក​ពិតជា​ចង់​បន្ត​ទៀត​មែន​ឬ ?"
+
+#: ui_main.activate
+msgctxt "ui_main.activate"
+msgid "Activate"
+msgstr "ធ្វើឲ្យ​សកម្ម"
+
+#: ui_main.active
+msgctxt "ui_main.active"
+msgid "Active"
+msgstr "សកម្ម"
+
+#: ui_main.add
+msgctxt "ui_main.add"
+msgid "Add"
+msgstr "បន្ថែម"
+
+#: ui_main.added_by
+msgctxt "ui_main.added_by"
+msgid "Added By"
+msgstr "បាន​បន្ថែម​ដោយ"
+
+#: ui_main.additional_data
+msgctxt "ui_main.additional_data"
+msgid "Additional Data"
+msgstr "ទិន្នន័យ​បន្ថែម"
+
+#: ui_main.additional_reports
+msgctxt "ui_main.additional_reports"
+msgid "Additional Reports"
+msgstr "របាយការណ៍​បន្ថែម"
+
+#: ui_main.add_edit
+msgctxt "ui_main.add_edit"
+msgid "Add/Edit"
+msgstr "បន្ថែម/កែសម្រួល"
+
+#: ui_main.add_field
+msgctxt "ui_main.add_field"
+msgid "Add a Field"
+msgstr "បន្ថែម​វាល"
+
+#: ui_main.add_language
+msgctxt "ui_main.add_language"
+msgid "Add Language"
+msgstr "បន្ថែម​ភាសា"
+
+#: ui_main.add_new
+msgctxt "ui_main.add_new"
+msgid "Add New"
+msgstr "បន្ថែម​ថ្មី"
+
+#: ui_main.add_new_category
+msgctxt "ui_main.add_new_category"
+msgid "Add New Category"
+msgstr "បន្ថែម​ប្រភេទ​ថ្មី"
+
+#: ui_main.add_translation
+msgctxt "ui_main.add_translation"
+msgid "Add Translation"
+msgstr "បន្ថែម​ការ​បកប្រែ"
+
+#: ui_main.admin
+msgctxt "ui_main.admin"
+msgid "Administration"
+msgstr "ការ​គ្រប់គ្រង"
+
+#: ui_main.alerts
+msgctxt "ui_main.alerts"
+msgid "Get Alerts"
+msgstr "យក​ការ​ជូនដំណឹង​"
+
+#: ui_main.alerts_alert_me
+msgctxt "ui_main.alerts_alert_me"
+msgid "Alert me if a report is filed in, or around:"
+msgstr "ជូនដំណឹង​ខ្ញុំ​ប្រសិនបើ​របាយការណ៍​ត្រូវ​បាន​រៀបចំ ឬ​​កំពុង​រៀបចំ៖"
+
+#: ui_main.alerts_btn_send
+msgctxt "ui_main.alerts_btn_send"
+msgid "Save My Alert"
+msgstr "រក្សាទុក​ការ​ជូនដំណឹង​របស់​ខ្ញុំ"
+
+#: ui_main.alerts_email
+msgctxt "ui_main.alerts_email"
+msgid "Email address:"
+msgstr "អាសយដ្ឋាន​អ៊ីមែល៖"
+
+#: ui_main.alerts_enter_email
+msgctxt "ui_main.alerts_enter_email"
+msgid "enter email address"
+msgstr "បញ្ចូល​អាសយដ្ឋាន​អ៊ីមែល"
+
+#: ui_main.alerts_enter_mobile
+msgctxt "ui_main.alerts_enter_mobile"
+msgid "enter mobile number with country code"
+msgstr "បញ្ចូល​លេខ​ទូរស័ព្ទ​ជាមួយ​លេខ​កូដ​ប្រទេស"
+
+#: ui_main.alerts_get
+msgctxt "ui_main.alerts_get"
+msgid "Get Alerts"
+msgstr "យក​ការ​ជូន​ដំណឹង​"
+
+#: ui_main.alert_has_been
+msgctxt "ui_main.alert_has_been"
+msgid "Alert has been"
+msgstr "ការ​ជូនដំណឹង​បាន"
+
+#: ui_main.alerts_mobile_phone
+msgctxt "ui_main.alerts_mobile_phone"
+msgid "Mobile phone:"
+msgstr "ទូរស័ព្ទ​ចល័ត៖"
+
+#: ui_main.alerts_place_spot
+msgctxt "ui_main.alerts_place_spot"
+msgid ""
+"Or place a spot on the map below, and we will alert you when a report is "
+"submitted within 20 kilometers."
+msgstr "ឬ​ដាក់​ចំណុច​នៅ​លើ​ផែនទី​ខាងក្រោម បន្ទាប់មក​យើង​នឹង​ជូនដំណឹង​អ្នក​នៅ​ពេល​ដែល​របាយការណ៍​ត្រូវ​បាន​ដាក់​ស្នើ​​ក្នុង​ចម្ងាយ២០​គីឡូម៉ែត្រ។"
+
+#: ui_main.alerts_place_spot2
+msgctxt "ui_main.alerts_place_spot2"
+msgid ""
+"If you can't find your location, please click on the map to pinpoint the "
+"correct location."
+msgstr "ប្រសិនបើ​អ្នក​មិន​អាច​រក​ឃើញ​ទីតាំង​របស់​អ្នក​ទេ សូម​ចុច​លើ​ផែនទី​ដើម្បី​ដៅ​ចំណុច​ត្រឹមត្រូវ។"
+
+#: ui_main.alerts_rss
+msgctxt "ui_main.alerts_rss"
+msgid "RSS Feeds (copy the URL below)"
+msgstr "មតិ​ព័ត៌មាន RSS (ចម្លង URL ខាងក្រោម)"
+
+#: ui_main.alerts_select_city
+msgctxt "ui_main.alerts_select_city"
+msgid "Select a city"
+msgstr "ជ្រើស​ទីក្រុង"
+
+#: ui_main.alerts_step1_select_city
+msgctxt "ui_main.alerts_step1_select_city"
+msgid "<strong>Step 1:</strong> Select your city or location:"
+msgstr "<strong>ជំហាន​ទី១៖</strong> ជ្រើស​ទីក្រុង ឬ​ទីតាំង​របស់​អ្នក៖"
+
+#: ui_main.alerts_step2_send_alerts
+msgctxt "ui_main.alerts_step2_send_alerts"
+msgid "<strong>Step 2:</strong> Send alerts to my:"
+msgstr "<strong>ជំហាន​​ទី២៖</strong> ផ្ញើ​ការ​ជូន​ដំណឹង​ឲ្យ​ខ្ញុំ៖"
+
+#: ui_main.alerts_step3_select_catgories
+msgctxt "ui_main.alerts_step3_select_catgories"
+msgid "<strong>Step 3 (Optional):</strong> Select Categories"
+msgstr "<strong>ជំហាន​ទី៣ (ជា​ជម្រើស)៖</strong> ជ្រើស​ប្រភេទ"
+
+#: ui_main.alert_confirm_previous
+msgctxt "ui_main.alert_confirm_previous"
+msgid "Confirm A Previous Alert Request"
+msgstr "អះអាង​សំណើ​ការ​ជូនដំណឹង​មុន"
+
+#: ui_main.alert_saved
+msgctxt "ui_main.alert_saved"
+msgid "Your Alert Has Been Saved!"
+msgstr "បាន​រក្សាទុក​ការ​ជូនដំណឹង​របស់​អ្នក!"
+
+#: ui_main.all
+msgctxt "ui_main.all"
+msgid "All"
+msgstr "ទាំង​អស់​"
+
+#: ui_main.allowed
+msgctxt "ui_main.allowed"
+msgid "Allowed"
+msgstr "បាន​អនុញ្ញាត"
+
+#: ui_main.allowed_tags
+msgctxt "ui_main.allowed_tags"
+msgid "Allowed HTML tags: \"%s\"."
+msgstr "បាន​អនុញ្ញាត​ស្លាក HTML ៖ \"%s\"។"
+
+#: ui_main.allowed_iframes
+msgctxt "ui_main.allowed_iframes"
+msgid "Iframes are only allowed from: %s."
+msgstr "Iframes ត្រូវ​បាន​អនុញ្ញាត​​ពី៖ %s ។"
+
+#: ui_main.all_categories
+msgctxt "ui_main.all_categories"
+msgid "All Categories"
+msgstr "ប្រភេទ​ទាំងអស់"
+
+#: ui_main.all_time
+msgctxt "ui_main.all_time"
+msgid "All Time"
+msgstr "គ្រប់​ពេល"
+
+#: ui_main.and
+msgctxt "ui_main.and"
+msgid "and"
+msgstr "និង"
+
+#: ui_main.api
+msgctxt "ui_main.api"
+msgid "API"
+msgstr "API"
+
+#: ui_main.approve
+msgctxt "ui_main.approve"
+msgid "Approve"
+msgstr "អនុម័ត"
+
+#: ui_main.approved
+msgctxt "ui_main.approved"
+msgid "Approved"
+msgstr "បាន​អនុម័ត"
+
+#: ui_main.approved_reports
+msgctxt "ui_main.approved_reports"
+msgid "Approved Reports"
+msgstr "របាយការណ៍​ដែល​បាន​អនុម័ត"
+
+#: ui_main.approve_this_report
+msgctxt "ui_main.approve_this_report"
+msgid "Approve this Report"
+msgstr "បាន​អនុម័ត​របាយការណ៍​នេះ"
+
+#: ui_main.approximate
+msgctxt "ui_main.approximate"
+msgid "Approximate"
+msgstr "ប្រហែល"
+
+#: ui_main.archive
+msgctxt "ui_main.archive"
+msgid "Archive"
+msgstr "ប័ណ្ណសារ"
+
+#: ui_main.archived
+msgctxt "ui_main.archived"
+msgid "Archived"
+msgstr "បាន​ទុក​ក្នុង​ប័ណ្ណសារ"
+
+#: ui_main.ascending
+msgctxt "ui_main.ascending"
+msgid "Ascending"
+msgstr "ឡើង"
+
+#: ui_main.at
+msgctxt "ui_main.at"
+msgid "at"
+msgstr "នៅ"
+
+#: ui_main.author
+msgctxt "ui_main.author"
+msgid "Author"
+msgstr "អ្នកនិពន្ធ"
+
+#: ui_main.auto_checkin
+msgctxt "ui_main.auto_checkin"
+msgid "Auto Checkin"
+msgstr "ពិនិត្យ​ចូល​ស្វ័យប្រវត្តិ"
+
+#: ui_main.Auto
+msgctxt "ui_main.Auto"
+msgid "Auto"
+msgstr ""
+
+#: ui_main.avg_reports_per_day
+msgctxt "ui_main.avg_reports_per_day"
+msgid "Avg Reports Per Day"
+msgstr "របាយការណ៍​ជាមធ្យម​ក្នុង​មួយ​ថ្ងៃ"
+
+#: ui_main.awaiting_approval
+msgctxt "ui_main.awaiting_approval"
+msgid "Awaiting Approval"
+msgstr "រង់ចាំ​ការ​អនុម័ត"
+
+#: ui_main.awaiting_verification
+msgctxt "ui_main.awaiting_verification"
+msgid "Awaiting Verification"
+msgstr "រង់ចាំ​ការ​ផ្ទៀងផ្ទាត់"
+
+#: ui_main.badge
+msgctxt "ui_main.badge"
+msgid "Badge"
+msgstr "សញ្ញាសម្គាល់"
+
+#: ui_main.badges
+msgctxt "ui_main.badges"
+msgid "Badges"
+msgstr "សញ្ញាសម្គាល់"
+
+#: ui_main.badge_image
+msgctxt "ui_main.badge_image"
+msgid "Badge Image"
+msgstr "រូបភាព​សញ្ញាសម្គាល់"
+
+#: ui_main.badge_image_upload_your_own
+msgctxt "ui_main.badge_image_upload_your_own"
+msgid "Or you can upload your own badge image instead."
+msgstr "ឬ​អ្នក​អាច​ផ្ទុក​រូបភាព​សញ្ញាសម្គាល់​របស់​អ្នក​ជំនួស​ក៏​បាន។"
+
+#: ui_main.badge_pack
+msgctxt "ui_main.badge_pack"
+msgid "Badge Pack"
+msgstr "កញ្ចប់​សញ្ញាសម្គាល់"
+
+#: ui_main.badge_select
+msgctxt "ui_main.badge_select"
+msgid "Select a Badge"
+msgstr "ជ្រើស​សញ្ញាសម្គាល់"
+
+#: ui_main.blog
+msgctxt "ui_main.blog"
+msgid "Blog"
+msgstr "កំណត់ហេតុបណ្ដាញ"
+
+#: ui_main.browse_profiles
+msgctxt "ui_main.browse_profiles"
+msgid "Browse Profiles"
+msgstr "រុករក​ទម្រង់"
+
+#: ui_main.cancel
+msgctxt "ui_main.cancel"
+msgid "Cancel"
+msgstr "បោះ​បង់​"
+
+#: ui_main.categories
+msgctxt "ui_main.categories"
+msgid "Categories"
+msgstr "ប្រភេទ"
+
+#: ui_main.category
+msgctxt "ui_main.category"
+msgid "Category"
+msgstr "ប្រភេទ"
+
+#: ui_main.category_filter
+msgctxt "ui_main.category_filter"
+msgid "Category Filter"
+msgstr "តម្រង​ប្រភេទ"
+
+#: ui_main.category_has_been
+msgctxt "ui_main.category_has_been"
+msgid "The category has been "
+msgstr "ប្រភេទ​បាន"
+
+#: ui_main.category_name
+msgctxt "ui_main.category_name"
+msgid "Category Name"
+msgstr "ឈ្មោះ​ប្រភេទ"
+
+#: ui_main.change_date_range
+msgctxt "ui_main.change_date_range"
+msgid "Change Date Range"
+msgstr "ប្ដូរ​ជួរ​កាលបរិច្ឆេទ"
+
+#: ui_main.change_password
+msgctxt "ui_main.change_password"
+msgid "Change Password"
+msgstr "ប្ដូរ​ពាក្យសម្ងាត់"
+
+#: ui_main.change_picture
+msgctxt "ui_main.change_picture"
+msgid "Change My Picture"
+msgstr "ប្ដូរ​រូបភាព​របស់​ខ្ញុំ"
+
+#: ui_main.choose
+msgctxt "ui_main.choose"
+msgid "Choose a"
+msgstr "ជ្រើសរើស"
+
+#: ui_main.choose_data_points
+msgctxt "ui_main.choose_data_points"
+msgid "Choose data points to download"
+msgstr "ជ្រើស​ចំណុច​ទិន្នន័យ​ដើម្បី​ទាញ​យក"
+
+#: ui_main.choose_date_range
+msgctxt "ui_main.choose_date_range"
+msgid "Or choose your own date range"
+msgstr "ឬ​ជ្រើស​ជួរ​ពេលវេលា​ផ្ទាល់ខ្លួន​របស់​អ្នក"
+
+#: ui_main.choose_field_type
+msgctxt "ui_main.choose_field_type"
+msgid "Choose field type"
+msgstr "ជ្រើស​ប្រភេទ​វាល"
+
+#: ui_main.cleanurl
+msgctxt "ui_main.cleanurl"
+msgid "Clean URLs"
+msgstr "URLs ត្រឹមត្រូវ"
+
+#: ui_main.clear
+msgctxt "ui_main.clear"
+msgid "Clear"
+msgstr "សម្អាត"
+
+#: ui_main.clear_map
+msgctxt "ui_main.clear_map"
+msgid "Clear Map"
+msgstr "សម្អាត​ផែនទី​"
+
+#: ui_main.close
+msgctxt "ui_main.close"
+msgid "Close"
+msgstr "បិទ"
+
+#: ui_main.clusters
+msgctxt "ui_main.clusters"
+msgid "clusters"
+msgstr "ក្រុម"
+
+#: ui_main.color
+msgctxt "ui_main.color"
+msgid "Color"
+msgstr "ពណ៌"
+
+#: ui_main.comment
+msgctxt "ui_main.comment"
+msgid "Comment"
+msgstr "មតិយោបល់"
+
+#: ui_main.comments
+msgctxt "ui_main.comments"
+msgid "Comments"
+msgstr "មតិយោបល់"
+
+#: ui_main.comment_details
+msgctxt "ui_main.comment_details"
+msgid "Comment Details"
+msgstr "មតិយោបល់​លម្អិត"
+
+#: ui_main.configuration_saved
+msgctxt "ui_main.configuration_saved"
+msgid "Your Settings Have Been Saved!"
+msgstr "បាន​រក្សាទុក​ការ​កំណត់​របស់​អ្នក"
+
+#: ui_main.configure
+msgctxt "ui_main.configure"
+msgid "Configure"
+msgstr "កំណត់​រចនាសម្ព័ន្ធ"
+
+#: ui_main.confirm_email_successful
+msgctxt "ui_main.confirm_email_successful"
+msgid ""
+"You have successfully confirmed your email address! Please login below."
+msgstr "អ្នក​បាន​អះអាង​អាសយដ្ឋាន​អ៊ីមែល​របស់​អ្នក​ដោយ​ជោគជ័យ! សូម​ចូល​នៅ​ខាងក្រោម។"
+
+#: ui_main.confirm_email_successful_and_approval
+msgctxt "ui_main.confirm_email_successful_and_approval"
+msgid ""
+"You have successfully confirmed your email address! An administrator must "
+"approve your account before you login"
+msgstr "អ្នក​បាន​បញ្ជាក់​អាសយដ្ឋាន​អ៊ីមែល​របស់​អ្នក​ដោយ​ជោគជ័យ! លុះត្រាតែ​អ្នក​គ្រប់គ្រង​អនុញ្ញាត​គណនី​របស់​អ្នក ទើប​អ្នក​ចូល​បាន"
+
+#: ui_main.confirm_email_failed
+msgctxt "ui_main.confirm_email_failed"
+msgid ""
+"Email confirmation failed! You can request a new email confirmation below."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​អះអាង​អ៊ីមែល! អ្នក​អាច​ស្នើសុំ​អ៊ីមែល​អះអាង​ថ្មី​នៅ​ខាងក្រោម។"
+
+#: ui_main.contact
+msgctxt "ui_main.contact"
+msgid "Contact Us"
+msgstr "ទាក់ទង​យើង"
+
+#: ui_main.contact_code
+msgctxt "ui_main.contact_code"
+msgid "Security Code"
+msgstr "លេខ​កូដ​សុវត្ថិភាព"
+
+#: ui_main.contact_email
+msgctxt "ui_main.contact_email"
+msgid "Your Email Address"
+msgstr "អាសយដ្ឋាន​អ៊ីមែល​របស់​អ្នក"
+
+#: ui_main.contact_message
+msgctxt "ui_main.contact_message"
+msgid "Message"
+msgstr "សារ"
+
+#: ui_main.contact_message_has_send
+msgctxt "ui_main.contact_message_has_send"
+msgid "Your Message Has Been Sent!"
+msgstr "សារ​របស់​អ្នក​ត្រូវ​បាន​ផ្ញើ!"
+
+#: ui_main.contact_name
+msgctxt "ui_main.contact_name"
+msgid "Your Name"
+msgstr "ឈ្មោះ​របស់​អ្នក"
+
+#: ui_main.contact_phone
+msgctxt "ui_main.contact_phone"
+msgid "Your Phone Number"
+msgstr "លេខ​ទូរស័ព្ទ​របស់​អ្នក"
+
+#: ui_main.contact_send
+msgctxt "ui_main.contact_send"
+msgid "Send Message"
+msgstr "ផ្ញើ​សារ"
+
+#: ui_main.contact_subject
+msgctxt "ui_main.contact_subject"
+msgid "Message Subject"
+msgstr "ប្រធាន​បទ​សារ"
+
+#: ui_main.copyright
+msgctxt "ui_main.copyright"
+msgid "Copyright ©"
+msgstr "រក្សាសិទ្ធិ"
+
+#: ui_main.create
+msgctxt "ui_main.create"
+msgid "Create"
+msgstr "បង្កើត"
+
+#: ui_main.create_edit
+msgctxt "ui_main.create_edit"
+msgid "Create/Edit"
+msgstr "បង្កើត/កែសម្រួល"
+
+#: ui_main.create_new
+msgctxt "ui_main.create_new"
+msgid "Create New"
+msgstr "បង្កើត​ថ្មី"
+
+#: ui_main.create_new_password
+msgctxt "ui_main.create_new_password"
+msgid "Create New Password"
+msgstr "បង្កើត​ពាក្យសម្ងាត់​ថ្មី"
+
+#: ui_main.create_report
+msgctxt "ui_main.create_report"
+msgid "Create Report"
+msgstr "បង្កើត​របាយការណ៍"
+
+#: ui_main.credibility
+msgctxt "ui_main.credibility"
+msgid "Credibility"
+msgstr "ភាព​គួរ​ជឿ​បាន"
+
+#: ui_main.current_password
+msgctxt "ui_main.current_password"
+msgid "Current Password"
+msgstr "ពាក្យសម្ងាត់​បច្ចុប្បន្ន"
+
+#: ui_main.custom_fields
+msgctxt "ui_main.custom_fields"
+msgid "Custom Fields"
+msgstr "វាល​ផ្ទាល់ខ្លួន"
+
+#: ui_main.data
+msgctxt "ui_main.data"
+msgid "Information"
+msgstr "ព័ត៌មាន"
+
+#: ui_main.date
+msgctxt "ui_main.date"
+msgid "Date"
+msgstr "កាលបរិច្ឆេទ​"
+
+#: ui_main.date_format
+msgctxt "ui_main.date_format"
+msgid "(mm/dd/yyyy)"
+msgstr "(mm/dd/yyyy)"
+
+#: ui_main.date_time
+msgctxt "ui_main.date_time"
+msgid "Date & Time"
+msgstr "កាល​បរិច្ឆេទ និង​ពេល​វេលា"
+
+#: ui_main.day
+msgctxt "ui_main.day"
+msgid "day"
+msgstr "ថ្ងៃ"
+
+#: ui_main.Daily
+msgctxt "ui_main.Daily"
+msgid "Daily"
+msgstr ""
+
+#: ui_main.deactivate
+msgctxt "ui_main.deactivate"
+msgid "Deactivate"
+msgstr "ធ្វើឲ្យ​អសកម្ម"
+
+#: ui_main.default_location_name
+msgctxt "ui_main.default_location_name"
+msgid "Nairobi, Kenya"
+msgstr "ណៃរ៉ូប៊ី, កេនយ៉ា"
+
+#: ui_main.delete
+msgctxt "ui_main.delete"
+msgid "Delete"
+msgstr "លុប"
+
+#: ui_main.deleted
+msgctxt "ui_main.deleted"
+msgid "Deleted"
+msgstr "បាន​លុប"
+
+#: ui_main.deletes
+msgctxt "ui_main.deletes"
+msgid "Deletes"
+msgstr "លុប"
+
+#: ui_main.delete_disabled
+msgctxt "ui_main.delete_disabled"
+msgid "Delete Disabled"
+msgstr "បាន​បិទ​ការ​លុប"
+
+#: ui_main.delete_last
+msgctxt "ui_main.delete_last"
+msgid "Delete Last"
+msgstr "លុប​ចុងក្រោយ​​"
+
+#: ui_main.delete_report
+msgctxt "ui_main.delete_report"
+msgid "Delete this Report"
+msgstr "លុប​របាយការណ៍​នេះ"
+
+#: ui_main.delete_selected
+msgctxt "ui_main.delete_selected"
+msgid "Delete Selected"
+msgstr "លុប​អ្វី​ដែល​បាន​ជ្រើស"
+
+#: ui_main.delete_spam
+msgctxt "ui_main.delete_spam"
+msgid "Delete Spam"
+msgstr "លុប​សារ​ឥតបានការ"
+
+#: ui_main.demo
+msgctxt "ui_main.demo"
+msgid "Demo"
+msgstr "ការ​បង្ហាញ​សាកល្បង"
+
+#: ui_main.description
+msgctxt "ui_main.description"
+msgid "Description"
+msgstr "សេចក្ដី​ពណ៌នា"
+
+#: ui_main.descending
+msgctxt "ui_main.descending"
+msgid "Descending"
+msgstr "ចុះ"
+
+#: ui_main.detailed_location_example
+msgctxt "ui_main.detailed_location_example"
+msgid "Example: Corner of City Market, 5th Street & 4th Avenue, Johannesburg"
+msgstr "ឧទាហរណ៍៖​ កាច់ជ្រុង City Market, 5th Street & 4th Avenue, Johannesburg"
+
+#: ui_main.details
+msgctxt "ui_main.details"
+msgid "Details"
+msgstr "សេចក្ដី​លម្អិត"
+
+#: ui_main.direct_report
+msgctxt "ui_main.direct_report"
+msgid "Direct Report"
+msgstr "របាយការណ៍​ផ្ទាល់"
+
+#: ui_main.disabled
+msgctxt "ui_main.disabled"
+msgid "Disabled"
+msgstr "បាន​បិទ"
+
+#: ui_main.disapprove
+msgctxt "ui_main.disapprove"
+msgid "Unapprove"
+msgstr "មិន​អនុញ្ញាត"
+
+#: ui_main.download_reports
+msgctxt "ui_main.download_reports"
+msgid "Download Reports"
+msgstr "ទាញ​យក​របាយការណ៍"
+
+#: ui_main.download
+msgctxt "ui_main.download"
+msgid "Download"
+msgstr "ទាញ​យក"
+
+#: ui_main.edit
+msgctxt "ui_main.edit"
+msgid "Edit"
+msgstr "កែសម្រួល"
+
+#: ui_main.edit_form_fields
+msgctxt "ui_main.edit_form_fields"
+msgid "Edit Form Fields"
+msgstr "កែសម្រួល​វាល​ទម្រង់​បែបបទ"
+
+#: ui_main.edit_report
+msgctxt "ui_main.edit_report"
+msgid "Edit Report"
+msgstr "កែសម្រួល​របាយការណ៍"
+
+#: ui_main.email
+msgctxt "ui_main.email"
+msgid "Email"
+msgstr "អ៊ីមែល"
+
+#: ui_main.email_address
+msgctxt "ui_main.email_address"
+msgid "Email Address"
+msgstr "អាសយដ្ឋាន​អ៊ីមែល"
+
+#: ui_main.email_configuration
+msgctxt "ui_main.email_configuration"
+msgid "Mail Server Settings"
+msgstr "ការ​កំណត់​កម្មវិធី​អ៊ីមែល"
+
+#: ui_main.email_server_host
+msgctxt "ui_main.email_server_host"
+msgid "Mail Server Host"
+msgstr "ម៉ាស៊ីន​កម្មវិធី​អ៊ីមែល"
+
+#: ui_main.email_server_password
+msgctxt "ui_main.email_server_password"
+msgid "Mail Server Password"
+msgstr "ពាក្យសម្ងាត់​កម្មវិធី​អ៊ីមែល"
+
+#: ui_main.email_server_port
+msgctxt "ui_main.email_server_port"
+msgid "Mail Server Port"
+msgstr "ច្រក​កម្មវិធី​អ៊ីមែល"
+
+#: ui_main.email_server_ssl_support
+msgctxt "ui_main.email_server_ssl_support"
+msgid "Mail Server SSL support"
+msgstr "គាំទ្រ​កម្មវិធី​អ៊ីមែល SSL"
+
+#: ui_main.email_server_type
+msgctxt "ui_main.email_server_type"
+msgid "Mail Server Type"
+msgstr "ប្រភេទ​កម្មវិធី​អ៊ីមែល"
+
+#: ui_main.email_server_username
+msgctxt "ui_main.email_server_username"
+msgid "Mail Server Username"
+msgstr "ឈ្មោះ​អ្នកប្រើ​កម្មវិធី​អ៊ីមែល"
+
+#: ui_main.email_settings_comment_0
+msgctxt "ui_main.email_settings_comment_0"
+msgid "so your settings have to be associated with this email address"
+msgstr "ដូច្នេះ​ការ​កំណត់​របស់​អ្នក​គឺ​មាន​ទំនាក់ទំនង​ជាមួយ​អាសយដ្ឋាន​អ៊ីមែល​នេះ"
+
+#: ui_main.email_settings_comment_00
+msgctxt "ui_main.email_settings_comment_00"
+msgid ""
+"In order to receive reports by email, please input your email account "
+"settings below. Please note that emails will be received at your"
+msgstr "ដើម្បី​ទទួល​បាន​របាយការណ៍​តាម​អ៊ីមែល សូម​បញ្ចូល​ការ​កំណត់​គណនី​អ៊ីមែល​របស់​អ្នក​​នៅ​ខាងក្រោម​។ សូម​ចងចាំ​ថា​អ៊ីមែល​ទាំងនោះ​នឹង​បាន​ទទួល​នៅ​ក្នុង​អាសយដ្ឋាន​របស់​អ្នក"
+
+#: ui_main.email_settings_comment_1
+msgctxt "ui_main.email_settings_comment_1"
+msgid "Some servers require a complete email address"
+msgstr "ម៉ាស៊ីន​មេ​មួយ​ចំនួន​ត្រូវការ​អាសយដ្ឋាន​អ៊ីមែល​ពេញលេញ"
+
+#: ui_main.email_settings_comment_2
+msgctxt "ui_main.email_settings_comment_2"
+msgid "Email account password"
+msgstr "ពាក្យសម្ងាត់​គណនី​អ៊ីមែល​របស់​អ្នក"
+
+#: ui_main.email_settings_comment_3
+msgctxt "ui_main.email_settings_comment_3"
+msgid "Common ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "ច្រក​ទូទៅ៖ 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: ui_main.email_settings_comment_4
+msgctxt "ui_main.email_settings_comment_4"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "ឧទាហរណ៍៖ mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: ui_main.email_settings_comment_5
+msgctxt "ui_main.email_settings_comment_5"
+msgid "Examples: pop3, imap"
+msgstr "ឧទាហរណ៍៖ pop3, imap"
+
+#: ui_main.email_settings_comment_6
+msgctxt "ui_main.email_settings_comment_6"
+msgid "Enable or disable SSL connections"
+msgstr "បិទ ឬ​បើក​ការ​តភ្ជាប់ SSL"
+
+#: ui_main.empty
+msgctxt "ui_main.empty"
+msgid "---EMPTY---"
+msgstr "---ទទេ---"
+
+#: ui_main.end_point
+msgctxt "ui_main.end_point"
+msgid "to"
+msgstr "ជូន​ចំពោះ"
+
+#: ui_main.error
+msgctxt "ui_main.error"
+msgid "Error!"
+msgstr "កំហុស!"
+
+#: ui_main.example
+msgctxt "ui_main.example"
+msgid "Example"
+msgstr "ឧទាហរណ៍"
+
+#: ui_main.example_country
+msgctxt "ui_main.example_country"
+msgid "Kenya"
+msgstr "កេនយ៉ា"
+
+#: ui_main.external_apps
+msgctxt "ui_main.external_apps"
+msgid "External Apps"
+msgstr "កម្មវិធី​ខាងក្រៅ"
+
+#: ui_main.external_video_link
+msgctxt "ui_main.external_video_link"
+msgid "External Video Link"
+msgstr "តំណ​វីដេអូ​ខាងក្រៅ​​"
+
+#: ui_main.facebook
+msgctxt "ui_main.facebook"
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ui_main.feed
+msgctxt "ui_main.feed"
+msgid "Feed"
+msgstr "មតិ​ព័ត៌មាន"
+
+#: ui_main.feedback
+msgctxt "ui_main.feedback"
+msgid "Provide Feedback"
+msgstr "ផ្ដល់​មតិ​ត្រឡប់"
+
+#: ui_main.feedback_reports
+msgctxt "ui_main.feedback_reports"
+msgid "Please give us feedback about your experience by sending an email to "
+msgstr "សូម​ផ្ដល់មតិត្រឡប់​ឲ្យ​យើង​អំពី​បទពិសោធន៍​របស់​អ្នក​ ដោយ​ផ្ញើ​អ៊ីមែល​ទៅ"
+
+#: ui_main.feeds
+msgctxt "ui_main.feeds"
+msgid "Feeds"
+msgstr "មតិ​ព័ត៌មាន"
+
+#: ui_main.feed_has_been
+msgctxt "ui_main.feed_has_been"
+msgid "The feed has been"
+msgstr "មតិ​ព័ត៌មាន​បាន"
+
+#: ui_main.feed_items
+msgctxt "ui_main.feed_items"
+msgid "Feed Items"
+msgstr "ធាតុ​មតិ​ព័ត៌មាន"
+
+#: ui_main.feed_name
+msgctxt "ui_main.feed_name"
+msgid "Feed Name"
+msgstr "ឈ្មោះ​មតិ​ព័ត៌មាន"
+
+#: ui_main.feed_url
+msgctxt "ui_main.feed_url"
+msgid "Feed URL"
+msgstr "URL មតិ​ព័ត៌មាន"
+
+#: ui_main.field_unused
+msgctxt "ui_main.field_unused"
+msgid "Unused field"
+msgstr "វាល​ដែល​មិន​ប្រើ"
+
+#: ui_main.file
+msgctxt "ui_main.file"
+msgid "File"
+msgstr "ឯកសារ"
+
+#: ui_main.file_over_max_allowed
+msgctxt "ui_main.file_over_max_allowed"
+msgid "Your file is over the maximum allowed filesize."
+msgstr "ឯកសារ​របស់​អ្នក​លើស​ពី​ទំហំ​អនុញ្ញាត​អតិបរមា​។"
+
+#: ui_main.filters
+msgctxt "ui_main.filters"
+msgid "Filters"
+msgstr "តម្រង"
+
+#: ui_main.filter_reports
+msgctxt "ui_main.filter_reports"
+msgid "Filter Reports"
+msgstr "ត្រង​របាយការណ៍"
+
+#: ui_main.filter_reports_by
+msgctxt "ui_main.filter_reports_by"
+msgid "Filter Reports By"
+msgstr "ត្រង​របាយការណ៍​តាម"
+
+#: ui_main.filter_reports_contain
+msgctxt "ui_main.filter_reports_contain"
+msgid "Filter reports that contain"
+msgstr "ត្រង​របាយការណ៍​ដែល​មាន"
+
+#: ui_main.find
+msgctxt "ui_main.find"
+msgid "Find"
+msgstr "រក"
+
+#: ui_main.find_location
+msgctxt "ui_main.find_location"
+msgid "Find Location"
+msgstr "រក​ទីតាំង"
+
+#: ui_main.first_name
+msgctxt "ui_main.first_name"
+msgid "First Name"
+msgstr "នាម​ខ្លួន"
+
+#: ui_main.force_run_scheduler
+msgctxt "ui_main.force_run_scheduler"
+msgid "Force Run Scheduler"
+msgstr "បង្ខំ​ដំណើរការ​កម្មវិធី​កាលវិភាគ"
+
+#: ui_main.forgot_password
+msgctxt "ui_main.forgot_password"
+msgid "Forgot your password?"
+msgstr "ភ្លេច​ពាក្យសម្ងាត់​របស់​អ្នក​ឬ?"
+
+#: ui_main.form
+msgctxt "ui_main.form"
+msgid "Form"
+msgstr "ទម្រង់​បែបបទ"
+
+#: ui_main.forms
+msgctxt "ui_main.forms"
+msgid "Forms"
+msgstr "ទម្រង់​បែបបទ"
+
+#: ui_main.form_description
+msgctxt "ui_main.form_description"
+msgid "Form Description"
+msgstr "សេចក្ដី​ពណ៌នា​ទម្រង់​បែបបទ"
+
+#: ui_main.form_edit
+msgctxt "ui_main.form_edit"
+msgid "Edit this Form"
+msgstr "កែសម្រួល​ទម្រង់​បែបបទ​នេះ"
+
+#: ui_main.form_has_been
+msgctxt "ui_main.form_has_been"
+msgid "The form has been"
+msgstr "ទម្រង់​បែបបទ​បាន"
+
+#: ui_main.form_title
+msgctxt "ui_main.form_title"
+msgid "Form Title"
+msgstr "ចំណងជើង​ទម្រង់​បែបបទ"
+
+#: ui_main.from
+msgctxt "ui_main.from"
+msgid "From"
+msgstr "ពី"
+
+#: ui_main.full_name
+msgctxt "ui_main.full_name"
+msgid "Full Name"
+msgstr "ឈ្មោះ​ពេញ"
+
+#: ui_main.geolocation_available
+msgctxt "ui_main.geolocation_available"
+msgid "GeoLocation Available"
+msgstr "មាន​ទីតាំង​ភូមិសាស្ត្រ"
+
+#: ui_main.geometry_color
+msgctxt "ui_main.geometry_color"
+msgid "Color"
+msgstr "ពណ៌"
+
+#: ui_main.geometry_comments
+msgctxt "ui_main.geometry_comments"
+msgid "Comments"
+msgstr "មតិ"
+
+#: ui_main.geometry_label
+msgctxt "ui_main.geometry_label"
+msgid "Label"
+msgstr "ស្លាក"
+
+#: ui_main.geometry_strokewidth
+msgctxt "ui_main.geometry_strokewidth"
+msgid "Stroke Width"
+msgstr "គូស​ទទឹង"
+
+#: ui_main.go
+msgctxt "ui_main.go"
+msgid "Go"
+msgstr "ទៅ"
+
+#: ui_main.hashtag
+msgctxt "ui_main.hashtag"
+msgid "Hashtag"
+msgstr "សញ្ញា #"
+
+#: ui_main.has_been
+msgctxt "ui_main.has_been"
+msgid "Has Been"
+msgstr "បាន"
+
+#: ui_main.help
+msgctxt "ui_main.help"
+msgid "How to Help"
+msgstr "វិធី​ជួយ"
+
+#: ui_main.hidden
+msgctxt "ui_main.hidden"
+msgid "Hidden"
+msgstr "បាន​លាក់"
+
+#: ui_main.hide
+msgctxt "ui_main.hide"
+msgid "Hide"
+msgstr "លាក់"
+
+#: ui_main.hide_this_message
+msgctxt "ui_main.hide_this_message"
+msgid "hide this message"
+msgstr "លាក់​សារ​នេះ"
+
+#: ui_main.home
+msgctxt "ui_main.home"
+msgid "Home"
+msgstr "ដើម"
+
+#: ui_main.Hourly
+msgctxt "ui_main.Hourly"
+msgid "Hourly"
+msgstr ""
+
+#: ui_main.how_to_report
+msgctxt "ui_main.how_to_report"
+msgid "How to Report"
+msgstr "វិធី​រាយការណ៍"
+
+#: ui_main.https
+msgctxt "ui_main.https"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: ui_main.id
+msgctxt "ui_main.id"
+msgid "ID"
+msgstr "លេខ​សម្គាល់"
+
+#: ui_main.identify_you
+msgctxt "ui_main.identify_you"
+msgid "Used to identify you on the site to other users."
+msgstr "ប្រើ​ដើម្បី​កំណត់​អត្តសញ្ញាណ​អ្នក​នៅ​លើ​តំបន់បណ្ដាញ​ទៅកាន់​អ្នកប្រើ​ផ្សេងទៀត។"
+
+#: ui_main.image
+msgctxt "ui_main.image"
+msgid "Image"
+msgstr "រូបភាព"
+
+#: ui_main.images
+msgctxt "ui_main.images"
+msgid "Images"
+msgstr "រូបភាព"
+
+#: ui_main.image_icon
+msgctxt "ui_main.image_icon"
+msgid "Image/Icon"
+msgstr "រូបភាព/រូបតំណាង"
+
+#: ui_main.inactive
+msgctxt "ui_main.inactive"
+msgid "Inactive"
+msgstr "អសកម្ម"
+
+#: ui_main.inbox
+msgctxt "ui_main.inbox"
+msgid "Inbox"
+msgstr "ប្រអប់​ទទួល"
+
+#: ui_main.incident
+msgctxt "ui_main.incident"
+msgid "Incident"
+msgstr "ឧប្បត្តិហេតុ"
+
+#: ui_main.incidents_nearby
+msgctxt "ui_main.incidents_nearby"
+msgid "Incidents Nearby"
+msgstr "ឧប្បត្តិហេតុ​នៅ​ជិតៗ"
+
+#: ui_main.incident_location
+msgctxt "ui_main.incident_location"
+msgid "Incident Location"
+msgstr "ទីតាំង​ឧប្បត្តិហេតុ"
+
+#: ui_main.include
+msgctxt "ui_main.include"
+msgid "Include"
+msgstr "រួមបញ្ចូល"
+
+#: ui_main.include_categories
+msgctxt "ui_main.include_categories"
+msgid "Include Categories"
+msgstr "រួមបញ្ចូល​ប្រភេទ"
+
+#: ui_main.include_custom_fields
+msgctxt "ui_main.include_custom_fields"
+msgid "Include Custom Fields"
+msgstr "រួមបញ្ចូល​វាល​ផ្ទាល់ខ្លួន"
+
+#: ui_main.include_description
+msgctxt "ui_main.include_description"
+msgid "Include Description"
+msgstr "រួមបញ្ចូល​សេចក្ដី​ពណ៌នា"
+
+#: ui_main.include_detail
+msgctxt "ui_main.include_detail"
+msgid "Include as much detail as possible"
+msgstr "រួមបញ្ចូល​សេចក្ដី​លម្អិត​ច្រើន​តាម​ដែល​អាច​ធ្វើ​បាន"
+
+#: ui_main.include_latitude
+msgctxt "ui_main.include_latitude"
+msgid "Include Latitude"
+msgstr "រួមបញ្ចូល​រយៈទទឹង"
+
+#: ui_main.include_location_information
+msgctxt "ui_main.include_location_information"
+msgid "Include Location Information"
+msgstr "រួមបញ្ចូល​ព័ត៌មាន​ទីតាំង"
+
+#: ui_main.include_longitude
+msgctxt "ui_main.include_longitude"
+msgid "Include Longitude"
+msgstr "រួមបញ្ចូល​រយៈបណ្ដោយ"
+
+#: ui_main.include_personal_info
+msgctxt "ui_main.include_personal_info"
+msgid "Include Personal Information"
+msgstr "រួមបញ្ចូល​ព័ត៌មាន​ផ្ទាល់ខ្លួន"
+
+#: ui_main.incoming_media
+msgctxt "ui_main.incoming_media"
+msgid "Incoming Media"
+msgstr "មេឌៀ​ចូល"
+
+#: ui_main.information_evaluation
+msgctxt "ui_main.information_evaluation"
+msgid "Information Evaluation"
+msgstr "ការ​វាយតម្លៃ​ព័ត៌មាន​​"
+
+#: ui_main.input_location
+msgctxt "ui_main.input_location"
+msgid "Enter your precise location"
+msgstr "បញ្ចូល​ទីតាំង​ជាក់លាក់"
+
+#: ui_main.insufficient_role
+msgctxt "ui_main.insufficient_role"
+msgid ""
+"Your account doesn't have the proper permission to fully log you in. Please "
+"contact the administrator."
+msgstr "គណនី​របស់​អ្នក​មិន​មាន​សិទ្ធិ​គ្រប់គ្រាន់​ក្នុង​ការ​ចូល​ទេ។ សូម​ទាក់ទង​អ្នក​គ្រប់គ្រង​របស់​អ្នក។"
+
+#: ui_main.interval
+msgctxt "ui_main.interval"
+msgid "Interval"
+msgstr ""
+
+#: ui_main.in_response_to
+msgctxt "ui_main.in_response_to"
+msgid "In response to"
+msgstr "ការ​ឆ្លើយតប​ចំពោះ"
+
+#: ui_main.ip_address
+msgctxt "ui_main.ip_address"
+msgid "IP Address"
+msgstr "អាសយដ្ឋាន IP"
+
+#: ui_main.is_this_your_profile
+msgctxt "ui_main.is_this_your_profile"
+msgid "Is this your profile?"
+msgstr "តើ​នេះ​ជា​ប្រវត្តិរូប​របស់​អ្នក​ឬ?"
+
+#: ui_main.item
+msgctxt "ui_main.item"
+msgid "item"
+msgstr "ធាតុ"
+
+#: ui_main.items
+msgctxt "ui_main.items"
+msgid "items"
+msgstr "ធាតុ"
+
+#: ui_main.item_details
+msgctxt "ui_main.item_details"
+msgid "item_details"
+msgstr "សេចក្ដី​លម្អិត​របស់​ធាតុ"
+
+#: ui_main.item_title
+msgctxt "ui_main.item_title"
+msgid "Item Title"
+msgstr "ចំណងជើង​ធាតុ"
+
+#: ui_main.key
+msgctxt "ui_main.key"
+msgid "Key"
+msgstr "កូនសោ"
+
+#: ui_main.keywords
+msgctxt "ui_main.keywords"
+msgid "Keywords"
+msgstr "ពាក្យ​គន្លឹះ"
+
+#: ui_main.kml_kmz_file
+msgctxt "ui_main.kml_kmz_file"
+msgid "KMZ/KML File"
+msgstr "ឯកសារ KMZ/KML"
+
+#: ui_main.kml_kmz_upload
+msgctxt "ui_main.kml_kmz_upload"
+msgid "Upload KMZ/KML File"
+msgstr "ផ្ទុក​ឯកសារ KMZ/KML ឡើង"
+
+#: ui_main.kml_url
+msgctxt "ui_main.kml_url"
+msgid "KML URL"
+msgstr "KML URL"
+
+#: ui_main.laconica
+msgctxt "ui_main.laconica"
+msgid "Laconica"
+msgstr "Laconica"
+
+#: ui_main.language
+msgctxt "ui_main.language"
+msgid "Language"
+msgstr "ភាសា"
+
+#: ui_main.last
+msgctxt "ui_main.last"
+msgid "Last"
+msgstr "មុន"
+
+#: ui_main.last_month
+msgctxt "ui_main.last_month"
+msgid "Last Month"
+msgstr "ខែមុន"
+
+#: ui_main.last_name
+msgctxt "ui_main.last_name"
+msgid "Last Name"
+msgstr "នាម​ត្រកូល"
+
+#: ui_main.last_year
+msgctxt "ui_main.last_year"
+msgid "Last Year"
+msgstr "ឆ្នាំមុន"
+
+#: ui_main.latitude
+msgctxt "ui_main.latitude"
+msgid "Latitude"
+msgstr "រយៈទទឹង​"
+
+#: ui_main.layers
+msgctxt "ui_main.layers"
+msgid "Layers"
+msgstr "ស្រទាប់"
+
+#: ui_main.layers_filter
+msgctxt "ui_main.layers_filter"
+msgid "Other Layers"
+msgstr "ស្រទាប់​ផ្សេង"
+
+#: ui_main.layer_has_been
+msgctxt "ui_main.layer_has_been"
+msgid "The Layer Has Been"
+msgstr "ស្រទាប់​បាន"
+
+#: ui_main.layer_name
+msgctxt "ui_main.layer_name"
+msgid "Layer Name"
+msgstr "ឈ្មោះ​ស្រទាប់"
+
+#: ui_main.layer_url
+msgctxt "ui_main.layer_url"
+msgid "Layer URL"
+msgstr "URL ស្រទាប់"
+
+#: ui_main.leave_a_comment
+msgctxt "ui_main.leave_a_comment"
+msgid "Leave a Comment"
+msgstr "ផ្ដល់​មតិយោបល់"
+
+#: ui_main.less_information
+msgctxt "ui_main.less_information"
+msgid "Less Information"
+msgstr "បន្ថយ​ព័ត៌មាន"
+
+#: ui_main.level
+msgctxt "ui_main.level"
+msgid "Level"
+msgstr "កម្រិត"
+
+#: ui_main.level_has_been
+msgctxt "ui_main.level_has_been"
+msgid "This level has been"
+msgstr "កម្រិត​នេះ​បាន"
+
+#: ui_main.level_name
+msgctxt "ui_main.level_name"
+msgid "Level Name"
+msgstr "ឈ្មោះ​កម្រិត"
+
+#: ui_main.limited
+msgctxt "ui_main.limited"
+msgid "Limited"
+msgstr "បាន​កំណត់"
+
+#: ui_main.link
+msgctxt "ui_main.link"
+msgid "Link"
+msgstr "តភ្ជាប់"
+
+#: ui_main.list
+msgctxt "ui_main.list"
+msgid "List"
+msgstr "បញ្ជី"
+
+#: ui_main.loading_reports
+msgctxt "ui_main.loading_reports"
+msgid "Loading Reports"
+msgstr "កំពុង​ផ្ទុក​របាយការណ៍"
+
+#: ui_main.location
+msgctxt "ui_main.location"
+msgid "Location"
+msgstr "ទីតាំង"
+
+#: ui_main.locations
+msgctxt "ui_main.locations"
+msgid "Locations"
+msgstr "ទីតាំង​"
+
+#: ui_main.location_example
+msgctxt "ui_main.location_example"
+msgid "City, State and/or Country"
+msgstr "ទីក្រុង រដ្ឋ និង/ឬ ប្រទេស"
+
+#: ui_main.login
+msgctxt "ui_main.login"
+msgid "Login"
+msgstr "ចូល"
+
+#: ui_main.login_account_creation_successful
+msgctxt "ui_main.login_account_creation_successful"
+msgid "Account created successfully. You may log in now."
+msgstr "បាន​បង្កើត​គណនី​ដោយ​ជោគជ័យ។​ ឥឡូវ​អ្នក​អាច​ចូល​បាន"
+
+#: ui_main.login_confirmation_sent
+msgctxt "ui_main.login_confirmation_sent"
+msgid "A confirmation has been sent to your email address."
+msgstr "បាន​ផ្ញើ​ការ​អះអាង​ទៅកាន់​អ៊ីមែល​របស់​អ្នក"
+
+#: ui_main.login_approval_required
+msgctxt "ui_main.login_approval_required"
+msgid ""
+"Account created. Your account must be approved by an admin before you can "
+"login."
+msgstr "បាន​បង្កើត​គណនី។ គណនី​របស់​អ្នក​ត្រូវតែ​បាន​អនុញ្ញាត​ដោយ​អ្នក​គ្រប់គ្រង ទើប​អ្នក​អាច​ចូល​បាន។"
+
+#: ui_main.login_email_doesnt_exist
+msgctxt "ui_main.login_email_doesnt_exist"
+msgid ""
+"Email address doesn't exist. Try a different address or create an account."
+msgstr "មិន​មាន​អាសយដ្ឋាន​អ៊ីមែល​នេះ​ទេ។ សូម​សាកល្បង​អាសយដ្ឋាន​ផ្សេង ឬ​បង្កើត​គណនី​ថ្មី។"
+
+#: ui_main.login_select_openid
+msgctxt "ui_main.login_select_openid"
+msgid "Please click your account provider"
+msgstr "សូម​ជ្រើស​ក្រុមហ៊ុន​ផ្ដល់​គណនី​របស់​អ្នក"
+
+#: ui_main.login_with
+msgctxt "ui_main.login_with"
+msgid "Login with"
+msgstr "ចូល​ជាមួយ"
+
+#: ui_main.login_userpass
+msgctxt "ui_main.login_userpass"
+msgid "Email and Password"
+msgstr "អ៊ីមែល និង​ពាក្យសម្ងាត់"
+
+#: ui_main.login_openid
+msgctxt "ui_main.login_openid"
+msgid "OpenID"
+msgstr "OpenID"
+
+#: ui_main.login_signup
+msgctxt "ui_main.login_signup"
+msgid "Sign Up"
+msgstr "ចុះឈ្មោះ"
+
+#: ui_main.login_signup_click
+msgctxt "ui_main.login_signup_click"
+msgid "Create an Account"
+msgstr "បង្កើត​គណនី"
+
+#: ui_main.login_signup_confirmation_message
+msgctxt "ui_main.login_signup_confirmation_message"
+msgid ""
+"Thank you for signing up at %1$s. To confirm your email address, please go "
+"to the following URL: %2$s"
+msgstr "អរគុណ​សម្រាប់​ការ​ចុះឈ្មោះ​ជាមួយ %1$s ។ ដើម្បី​អះអាង​អ៊ីមែល​របស់​អ្នក សូម​ទៅកាន់ URL ដូច​ខាងក្រោម៖ %2$s"
+
+#: ui_main.login_signup_confirmation_subject
+msgctxt "ui_main.login_signup_confirmation_subject"
+msgid "Signup Confirmation"
+msgstr "អះអាង​ការ​ចុះឈ្មោះ"
+
+#: ui_main.login_signup_admin_approval_message
+msgctxt "ui_main.login_signup_admin_approval_message"
+msgid ""
+"An new user has signed up at %1$s. To approve their registration please go "
+"to the following URL: %2$s"
+msgstr "មាន​អ្នកប្រើ​ថ្មី​បាន​ចុះឈ្មោះ​នៅ %1$s ។ ដើម្បី​យល់ព្រម​ការ​ចុះឈ្មោះ​របស់​ពួកគេ សូម​ចូល​ទៅកាន់ URL ខាងក្រោម៖ %2$s"
+
+#: ui_main.login_signup_admin_approval_subject
+msgctxt "ui_main.login_signup_admin_approval_subject"
+msgid "New User Approval"
+msgstr "ការ​អនុញ្ញាត​អ្នកប្រើ​ថ្មី"
+
+#: ui_main.login_signup_approval_message
+msgctxt "ui_main.login_signup_approval_message"
+msgid ""
+"Your user account has been approved for %1$s. To login go to the following "
+"URL: %2$s"
+msgstr "គណនី​អ្នកប្រើ​របស់​អ្នក​បាន​អនុញ្ញាត​សម្រាប់ %1$s ។ ដើម្បី​ចូល សូម​ទៅកាន់ URL ខាងក្រោម៖ %2$s"
+
+#: ui_main.login_signup_approval_subject
+msgctxt "ui_main.login_signup_approval_subject"
+msgid "User account approved"
+msgstr "បាន​អនុញ្ញាត​គណនី​អ្នកប្រើ"
+
+#: ui_main.login_signup_text
+msgctxt "ui_main.login_signup_text"
+msgid "Create an account now to take advantage of more features on the site."
+msgstr "បង្កើត​គណនី​ឥឡូវ​ដើម្បី​ទទួល​បាន​ប្រយោជន៍​ផ្សេងៗ​នៅ​លើ​តំបន់បណ្ដាញ។"
+
+#: ui_main.longitude
+msgctxt "ui_main.longitude"
+msgid "Longitude"
+msgstr "រយៈបណ្ដោយ​"
+
+#: ui_main.map
+msgctxt "ui_main.map"
+msgid "Map"
+msgstr "ផែន​ទី"
+
+#: ui_main.mark_read
+msgctxt "ui_main.mark_read"
+msgid "Mark as Read"
+msgstr "សម្គាល់​ថា​បាន​អាន"
+
+#: ui_main.mark_unread
+msgctxt "ui_main.mark_unread"
+msgid "Mark as Unread"
+msgstr "សម្គាល់​ថា​មិន​បាន​អាន"
+
+#: ui_main.maximum_filesize
+msgctxt "ui_main.maximum_filesize"
+msgid "Maximum filesize"
+msgstr "ទំហំ​ឯកសារ​ធំ​បំផុត"
+
+#: ui_main.media
+msgctxt "ui_main.media"
+msgid "Media"
+msgstr "មេឌៀ"
+
+#: ui_main.media_filter
+msgctxt "ui_main.media_filter"
+msgid "Media Filter"
+msgstr "តម្រង​មេឌៀ"
+
+#: ui_main.members
+msgctxt "ui_main.members"
+msgid "Members"
+msgstr "សមាជិក"
+
+#: ui_main.manage_your_account
+msgctxt "ui_main.manage_your_account"
+msgid "Manage Your Account"
+msgstr "គ្រប់គ្រង​គណនី​របស់​អ្នក"
+
+#: ui_main.message
+msgctxt "ui_main.message"
+msgid "Message"
+msgstr "សារ"
+
+#: ui_main.messages
+msgctxt "ui_main.messages"
+msgid "Messages"
+msgstr "សារ"
+
+#: ui_main.message_details
+msgctxt "ui_main.message_details"
+msgid "Message Details"
+msgstr "សារ​លម្អិត"
+
+#: ui_main.message_non_numeric_source
+msgctxt "ui_main.message_non_numeric_source"
+msgid "Message from a non-numeric source:"
+msgstr "សារ​ពី​ប្រភព​មិនមែន​លេខ៖"
+
+#: ui_main.mobile
+msgctxt "ui_main.mobile"
+msgid "Mobile"
+msgstr "ទូរស័ព្ទ​ចល័ត"
+
+#: ui_main.modify
+msgctxt "ui_main.modify"
+msgid "Modify"
+msgstr "កែប្រែ"
+
+#: ui_main.modify_date
+msgctxt "ui_main.modify_date"
+msgid "Modify Date"
+msgstr "កែប្រែ​កាលបរិច្ឆេទ"
+
+#: ui_main.month
+msgctxt "ui_main.month"
+msgid "month"
+msgstr "ខែ"
+
+#: ui_main.Monthly
+msgctxt "ui_main.Monthly"
+msgid "Monthly"
+msgstr ""
+
+#: ui_main.more
+msgctxt "ui_main.more"
+msgid "More"
+msgstr "ច្រើន​ទៀត"
+
+#: ui_main.more_information
+msgctxt "ui_main.more_information"
+msgid "More Information"
+msgstr "ព័ត៌មាន​បន្ថែម"
+
+#: ui_main.multi_country_instance
+msgctxt "ui_main.multi_country_instance"
+msgid "Does this Ushahidi Deployment Span Multiple Countries"
+msgstr "តើ​ការ​អភិវឌ្ឍ Ushahidi ​នេះ​បាន​ទៅដល់​ប្រទេស​ច្រើន​ដែរ​ឬទេ"
+
+#: ui_main.must_confirm_email_address
+msgctxt "ui_main.must_confirm_email_address"
+msgid ""
+"You must confirm your email address to access this deployment. If you lost "
+"your confirmation email, you can request a new one below."
+msgstr "អ្នក​ត្រូវតែ​អះអាង​អាសយដ្ឋាន​អ៊ីមែល​របស់​អ្នក​ដើម្បី​ចូល​ដំណើរការ​ការ​ប្រើប្រាស់​នេះ។ ប្រសិនបើ​អ្នក​បាត់​អ៊ីមែល​អះអាង អ្នក​អាច​ស្នើសុំ​ការ​អះអាង​ថ្មី​ខាងក្រោម។"
+
+#: ui_main.name
+msgctxt "ui_main.name"
+msgid "Name"
+msgstr "ឈ្មោះ"
+
+#: ui_main.nearby_report
+msgctxt "ui_main.nearby_report"
+msgid "Nearby Report"
+msgstr "របាយការណ៍​ប្រហាក់ប្រហែល"
+
+#: ui_main.new
+msgctxt "ui_main.new"
+msgid "New"
+msgstr "ថ្មី"
+
+#: ui_main.news
+msgctxt "ui_main.news"
+msgid "News"
+msgstr "ព័ត៌មាន"
+
+#: ui_main.news_feeds
+msgctxt "ui_main.news_feeds"
+msgid "News Feeds"
+msgstr "មតិ​ព័ត៌មាន"
+
+#: ui_main.news_source
+msgctxt "ui_main.news_source"
+msgid "News Source"
+msgstr "ប្រភព​ព័ត៌មាន"
+
+#: ui_main.new_category
+msgctxt "ui_main.new_category"
+msgid "New Category"
+msgstr "ប្រភេទ​ថ្មី​"
+
+#: ui_main.new_password
+msgctxt "ui_main.new_password"
+msgid "New Password"
+msgstr "ពាក្យសម្ងាត់​ថ្មី"
+
+#: ui_main.new_report
+msgctxt "ui_main.new_report"
+msgid "New Report"
+msgstr "របាយការណ៍​ថ្មី"
+
+#: ui_main.next
+msgctxt "ui_main.next"
+msgid "Next"
+msgstr "បន្ទាប់"
+
+#: ui_main.no
+msgctxt "ui_main.no"
+msgid "No"
+msgstr "ទេ​"
+
+#: ui_main.no_checkins
+msgctxt "ui_main.no_checkins"
+msgid "No checkins to display."
+msgstr "មិន​មាន​ការ​ពិនិត្យ​ចូល​ដើម្បី​បង្ហាញ​ទេ។"
+
+#: ui_main.no_data
+msgctxt "ui_main.no_data"
+msgid "No data"
+msgstr "គ្មាន​ទិន្នន័យ"
+
+#: ui_main.none
+msgctxt "ui_main.none"
+msgid "None"
+msgstr "គ្មាន"
+
+#: ui_main.notices
+msgctxt "ui_main.notices"
+msgid "Notices"
+msgstr "សម្គាល់"
+
+#: ui_main.not_approved
+msgctxt "ui_main.not_approved"
+msgid "Not Approved"
+msgstr "មិន​យល់ព្រម"
+
+#: ui_main.not_approved_singular
+msgctxt "ui_main.not_approved_singular"
+msgid "Not Approved"
+msgstr "មិន​យល់ព្រម"
+
+#: ui_main.not_selected
+msgctxt "ui_main.not_selected"
+msgid "---Not Selected---"
+msgstr "---មិន​បាន​ជ្រើស---"
+
+#: ui_main.not_spam
+msgctxt "ui_main.not_spam"
+msgid "not spam"
+msgstr "មិនមែន​សារ​ឥតបានការ"
+
+#: ui_main.not_specified
+msgctxt "ui_main.not_specified"
+msgid "Not Specified"
+msgstr "មិនបាន​បញ្ជាក់"
+
+#: ui_main.no_reports
+msgctxt "ui_main.no_reports"
+msgid "There are no reports"
+msgstr "មិន​មាន​របាយការណ៍"
+
+#: ui_main.no_results
+msgctxt "ui_main.no_results"
+msgid "There are no results"
+msgstr "មិន​មាន​លទ្ធផល"
+
+#: ui_main.off
+msgctxt "ui_main.off"
+msgid "Off"
+msgstr "បិទ"
+
+#: ui_main.official_news
+msgctxt "ui_main.official_news"
+msgid "Official &amp; mainstream news"
+msgstr "ព័ត៌មាន​ធម្មតា​របស់ &amp; ផ្លូវការ"
+
+#: ui_main.on
+msgctxt "ui_main.on"
+msgid "On"
+msgstr "បើក"
+
+#: ui_main.option
+msgctxt "ui_main.option"
+msgid "Option"
+msgstr "ជម្រើស"
+
+#: ui_main.optional
+msgctxt "ui_main.optional"
+msgid "Optional"
+msgstr "ជា​ជម្រើស"
+
+#: ui_main.options
+msgctxt "ui_main.options"
+msgid "Options"
+msgstr "ជម្រើស"
+
+#: ui_main.organization
+msgctxt "ui_main.organization"
+msgid "Organization"
+msgstr "ស្ថាប័ន"
+
+#: ui_main.organizations
+msgctxt "ui_main.organizations"
+msgid "Organizations"
+msgstr "ស្ថាប័ន"
+
+#: ui_main.organization_description
+msgctxt "ui_main.organization_description"
+msgid "Organization Description"
+msgstr "សេចក្ដី​ពណ៌នា​ពី​ស្ថាប័ន"
+
+#: ui_main.organization_email
+msgctxt "ui_main.organization_email"
+msgid "Organization Email"
+msgstr "អ៊ីមែល​ស្ថាប័ន"
+
+#: ui_main.organization_has_been
+msgctxt "ui_main.organization_has_been"
+msgid "The Organization Has Been"
+msgstr "ស្ថាប័ន​បាន"
+
+#: ui_main.organization_name
+msgctxt "ui_main.organization_name"
+msgid "Organization Name"
+msgstr "ឈ្មោះ​ស្ថាប័ន"
+
+#: ui_main.organization_phone_1
+msgctxt "ui_main.organization_phone_1"
+msgid "Organization Phone 1"
+msgstr "ទូរស័ព្ទ​ស្ថាប័ន ១"
+
+#: ui_main.organization_phone_2
+msgctxt "ui_main.organization_phone_2"
+msgid "Organization Phone 2"
+msgstr "ទូរស័ព្ទ​ស្ថាប័ន ២"
+
+#: ui_main.organization_website
+msgctxt "ui_main.organization_website"
+msgid "Organization Website"
+msgstr "តំបន់បណ្ដាញ​របស់​ស្ថាប័ន"
+
+#: ui_main.original
+msgctxt "ui_main.original"
+msgid "Original"
+msgstr "ដើម"
+
+#: ui_main.original_description
+msgctxt "ui_main.original_description"
+msgid "Original Description"
+msgstr "សេចក្ដី​ពណ៌នា​ដើម"
+
+#: ui_main.original_title
+msgctxt "ui_main.original_title"
+msgid "Original Title"
+msgstr "ចំណងជើង​ដើម"
+
+#: ui_main.other_ushahidi_instances
+msgctxt "ui_main.other_ushahidi_instances"
+msgid "Other Deployments"
+msgstr "ការប្រើប្រាស់​ផ្សេងទៀត"
+
+#: ui_main.outbox
+msgctxt "ui_main.outbox"
+msgid "Outbox"
+msgstr "ប្រអប់​ចេញ"
+
+#: ui_main.outgoing
+msgctxt "ui_main.outgoing"
+msgid "Outgoing"
+msgstr "ចេញ"
+
+#: ui_main.page
+msgctxt "ui_main.page"
+msgid "Page"
+msgstr "ទំព័រ"
+
+#: ui_main.pages
+msgctxt "ui_main.pages"
+msgid "Pages"
+msgstr "ទំព័រ"
+
+#: ui_main.page_description
+msgctxt "ui_main.page_description"
+msgid "Page Description"
+msgstr "ការ​ពណ៌នា​ទំព័រ"
+
+#: ui_main.page_has_been
+msgctxt "ui_main.page_has_been"
+msgid "The Page Has Been"
+msgstr "ទំព័រ​បាន"
+
+#: ui_main.page_tab_name
+msgctxt "ui_main.page_tab_name"
+msgid "Page Tab Name"
+msgstr "ឈ្មោះ​ផ្ទាំង​ទំព័រ"
+
+#: ui_main.page_title
+msgctxt "ui_main.page_title"
+msgid "Page Title"
+msgstr "ចំណងជើង​ទំព័រ"
+
+#: ui_main.parent_category
+msgctxt "ui_main.parent_category"
+msgid "Parent Category"
+msgstr "ប្រភេទ​មេ"
+
+#: ui_main.password
+msgctxt "ui_main.password"
+msgid "Password"
+msgstr "ពាក្យសម្ងាត់"
+
+#: ui_main.password_again
+msgctxt "ui_main.password_again"
+msgid "Verify Password"
+msgstr "ផ្ទៀងផ្ទាត់​ពាក្យសម្ងាត់"
+
+#: ui_main.password_changed_successfully
+msgctxt "ui_main.password_changed_successfully"
+msgid "Password changed successfully! Login below."
+msgstr "បាន​ផ្លាស់ប្ដូរ​ពាក្យសម្ងាត់​ដោយ​ជោគជ័យ! សូម​ចូល​នៅ​ខាងក្រោម។"
+
+#: ui_main.password_forgot
+msgctxt "ui_main.password_forgot"
+msgid "Forgot your password?"
+msgstr "ភ្លេច​ពាក្យសម្ងាត់​របស់​អ្នក​ឬ?"
+
+#: ui_main.password_reset_confirm
+msgctxt "ui_main.password_reset_confirm"
+msgid "Check your email for the new password."
+msgstr "ពិនិត្យមើល​អ៊ីមែល​របស់​អ្នក​សម្រាប់​ពាក្យសម្ងាត់​ថ្មី។"
+
+#: ui_main.password_save
+msgctxt "ui_main.password_save"
+msgid "Stay logged in on this computer?"
+msgstr "នៅតែ​ចូល​លើ​កុំព្យូទ័រ​នេះ​ឬ?"
+
+#: ui_main.past_month
+msgctxt "ui_main.past_month"
+msgid "Past Month"
+msgstr "ខែមុន"
+
+#: ui_main.past_year
+msgctxt "ui_main.past_year"
+msgid "Past Year"
+msgstr "ឆ្នាំមុន"
+
+#: ui_main.pending
+msgctxt "ui_main.pending"
+msgid "Pending"
+msgstr "ក្រោម​ការ​រង់ចាំ"
+
+#: ui_main.per
+msgctxt "ui_main.per"
+msgid "per"
+msgstr "ក្នុង"
+
+#: ui_main.personal_information
+msgctxt "ui_main.personal_information"
+msgid "Personal Information <span>Optional.</span>"
+msgstr "ព័ត៌មាន​ផ្ទាល់ខ្លួន <span>ជា​ជម្រើស។</span>"
+
+#: ui_main.phone
+msgctxt "ui_main.phone"
+msgid "Phone"
+msgstr "ទូរស័ព្ទ"
+
+#: ui_main.photos
+msgctxt "ui_main.photos"
+msgid "Photos"
+msgstr "រូបថត"
+
+#: ui_main.pictures
+msgctxt "ui_main.pictures"
+msgid "Pictures"
+msgstr "រូប​ភាព​"
+
+#: ui_main.pictures_and_videos
+msgctxt "ui_main.pictures_and_videos"
+msgid "Pictures and Videos"
+msgstr "រូបភាព និង​ វីដេអូ"
+
+#: ui_main.pinpoint_location
+msgctxt "ui_main.pinpoint_location"
+msgid ""
+"* Search for your location using a location name OR latitude,longitude "
+"coordinates (format: 38.19, 85.61), OR click on the map to pinpoint the "
+"correct location."
+msgstr "* ស្វែងរក​ទីតាំង​របស់​អ្នក​ដោយ​ប្រើ​ឈ្មោះ ឬ​រយៈទទឹង រយៈបណ្ដោយ (ទម្រង់៖ 38.19, 85.61) ឬ​ចង្អុល​លើ​ផែនទី​ដើម្បី​រក​ទីតាំង​ដែល​ត្រឹមត្រូវ។"
+
+#: ui_main.play
+msgctxt "ui_main.play"
+msgid "Play"
+msgstr "លេង"
+
+#: ui_main.please_note
+msgctxt "ui_main.please_note"
+msgid "Please Note"
+msgstr "សូម​ចំណាំ"
+
+#: ui_main.plugins
+msgctxt "ui_main.plugins"
+msgid "Plugins"
+msgstr "កម្មវិធី​ជំនួយ"
+
+#: ui_main.plugin_url
+msgctxt "ui_main.plugin_url"
+msgid "Plugin Website"
+msgstr "តំបន់បណ្ដាញ​កម្មវិធី​ជំនួយ"
+
+#: ui_main.public_profile
+msgctxt "ui_main.public_profile"
+msgid "Public Profile"
+msgstr "ទម្រង់​សាធារណៈ"
+
+#: ui_main.public_profile_url
+msgctxt "ui_main.public_profile_url"
+msgid "Public Profile URL"
+msgstr "URL ទម្រង់​សាធារណៈ"
+
+#: ui_main.preview
+msgctxt "ui_main.preview"
+msgid "Preview"
+msgstr "មើល​ជាមុន"
+
+#: ui_main.preview_item
+msgctxt "ui_main.preview_item"
+msgid "Preview Item"
+msgstr "មើល​ធាតុ​ជាមុន"
+
+#: ui_main.preview_message
+msgctxt "ui_main.preview_message"
+msgid "Preview Message"
+msgstr "មើល​សារ​ជាមុន"
+
+#: ui_main.previous
+msgctxt "ui_main.previous"
+msgid "Previous"
+msgstr "មុន"
+
+#: ui_main.private
+msgctxt "ui_main.private"
+msgid "Private"
+msgstr "ឯកជន"
+
+#: ui_main.profile_color
+msgctxt "ui_main.profile_color"
+msgid "Profile Color"
+msgstr "ពណ៌​ទម្រង់"
+
+#: ui_main.profile_saved
+msgctxt "ui_main.profile_saved"
+msgid "Your Profile Has Been Saved"
+msgstr "បាន​រក្សាទុក​ទម្រង់​របស់​អ្នក"
+
+#: ui_main.quick_stats
+msgctxt "ui_main.quick_stats"
+msgid "Quick Stats"
+msgstr "ស្ថានភាព​រហ័ស"
+
+#: ui_main.rating
+msgctxt "ui_main.rating"
+msgid "Rating"
+msgstr "អត្រា"
+
+#: ui_main.read
+msgctxt "ui_main.read"
+msgid "Read"
+msgstr "អាន"
+
+#: ui_main.receive
+msgctxt "ui_main.receive"
+msgid "Receive"
+msgstr "ទទួល"
+
+#: ui_main.receive_from
+msgctxt "ui_main.receive_from"
+msgid "Receive from"
+msgstr "ទទួល​ពី"
+
+#: ui_main.receive_notifications
+msgctxt "ui_main.receive_notifications"
+msgid "Receive Notifications"
+msgstr "ទទួល​ការ​ជូនដំណឹង"
+
+#: ui_main.recent_reports
+msgctxt "ui_main.recent_reports"
+msgid "Recent Reports"
+msgstr "របាយការណ៍​ថ្មីៗ"
+
+#: ui_main.refresh_news_feeds
+msgctxt "ui_main.refresh_news_feeds"
+msgid "Refresh News Feeds"
+msgstr "ធ្វើឲ្យ​មតិ​ព័ត៌មាន​ស្រស់"
+
+#: ui_main.registered_email
+msgctxt "ui_main.registered_email"
+msgid "Registered Email"
+msgstr "បាន​ចុះឈ្មោះ​អ៊ីមែល"
+
+#: ui_main.remove
+msgctxt "ui_main.remove"
+msgid "Remove"
+msgstr "យកចេញ"
+
+#: ui_main.reply
+msgctxt "ui_main.reply"
+msgid "Reply"
+msgstr "ឆ្លើយតប"
+
+#: ui_main.report
+msgctxt "ui_main.report"
+msgid "Report"
+msgstr "របាយការណ៍"
+
+#: ui_main.reports_listed
+msgctxt "ui_main.reports_listed"
+msgid "Reports <span>(from the map, listed in chronological order)</span>"
+msgstr "របាយការណ៍ <span>(ពី​ផែនទី, បញ្ជី​តាម​លំដាប់​កាល)</span>"
+
+#: ui_main.reporter
+msgctxt "ui_main.reporter"
+msgid "Reporter"
+msgstr "អ្នក​រាយការណ៍"
+
+#: ui_main.reporters
+msgctxt "ui_main.reporters"
+msgid "Reporters"
+msgstr "អ្នក​រាយការណ៍"
+
+#: ui_main.reporter_date
+msgctxt "ui_main.reporter_date"
+msgid "Reporter Date"
+msgstr "កាលបរិច្ឆេទ​រាយការណ៍"
+
+#: ui_main.reporter_email
+msgctxt "ui_main.reporter_email"
+msgid "Reporter Email"
+msgstr "អ៊ីមែល​អ្នក​រាយការណ៍"
+
+#: ui_main.reporter_first_name
+msgctxt "ui_main.reporter_first_name"
+msgid "Reporter First Name"
+msgstr "​នាម​ខ្លួន​អ្នក​រាយការណ៍"
+
+#: ui_main.reporter_has_been
+msgctxt "ui_main.reporter_has_been"
+msgid "The Reporter Has Been"
+msgstr "របាយការណ៍​បាន"
+
+#: ui_main.reporter_ip
+msgctxt "ui_main.reporter_ip"
+msgid "Reporter IP Address"
+msgstr "អាសយដ្ឋាន IP របស់​អ្នក​រាយការណ៍"
+
+#: ui_main.reporter_last_name
+msgctxt "ui_main.reporter_last_name"
+msgid "Reporter Last Name"
+msgstr "នាមត្រកូល​​​អ្នក​រាយការណ៍"
+
+#: ui_main.reporter_level
+msgctxt "ui_main.reporter_level"
+msgid "Reporter Level"
+msgstr "លំដាប់​អ្នក​រាយការណ៍"
+
+#: ui_main.reporter_levels
+msgctxt "ui_main.reporter_levels"
+msgid "Reporter Levels"
+msgstr "លំដាប់​អ្នក​រាយការណ៍"
+
+#: ui_main.reporter_phone
+msgctxt "ui_main.reporter_phone"
+msgid "Reporter Phone"
+msgstr "ទូរស័ព្ទ​អ្នក​រាយការណ៍"
+
+#: ui_main.reports
+msgctxt "ui_main.reports"
+msgid "Reports"
+msgstr "របាយការណ៍"
+
+#: ui_main.reports_btn_browse
+msgctxt "ui_main.reports_btn_browse"
+msgid "Browse"
+msgstr "រុករក"
+
+#: ui_main.reports_btn_submit
+msgctxt "ui_main.reports_btn_submit"
+msgid "Submit"
+msgstr "ដាក់​ស្នើ"
+
+#: ui_main.reports_by_this_user
+msgctxt "ui_main.reports_by_this_user"
+msgid "Reports By This User"
+msgstr "របាយការណ៍​ដោយ​អ្នកប្រើ​នេះ"
+
+#: ui_main.reports_categories
+msgctxt "ui_main.reports_categories"
+msgid "Categories"
+msgstr "ប្រភេទ"
+
+#: ui_main.reports_count
+msgctxt "ui_main.reports_count"
+msgid "%d Reports"
+msgstr "%d របាយការណ៍"
+
+#: ui_main.reports_date
+msgctxt "ui_main.reports_date"
+msgid "Date"
+msgstr "កាលបរិច្ឆេទ​"
+
+#: ui_main.reports_description
+msgctxt "ui_main.reports_description"
+msgid "Description"
+msgstr "សេចក្ដី​ពណ៌នា"
+
+#: ui_main.reports_download_csv
+msgctxt "ui_main.reports_download_csv"
+msgid "Reports will be downloaded in CSV format"
+msgstr "នឹង​ទាញ​យក​របាយការណ៍​ក្នុង​ទម្រង់ CSV"
+
+#: ui_main.reports_email
+msgctxt "ui_main.reports_email"
+msgid "Email"
+msgstr "អ៊ីមែល"
+
+#: ui_main.reports_features
+msgctxt "ui_main.reports_features"
+msgid "Features"
+msgstr "លក្ខណៈ"
+
+#: ui_main.reports_find_location
+msgctxt "ui_main.reports_find_location"
+msgid "Find a location near you"
+msgstr "រក​ទីតាំង​ដែល​នៅ​ជិត​អ្នក"
+
+#: ui_main.reports_first
+msgctxt "ui_main.reports_first"
+msgid "First Name"
+msgstr "នាម​ខ្លួន"
+
+#: ui_main.reports_last
+msgctxt "ui_main.reports_last"
+msgid "Last Name"
+msgstr "នាមត្រកូល​​"
+
+#: ui_main.reports_location_name
+msgctxt "ui_main.reports_location_name"
+msgid "Location Name"
+msgstr "ឈ្មោះ​ទីតាំង"
+
+#: ui_main.reports_news
+msgctxt "ui_main.reports_news"
+msgid "News Source Link"
+msgstr "តំណ​ប្រភព​ព័ត៌មាន"
+
+#: ui_main.reports_optional
+msgctxt "ui_main.reports_optional"
+msgid "Optional Information"
+msgstr "ព័ត៌មាន​ជា​ជម្រើស"
+
+#: ui_main.reports_photos
+msgctxt "ui_main.reports_photos"
+msgid "Upload Photos"
+msgstr "ផ្ទុក​រូបភាព​ឡើង​"
+
+#: ui_main.reports_return
+msgctxt "ui_main.reports_return"
+msgid "Return to the reports page"
+msgstr "ត្រឡប់​ទៅ​ទំព័រ​របាយការណ៍"
+
+#: ui_main.reports_select_city
+msgctxt "ui_main.reports_select_city"
+msgid "Select a City"
+msgstr "ជ្រើសរើស​ទីក្រុង"
+
+#: ui_main.reports_submitted
+msgctxt "ui_main.reports_submitted"
+msgid ""
+"Your Report has been submitted to our staff for review. We will get back to "
+"you shortly if necessary."
+msgstr "របាយការណ៍​របស់​អ្នក​បាន​បញ្ជូន​ទៅកាន់​បុគ្គលិក​របស់​យើង​ដើម្បី​ត្រួតពិនិត្យ។​ យើង​ជូនដំណឹង​ត្រឡប់មកវិញ​យ៉ាង​ឆាប់​បំផុត។"
+
+#: ui_main.reports_submit_new
+msgctxt "ui_main.reports_submit_new"
+msgid "Submit a New Report"
+msgstr "ដាក់​ស្នើ​របាយការណ៍​ថ្មី"
+
+#: ui_main.reports_time
+msgctxt "ui_main.reports_time"
+msgid "Time"
+msgstr "ពេល"
+
+#: ui_main.reports_timeline
+msgctxt "ui_main.reports_timeline"
+msgid "Reports Timeline"
+msgstr "កាល​កំណត់​របាយការណ៍"
+
+#: ui_main.reports_title
+msgctxt "ui_main.reports_title"
+msgid "Report Title"
+msgstr "ចំណងជើង​របាយការណ៍"
+
+#: ui_main.reports_video
+msgctxt "ui_main.reports_video"
+msgid "Video link"
+msgstr "តំណ​វីដេអូ"
+
+#: ui_main.report_an_incident
+msgctxt "ui_main.report_an_incident"
+msgid "Report an Incident"
+msgstr "រាយការណ៍​​ព្រឹត្តិការណ៍"
+
+#: ui_main.report_details
+msgctxt "ui_main.report_details"
+msgid "Report Details"
+msgstr "របាយការណ៍​លម្អិត"
+
+#: ui_main.report_option_1
+msgctxt "ui_main.report_option_1"
+msgid "By sending a message to"
+msgstr "តាមរយៈ​ការ​ផ្ញើ​សារ"
+
+#: ui_main.report_option_2
+msgctxt "ui_main.report_option_2"
+msgid "By sending an email"
+msgstr "តាមរយៈ​ការ​ផ្ញើ​អ៊ីមែល"
+
+#: ui_main.report_option_3
+msgctxt "ui_main.report_option_3"
+msgid "By sending a tweet with the hashtag/s"
+msgstr "ការ​ផ្ញើ​តាម​​រយៈ ​tweet ដោយ​ប្រើ​សញ្ញា #  hashtag/s"
+
+#: ui_main.report_option_4
+msgctxt "ui_main.report_option_4"
+msgid "By filling this form on our website."
+msgstr "តាមរយៈ​ការ​បំពេញ​ទម្រង់​នៅ​លើ​តំបន់បណ្ដាញ​របស់​យើង។"
+
+#: ui_main.report_option_external_apps
+msgctxt "ui_main.report_option_external_apps"
+msgid "By using an app"
+msgstr "តាមរយៈ​ការ​ប្រើ​កម្មវិធី"
+
+#: ui_main.report_saved
+msgctxt "ui_main.report_saved"
+msgid "Your Report Has Been Saved"
+msgstr "បាន​រក្សាទុក​របាយការណ៍​របស់​អ្នក"
+
+#: ui_main.report_title
+msgctxt "ui_main.report_title"
+msgid "Report Title"
+msgstr "ចំណងជើង​របាយការណ៍"
+
+#: ui_main.request_information
+msgctxt "ui_main.request_information"
+msgid "Request more information"
+msgstr "ស្នើសុំ​ព័ត៌មាន​បន្ថែម"
+
+#: ui_main.request_location
+msgctxt "ui_main.request_location"
+msgid "Request location"
+msgstr "ស្នើសុំ​ទីកន្លែង"
+
+#: ui_main.required
+msgctxt "ui_main.required"
+msgid "Required"
+msgstr "បាន​ទាមទារ"
+
+#: ui_main.requirements
+msgctxt "ui_main.requirements"
+msgid "Requirements"
+msgstr "តម្រូវ​ការ"
+
+#: ui_main.resend_confirm_email
+msgctxt "ui_main.resend_confirm_email"
+msgid "Resend Confirmation Email"
+msgstr "ផ្ញើ​អ៊ីមែល​អះអាង​ឡើងវិញ"
+
+#: ui_main.reset
+msgctxt "ui_main.reset"
+msgid "Reset"
+msgstr "កំណត់​ឡើងវិញ"
+
+#: ui_main.reset_all_filters
+msgctxt "ui_main.reset_all_filters"
+msgid "Reset all filters"
+msgstr "កំណត់​តម្រង​ទាំងអស់​ឡើងវិញ"
+
+#: ui_main.reset_password
+msgctxt "ui_main.reset_password"
+msgid "Reset Password"
+msgstr "កំណត់​ពាក្យសម្ងាត់​ឡើងវិញ"
+
+#: ui_main.retrieve_city_names
+msgctxt "ui_main.retrieve_city_names"
+msgid "Retrieve city names for the selected country"
+msgstr "ទៅ​យក​ឈ្មោះ​ទីក្រុង​ឡើងវិញ​សម្រាប់​ប្រទេស​ដែល​បាន​ជ្រើស"
+
+#: ui_main.riverid_information
+msgctxt "ui_main.riverid_information"
+msgid "Accounts managed by the %s service."
+msgstr "បាន​គ្រប់គ្រង​គណនី​ដោយ​សេវាកម្ម %s ។"
+
+#: ui_main.riverid_exists_login
+msgctxt "ui_main.riverid_exists_login"
+msgid ""
+"You already have an account managed by CrowdmapID! Try using your CrowdmapID"
+" email and password to login."
+msgstr "អ្នក​មាន​គណនី​ដែល​បាន​គ្រប់គ្រង​ដោយ CrowdmapID រួចហើយ! សាកល្បង​ប្រើ​ពាក្យសម្ងាត់ និង​អ៊ីមែល​របស់ CrowdmapID ដើម្បី​ចូល។"
+
+#: ui_main.role
+msgctxt "ui_main.role"
+msgid "Role"
+msgstr "មុខងារ"
+
+#: ui_main.rss
+msgctxt "ui_main.rss"
+msgid "RSS"
+msgstr "RSS"
+
+#: ui_main.save
+msgctxt "ui_main.save"
+msgid "Save"
+msgstr "រក្សាទុក"
+
+#: ui_main.saved
+msgctxt "ui_main.saved"
+msgid "Saved"
+msgstr "បាន​រក្សាទុក"
+
+#: ui_main.save_add_new
+msgctxt "ui_main.save_add_new"
+msgid "Save & Add New"
+msgstr "រក្សា​ទុក និង​បន្ថែម​ថ្មី​"
+
+#: ui_main.save_close
+msgctxt "ui_main.save_close"
+msgid "Save & Close"
+msgstr "រក្សាទុក និង​បិទ"
+
+#: ui_main.save_report
+msgctxt "ui_main.save_report"
+msgid "Save Report"
+msgstr "រក្សា​ទុក​របាយការណ៍"
+
+#: ui_main.schedule
+msgctxt "ui_main.schedule"
+msgid "Schedule"
+msgstr "កាលវិភាគ"
+
+#: ui_main.scheduler
+msgctxt "ui_main.scheduler"
+msgid "Scheduler"
+msgstr "កម្មវិធី​កំណត់​ពេល"
+
+#: ui_main.scheduler_day
+msgctxt "ui_main.scheduler_day"
+msgid "Day"
+msgstr "ថ្ងៃ"
+
+#: ui_main.scheduler_hour
+msgctxt "ui_main.scheduler_hour"
+msgid "Hour"
+msgstr "ម៉ោង"
+
+#: ui_main.scheduler_log
+msgctxt "ui_main.scheduler_log"
+msgid "Scheduler Log"
+msgstr "កំណត់ហេតុ​កម្មវិធី​កំណត់​ពេល"
+
+#: ui_main.scheduler_minute
+msgctxt "ui_main.scheduler_minute"
+msgid "Minute"
+msgstr "នាទី"
+
+#: ui_main.scheduler_weekday
+msgctxt "ui_main.scheduler_weekday"
+msgid "Day of the Week"
+msgstr "ថ្ងៃ​នៃ​សប្ដាហ៍​"
+
+#: ui_main.search
+msgctxt "ui_main.search"
+msgid "Search"
+msgstr "ស្វែងរក"
+
+#: ui_main.search_results
+msgctxt "ui_main.search_results"
+msgid "Search Results"
+msgstr "លទ្ធផល​ស្វែងរក​"
+
+#: ui_main.security_code
+msgctxt "ui_main.security_code"
+msgid "Security Code"
+msgstr "លេខ​កូដ​សុវត្ថិភាព"
+
+#: ui_main.select_all
+msgctxt "ui_main.select_all"
+msgid "Select All"
+msgstr "ជ្រើស​យក​ទាំងអស់"
+
+#: ui_main.select_field_type
+msgctxt "ui_main.select_field_type"
+msgid "Select a Field Type"
+msgstr "ជ្រើស​ប្រភេទ​វាល"
+
+#: ui_main.select_form_type
+msgctxt "ui_main.select_form_type"
+msgid "Select A Form Type"
+msgstr "ជ្រើស​ប្រភេទ​ទម្រង់"
+
+#: ui_main.select_in_map
+msgctxt "ui_main.select_in_map"
+msgid "Select in the map"
+msgstr "ជ្រើស​ក្នុង​ផែនទី"
+
+#: ui_main.select_multiple
+msgctxt "ui_main.select_multiple"
+msgid "Select as many as needed"
+msgstr "ជ្រើស​បាន​ច្រើន​តាម​តម្រូវ​ការ​"
+
+#: ui_main.select_one
+msgctxt "ui_main.select_one"
+msgid "Please verify that you have checked an item"
+msgstr "សូម​ផ្ទៀងផ្ទាត់​ថា​អ្នក​បាន​ធីក​ធាតុ​មួយ"
+
+#: ui_main.select_theme
+msgctxt "ui_main.select_theme"
+msgid "Select Theme"
+msgstr "ជ្រើស​រូបរាង"
+
+#: ui_main.send
+msgctxt "ui_main.send"
+msgid "Send"
+msgstr "ផ្ញើ"
+
+#: ui_main.send_confirmation
+msgctxt "ui_main.send_confirmation"
+msgid "Send Confirmation"
+msgstr "ផ្ញើ​ការ​អះអាង"
+
+#: ui_main.sending_to
+msgctxt "ui_main.sending_to"
+msgid "Sending To"
+msgstr "កំពុង​ផ្ញើ​ទៅ"
+
+#: ui_main.sent
+msgctxt "ui_main.sent"
+msgid "Sent"
+msgstr "បាន​ផ្ញើ"
+
+#: ui_main.sent_by
+msgctxt "ui_main.sent_by"
+msgid "Sent by"
+msgstr "បាន​ផ្ញើ​ដោយ"
+
+#: ui_main.server_address
+msgctxt "ui_main.server_address"
+msgid "Server address"
+msgstr "អាសយដ្ឋាន​ម៉ាស៊ីន​មេ"
+
+#: ui_main.server_type
+msgctxt "ui_main.server_type"
+msgid "Server type"
+msgstr "ប្រភេទ​ម៉ាស៊ីន​មេ"
+
+#: ui_main.service
+msgctxt "ui_main.service"
+msgid "Service"
+msgstr "សេវាកម្ម"
+
+#: ui_main.service_username
+msgctxt "ui_main.service_username"
+msgid "Service Username"
+msgstr "ឈ្មោះ​អ្នកប្រើ​សេវាកម្ម"
+
+#: ui_main.service_user_id
+msgctxt "ui_main.service_user_id"
+msgid "Service User ID"
+msgstr "លេខ​សម្គាល់​អ្នកប្រើ​សេវាកម្ម"
+
+#: ui_main.share
+msgctxt "ui_main.share"
+msgid "Share"
+msgstr "ចែករំលែក"
+
+#: ui_main.shared_data
+msgctxt "ui_main.shared_data"
+msgid "Shared data"
+msgstr "បាន​ចែករំលែក​ទិន្នន័យ"
+
+#: ui_main.share_has_been
+msgctxt "ui_main.share_has_been"
+msgid "The share has been"
+msgstr "ការ​ចែករំលែក​បាន"
+
+#: ui_main.sharing
+msgctxt "ui_main.sharing"
+msgid "Sharing"
+msgstr "ការ​ចែករំលែក"
+
+#: ui_main.shorter_map
+msgctxt "ui_main.shorter_map"
+msgid "Shorter Map"
+msgstr "ផែនទី​ខ្លី​ជាង"
+
+#: ui_main.show
+msgctxt "ui_main.show"
+msgid "Show"
+msgstr "បង្ហាញ"
+
+#: ui_main.show_all
+msgctxt "ui_main.show_all"
+msgid "Show all"
+msgstr "បង្ហាញ​ទាំងអស់"
+
+#: ui_main.show_messages
+msgctxt "ui_main.show_messages"
+msgid "Show Messages"
+msgstr "បង្ហាញ​សារ"
+
+#: ui_main.showing_reports_from
+msgctxt "ui_main.showing_reports_from"
+msgid "Showing Reports From <span class=\"time-period\">%1$s to %2$s</span>"
+msgstr "បង្ហាញ​របាយការណ៍​ពី <span class=\"time-period\">%1$s ទៅ %2$s</span>"
+
+#: ui_main.site
+msgctxt "ui_main.site"
+msgid "Website"
+msgstr "តំបន់បណ្ដាញ"
+
+#: ui_main.site_email_address
+msgctxt "ui_main.site_email_address"
+msgid "site email address"
+msgstr "អាសយដ្ឋាន​​អ៊ីមែល​តំបន់បណ្ដាញ"
+
+#: ui_main.site_url
+msgctxt "ui_main.site_url"
+msgid "Site URL"
+msgstr "URL​ តំបន់បណ្ដាញ"
+
+#: ui_main.smaller_map
+msgctxt "ui_main.smaller_map"
+msgid "Smaller Map"
+msgstr "ផែនទី​តូច​ជាង"
+
+#: ui_main.sms
+msgctxt "ui_main.sms"
+msgid "SMS"
+msgstr "សារ SMS"
+
+#: ui_main.sorry_no_badges
+msgctxt "ui_main.sorry_no_badges"
+msgid "Sorry, you do not have any badges."
+msgstr "សូមទោស អ្នក​មិន​មាន​សញ្ញា​ទេ។"
+
+#: ui_main.source
+msgctxt "ui_main.source"
+msgid "Source"
+msgstr "ប្រភព"
+
+#: ui_main.source_name
+msgctxt "ui_main.source_name"
+msgid "Source name"
+msgstr "ឈ្មោះ​ប្រភព"
+
+#: ui_main.sort
+msgctxt "ui_main.sort"
+msgid "Sort"
+msgstr "តម្រៀប"
+
+#: ui_main.sort_by
+msgctxt "ui_main.sort_by"
+msgid "Sort By"
+msgstr "តម្រៀប​តាម"
+
+#: ui_main.source_url
+msgctxt "ui_main.source_url"
+msgid "Source URL"
+msgstr "URL ប្រភព"
+
+#: ui_main.spam
+msgctxt "ui_main.spam"
+msgid "Spam"
+msgstr "សារ​ឥតបានការ"
+
+#: ui_main.ssl_support
+msgctxt "ui_main.ssl_support"
+msgid "SSL Support?"
+msgstr "គាំទ្រ SSL ឬ?"
+
+#: ui_main.start_point
+msgctxt "ui_main.start_point"
+msgid "From"
+msgstr "ពី"
+
+#: ui_main.step
+msgctxt "ui_main.step"
+msgid "Step"
+msgstr "ជំហាន"
+
+#: ui_main.submit
+msgctxt "ui_main.submit"
+msgid "Submit a Report"
+msgstr "ដាក់​ស្នើ​របាយការណ៍"
+
+#: ui_main.submitted_by
+msgctxt "ui_main.submitted_by"
+msgid "Submitted by <strong>%1$s</strong> via <strong>%2$s</strong>"
+msgstr "បាន​ដាក់​ស្នើ​ដោយ <strong>%1$s</strong> តាមរយៈ <strong>%2$s</strong>"
+
+#: ui_main.submit_sms
+msgctxt "ui_main.submit_sms"
+msgid "Submit via SMS"
+msgstr "ដាក់​ស្នើ​តាម​សារ​ SMS"
+
+#: ui_main.submit_sms1
+msgctxt "ui_main.submit_sms1"
+msgid "Send your SMS to"
+msgstr "ផ្ញើ​សារ​ SMS របស់​អ្នក​ទៅ"
+
+#: ui_main.submit_sms2
+msgctxt "ui_main.submit_sms2"
+msgid "on your phone"
+msgstr "តាម​ទូរស័ព្ទ​របស់​អ្នក"
+
+#: ui_main.success
+msgctxt "ui_main.success"
+msgid "Success!"
+msgstr "ជោគជ័យ!"
+
+#: ui_main.successfuly_imported
+msgctxt "ui_main.successfuly_imported"
+msgid "Succesfully imported"
+msgstr "បាន​នាំចូល​ដោយ​ជោគជ័យ"
+
+#: ui_main.surname
+msgctxt "ui_main.surname"
+msgid "Surname"
+msgstr "នាមត្រកូល"
+
+#: ui_main.survey
+msgctxt "ui_main.survey"
+msgid "Survey"
+msgstr "ស្ទង់​មតិ"
+
+#: ui_main.system
+msgctxt "ui_main.system"
+msgid "System"
+msgstr "ប្រព័ន្ធ"
+
+#: ui_main.taller_map
+msgctxt "ui_main.taller_map"
+msgid "Taller Map"
+msgstr "ផែនទី​ខ្ពស់​ជាង"
+
+#: ui_main.tcp_port
+msgctxt "ui_main.tcp_port"
+msgid "TCP Port"
+msgstr "ច្រក TCP"
+
+#: ui_main.themes
+msgctxt "ui_main.themes"
+msgid "Themes"
+msgstr "រូបរាង"
+
+#: ui_main.theme_default
+msgctxt "ui_main.theme_default"
+msgid "Default Ushahidi Theme"
+msgstr "រូបរាង​ Ushahidi ​លំនាំដើម"
+
+#: ui_main.theme_settings
+msgctxt "ui_main.theme_settings"
+msgid "Theme Settings"
+msgstr "ការ​កំណត់​រូបរាង"
+
+#: ui_main.this
+msgctxt "ui_main.this"
+msgid "This"
+msgstr "នេះ"
+
+#: ui_main.this_day
+msgctxt "ui_main.this_day"
+msgid "Today"
+msgstr "ថ្ងៃនេះ"
+
+#: ui_main.this_month
+msgctxt "ui_main.this_month"
+msgid "This Month"
+msgstr "ខែ​នេះ"
+
+#: ui_main.this_week
+msgctxt "ui_main.this_week"
+msgid "This Week"
+msgstr "សប្ដាហ៍​នេះ"
+
+#: ui_main.this_year
+msgctxt "ui_main.this_year"
+msgid "This Year"
+msgstr "ឆ្នាំនេះ"
+
+#: ui_main.this_is_your_profile
+msgctxt "ui_main.this_is_your_profile"
+msgid "This is your profile."
+msgstr "នេះ​ជា​ប្រវត្តិរូប​របស់​អ្នក"
+
+#: ui_main.time
+msgctxt "ui_main.time"
+msgid "Time"
+msgstr "ពេល​វេលា"
+
+#: ui_main.title
+msgctxt "ui_main.title"
+msgid "Title "
+msgstr "ចំណង​ជើង​"
+
+#: ui_main.to
+msgctxt "ui_main.to"
+msgid "to"
+msgstr "ជូនចំពោះ​"
+
+#: ui_main.today
+msgctxt "ui_main.today"
+msgid "Today"
+msgstr "ថ្ងៃនេះ"
+
+#: ui_main.today_at
+msgctxt "ui_main.today_at"
+msgid "Today at"
+msgstr "ថ្ងៃនេះ​នៅ"
+
+#: ui_main.token
+msgctxt "ui_main.token"
+msgid "Token"
+msgstr "ថូខឹន"
+
+#: ui_main.total_reports
+msgctxt "ui_main.total_reports"
+msgid "Total Reports"
+msgstr "របាយការណ៍​សរុប"
+
+#: ui_main.translated
+msgctxt "ui_main.translated"
+msgid "Translated"
+msgstr "បាន​បកប្រែ"
+
+#: ui_main.translated_description
+msgctxt "ui_main.translated_description"
+msgid "Translated Description"
+msgstr "បាន​បកប្រែ​ការ​ពណ៌នា"
+
+#: ui_main.translated_title
+msgctxt "ui_main.translated_title"
+msgid "Translated Title"
+msgstr "បាន​បកប្រែ​ចំណងជើង"
+
+#: ui_main.translate_to
+msgctxt "ui_main.translate_to"
+msgid "Translate to"
+msgstr "បកប្រែ​ជា"
+
+#: ui_main.translation
+msgctxt "ui_main.translation"
+msgid "Translation"
+msgstr "ការ​បកប្រែ"
+
+#: ui_main.translation_saved
+msgctxt "ui_main.translation_saved"
+msgid "Translation has been saved"
+msgstr "បាន​រក្សាទុក​ការ​បកប្រែ"
+
+#: ui_main.trusted
+msgctxt "ui_main.trusted"
+msgid "Trusted"
+msgstr "បាន​ទុកចិត្ត"
+
+#: ui_main.type
+msgctxt "ui_main.type"
+msgid "Type"
+msgstr "ប្រភេទ"
+
+#: ui_main.twitter
+msgctxt "ui_main.twitter"
+msgid "Twitter"
+msgstr "Twitter"
+
+#: ui_main.unable_send_email
+msgctxt "ui_main.unable_send_email"
+msgid "Unable to send email."
+msgstr "មិន​អាច​ផ្ញើ​អ៊ីមែល​បាន​ទេ។"
+
+#: ui_main.uncategorized_reports
+msgctxt "ui_main.uncategorized_reports"
+msgid "Uncategorized Reports"
+msgstr "របាយការណ៍​គ្មាន​ប្រភេទ"
+
+#: ui_main.unread
+msgctxt "ui_main.unread"
+msgid "unread"
+msgstr "មិន​បាន​អាន"
+
+#: ui_main.unverified
+msgctxt "ui_main.unverified"
+msgid "Unverified"
+msgstr "មិន​បាន​អះអាង"
+
+#: ui_main.update_feeds
+msgctxt "ui_main.update_feeds"
+msgid "Update feeds"
+msgstr "ធ្វើ​បច្ចុប្បន្នភាព​មតិ​ព័ត៌មាន"
+
+#: ui_main.upload
+msgctxt "ui_main.upload"
+msgid "Upload"
+msgstr "ផ្ទុក​ឡើង"
+
+#: ui_main.upload_guide
+msgctxt "ui_main.upload_guide"
+msgid "View our report upload guides:-"
+msgstr "មើល​របៀប​ផ្ទុក​របាយការណ៍​ឡើង​របស់​យើង៖-"
+
+#: ui_main.upload_docs_1
+msgctxt "ui_main.upload_docs_1"
+msgid "XML Upload guide"
+msgstr "របៀប​ផ្ទុក XML ឡើង"
+
+#: ui_main.upload_docs_2
+msgctxt "ui_main.upload_docs_2"
+msgid "CSV Upload guide"
+msgstr "របៀប​ផ្ទុក CSV ឡើង"
+
+#: ui_main.upload_file
+msgctxt "ui_main.upload_file"
+msgid "File to upload"
+msgstr "ឯកសារ​ដែល​ត្រូវ​ផ្ទុក​ឡើង"
+
+#: ui_main.upload_reports
+msgctxt "ui_main.upload_reports"
+msgid "Upload Reports"
+msgstr "ផ្ទុក​របាយការណ៍​ឡើង"
+
+#: ui_main.upload_reports_custom_forms
+msgctxt "ui_main.upload_reports_custom_forms"
+msgid ""
+"Custom field columns must have their form_id appended to them e.g custom "
+"field Test, on the default form, whose id is 1, will be Test-1. During "
+"custom form field import, ensure that"
+msgstr "ជួរឈរ​វាល​ផ្ទាល់ខ្លួន​ត្រូវតែ​មាន​ form_id របស់​ពួកគេ​ដែល​បាន​បន្ថែម ឧ. វាល​ផ្ទាល់ខ្លួន Test នៅ​លើ​ទម្រង់​លំនាំដើម​ដែល​លេខ​សម្គាល់​របស់​វា​គឺ 1 ដូច្នេះ​វា​គឺ Test-1។ នៅ​ពេល​នាំចូល​វាល​ទម្រង់​ផ្ទាល់ខ្លួន ត្រូវ​ប្រាកដ​ថា"
+
+#: ui_main.upload_reports_detail_1
+msgctxt "ui_main.upload_reports_detail_1"
+msgid ""
+"With the form below, you can import incidents into the Ushahidi engine."
+msgstr "ជាមួយ​ទម្រង់​បែបបទ​ខាងក្រោម អ្នក​អាច​នាំចូល​របាយការណ៍​​​ព្រឹត្តិការណ៍​​​ទៅកាន់​ម៉ាស៊ីន​ Ushahidi ​បាន។"
+
+#: ui_main.upload_reports_detail_2
+msgctxt "ui_main.upload_reports_detail_2"
+msgid "Reports must be uploaded in either CSV or XML format."
+msgstr "របាយការណ៍​ត្រូវតែ​ផ្ទុក​ឡើង​ក្នុង​ទន្រង់ CSV ឬ XML ។"
+
+#: ui_main.upload_reports_detail_3
+msgctxt "ui_main.upload_reports_detail_3"
+msgid ""
+"When incident ID already exists in the database, the entry in the CSV/XML "
+"file will be ignored."
+msgstr "ពេល​លេខ​សម្គាល់​ហេតុ​ការណ៍​មាន​រួចហើយ​នៅ​ក្នុង​មូលដ្ឋាន​ទិន្នន័យ នោះ​ធាតុ​នៅ​ក្នុង​ឯកសារ CSV/XML នឹង​ត្រូវ​បាន​មិន​អើពើ។"
+
+#: ui_main.upload_reports_detail_4
+msgctxt "ui_main.upload_reports_detail_4"
+msgid "It must contain at least Incident Title and Incident Date."
+msgstr "វា​ត្រូវតែ​មាន​យ៉ាង​ហោច​ចំណងជើង និង​កាលបរិច្ឆេទ​ព្រឹត្តិការណ៍។"
+
+#: ui_main.upload_reports_detail_4b
+msgctxt "ui_main.upload_reports_detail_4b"
+msgid ""
+"If no latitude and longitude columns are supplied, the location will be "
+"geocoded using the Google Geocoder."
+msgstr "ប្រសិនបើ​មិន​បាន​ផ្ដល់​រយៈបណ្ដោយ និង​រយៈទទឹង​ទេ នោះ​ទីតាំង​នឹង​ត្រូវ​បាន​កំណត់​កូដ​ភូមិសាស្ត្រ​ដោយ​ប្រើ Google Geocoder ។"
+
+#: ui_main.upload_reports_detail_4c
+msgctxt "ui_main.upload_reports_detail_4c"
+msgid ""
+"If importing additional info i.e personal information and/or custom form "
+"fields"
+msgstr "ប្រសិនបើ​មាន​ការ​នាំចូល​ព័ត៌មាន​បន្ថែម ឧ. ព័ត៌មាន​ផ្ទាល់ខ្លួន និង/ឬ​វាល​ទម្រង់​ផ្ទាល់ខ្លួន"
+
+#: ui_main.upload_reports_detail_4d
+msgctxt "ui_main.upload_reports_detail_4d"
+msgid ""
+"At least one of the personal information fields(name, surname,email) entries"
+" MUST exist. Empty records will not be imported"
+msgstr "នៅ​ក្នុង​វាល​ព័ត៌មាន​ផ្ទាល់ខ្លួន ត្រូវតែ​បាន​បំពេញ​ធាតុ​មួយ​យ៉ាង​ហោច​​ក្នុង​ចំណោម (នាម​ខ្លួន, នាម​ត្រកូល​ អ៊ីមែល) ។ កំណត់ត្រា​ទទេ​នឹង​មិន​ត្រូវ​បាន​នាំចូល​ឡើយ"
+
+#: ui_main.upload_reports_detail_4e
+msgctxt "ui_main.upload_reports_detail_4e"
+msgid ""
+"Your entries for dropdown fields, radio buttons and checkboxes match the "
+"options provided for the custom field on your instance"
+msgstr "ធាតុ​របស់​អ្នក​នៅ​ក្នុង​វាល​ទម្លាក់​ចុះ ប៊ូតុង​មូល និង​ប្រអប់​ធីក​គឺ​ផ្គូផ្គង​គ្នា​ជាមួយ​ជម្រើស​ដែល​បាន​ផ្ដល់​សម្រាប់​​ធាតុ​វាល​ផ្ទាល់ខ្លួន​របស់​អ្នក"
+
+#: ui_main.upload_reports_detail_4f
+msgctxt "ui_main.upload_reports_detail_4f"
+msgid ""
+"Checkbox options are separated by a comma e.g if your selected choice of "
+"fruits is apples,mangoes and grapes, your entry for this should be "
+"\"apples,mangoes,grapes\""
+msgstr "ជម្រើស​ប្រអប់​ធីក​ត្រូវ​បាន​បំបែក​ដោយ​សញ្ញា​ក្បៀស ឧ. ប្រសិនបើ​អ្នក​បាន​ជ្រើស​ផ្លែ​ប៉ោម ស្វាយ និង​ទំពាំងបាយជូរ នោះ​ធាតុ​របស់​អ្នក​គឺ \"ប៉ោម, ស្វាយ, ទំពាំងបាយជូរ\""
+
+#: ui_main.upload_reports_detail_4g
+msgctxt "ui_main.upload_reports_detail_4g"
+msgid ""
+"Date field values are in the following format: mm/dd/yyyy e.g 3rd October "
+"2012 = 10/03/2012"
+msgstr "តម្លៃ​វាល​កាលបរិច្ឆេទ​គឺ​មាន​ទម្រង់​ដូច​ខាងក្រោម៖ mm/dd/yyyy ឧ. ថ្ងៃ​ទី៣ ខែ​តុលា ឆ្នាំ​២០១២ = ១០/០៣/២០១២"
+
+#: ui_main.upload_reports_detail_5
+msgctxt "ui_main.upload_reports_detail_5"
+msgid "A Sample CSV Report"
+msgstr "គំរូ​របាយការណ៍ CSV"
+
+#: ui_main.upload_reports_detail_6
+msgctxt "ui_main.upload_reports_detail_6"
+msgid ""
+"#,INCIDENT TITLE,INCIDENT "
+"DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED,LATITUDE,LONGITUDE<br "
+"/>\"1\",\"Suspected death in Nairobi\",\"2009-05-15 "
+"01:06:00\",\"Nairobi\",\"Three cases have been confirmed in C. del "
+"Uruguay\",\"DEATHS, CIVILIANS, \",YES,YES,\"-1.287\",\"36.821\""
+msgstr "#,INCIDENT TITLE,INCIDENT DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED,LATITUDE,LONGITUDE<br />\"1\",\"Suspected death in Nairobi\",\"2009-05-15 01:06:00\",\"Nairobi\",\"Three cases have been confirmed in C. del Uruguay\",\"DEATHS, CIVILIANS, \",YES,YES,\"-1.287\",\"36.821\""
+
+#: ui_main.upload_reports_detail_7
+msgctxt "ui_main.upload_reports_detail_7"
+msgid ""
+"\"2\",\"Looting\",\"2009-03-18 10:10:00\",\"Accra\",\"Looting happening "
+"everywhere\",\"RIOTS, DEATHS, PROPERTY LOSS, "
+"\",YES,NO,\"5.55\",\"-0.2166667\""
+msgstr "\"2\",\"Looting\",\"2009-03-18 10:10:00\",\"Accra\",\"Looting happening everywhere\",\"RIOTS, DEATHS, PROPERTY LOSS, \",YES,NO,\"5.55\",\"-0.2166667\""
+
+#: ui_main.upload_successful
+msgctxt "ui_main.upload_successful"
+msgid "Upload Successful"
+msgstr "បាន​ផ្ទុក​ឡើង​ដោយ​ជោគជ័យ"
+
+#: ui_main.upload_video
+msgctxt "ui_main.upload_video"
+msgid "Upload Video"
+msgstr "ផ្ទុក​វីដេអូ​ឡើង"
+
+#: ui_main.url
+msgctxt "ui_main.url"
+msgid "URL"
+msgstr "URL"
+
+#: ui_main.user
+msgctxt "ui_main.user"
+msgid "User"
+msgstr "អ្នកប្រើ"
+
+#: ui_main.username
+msgctxt "ui_main.username"
+msgid "Username"
+msgstr "ឈ្មោះ​អ្នកប្រើ"
+
+#: ui_main.ushahidi_admin
+msgctxt "ui_main.ushahidi_admin"
+msgid "Ushahidi Admin"
+msgstr "អ្នក​គ្រប់គ្រង​ Ushahidi"
+
+#: ui_main.verification
+msgctxt "ui_main.verification"
+msgid "Verification"
+msgstr "ការ​ផ្ទៀងផ្ទាត់"
+
+#: ui_main.verified
+msgctxt "ui_main.verified"
+msgid "Verified"
+msgstr "បាន​ផ្ទៀងផ្ទាត់"
+
+#: ui_main.verified_reports
+msgctxt "ui_main.verified_reports"
+msgid "Verified Reports"
+msgstr "បាន​ផ្ទៀងផ្ទាត់​របាយការណ៍"
+
+#: ui_main.verify
+msgctxt "ui_main.verify"
+msgid "Verify"
+msgstr "ផ្ទៀងផ្ទាត់"
+
+#: ui_main.verify_this_report
+msgctxt "ui_main.verify_this_report"
+msgid "Verify this Report"
+msgstr "ផ្ទៀងផ្ទាត់​របាយការណ៍​នេះ"
+
+#: ui_main.version
+msgctxt "ui_main.version"
+msgid "Version"
+msgstr "កំណែ"
+
+#: ui_main.via
+msgctxt "ui_main.via"
+msgid "via"
+msgstr "តាមរយៈ"
+
+#: ui_main.video
+msgctxt "ui_main.video"
+msgid "Video"
+msgstr "វីដេអូ"
+
+#: ui_main.view
+msgctxt "ui_main.view"
+msgid "View"
+msgstr "មើល"
+
+#: ui_main.views
+msgctxt "ui_main.views"
+msgid "Views"
+msgstr "ទិដ្ឋភាព"
+
+#: ui_main.view_all
+msgctxt "ui_main.view_all"
+msgid "View All"
+msgstr "មើល​ទាំងអស់"
+
+#: ui_main.view_all_feeds
+msgctxt "ui_main.view_all_feeds"
+msgid "View all feeds"
+msgstr "មើល​មតិ​ព័ត៌មាន​ទាំងអស់"
+
+#: ui_main.view_all_reports
+msgctxt "ui_main.view_all_reports"
+msgid "View all reports"
+msgstr "មើល​របាយការណ៍​ទាំងអស់"
+
+#: ui_main.view_items
+msgctxt "ui_main.view_items"
+msgid "View Items"
+msgstr "មើល​ធាតុ"
+
+#: ui_main.view_more
+msgctxt "ui_main.view_more"
+msgid "View More"
+msgstr "មើល​ច្រើន​ទៀត"
+
+#: ui_main.view_public_profile
+msgctxt "ui_main.view_public_profile"
+msgid "View Public Profile"
+msgstr "មើល​ទម្រង់​សាធារណៈ"
+
+#: ui_main.view_report
+msgctxt "ui_main.view_report"
+msgid "View Report"
+msgstr "មើល​របាយការណ៍"
+
+#: ui_main.view_reports
+msgctxt "ui_main.view_reports"
+msgid "View Reports"
+msgstr "មើល​របាយការណ៍"
+
+#: ui_main.view_video
+msgctxt "ui_main.view_video"
+msgid "View Video"
+msgstr "មើល​ហេតុ​ការណ៍​"
+
+#: ui_main.visible
+msgctxt "ui_main.visible"
+msgid "Visible"
+msgstr "អាច​មើល​ឃើញ"
+
+#: ui_main.waiting_approval
+msgctxt "ui_main.waiting_approval"
+msgid "Waiting Approval"
+msgstr "រង់ចាំ​ការ​អនុម័ត"
+
+#: ui_main.waiting_verification
+msgctxt "ui_main.waiting_verification"
+msgid "Waiting Verification"
+msgstr "រង់ចាំ​ការ​អះអាង"
+
+#: ui_main.wider_map
+msgctxt "ui_main.wider_map"
+msgid "Wider Map"
+msgstr "ផែន​ទី​ធំ​ជាង​"
+
+#: ui_main.web_form
+msgctxt "ui_main.web_form"
+msgid "Web Form"
+msgstr "សំណុំ​បែបបទ​បណ្ដាញ"
+
+#: ui_main.web
+msgctxt "ui_main.web"
+msgid "Web"
+msgstr "តំបន់បណ្ដាញ"
+
+#: ui_main.weight
+msgctxt "ui_main.weight"
+msgid "Weight"
+msgstr "ទម្ងន់"
+
+#: ui_main.Weekly
+msgctxt "ui_main.Weekly"
+msgid "Weekly"
+msgstr ""
+
+#: ui_main.yes
+msgctxt "ui_main.yes"
+msgid "Yes"
+msgstr "បាទ/ចាស​"
+
+#: ui_main.yesterday
+msgctxt "ui_main.yesterday"
+msgid "Yesterday"
+msgstr "ម្សិលមិញ"
+
+#: ui_main.your_dashboard
+msgctxt "ui_main.your_dashboard"
+msgid "Your Dashboard"
+msgstr "ផ្ទាំង​គ្រប់គ្រង​របស់​អ្នក"
+
+#: ui_main.your_file
+msgctxt "ui_main.your_file"
+msgid "Your file"
+msgstr "ឯកសារ​របស់​អ្នក"
+
+#: ui_main.zoom_in
+msgctxt "ui_main.zoom_in"
+msgid "Zoom In"
+msgstr "ពង្រីក"
+
+#: ui_main.zoom_out
+msgctxt "ui_main.zoom_out"
+msgid "Zoom Out"
+msgstr "បង្រួម"

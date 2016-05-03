@@ -1,0 +1,201 @@
+# 
+# Translators:
+# Almita <alma.seper@oneworldsee.org>, 2012
+# prangec <dejan.georgievski@oneworldsee.org>, 2012
+# Fikret Muratović <fikretmuratovic@gmail.com>, 2012
+# Šejla K. <shejlo@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Bosnian (Bosnia and Herzegovina) (http://www.transifex.com/ushahidi/ushahidi-v2/language/bs_BA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bs_BA\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: stats.approved
+msgctxt "stats.approved"
+msgid "Approved"
+msgstr "Odobreno"
+
+#: stats.categories
+msgctxt "stats.categories"
+msgid "Categories"
+msgstr "Kategorije"
+
+#: stats.category_impact
+msgctxt "stats.category_impact"
+msgid "Category Impact"
+msgstr "Kategorija utjecaja"
+
+#: stats.category_impact_description
+msgctxt "stats.category_impact_description"
+msgid ""
+"This chart gives you a linear view of the reports by category over time.  "
+"Scroll from left to right to see a comparative view of the different "
+"categories. Mouse over the graph for more details."
+msgstr "Na ovom grafikonu imate linearni i hronološki prikaz izvještaja po kategorijama. Listajte s lijeva na desno kako bi dobili komparativni pregled razčilitih kategorija. Pređite mišem preko grafikona kako bi dobili više detalja."
+
+#: stats.choose_date_range
+msgctxt "stats.choose_date_range"
+msgid "Choose a date range."
+msgstr "Odaberite vremensko razdoblje."
+
+#: stats.countries
+msgctxt "stats.countries"
+msgid "Countries"
+msgstr "Države"
+
+#: stats.country
+msgctxt "stats.country"
+msgid "Country"
+msgstr "Država"
+
+#: stats.country_breakdown
+msgctxt "stats.country_breakdown"
+msgid "Country Breakdown"
+msgstr "Pregled po državama"
+
+#: stats.description
+msgctxt "stats.description"
+msgid ""
+"This is the statistics section and will contain a general description here "
+"soon. For now, browse around using the sub category links above."
+msgstr "Ovo je statistička sekcija na kojo će se uskoro nalaziti i opšti opis. Za sada možete pregledati informacije preko linkova za podkategorije koji se nalaze iznad."
+
+#: stats.error
+msgctxt "stats.error"
+msgid "Error"
+msgstr "Greška"
+
+#: stats.glossary
+msgctxt "stats.glossary"
+msgid "Glossary"
+msgstr "Pojmovnik"
+
+#: stats.hit_summary
+msgctxt "stats.hit_summary"
+msgid "Hit Summary"
+msgstr "Sumirani prikaz hitova"
+
+#: stats.legend
+msgctxt "stats.legend"
+msgid "Legend"
+msgstr "Legenda"
+
+#: stats.pageviews
+msgctxt "stats.pageviews"
+msgid "Pageviews"
+msgstr "Posjete individualnih stranica"
+
+#: stats.pageviews_description
+msgctxt "stats.pageviews_description"
+msgid "The total number of pages that visitors have viewed on your site"
+msgstr "Ukupan broj stranica koje su posjetitelji vidjeli na tvom sajtu"
+
+#: stats.reports
+msgctxt "stats.reports"
+msgid "Reports"
+msgstr "Izvještaji"
+
+#: stats.reports_categories
+msgctxt "stats.reports_categories"
+msgid "Reports Categories"
+msgstr "Kategorije izvještaja"
+
+#: stats.reports_statistics
+msgctxt "stats.reports_statistics"
+msgid "Reports Statistics"
+msgstr "Statistike izvještaja"
+
+#: stats.reports_status
+msgctxt "stats.reports_status"
+msgid "Reports Status"
+msgstr "Statusi izvještaja"
+
+#: stats.report_punchcard
+msgctxt "stats.report_punchcard"
+msgid "Report Punchcard"
+msgstr "Perforirana kartica izvještaja"
+
+#: stats.report_stats
+msgctxt "stats.report_stats"
+msgid "Report Stats"
+msgstr "Statistički izvještaj"
+
+#: stats.stats_not_setup
+msgctxt "stats.stats_not_setup"
+msgid "Stats Not Set Up"
+msgstr "Statistika nije postavljena"
+
+#: stats.time_range_1
+msgctxt "stats.time_range_1"
+msgid "1 Month"
+msgstr "1 mjesec"
+
+#: stats.time_range_2
+msgctxt "stats.time_range_2"
+msgid "3 Months"
+msgstr "3 mjeseca"
+
+#: stats.time_range_3
+msgctxt "stats.time_range_3"
+msgid "6 Months"
+msgstr "6 mjeseci"
+
+#: stats.time_range_all
+msgctxt "stats.time_range_all"
+msgid "All"
+msgstr "Ukupno"
+
+#: stats.unapproved
+msgctxt "stats.unapproved"
+msgid "Unapproved"
+msgstr "Neodobreno"
+
+#: stats.unique_visitors
+msgctxt "stats.unique_visitors"
+msgid "Unique Visitors"
+msgstr "Pojedinačni posjetitelji"
+
+#: stats.unique_visitors_description
+msgctxt "stats.unique_visitors_description"
+msgid ""
+"The number of individuals coming to your deployment. Unique visitors are "
+"determined using cookies. Visitors that do not have cookies enabled will be "
+"identified using a simple heuristic taking into account IP address, "
+"resolution, browser, plugins, OS, etc."
+msgstr "Broj osoba koji prilaze vašoj postavci. Unikatni posjetioci određuju se korištenjem cookie-ja. Posjetioci/teljke koji nisu aktivirali korištenje cookie-ja biće identificirani/ne korištenjem jednostavnim heurističkim pregledom IP adresa, rezolucija, pregledača, pluginova, operativnih sistema, itd."
+
+#: stats.unverified
+msgctxt "stats.unverified"
+msgid "Unverified"
+msgstr "Ne odobreno"
+
+#: stats.verified
+msgctxt "stats.verified"
+msgid "Verified"
+msgstr "Odobreno"
+
+#: stats.visitor_summary
+msgctxt "stats.visitor_summary"
+msgid "Visitor Summary"
+msgstr "Pregled posjetioca."
+
+#: stats.visits
+msgctxt "stats.visits"
+msgid "Visits"
+msgstr "Posjete"
+
+#: stats.visits_description
+msgctxt "stats.visits_description"
+msgid ""
+"A visit is a record of a unique visitor coming to the site more than 30 "
+"minutes past his/her last pageview."
+msgstr "Posjetom se smatra zapis dolaska unikatnog posjetioca/teljke više od 30 minuta nakon njegove/njene posledne posjete neke individualne strane"

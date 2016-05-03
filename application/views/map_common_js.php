@@ -85,7 +85,7 @@
 			return;
 		}
 		
-		if (typeof radius == 'undefined' || radius > 0)
+		if (typeof radius == 'undefined' || radius <= 0)
 		{
 			// Set the radius to a default value
 			radius = 20000;
@@ -110,7 +110,7 @@
 	}
 	
 	/**
-	 * Draw circle around point
+	 * Draw circle around point and return the layer
 	 */
 	function drawCircle(map, lat, lon, radius)
 	{
@@ -145,6 +145,8 @@
 		);
 		
 		radiusLayer.addFeatures( [circleFeature] );
+
+		return radiusLayer;
 	}
 	
 	/**

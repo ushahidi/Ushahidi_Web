@@ -1,0 +1,112 @@
+# 
+# Translators:
+# lcs <lucas-r-l@hotmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-09-11 06:22+0000\n"
+"PO-Revision-Date: 2014-03-27 15:58+0000\n"
+"Last-Translator: lcs <lucas-r-l@hotmail.com>\n"
+"Language-Team: Spanish (Spain) (http://www.transifex.com/ushahidi/ushahidi-v2/language/es_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: permissions.reports_view
+msgctxt "permissions.reports_view"
+msgid "View Reports"
+msgstr "Ver informes"
+
+#: permissions.reports_edit
+msgctxt "permissions.reports_edit"
+msgid "Create/Edit/Delete Reports"
+msgstr "Crear/Editar/Eliminar informes"
+
+#: permissions.reports_approve
+msgctxt "permissions.reports_approve"
+msgid "Approve Reports"
+msgstr "Aprobar informes"
+
+#: permissions.reports_verify
+msgctxt "permissions.reports_verify"
+msgid "Verify Reports"
+msgstr "Verificar informes"
+
+#: permissions.reports_comments
+msgctxt "permissions.reports_comments"
+msgid "Manage Report Comments"
+msgstr "Gestionar comentarios"
+
+#: permissions.reports_download
+msgctxt "permissions.reports_download"
+msgid "Download Reports"
+msgstr "Descargar informes"
+
+#: permissions.reports_upload
+msgctxt "permissions.reports_upload"
+msgid "Upload Reports"
+msgstr "Subir informes"
+
+#: permissions.messages
+msgctxt "permissions.messages"
+msgid "Manage Messages"
+msgstr "Gestionar mensajes"
+
+#: permissions.messages_reporters
+msgctxt "permissions.messages_reporters"
+msgid "Manage Message Reporters"
+msgstr "Gestionar mensajes de los reporteros."
+
+#: permissions.stats
+msgctxt "permissions.stats"
+msgid "View Stats"
+msgstr "Ver estadísticas."
+
+#: permissions.settings
+msgctxt "permissions.settings"
+msgid "Modify Settings"
+msgstr "Modificar los ajustes"
+
+#: permissions.manage
+msgctxt "permissions.manage"
+msgid "Manage Panel"
+msgstr "Gestionar el panel"
+
+#: permissions.users
+msgctxt "permissions.users"
+msgid "Manage Users"
+msgstr "Gestionar usuarios"
+
+#: permissions.manage_roles
+msgctxt "permissions.manage_roles"
+msgid "Manage Roles"
+msgstr "Gestionar Roles"
+
+#: permissions.checkin
+msgctxt "permissions.checkin"
+msgid "Can checkin"
+msgstr "Puede comprobar"
+
+#: permissions.checkin_admin
+msgctxt "permissions.checkin_admin"
+msgid "Manage checkins"
+msgstr "Gestionar comprobaciones"
+
+#: permissions.admin_ui
+msgctxt "permissions.admin_ui"
+msgid "Access Admin UI"
+msgstr "Acceder a la interfaz de administrador."
+
+#: permissions.member_ui
+msgctxt "permissions.member_ui"
+msgid "Access Members UI"
+msgstr "Acceder a la interfaz de miembro."
+
+#: permissions.delete_all_reports
+msgctxt "permissions.delete_all_reports"
+msgid "Delete all reports"
+msgstr "Borrar todos los informes."

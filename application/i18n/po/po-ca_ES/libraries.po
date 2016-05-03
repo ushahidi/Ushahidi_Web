@@ -1,0 +1,117 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Catalan (Spain) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ca_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: libraries.akismet_cannot_connect
+msgctxt "libraries.akismet_cannot_connect"
+msgid "Could not connect to Akismet server."
+msgstr "No es pot connectar al servidor Akismet"
+
+#: libraries.akismet_cannot_retrieve
+msgctxt "libraries.akismet_cannot_retrieve"
+msgid "The response from Akismet could not be retrieved."
+msgstr "No es pot rebre resposta d`Akismet"
+
+#: libraries.api_library_not_found
+msgctxt "libraries.api_library_not_found"
+msgid ""
+"The API library: <strong>%s</strong> for the <strong>%s</strong> class could"
+" not be found. Please check your API task routing table."
+msgstr "La llibreria API: <strong>%s</strong>, per la classe <strong>%s</strong> no es troba. Si us plau, reviseu la taula d`enrutament de les tasques de l`API."
+
+#: libraries.askimet_invalid_apikey
+msgctxt "libraries.askimet_invalid_apikey"
+msgid "Your Akismet API key is not valid."
+msgstr "La clau API de l`Akismet no és vàlida"
+
+#: libraries.clickatell_fopen_error
+msgctxt "libraries.clickatell_fopen_error"
+msgid ""
+"Error while executing fopen sending method!<br>Please check whether PHP has "
+"OpenSSL support and whether the PHP version is greater than 5.2."
+msgstr "Error executant el métode d`enviament fopen!<br>Si us plau, reviseu que el PHP suporta OpenSSL i que la versióde PHP és superior a la 5.2"
+
+#: libraries.clickatell_message_too_long
+msgctxt "libraries.clickatell_message_too_long"
+msgid "Your unicode message is too long! (Current length="
+msgstr "El missatge es massa llarg! (Llargada actual="
+
+#: libraries.clickatell_no_destination_address
+msgctxt "libraries.clickatell_no_destination_address"
+msgid "Please specify a destination address (TO)!"
+msgstr "Si us plau, especifiqueu un adreça de destinació (TO-A)!"
+
+#: libraries.clickatell_no_sender_address
+msgctxt "libraries.clickatell_no_sender_address"
+msgid "Please specify source address (FROM)!"
+msgstr "Si us plau, especifiqueu una adreça d`origen (FROM-DE)!"
+
+#: libraries.clickatell_unicode_message_too_long
+msgctxt "libraries.clickatell_unicode_message_too_long"
+msgid "Your unicode message is too long! (Current length="
+msgstr "El missatge unicode es massa llarg! (Llargada actual="
+
+#: libraries.clickatell_unsupported_method
+msgctxt "libraries.clickatell_unsupported_method"
+msgid "Unsupported sending method!"
+msgstr "Métode d`enviament no suportat!"
+
+#: libraries.invalid_api_library
+msgctxt "libraries.invalid_api_library"
+msgid ""
+"The API library %s is invalid. All API libraries must be subclasses of %s."
+msgstr "La llibreria API %s no és vàlida. Totes les llibreries d`API han de ser subclasses de %s"
+
+#: libraries.upgrade_directory_not_deleted
+msgctxt "libraries.upgrade_directory_not_deleted"
+msgid "Directory <code>%s</coded> could not be deleted."
+msgstr "El directori <code>%s</coded> no es pot esborrar"
+
+#: libraries.upgrade_extracting_error
+msgctxt "libraries.upgrade_extracting_error"
+msgid "Error while extracting: <code>%s</code>"
+msgstr "Error a l`extreure: <code>%s</code>"
+
+#: libraries.upgrade_failed
+msgctxt "libraries.upgrade_failed"
+msgid "Downloading the latest Ushahidi failed. HTTP status code"
+msgstr "La descàrrega de la darrera versió de l`Ushahidi ha fallat. Codi d`estat HTTP"
+
+#: libraries.upgrade_file_not_copied
+msgctxt "libraries.upgrade_file_not_copied"
+msgid "File <code>%s</coded> could not be copied."
+msgstr "El fitxer <code>%s</coded> no es pot copiar"
+
+#: libraries.upgrade_file_not_deleted
+msgctxt "libraries.upgrade_file_not_deleted"
+msgid "File <code>%s</coded> could not be deleted."
+msgstr "El fitxer <code>%s</coded> no es pot esborrar"
+
+#: libraries.upgrade_title
+msgctxt "libraries.upgrade_title"
+msgid "Ushahidi upgrade script"
+msgstr "Script d`actualització de l`Ushahidi"
+
+#: libraries.upgrade_zip_error
+msgctxt "libraries.upgrade_zip_error"
+msgid ""
+"The downloaded Ushahidi zip file <code>%s</code>, could not be written."
+msgstr "Al fitxer zip d`Ushahidi descarregat: <code>%s</code>, no es pot escriure"
+
+#: libraries.riverid_variable_not_available
+msgctxt "libraries.riverid_variable_not_available"
+msgid "%s is not available in the RiverID class."
+msgstr "%s no està disponible en la classe RiverID."

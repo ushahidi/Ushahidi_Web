@@ -1,0 +1,394 @@
+# 
+# Translators:
+# mindthecam <mindthecam.gr@gmail.com>, 2013
+# Wasilis <m.wasilis@yahoo.de>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-08-22 06:26+0000\n"
+"PO-Revision-Date: 2013-08-22 06:22+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Greek (http://www.transifex.com/ushahidi/ushahidi-v2/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: report.comments_form_error
+msgctxt "report.comments_form_error"
+msgid "error!"
+msgstr "Σφάλμα"
+
+#: report.country_name.single_country
+msgctxt "report.country_name.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the report "
+"location is within the country %s."
+msgstr "Αυτή η εγκατάσταση αναφέρεται μόνο σε μια χώρα. Παρακαλώ επιβεβαίωσε ότι η τοποθεσία της αναφοράς βρίσκεται μέσα στη χώρα %s."
+
+#: report.custom_field.values
+msgctxt "report.custom_field.values"
+msgid "Please enter a valid value for the \"%s\" field."
+msgstr ""
+
+#: report.custom_field.numeric
+msgctxt "report.custom_field.numeric"
+msgid "The \"%s\" field must be numeric."
+msgstr "Το πεδίο \"%s\" πρέπει να είναι αριθμητικό."
+
+#: report.custom_field.required
+msgctxt "report.custom_field.required"
+msgid "The \"%s\" field is required."
+msgstr "Το πεδίο \"%s\" είναι υποχρεωτικό."
+
+#: report.custom_field.not_exist
+msgctxt "report.custom_field.not_exist"
+msgid "The \"%s\" field is does not exist."
+msgstr " Το πεδίο \"%s\" δεν υπάρχει."
+
+#: report.custom_field.permission
+msgctxt "report.custom_field.permission"
+msgid "The \"%s\" field cannot be edited by your account."
+msgstr "Το πεδίο \"%s\" δεν μπορεί να επεξεργαστεί από το λογαριασμό σας."
+
+#: report.custom_field.email
+msgctxt "report.custom_field.email"
+msgid "The \"%s\" field must contain a valid email address."
+msgstr "Το πεδίο \"%s\" πρέπει να περιέχει μια έγκυρη email διεύθυνση."
+
+#: report.custom_field.phone
+msgctxt "report.custom_field.phone"
+msgid "The \"%s\" field must contain a valid phone number."
+msgstr "Το πεδίο \"%s\" πρέπει να περιέχει έναν έγκυρο αριθμό τηλεφώνου."
+
+#: report.custom_field.date_mmddyyyy
+msgctxt "report.custom_field.date_mmddyyyy"
+msgid "The \"%s\" field must contain a valid date (MM/DD/YYYY)."
+msgstr "Το πεδίο \"%s\" πρέπει να περιέχει μια έγκυρη ημερομηνία (MM/DD/YYYY)."
+
+#: report.custom_field.date_ddmmyyyy
+msgctxt "report.custom_field.date_ddmmyyyy"
+msgid "The \"%s\" field must contain a valid date (DD/MM/YYYY)."
+msgstr "Το πεδίο \"%s\" πρέπει να περιέχει μια έγκυρη ημερομηνία (DD/MM/YYYY)."
+
+#: report.data_include.between
+msgctxt "report.data_include.between"
+msgid "Please select a valid item to include in the download."
+msgstr "Παρακαλώ διάλεξε ένα έγκυρο αντικείμενο για να συμπεριληφθεί στην λήψη."
+
+#: report.data_include.numeric
+msgctxt "report.data_include.numeric"
+msgid "Please select a valid item to include in the download."
+msgstr "Παρακαλώ διάλεξε ένα έγκυρο αντικείμενο για να συμπεριληφθεί στην λήψη."
+
+#: report.data_active.between
+msgctxt "report.data_active.between"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Παρακαλώ επίλεξε \"Αναφορές εν αναμονή έγκρισης\" ή \"Εγκεκριμένες Αναφορές\" ή και τα δύο."
+
+#: report.data_active.numeric
+msgctxt "report.data_active.numeric"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Παρακαλώ επίλεξε \"Αναφορές εν αναμονή έγκρισης\" ή \"Εγκεκριμένες Αναφορές\" ή και τα δύο."
+
+#: report.data_active.required
+msgctxt "report.data_active.required"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Παρακαλώ επίλεξε \"Αναφορές εν αναμονή έγκρισης\" ή \"Εγκεκριμένες Αναφορές\" ή και τα δύο."
+
+#: report.data_verified.between
+msgctxt "report.data_verified.between"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Παρακαλώ επίλεξε \"Αναφορές εν αναμονή επαλήθευσης\" ή \"Επαληθευμένες Αναφορές\" ή και τα δύο."
+
+#: report.data_verified.numeric
+msgctxt "report.data_verified.numeric"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Παρακαλώ επίλεξε \"Αναφορές εν αναμονή επαλήθευσης\" ή \"Επαληθευμένες Αναφορές\" ή και τα δύο."
+
+#: report.data_verified.required
+msgctxt "report.data_verified.required"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Παρακαλώ επίλεξε \"Αναφορές εν αναμονή επαλήθευσης\" ή \"Επαληθευμένες Αναφορές\" ή και τα δύο."
+
+#: report.data_point.between
+msgctxt "report.data_point.between"
+msgid "Please select a valid type of report to download."
+msgstr "Παρακαλώ διάλεξε ένα έγκυρο τύπο για να συμπεριληφθεί στην λήψη."
+
+#: report.data_point.numeric
+msgctxt "report.data_point.numeric"
+msgid "Please select a valid type of report to download."
+msgstr "Παρακαλώ διάλεξε ένα έγκυρο τύπο για να συμπεριληφθεί στην λήψη."
+
+#: report.data_point.required
+msgctxt "report.data_point.required"
+msgid "Please select a valid type of report to download."
+msgstr "Παρακαλώ επίλεξε ένα έγκυρο τύπο αναφοράς για μεταφόρτωση."
+
+#: report.format.required
+msgctxt "report.format.required"
+msgid "You must select a download format. Select either CSV or XML."
+msgstr "Πρέπει να επιλέξεις μια μορφή μεταφόρτωσης. Επίλεξε είτε CSV, είτε XML."
+
+#: report.format.valid
+msgctxt "report.format.valid"
+msgid "Please select a valid format to download your reports in"
+msgstr "Παρακαλώ επίλεξε μια έγκυρη μορφή για τη μεταφόρτωση των αναφορών σου."
+
+#: report.from_date.date_mmddyyyy
+msgctxt "report.from_date.date_mmddyyyy"
+msgid "The FROM date field does not appear to contain a valid date."
+msgstr "Το πεδίο ΑΠΟ δεν περιλαμβάνει έγκυρη ημερομηνία"
+
+#: report.from_date.range
+msgctxt "report.from_date.range"
+msgid "Please enter a valid FROM date. It cannot be greater than today."
+msgstr "Παρακαλώ εισήγαγε έγκυρη ημερομηνία στο πεδιο ΑΠΟ.Δεν μπορει να ειναι μεγαλυτερο απο σημερα."
+
+#: report.incident_active.between
+msgctxt "report.incident_active.between"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Το πεδίο ΕΓΚΡΙΣΗ ΑΥΤΗΣ ΤΗΣ ΑΝΑΦΟΡΑΣ δεν ειναι έγκυρο"
+
+#: report.incident_active.required
+msgctxt "report.incident_active.required"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Το πεδίο ΕΓΚΡΙΣΗ ΑΥΤΗΣ ΤΗΣ ΑΝΑΦΟΡΑΣ δεν ειναι έγκυρο"
+
+#: report.incident_ampm.validvalues
+msgctxt "report.incident_ampm.validvalues"
+msgid "The am/pm field does not appear to contain a valid value."
+msgstr "Το πεδίο πμ/μμ δεν ειναι έγκυρο"
+
+#: report.incident_category.numeric
+msgctxt "report.incident_category.numeric"
+msgid "The \"Categories\" field does not appear to contain a valid category."
+msgstr "Το πεδίο \"Κατηγορίες\" δε φαίνεται να περιέχει κάποια έγκυρη κατηγορία."
+
+#: report.incident_category.required
+msgctxt "report.incident_category.required"
+msgid "The \"Categories\" field is required."
+msgstr "Το πεδίο \"Κατηγορίες\" είναι προαπαιτούμενο."
+
+#: report.incident_date.date_ddmmyyyy
+msgctxt "report.incident_date.date_ddmmyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "Το πεδίο ημερομηνίας δεν ειναι έγκυρο"
+
+#: report.incident_date.date_mmddyyyy
+msgctxt "report.incident_date.date_mmddyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "Το πεδίο ημερομηνίας δεν ειναι έγκυρο"
+
+#: report.incident_date.required
+msgctxt "report.incident_date.required"
+msgid "The date field is required."
+msgstr "Ημερομηνία απαιτείται"
+
+#: report.incident_description.required
+msgctxt "report.incident_description.required"
+msgid "The \"Description\" field is required."
+msgstr "Το πεδίο ΠΕΡΙΓΡΑΦΗ απαιτείται"
+
+#: report.incident_hour.between
+msgctxt "report.incident_hour.between"
+msgid "The hour field does not appear to contain a valid hour."
+msgstr "Το πεδίο ΩΡΑ δεν ειναι έγκυρο"
+
+#: report.incident_hour.required
+msgctxt "report.incident_hour.required"
+msgid "The hour field is required."
+msgstr "Το πεδίο ΩΡΑ δεν ειναι έγκυρο"
+
+#: report.incident_information.alpha
+msgctxt "report.incident_information.alpha"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Παρακαλώ δωσε μια έγκυρη τιμή για την πιθανότητα της πληροφορίας."
+
+#: report.incident_information.length
+msgctxt "report.incident_information.length"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Παρακαλώ δωσε μια έγκυρη τιμή για την πιθανότητα της πληροφορίας."
+
+#: report.incident_minute.between
+msgctxt "report.incident_minute.between"
+msgid "The minute field does not appear to contain a valid value."
+msgstr "Το πεδίο ΛΕΠΤΑ δεν ειναι έγκυρο"
+
+#: report.incident_minute.required
+msgctxt "report.incident_minute.required"
+msgid "The minute field is required."
+msgstr "Το πεδίο ΛΕΠΤΑ απαιτείται"
+
+#: report.incident_news.url
+msgctxt "report.incident_news.url"
+msgid "The news source links field does not appear to contain a valid URL."
+msgstr "Το πεδίο εισαγωγής ηλεκτρονικής διεύθυνσης νέων δε φαίνεται να περιέχει κάποια έγκυρη διεύθυνση URL. "
+
+#: report.incident_photo.size
+msgctxt "report.incident_photo.size"
+msgid "Please ensure that photo upload sizes are limited to 2MB."
+msgstr "Παρακαλώ εξασφάλισε ότι η φωτογραφίες που ανεβάζεις δεν ξεπερνούν σε μέγεθος τα 2MB."
+
+#: report.incident_photo.type
+msgctxt "report.incident_photo.type"
+msgid ""
+"The Upload Photos field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "Το πεδίο \"Ανέβασε φωτογραφίες\" δεν περιέχει κάποια έγκυρη εικόνα. Οι τύποι αρχείου που γίνονται αποδεκτοί από το σύστημα είναι .jpg, .png και .gif."
+
+#: report.incident_photo.valid
+msgctxt "report.incident_photo.valid"
+msgid "The Upload Photos field does not appear to contain a valid file."
+msgstr "Το πεδίο \"Ανέβασε φωτογραφίες\" δεν περιέχει έγκυρο αρχείο."
+
+#: report.incident_source.alpha
+msgctxt "report.incident_source.alpha"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Παρακαλώ δώσε μια έγκυρη τιμή για την Αξιοπιστία της Πηγής."
+
+#: report.incident_source.length
+msgctxt "report.incident_source.length"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Παρακαλώ δώσε μια έγκυρη τιμή για την Αξιοπιστία της Πηγής."
+
+#: report.incident_title.length
+msgctxt "report.incident_title.length"
+msgid ""
+"The \"Report Title\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "Το πεδίοι \"Τίτλος αναφοράς\" πρέπει να έχει τουλάχιστον 3 χαρακτήρες και όχι περισσότερους από 200."
+
+#: report.incident_title.required
+msgctxt "report.incident_title.required"
+msgid "The \"Report Title\" field is required."
+msgstr "Το πεδίο \"Τίτλος αναφοράς\" είναι προαπαιτούμενο."
+
+#: report.incident_title.csrf
+msgctxt "report.incident_title.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a report?"
+msgstr "Πιθανή επίθεση CSRF. Ήθελες όντως να δημιουργήσεις / διορθώσεις κάποια αναφορά;"
+
+#: report.incident_verified.between
+msgctxt "report.incident_verified.between"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Παρακαλώ δώσε μια έγκυρη τιμή για το πεδίο \"Επιβεβαίωσε αυτή την Αναφορά\""
+
+#: report.incident_verified.required
+msgctxt "report.incident_verified.required"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Παρακαλώ δώσε μια έγκυρη τιμή για το πεδίο \"Επιβεβαίωσε αυτή την Αναφορά\""
+
+#: report.incident_video.url
+msgctxt "report.incident_video.url"
+msgid "The video links field does not appear to contain a valid URL."
+msgstr "Το πεδίο σύνδεσμου video δεν περιέχει σωστό URL."
+
+#: report.latitude.between
+msgctxt "report.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "Το πεδίο γεωγραφικού πλάτους δεν περιέχει έγκυρη τιμή."
+
+#: report.latitude.required
+msgctxt "report.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Το πεδίο γεωγραφικού πλάτους είναι προαπαιτούμενο. Παρακαλώ κάνε κλικ στο χάρτη για να υποδείξεις την τοποθεσία."
+
+#: report.locale.alpha_dash
+msgctxt "report.locale.alpha_dash"
+msgid "The locale field has an incorrect value. "
+msgstr "Το πεδίο γεωγραφικoύ προσδιορισμού έχει μη έγκυρη τιμή."
+
+#: report.locale.exists
+msgctxt "report.locale.exists"
+msgid "This report already has a translation for this language."
+msgstr "Αυτή η αναφορά διαθέτει ήδη μετάφραση σε αυτή τη γλώσσα."
+
+#: report.locale.length
+msgctxt "report.locale.length"
+msgid "The locale field has an incorrect value. "
+msgstr "Το πεδίο γεωγραφικoύ προσδιορισμού έχει μη έγκυρη τιμή."
+
+#: report.locale.locale
+msgctxt "report.locale.locale"
+msgid ""
+"The Original Report and the Translation have the same locale (language)."
+msgstr "Η αρχική αναφορά και η μετάφραση έχουν την ίδια τιμή γεωγραφικoύ προσδιορισμού (γλώσσα)."
+
+#: report.locale.required
+msgctxt "report.locale.required"
+msgid "The locale is required."
+msgstr "Η τιμή γεωγραφικoύ προσδιορισμού είναι προαπαιτούμενη."
+
+#: report.location_name.length
+msgctxt "report.location_name.length"
+msgid ""
+"The \"Location Name\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "Το πεδίο \"Όνομα τοποθεσίας\" πρέπει να έχει τουλάχιστον 3 χαρακτήρες και όχι περισσότερους από 200."
+
+#: report.location_name.required
+msgctxt "report.location_name.required"
+msgid "The \"Location Name\" field is required."
+msgstr "Το πεδίο \"Όνομα τοποθεσίας\" είναι προαπαιτούμενο."
+
+#: report.longitude.between
+msgctxt "report.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "Το πεδίο γεωγραφικού μήκους δεν περιέχει έγκυρη τιμή."
+
+#: report.longitude.required
+msgctxt "report.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Το πεδίο γεωγραφικού μήκους είναι προαπαιτούμενο. Παρακαλώ κάνε κλικ στο χάρτη για να υποδείξεις την τοποθεσία."
+
+#: report.person_email.email
+msgctxt "report.person_email.email"
+msgid "The email field does not appear to contain a valid email address."
+msgstr "Το πεδίο διεύθυνσης ηλεκτρονικού ταχυδρομείου δεν περιέχει έγκυρη διεύθυνση."
+
+#: report.person_email.length
+msgctxt "report.person_email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "Το πεδίο διεύθυνσης ηλεκτρονικού ταχυδρομείου πρέπει να περιέχει μεταξύ 4 και 64 χαρακτήρες."
+
+#: report.person_first.length
+msgctxt "report.person_first.length"
+msgid ""
+"The first name field must be at least 3 and no more 100 characters long."
+msgstr "Το πεδίο \"Όνομα\" πρέπει να περιέχει μεταξύ 3 και 100 χαρακτήρες."
+
+#: report.person_last.length
+msgctxt "report.person_last.length"
+msgid ""
+"The last name field must be at least 2 and no more 100 characters long."
+msgstr "Το πεδίο \"Επώνυμο\" πρέπει να περιέχει μεταξύ 3 και 100 χαρακτήρες."
+
+#: report.to_date.date_mmddyyyy
+msgctxt "report.to_date.date_mmddyyyy"
+msgid "The TO date field does not appear to contain a valid date."
+msgstr "Το πεδίο ημερομηνίας ΜΕΧΡΙ δεν περιέχει έγκυρη ημερομηνία."
+
+#: report.to_date.range
+msgctxt "report.to_date.range"
+msgid "Please enter a valid TO date. It cannot be greater than today."
+msgstr "Παρακαλώ δώσε μια έγκυρη ημερομηνία ΜΕΧΡΙ. Η ημερομηνία αυτή δεν μπορεί να είναι μεγαλύτερη από τη σημερινή."
+
+#: report.to_date.range_greater
+msgctxt "report.to_date.range_greater"
+msgid "Your FROM date cannot be greater than your TO date."
+msgstr "Η ημερομηνία ΑΠΟ δεν μπορεί να είναι ύστερα από την ημερομηνία ΜΕΧΡΙ."

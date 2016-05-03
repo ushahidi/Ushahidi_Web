@@ -1,0 +1,46 @@
+#. extracted from hy_AM/organization.php
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-29 11:18+1300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 1.9.0\n"
+
+#: $lang->'required'
+msgid "Մուտքագրեք կազմակերպության անվանումը:"
+msgstr ""
+
+#: $lang->'length'
+msgid ""
+"Կազմակերպության անվանումը պետք է պարունակի առնվազն 3 և առավելագույնը` 70 "
+"նիշ:"
+msgstr ""
+
+#: $lang->'standard_text'
+msgid "Օգտագործողի անունը ճիշտ չէ մուտքագրված:"
+msgstr ""
+
+#: $lang->'required'
+msgid "Մուտքագրեք կազմակերպության կայքի հասցեն:"
+msgstr ""
+
+#: $lang->'url'
+msgid ""
+"Մուտքագրեք ճիշտ URL: Օր. http://www.ushahidi.com'\n"
+"\t\t),\n"
+"\t\t\n"
+"\t\t'organization_description' => array\n"
+"\t\t(\n"
+"\t\t\t'required' => 'Մուտքագրեք կազմակերպության կարճ նկարագրությունը:'\n"
+"\t\t),\n"
+"\t\t\n"
+"\t\t'organization_email' => array\n"
+"\t\t(\n"
+"\t\t\t'email'\t\t  => 'Կազմակերպության էլ-փոստի դաշտում նշված հասցեն ճիշտ չէ:"
+msgstr ""

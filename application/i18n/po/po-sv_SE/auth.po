@@ -1,0 +1,252 @@
+# 
+# Translators:
+# bjorn.albertsson <bjorn.albertsson@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2014-08-19 22:07+0000\n"
+"Last-Translator: bjorn.albertsson <bjorn.albertsson@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/ushahidi/ushahidi-v2/language/sv_SE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: auth.email.email
+msgctxt "auth.email.email"
+msgid "The email you entered is not a valid email address."
+msgstr "E-postf&auml;ltet inneh&aring;ller inte en giltig e-postadress?"
+
+#: auth.email.exists
+msgctxt "auth.email.exists"
+msgid "Sorry, a user account already exists for this email address."
+msgstr "Det finns redan ett anv&auml;ndarnamn f&ouml;r denna e-postadress."
+
+#: auth.email.length
+msgctxt "auth.email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "E-postf&auml;ltet m&aring;ste vara mellan 4 och 64 tecken."
+
+#: auth.email.required
+msgctxt "auth.email.required"
+msgid "The email field is required."
+msgstr "E-postf&auml;ltet m&aring;ste fyllas i."
+
+#: auth.name.length
+msgctxt "auth.name.length"
+msgid "The name field must be at least 3 and no more 100 characters long."
+msgstr "Det fullst&auml;ndiga namnet m&aring;ste vara mellan 3 och 100 tecken."
+
+#: auth.name.required
+msgctxt "auth.name.required"
+msgid "The name field is required."
+msgstr "Fullst&auml;ndigt namn m&aring;ste anges."
+
+#: auth.name.standard_text
+msgctxt "auth.name.standard_text"
+msgid "The username field contains disallowed characters."
+msgstr "Anv&auml;ndarnamnet inneh&aring;ller ogiltiga tecken."
+
+#: auth.current_password.length
+msgctxt "auth.current_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "L&oring;senordet m&aring;ste best&aring; av minst 8 tecken."
+
+#: auth.current_password.login error
+msgctxt "auth.current_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr ""
+
+#: auth.current_password.matches
+msgctxt "auth.current_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Skriv samma l&oring;senord i de tv&aring; l&oring;senordsfälten."
+
+#: auth.current_password.required
+msgctxt "auth.current_password.required"
+msgid "The password field is required."
+msgstr "L&oring;senordsf&auml;ltet är obiligatoriskt."
+
+#: auth.current_password.alpha_dash
+msgctxt "auth.current_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr ""
+
+#: auth.current_password.incorrect
+msgctxt "auth.current_password.incorrect"
+msgid ""
+"The current password you entered for your account is incorrect. Please try "
+"again."
+msgstr ""
+
+#: auth.new_password.length
+msgctxt "auth.new_password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr ""
+
+#: auth.new_password.login error
+msgctxt "auth.new_password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr ""
+
+#: auth.new_password.matches
+msgctxt "auth.new_password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr ""
+
+#: auth.new_password.required
+msgctxt "auth.new_password.required"
+msgid "The password field is required."
+msgstr ""
+
+#: auth.new_password.alpha_dash
+msgctxt "auth.new_password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr ""
+
+#: auth.password.default
+msgctxt "auth.password.default"
+msgid "There has been an error attempting to log you in."
+msgstr ""
+
+#: auth.password.length
+msgctxt "auth.password.length"
+msgid "The password field must be at least 8 characters long."
+msgstr "L&ouml;senordet m&aring;ste vara mellan 5 och 16 tecken."
+
+#: auth.password.login error
+msgctxt "auth.password.login error"
+msgid "Please check that you entered the correct email and password."
+msgstr "Kontrollera att du angav r&auml;tt l&ouml;senord."
+
+#: auth.password.matches
+msgctxt "auth.password.matches"
+msgid "Please enter the same password in the two password fields."
+msgstr "Ange samma l&ouml;senord i b&aring;da l&ouml;senordsf&auml;lten."
+
+#: auth.password.required
+msgctxt "auth.password.required"
+msgid "The password field is required."
+msgstr "L&ouml;senord m&aring;ste anges."
+
+#: auth.password.riverid server down
+msgctxt "auth.password.riverid server down"
+msgid "The authentication server is down. Please try again later."
+msgstr ""
+
+#: auth.password.riverid
+msgctxt "auth.password.riverid"
+msgid "%s"
+msgstr ""
+
+#: auth.password.alpha_dash
+msgctxt "auth.password.alpha_dash"
+msgid ""
+"The password field must have alphabetical characters, the # and @ symbols, "
+"numbers, underscores and dashes only"
+msgstr ""
+
+#: auth.password_confirm.matches
+msgctxt "auth.password_confirm.matches"
+msgid "The password confirmation field must match the password field."
+msgstr "Bekr&auml;ftelsef&auml;ltet f&ouml;r l&ouml;senordet m&aring;ste vara samma som l&ouml;senordsf&auml;ltet."
+
+#: auth.resetemail.email
+msgctxt "auth.resetemail.email"
+msgid "The email you entered is not a valid email address."
+msgstr "E-postf&auml;ltet inneh&aring;ller inte en giltig e-postadress?"
+
+#: auth.resetemail.invalid
+msgctxt "auth.resetemail.invalid"
+msgid "Sorry, we don't have your email address"
+msgstr "Vi hittar inte din e-postadress"
+
+#: auth.resetemail.required
+msgctxt "auth.resetemail.required"
+msgid "The email field is required."
+msgstr "E-postf&auml;ltet m&aring;ste fyllas i."
+
+#: auth.role.superadmin_modify
+msgctxt "auth.role.superadmin_modify"
+msgid "Only a superadmin may modify a superadmin or upgrade a user to admin."
+msgstr ""
+
+#: auth.roles.alpha_numeric
+msgctxt "auth.roles.alpha_numeric"
+msgid "Invalid role format."
+msgstr ""
+
+#: auth.roles.length
+msgctxt "auth.roles.length"
+msgid "The role field must be at least 5 and no more than 30 characters long."
+msgstr ""
+
+#: auth.roles.required
+msgctxt "auth.roles.required"
+msgid "You must define at least one role."
+msgstr "Du m&aring;ste definiera minst en anv&auml;ndarprofil."
+
+#: auth.roles.values
+msgctxt "auth.roles.values"
+msgid "You must select either ADMIN or USER role."
+msgstr "Du m&aring;ste v&auml;lja antingen ADMIN eller USER profilen."
+
+#: auth.token.invalid
+msgctxt "auth.token.invalid"
+msgid "The forgotten password token is invalid"
+msgstr ""
+
+#: auth.token.required
+msgctxt "auth.token.required"
+msgid "Forgotten password token was required"
+msgstr ""
+
+#: auth.username.admin
+msgctxt "auth.username.admin"
+msgid "The admin user role cannot be modified."
+msgstr "Anv&auml;ndarprofilen f&ouml;r admin kan inte &auml;ndras."
+
+#: auth.username.alpha_numeric
+msgctxt "auth.username.alpha_numeric"
+msgid "The public profile URL field must only contain numbers and letters."
+msgstr ""
+
+#: auth.username.exists
+msgctxt "auth.username.exists"
+msgid "Sorry, this public profile URL is already in use."
+msgstr "Anv&auml;ndarnamnet finns redan."
+
+#: auth.username.length
+msgctxt "auth.username.length"
+msgid ""
+"The public profile URL field must be at least 2 and no more 100 characters "
+"long."
+msgstr "Anv&auml;ndarnamnet m&aring;ste vara mellan 2 och 16 tecken."
+
+#: auth.username.login error
+msgctxt "auth.username.login error"
+msgid "Please check that you entered the correct public profile URL."
+msgstr "Kontrollera att du angav r&auml;tt anv&auml;ndarnamn."
+
+#: auth.username.required
+msgctxt "auth.username.required"
+msgid "The public profile URL field is required."
+msgstr "Anv&auml;ndarnamn m&aring;ste anges."
+
+#: auth.username.superadmin
+msgctxt "auth.username.superadmin"
+msgid "The super admin role cannot be modified."
+msgstr "Anv&auml;ndarprofilen f&ouml;r superadmin kan inte &auml;ndras."
+
+#: auth.username.csrf
+msgctxt "auth.username.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a user?"
+msgstr ""

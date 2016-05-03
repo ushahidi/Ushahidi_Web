@@ -1,0 +1,24 @@
+# 
+# Translators:
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-07-10 05:42+0000\n"
+"Last-Translator: Anh Phan <vietnamesel10n@gmail.com>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: maintenance.message
+msgctxt "maintenance.message"
+msgid ""
+"Sorry, our site is currently down for maintenance. Please try again in a few"
+" minutes."
+msgstr "Rất tiếc, trang này của chúng tôi hiện đang ở trạng thái bảo trì. Xin vui lòng quay lại sau ít phút nữa."

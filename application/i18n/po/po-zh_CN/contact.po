@@ -1,0 +1,77 @@
+# 
+# Translators:
+# Qxiaojoe <1303133601@qq.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-06-27 14:33+0000\n"
+"Last-Translator: Qxiaojoe <1303133601@qq.com>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/ushahidi/ushahidi-v2/language/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: contact.captcha.default
+msgctxt "contact.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "验证码输入不正确"
+
+#: contact.captcha.valid
+msgctxt "contact.captcha.valid"
+msgid "Please enter a valid security code."
+msgstr "请输入一个有效地安全地代码。"
+
+#: contact.captcha.required
+msgctxt "contact.captcha.required"
+msgid "Please enter the security code."
+msgstr "请输入验证码"
+
+#: contact.contact_email.email
+msgctxt "contact.contact_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "电子邮箱地址格式不正确"
+
+#: contact.contact_email.length
+msgctxt "contact.contact_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "电子邮箱地址长度应为4至64个字符"
+
+#: contact.contact_email.required
+msgctxt "contact.contact_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "打钩则电子邮箱地址为必填项"
+
+#: contact.contact_message.required
+msgctxt "contact.contact_message.required"
+msgid "The message field is required."
+msgstr "消息内容是必填项"
+
+#: contact.contact_name.length
+msgctxt "contact.contact_name.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "用户名长度须不少于3个字母"
+
+#: contact.contact_name.required
+msgctxt "contact.contact_name.required"
+msgid "The name field is required."
+msgstr "用户名是必填项"
+
+#: contact.contact_subject.length
+msgctxt "contact.contact_subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr "主题长度必须超过3个字符"
+
+#: contact.contact_subject.required
+msgctxt "contact.contact_subject.required"
+msgid "The subject field is required."
+msgstr "主题是必填项"
+
+#: contact.email_send.failed
+msgctxt "contact.email_send.failed"
+msgid "There was an error sending your message."
+msgstr "有个错误正发到你的消息里。"

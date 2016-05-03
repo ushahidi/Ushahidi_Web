@@ -1,0 +1,37 @@
+# 
+# Translators:
+# Andrea_Pio <ivan.schepens@wynns.be>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Dutch (Netherlands) (http://www.transifex.com/ushahidi/ushahidi-v2/language/nl_NL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: page.page_title.required
+msgctxt "page.page_title.required"
+msgid "Please enter a Page Title."
+msgstr "Gelieve een paginatitel in te geven."
+
+#: page.page_title.length
+msgctxt "page.page_title.length"
+msgid "Page Title must be at least 3 and no more than 150 characters long."
+msgstr "De paginatitel moet minstens 3 en hoogstens 150 letters lang zijn."
+
+#: page.page_tab.required
+msgctxt "page.page_tab.required"
+msgid "Please enter a Page Tab Name."
+msgstr "Gelieve een tabnaam in te geven"
+
+#: page.page_description.required
+msgctxt "page.page_description.required"
+msgid "Please enter a Page Description."
+msgstr "Gelieve een paginabeschrijving in te geven."

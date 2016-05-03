@@ -1,0 +1,587 @@
+# 
+# Translators:
+# Farshad Sadri <farshad.sadri@gmail.com>, 2015
+# l <leilaz@stanford.edu>, 2013
+# Mohammad Mahdian <mahdian@gmail.com>, 2013
+# snp <saharnp@stanford.edu>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2015-07-24 00:18+0000\n"
+"Last-Translator: Farshad Sadri <farshad.sadri@gmail.com>\n"
+"Language-Team: Persian (http://www.transifex.com/ushahidi/ushahidi-v2/language/fa/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fa\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: tooltips.actions.add_to_category
+msgctxt "tooltips.actions.add_to_category"
+msgid ""
+"This adds the report to additional categories. If you select Category 1 here"
+" and the report already has Category 2 attached to it, the report will then "
+"have both Category 1 and Category 2."
+msgstr "در اینجا می توانید گزارش را به دسته های دیگری هم اضافه کنید. مثلا اگر گزارش شما از قبل در دسته ی 2 بوده باشد و شما اینجا دسته ی 1 را انتخاب کنید، گزارش در هر دو دسته ی 1 و 2 قرار خواهد گرفت. "
+
+#: tooltips.actions.approve
+msgctxt "tooltips.actions.approve"
+msgid "Approves a report or not. If approved, it will show up publicly."
+msgstr "در اینجا می توانید یک گزارش را قبول یا رد کنید. در صورت قبول، گزارش به صورت عمومی نشان داده خواهد شد."
+
+#: tooltips.actions.assign_badge
+msgctxt "tooltips.actions.assign_badge"
+msgid ""
+"You will be able to assign a badge to the triggering user. Pick the badge "
+"that gets assigned here."
+msgstr "شما می توانید یک نشان به هر کاربر تریگر اختصاص دهید. نشان مورد نظر را اینجا انتخاب کنید."
+
+#: tooltips.actions.between_times
+msgctxt "tooltips.actions.between_times"
+msgid ""
+"This is a range of hours and/or minutes between two times in 24 hour format."
+" If you input an earlier time in the second field, it will be flipped with "
+"the first. These times must be within a single day. Also, this time is "
+"checked against the time you have configured on your site in site settings "
+"and <strong>not</strong> necessarily the timezone of the user interacting "
+"with your deployment. Leave this at 00:00 to 00:00 to ignore this qualifier."
+msgstr "این یک بازه‌ی زمانی بین دو زمان داده شده با فرمت 24 ساعته است. اگر زمانی که در فیلد دوم وارد می‌کنید زودتر از فیلد اول باشد، این دو مقدار با هم جابه‌جا خواهند شد. این زمان‌ها باید در یک روز باشند. همچنین، این زمان‌ با زمانی که شما در بخش تنظیمات سایت برای سایت‌تان پیکربندی کرده‌اید و <strong>نه</strong> لزوماً در برابر موقعیت زمانی کاربر چک خواهد شد. برای نادیده گرفته شدن این توصیف‌گر، مقدار 00:00 تا 00:00 را نگه‌دارید."
+
+#: tooltips.actions.category
+msgctxt "tooltips.actions.category"
+msgid ""
+"If you would like to activate triggers only when a certain category is being"
+" used, you can set that here. This will allow a trigger to be activated if "
+"only one of the categories is used. For instace, if you select Category 1 "
+"and Category 2 here and a report is submitted using Category 2 and Category "
+"3, it will pass the test."
+msgstr "اگر دوست دارید تریگرها تنها زمانی که یک دسته ی خاص در حال استفاده است فعال کردد، می توانید آن را اینجا تنظیم کنید. این کار تریگر را واردار می کند وقتی تنها یکی از دسته ها در حال استفاده است فعال شود. برای مثال اگر دسته ی 1 و 2 را اینجا انتخاب کنید و یک گزارش در دسته ی 2 و 3 ثبت شود، تریگر فعال خواهد شد."
+
+#: tooltips.actions.days_of_the_week
+msgctxt "tooltips.actions.days_of_the_week"
+msgid ""
+"If these actions happen on certain days of the week, set that here. Keep in "
+"mind the day is determined by the timezone configured on your deployment. "
+"Hold shift, command, or control for multiple day selection."
+msgstr "در صورتیکه این فعالیتها در روزهای خاصی از هفته اتفاق بیفتد، آن را اینجا تنظیم کنید. دقت کنید که روز از زوی منطقه زمانی که روی گسترش شما تنظیم شده است تعیین می گردد. کلید شیفت و کامند یا کنترل را نگه دارید تا بتواند روزهای متعددی انتخاب کنید."
+
+#: tooltips.actions.email_body
+msgctxt "tooltips.actions.email_body"
+msgid "Body of the email that will be sent."
+msgstr "متن ایمیلی که ارسال خواهد شد."
+
+#: tooltips.actions.email_subject
+msgctxt "tooltips.actions.email_subject"
+msgid "Subject of email that will be sent."
+msgstr "موضوع ایمیلی که ارسال خواهد شد."
+
+#: tooltips.actions.feed_id
+msgctxt "tooltips.actions.feed_id"
+msgid ""
+"The feed can be all feeds or a specific feeds. If you would only like "
+"specific feeds to activate a trigger, you will want to select them here. "
+"Otherwise, you will want to leave this as \"all\""
+msgstr "فید می تواند تمام فیدها یا چند فید خاص باشد. اگر مایلید تنها چند فید خاص تریگر را فعال کنند، باید آنها را اینجا انتخاب کنید. در غیر این صورت می توانید اینجا همان گزینه ی  \"همه\" را بزنید."
+
+#: tooltips.actions.from
+msgctxt "tooltips.actions.from"
+msgid ""
+"Twitter author username (or multiple usernames separated by commas). If you "
+"would like to activate triggers only for twitter messages from a particular "
+"user, enter their username here (not including @)"
+msgstr "نام کاربر توئییتر (یا نام چندین کاربر توئییتر که با ویرگول از هم جدا شده اند). اگر می خواهید تریگر را تنها برای پیام های توئییتر یک کاربر خاص فعال کنید، نام کاربری آنها را اینجا وارد کنید. (بدون علامت @)."
+
+#: tooltips.actions.keywords
+msgctxt "tooltips.actions.keywords"
+msgid ""
+"You can choose to leave this blank if you do not want to check against "
+"keywords. If you add words here, you will need to separate them with a comma"
+" (,). For example, if you want to activate a trigger when someone mentions "
+"\"love\" or \"peace\" in their message, you will want to add \"love, peace\""
+" in the keywords box."
+msgstr "اگر نمی خواهید مقایسه با کلمات کلیدی انجام شود، می توانید اینجا را خالی بگذارید. ولی اگر اینجا کلمه اضافه کنید، باید آنها را با ویرگول (،) از هم جدا کنید. برای مثال اگر می خواهید هرگاه کسی کلمات \"عشق\" یا \"صلح\" را در پیام خود به کار برد ماشه یا Trigger  فعال شود، باید در جعبه کلمات کلیدی بنویسید \"عشق ، صلح\"."
+
+#: tooltips.actions.location
+msgctxt "tooltips.actions.location"
+msgid ""
+"You can either select anywhere or a specific location. If you select a "
+"specific location, you will be asked to draw a box around the area that "
+"qualifies an action. For example, if you want this trigger to be activated "
+"when someone submits a report in Brazil, you will select \"specific area\" "
+"and then draw the box around Brazil. You can make these boxes as small or as"
+" large as you would like. You can also draw multiple boxes."
+msgstr "شما می‌توانید یا «هر جا» و یا «یک مکان مشخص» را انتخاب کنید. اگر یک مکان مشخص را انتخاب کنید، از شما خواسته خواهد شد که مستطیلی دور منطقه‌ای که یک کنش را توصیف می‌کند بکشید. برای نمونه، اگر می‌خواهید که این تریگر وقتی که کاربری گزارشی در برزیل ارسال می‌کند فعال شود، «یک مکان مشخص» را انتخاب کنید و مستطیل را دور برزیل بکشید. شما می‌توانید این مستطیل‌ها را هر مقدار که بخواهید کوچک یا بزرگ بکشید. همچنین، می‌توانید بیش از یک مستطیل‌ بکشید."
+
+#: tooltips.actions.on_specific_count
+msgctxt "tooltips.actions.on_specific_count"
+msgid ""
+"This qualifier will activate the trigger on the N-th count either for the "
+"entire collective user base or for each individual user. Leave this blank to"
+" ignore it."
+msgstr "این توصیف‌گر تریگر را وقتی فعال می‌کند که تعداد یا برای کل مجموعه و یا برای هر کاربری به N برسد.  برای نادیده گرفته شدن خالی بگذارید."
+
+#: tooltips.actions.report_title
+msgctxt "tooltips.actions.report_title"
+msgid "This is the default title to add to the report."
+msgstr "این عنوان پیش‌فرض است که می‌توانید به گزارش اضافه کنید."
+
+#: tooltips.actions.response
+msgctxt "tooltips.actions.response"
+msgid ""
+"If all of the qualifiers above are passed, the trigger will initiate a "
+"response. This can range from approving a report to emailing a user. Select "
+"the response here to activate additional options for the specific responses."
+msgstr "اگر همه‌ی توصیف‌گرهای بالا درست باشند، تریگر شروع به پاسخ می‌کند. این پاسخ می‌تواند چیزی مانند تأیید یک گزارش یا ایمیل زدن به یک کاربر باشد. در این‌جا نوع پاسخ را انتخاب کنید تا گزینه‌های بیشتر در باره‌ی این پاسخ فعال شوند."
+
+#: tooltips.actions.send_to
+msgctxt "tooltips.actions.send_to"
+msgid ""
+"If you select \"Triggering User\", the email will be sent to the user who "
+"performed the action. If you select the radio button next to the input box, "
+"you will be able to enter a custom email address. This is useful if you are "
+"setting up triggers to notify people when certain parts of the map are "
+"seeing reports, check ins or some other activity."
+msgstr "اگر «تریگر کردن کاربر»‌ را انتخاب کنید، ایمیل به کاربری که کنش مربوطه را انجام داده است فرستاده خواهد شد. اگر رادیو باتن کنار قسمت ورودی را انتخاب کنید، از شما خواسته خواهد شد که یک آدرس ایمیل وارد کنید. این برای وقتی مفید است که می‌خواهید تریگرهایی تنظیم کنید که وقتی گزارش، اعلام ورود، یا کنش‌های دیگر برای منطقه‌ی خاصی روی نقشه دریافت شود افراد خاصی را مطلع کنند."
+
+#: tooltips.actions.specific_days
+msgctxt "tooltips.actions.specific_days"
+msgid ""
+"You can select multiple days here. Dates are determined by your deployment "
+"timezone setting. In order to default to all dates, do not select any dates."
+msgstr "شما در این‌جا می‌توانید بیش از یک روز را انتخاب کنید. تاریخ‌ها با تنظیمات منطقه‌ی زمانی مکانی که سایت برای آن‌جا گسترش داده شده است تعیین می‌شوند. برای این که همه‌ی تاریخ‌ها را به عنوان پیش‌فرض داشته باشید، هیچ تاریخی را انتخاب نکنید."
+
+#: tooltips.actions.trigger
+msgctxt "tooltips.actions.trigger"
+msgid ""
+"The trigger is the core component of setting up your Action Triggers. This "
+"is where you determine if you would like something to happen when someone "
+"submits a report, performs a check in, etc. You will be able to filter "
+"responses to these actions after selecting one."
+msgstr "این تریگر بخش اصلی تنظیم کردن تریگرهای کنش‌تان است. این‌جا جایی است که باید تعیین کنید که آیا می‌خواهید مثلاً وقتی کسی گزارشی می‌فرستد یا اعلام ورود می‌کند اتفاق خاصی بیفتد. بعد از انتخاب، شما خواهید توانست پاسخ‌های به این کنش‌ها را فیلتر کنید."
+
+#: tooltips.actions.user
+msgctxt "tooltips.actions.user"
+msgid ""
+"The user can be anyone or a specific user. If you would only like specific "
+"users to activate a trigger, you will want to select them here. Otherwise, "
+"you will want to leave this as \"anyone\" since most triggers are set up for"
+" all users interacting with the system"
+msgstr "کاربر می‌تواند یا هر کس و یا یک کاربر خاص باشد. اگر شما فقط می‌خواهید که کاربرهای خاصی بتوانند تریگری را فعال کنند، باید این کاربرها را این‌جا انتخاب کنید. در غیر این صورت، باید گزینه‌ی «هر کس» را در این‌جا نگه‌دارید، چون بیشتر تریگرها برای همه‌ی کاربرهایی که با سیستم کار می‌کنند تنظیم می‌شوند."
+
+#: tooltips.actions.verify
+msgctxt "tooltips.actions.verify"
+msgid "Marks a report as verified or not."
+msgstr "گزارش را به عنوان اعتبارسنجی شده یا اعتبارسنجی نشده علامت‌گذاری کنید."
+
+#: tooltips.change_picture
+msgctxt "tooltips.change_picture"
+msgid ""
+"Profile pages on this site use Gravatar. By clicking on your image, you will"
+" be taken to the Gravatar website where you can change your profile picture."
+msgstr "صفحه‌های پروفایل این سایت از Gravatar استفاده می‌کنند. می‌توانید با کلیک کردن روی تصویرتان، به سایت Gravatar بروید و تصویر پروفایل‌تان را تغییر دهید."
+
+#: tooltips.default_value
+msgctxt "tooltips.default_value"
+msgid "Separate each value with a comma, e.g. value1, value2."
+msgstr "مقدارها را با ویرگول از هم جدا کنید، برای نمونه مقدار1، مقدار 2."
+
+#: tooltips.radio_choices
+msgctxt "tooltips.radio_choices"
+msgid ""
+"Separate each value with a comma, e.g. value1, value2. In case you want to "
+"set a default value, end your list of options with :: e.g If you want to "
+"make value3 the default, it will be value1, value2, value3::value3"
+msgstr "مقدارها را با ویرگول از هم جدا کنید، برای نمونه مقدار‌1، مقدار 2. در صورتی که می‌خواهید مقداری را به عنوان پیش‌فرض قرار دهید، لیست گزینه‌ها را با :: تمام کنید. برای نمونه اگر می‌خواهید مقدار 3 پیش‌فرض باشد، بنویسید مقدار 1، مقدار 2، مقدار 3::مقدار 3"
+
+#: tooltips.dropdown_choices
+msgctxt "tooltips.dropdown_choices"
+msgid "Separate each choice item with a comma, e.g. Item 1, Item 2 etc."
+msgstr "انتخاب‌ها را با ویرگول از هم جدا کنید، برای نمونه مورد 1، مورد 2."
+
+#: tooltips.private_to
+msgctxt "tooltips.private_to"
+msgid "Start typing to list members."
+msgstr "فهرست اعضا را تایپ کنید."
+
+#: tooltips.private_subject
+msgctxt "tooltips.private_subject"
+msgid "Private message subject"
+msgstr "موضوع  پیغام خصوصی"
+
+#: tooltips.private_message
+msgctxt "tooltips.private_message"
+msgid "Private message"
+msgstr "پیغام خصوصی"
+
+#: tooltips.profile_color
+msgctxt "tooltips.profile_color"
+msgid ""
+"You can select a color that will show up under your profile picture on your "
+"public profile. This color will also be the color dot that shows up on the "
+"map for your checkins."
+msgstr "شما می توانید رنگی که در زیر عکس پروفایل شما در پروفایلتان ظاهر می شود را انتخاب کنید. این رنگ ضمنا رنگ نقطه ای خواهد بود که روی نقشه در هنگام ورود شما ظاهر می شود."
+
+#: tooltips.profile_email
+msgctxt "tooltips.profile_email"
+msgid "Your email address"
+msgstr "آدرس ایمیل شما"
+
+#: tooltips.profile_name
+msgctxt "tooltips.profile_name"
+msgid ""
+"This is one of the ways that you are identified on the website. Keep in mind"
+" that this is public!"
+msgstr "این یکی از راه هایی است که شما روی وبسایت شناخته می شوید. دقت کنید که این اطلاعات عمومی است!"
+
+#: tooltips.profile_new_password
+msgctxt "tooltips.profile_new_password"
+msgid ""
+"If set, this will be your new password. Leave this field blank if you wish "
+"to keep your current password."
+msgstr "اگر این گزینه تنظیم شود، این گذرواژه ی جدید شما خواهد بود. اگر می خواهید گذزواژه ی فعلی خود را نگه دارید، اینجا را خالی بگذارید."
+
+#: tooltips.profile_new_users_password
+msgctxt "tooltips.profile_new_users_password"
+msgid ""
+"This is a requirement when creating a new user and will be the users "
+"password. You should inform your new user to change their password after "
+"logging in for the first time."
+msgstr "این برای ایجاد کاربر جدید ضروری است و گذرواژه کاربرها خواهد بود. شما باید از کاربر خود بخواهید پس از ورود برای بار اول گذرواژه خود را عوض کند."
+
+#: tooltips.profile_notify
+msgctxt "tooltips.profile_notify"
+msgid ""
+"Selecting YES lets you get alerts via email when new reports or comments are"
+" posted on your website."
+msgstr "با انتخاب \"بلی\" می توانید  وقتی  گزارش ها یا نظرات جدید در وبسایت پست شد، از طریق ایمیل هشدار دریافت کنید."
+
+#: tooltips.profile_password
+msgctxt "tooltips.profile_password"
+msgid ""
+"Your current password. We require you enter your password to prevent any "
+"unauthorized changes to your account."
+msgstr "گذرواژه ی فعلی شما. ار شما می خواهیم که گذرواژه ی خود را وارد کنید تا از هر تغییر عیر مجاز در حساب کاربری شما جلوگیری شود."
+
+#: tooltips.profile_public
+msgctxt "tooltips.profile_public"
+msgid ""
+"Your profile can be viewed by anyone on the Internet if you check this "
+"option. This is also the easiest way to show off the reports you've "
+"submitted, your checkins, badges, etc all on one page."
+msgstr "اکر این گزینه را انتخاب کنید هرکسی روی اینترنت می تواند پروفایل شما را ببیند. همچنین این راحت ترین راه برای نمایش گزارش هایی که ثبت کرده اید و ورودها و نشان ها و ... شما همه در یک صفحه می باشد."
+
+#: tooltips.profile_public_url
+msgctxt "tooltips.profile_public_url"
+msgid "This is the address where your public profile can be found."
+msgstr "این آدرسی است که پروفایل عمومی شما در آنجا قرار گرفته."
+
+#: tooltips.profile_username
+msgctxt "tooltips.profile_username"
+msgid "Your username cannot be changed."
+msgstr "نام کاربری شما قابل تغییر نمی باشد."
+
+#: tooltips.settings_access_level
+msgctxt "tooltips.settings_access_level"
+msgid ""
+"Access Levels are used to restrict access to custom form field data. Higher "
+"access levels can access fields from lower levels. Superadmin has the "
+"highest access level (100). Public data is displayed at the lowest access "
+"level (0). Members have access level 10. Admin is access level 90 by "
+"default."
+msgstr "رده های دسترسی برای محدود کردن میزان دسترسی به داده های  درون فیلدهای فرم دلخواه استفاده می شوند. رده های دسترسی بالا می توانند به فیلدهای رده های دسترسی پایین تر دسترسی پیدا کنند. مدیر ویژه بالاترین رده ی دسترسی را دارد (100). داده های عمومی با پایین ترین رده ی دسترسی نمایش داده می شوند (0). اعضا دارای رده ی دسترسی 10 هستند. مدید به صورت پیش فرض دارای رده دسترسی 90 می باشد."
+
+#: tooltips.settings_alert_email
+msgctxt "tooltips.settings_alert_email"
+msgid "This is the email address that will be used to send email alerts."
+msgstr "این نشانی ایمیلی است که هشدارهای ایمیلی از آن ارسال می شوند."
+
+#: tooltips.settings_allow_alerts
+msgctxt "tooltips.settings_allow_alerts"
+msgid "Allow users to subscribe for alerts via the web."
+msgstr "دادن اجازه به کاربرها برای اشتراک برای دریافت هشدارها از طریق اینترنت."
+
+#: tooltips.settings_allow_clustering
+msgctxt "tooltips.settings_allow_clustering"
+msgid "This allows bundling of similar reports into a single dot on the map"
+msgstr "این گزینه امکان دسته بندی خبرهای مشابه را به صورت یک نقطه روی نقشه می دهد."
+
+#: tooltips.settings_allow_comments
+msgctxt "tooltips.settings_allow_comments"
+msgid "Allow users to comment on reports on the main site."
+msgstr "دادن اجازه به کاربر برای نظردهی روی گزارش های سایت اصلی"
+
+#: tooltips.settings_allow_feed
+msgctxt "tooltips.settings_allow_feed"
+msgid "This allows RSS News feeds to be displayed on the main site."
+msgstr "این گزینه به فیدهای خبری RSS اجازه می دهد که در سایت اصلی شان داده شوند."
+
+#: tooltips.settings_allow_feed_category
+msgctxt "tooltips.settings_allow_feed_category"
+msgid "This allows creating new Category from RSS News feeds."
+msgstr "این گزینه امکان ایجاد یک شاخه از فید خبری RSS را می‌دهد."
+
+#: tooltips.settings_allow_reports
+msgctxt "tooltips.settings_allow_reports"
+msgid "Allow users to submit information via the web form."
+msgstr "دادن اجازه به کاربرها برای ثبت اطلاعات از طریق فرم اینترنتی."
+
+#: tooltips.settings_api_default_record_limit
+msgctxt "tooltips.settings_api_default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr " پیش فرض تعداد رکوردهایی که با هر درخواست API آورده می شوند"
+
+#: tooltips.settings_api_max_record_limit
+msgctxt "tooltips.settings_api_max_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "حداکثر تعداد رکوردی که با هر درخواست API  آورده می شود"
+
+#: tooltips.settings_api_max_requests_per_ip
+msgctxt "tooltips.settings_api_max_requests_per_ip"
+msgid "Maximum number of API requests per IP address"
+msgstr "حداکثر تعداد درخواست های API به ازای هر آدرس  IP"
+
+#: tooltips.settings_banner
+msgctxt "tooltips.settings_banner"
+msgid ""
+"The site banner shows up at the top of the front end of your website if the "
+"theme you are using supports it. The recommended size for this banner will "
+"depend on the theme you are using. Keep in mind that this will replace the "
+"site title and tagline at the top of the page."
+msgstr "اگر تمی که از آن استفاده می کنید برنما را پشتیبانی کند، برنمای سایت در بالای وبسایت شما در طرف کاربر نمایش داده خواهد شد. سایز پیشنهادی برای این برنما به تم انتخابی شما بستگی دارد. به خاطر داشته باشید که این برنما عنوان و برچسب سایت در بالای صفحه را جایگزین خواهد کرد."
+
+#: tooltips.settings_blocks_per_row
+msgctxt "tooltips.settings_blocks_per_row"
+msgid "Number of Block columns that will be displayed on each row."
+msgstr "تعداد ستون های بلوکی که در هر ردیف نمایش داده خواهد شد."
+
+#: tooltips.settings_cache_pages
+msgctxt "tooltips.settings_cache_pages"
+msgid ""
+"Enable or disable page caching. This makes pages display faster by cutting "
+"response times. We recommend using caching on high traffic sites. **Remember"
+" that reports will be populated on the front end based on the schedule you "
+"set below (Cache Lifetime)."
+msgstr "نگه داری صفحه در حافظه‌ی پنهان را فعال یا غیرفعال کنید. این باعث می‌شود که زمان پاسخ کم‌تر شود و صفحه سریع‌تر نمایش داده شود. توصیه‌ی ما این است که برای سایت‌های با ترافیک بالا این گزینه را فعال کنید.  ** به یاد داشته باشید که گزارش‌ها گزارش‌ها در فرانت‌اند بر اساس زمان‌بندی‌ای که در پایین تعیین می‌کنید (مدت زنده بودن حافظه‌ی پنهان) پر می‌شوند."
+
+#: tooltips.settings_cache_pages_lifetime
+msgctxt "tooltips.settings_cache_pages_lifetime"
+msgid "Set the lifetime of the cache."
+msgstr "طول عمر مخزن را تعیین کنید."
+
+#: tooltips.settings_checkins
+msgctxt "tooltips.settings_checkins"
+msgid ""
+"This setting enables checkins on your deployment. This is a simplified "
+"report type that is not moderated before it goes on the homepage and "
+"requires your site to be configured a certain way. When you enable this, "
+"make sure your timezone setting is on UTC and your theme supports checkins. "
+"When you enable this, checkin-only themes will become enabled under your "
+"addons/themes settings page."
+msgstr "این تنظیم اعلام ورود را روی گسترش شما فعال می‌کند. اعلام ورود یک نوع ساده‌ی گزارش است که بدون نظارت بر صفحه‌ی اصلی نمایش داده می‌شود و لازم است که سایت‌تان به صورت خاصی پیکربندی شده باشد. وقتی که این گزینه را فعال می‌کنید، مطمئن شوید که منطقه‌ی زمانی به UTC تنظیم شده است و تم سایت اعلام ورود را پشتیبانی می‌کند. وقتی که این گزینه را فعال می‌کنید، تم‌هایی که فقط اعلام ورود را پشتیبانی می‌کنند در قسمت تنظیمات افزودنی‌ها/تم‌ها فعال می‌شوند."
+
+#: tooltips.settings_configure_map
+msgctxt "tooltips.settings_configure_map"
+msgid "Set the map to cover a specific location."
+msgstr "نتظیم نقشه برای پوشش دهی یک مکان خاص."
+
+#: tooltips.settings_default_category_colors
+msgctxt "tooltips.settings_default_category_colors"
+msgid "Set one color code for all the categories on the site."
+msgstr "برای همه‌ی رده‌های روی سایت یک کدبندی رنگی تعیین کنید."
+
+#: tooltips.settings_default_category_icons
+msgctxt "tooltips.settings_default_category_icons"
+msgid "Set one icon for all the categories on the site."
+msgstr "یک نقشک برای رده‌های روی سایت تعیین کنید."
+
+#: tooltips.settings_default_location
+msgctxt "tooltips.settings_default_location"
+msgid "This is the country the site is being deployed."
+msgstr "این، کشوری است که سایت برای آن گسترش یافته است."
+
+#: tooltips.settings_display_contact
+msgctxt "tooltips.settings_display_contact"
+msgid "Turn the Contact Tab on or off on the main site."
+msgstr "باریکه‌ی کانتکت‌ها را روی وب‌سایت اصلی نمایش دهید یا مخفی کنید."
+
+#: tooltips.settings_display_howtohelp
+msgctxt "tooltips.settings_display_howtohelp"
+msgid "Turn the How to Help Tab on or off on the main site."
+msgstr "برگه ی چگونگی کمک کردن را روی وب‌سایت اصلی نمایش دهید یا مخفی کنید."
+
+#: tooltips.settings_display_items_per_page
+msgctxt "tooltips.settings_display_items_per_page"
+msgid "This is the number of reports displayed per page on the main site."
+msgstr "این تعداد گزارش هایی هست که در هر صفحه در سایت اصلی نمایش داده خواهد شد."
+
+#: tooltips.settings_display_items_per_page_admin
+msgctxt "tooltips.settings_display_items_per_page_admin"
+msgid ""
+"This is the number of reports displayed per page on the admin Back End."
+msgstr "این تعداد گزارش هایی هست که در هر صفحه در طرف مدیر نمایش داده خواهد شد."
+
+#: tooltips.settings_flsms_download
+msgctxt "tooltips.settings_flsms_download"
+msgid "This is the hub for incoming messages."
+msgstr "اینجا قطب پیامهای دریافتی است."
+
+#: tooltips.settings_flsms_synchronize
+msgctxt "tooltips.settings_flsms_synchronize"
+msgid "This synchronizes the messages in the hub with the Ushahidi platform."
+msgstr "اینجا پیام های قطب با بستر نرم افزاری یوشهیدی همگام می شوند."
+
+#: tooltips.settings_flsms_text_1
+msgctxt "tooltips.settings_flsms_text_1"
+msgid "Phone numbers through which the text messages are received."
+msgstr "شماره تلفنی که پیامک ها از طریق آن دریافت می شوند."
+
+#: tooltips.settings_google_analytics
+msgctxt "tooltips.settings_google_analytics"
+msgid "Tracks visitors of your site. Get detailed visitor statistics."
+msgstr "بازدیدکنندگان سایتتان را پیگیری کنید. می توانید آمار دقیقی از بازدیدکننده ها داشته باشید."
+
+#: tooltips.settings_locale
+msgctxt "tooltips.settings_locale"
+msgid "Sets the language that will be used in the site."
+msgstr "زبانی که در سایت استفاده خواهد شد را تنظیم کنید."
+
+#: tooltips.settings_manually_approve_users
+msgctxt "tooltips.settings_manually_approve_users"
+msgid ""
+"If you set this option to yes, you must approve every individual user who "
+"creates an account on your site by assigning them roles (ie. Member, Admin, "
+"Superadmin)."
+msgstr "اگر این گزینه را به بلی تغییر دهید، باید هر کاربر جدیدی را که در سایتتان حساب کاربری می سازد تایید کنید و به آنها نقش اختصاص دهید. (مثل عضو، مدیر، مدیر ویژه)."
+
+#: tooltips.settings_map_provider
+msgctxt "tooltips.settings_map_provider"
+msgid "This defines which map is to be used on the site."
+msgstr "اینجا می توانید تعیین کنید که کدام نقشه در سایت استفاده شود."
+
+#: tooltips.settings_map_timeline
+msgctxt "tooltips.settings_map_timeline"
+msgid ""
+"This shows the timeline based on the date and time reports were submitted"
+msgstr "اینجا محور زمانی ای بر اساس زمان و تاریخی که گزارش ها ثبت شده اند نشان داده می شود."
+
+#: tooltips.settings_private_deployment
+msgctxt "tooltips.settings_private_deployment"
+msgid ""
+"Setting this value to true or yes will make your deployment private so only "
+"users with accounts that you specify will be able to access the deployment."
+msgstr "اگر این گزینه را به بلی تغییر دهید، گستره ی شما خصوصی خواهد شد و تنها کاربران با حساب های خاصی که شما مشخص می کنید می توانند به آن دسترسی پیدا کنند."
+
+#: tooltips.settings_require_email_confirmation
+msgctxt "tooltips.settings_require_email_confirmation"
+msgid ""
+"Users will be emailed with a confirmation link to click before they are "
+"allowed to log into the deployment if this is set to yes. If you enable this"
+" after your deployment has accepted users, they will be prompted to confirm "
+"their account before they will be allowed to continue using it."
+msgstr "اگر این گزینه را به بلی تغییر دهید، یک پیوند تایید به کاربرها ایمیل خواهد شد که قبل از ورود به سایت باید آن را کلیک کنند. اگر این گزینه را پس از این که سایت شما کاربر پذیرفته فعال کنید، از کاربرها خواسته خواهد شد که حساب خود را تایید کنید پیش از آن که بتوانند به استفاده از آن ادامه دهند."
+
+#: tooltips.settings_server_host
+msgctxt "tooltips.settings_server_host"
+msgid "This is where the emails reside"
+msgstr "این جایی است که ایمیل ها در آن قرار دارند."
+
+#: tooltips.settings_server_password
+msgctxt "tooltips.settings_server_password"
+msgid "This is the password for the email address that receives reports."
+msgstr "این گذرواژه ی آدرس ایمیلی است که گزارش ها را دریافت می کند."
+
+#: tooltips.settings_server_port
+msgctxt "tooltips.settings_server_port"
+msgid ""
+"This is required to accept incoming connections from the email address."
+msgstr "این برای قبول ارتباطات برقرار شده از آدرس ایمیل لازم است."
+
+#: tooltips.settings_server_ssl_support
+msgctxt "tooltips.settings_server_ssl_support"
+msgid "This is required to enhance a secure connection."
+msgstr "این گزینه برای بهبود امنیت ارتباط لازم است."
+
+#: tooltips.settings_server_type
+msgctxt "tooltips.settings_server_type"
+msgid "This is required to retrieve e-mails from the host server."
+msgstr "این برای بازیابی ایمیل ها از سرور میزبان لازم است."
+
+#: tooltips.settings_server_username
+msgctxt "tooltips.settings_server_username"
+msgid "This is the email address that receives reports."
+msgstr "این آدرس ایمیلی است که گزارش ها را دریافت می کند."
+
+#: tooltips.settings_share_site_stats
+msgctxt "tooltips.settings_share_site_stats"
+msgid ""
+"Hit statistics are stored on a server controlled by Ushahidi. By enabling "
+"this option, you gain access to hit statistics directly in your admin panel."
+" By disabling it, you will stop collecting statistics and will be unable to "
+"recover traffic stats collected while this is turned off."
+msgstr "آمار کلیک ها روی سروری که توسط یوشهیدی کنترل می شود، ذخیره خواهد شد. با فعال کردن این گزینه، شما به طور مستقیم به این آمار از روی پیشخوان مدیر دسترسی خواهید داشت. با غیر فعال کردن آن، شما دیگر آماری جمع آوری نخواهید کرد و نمی توانید  هنگامی که این گزینه خاموش است، آمار رفت آمد های جمع آوری شده را بازیابی کنید."
+
+#: tooltips.settings_site_copyright_statement
+msgctxt "tooltips.settings_site_copyright_statement"
+msgid ""
+"Do others have the right to republish text, images, video and/or design "
+"themes that you and your users create? Go to "
+"https://creativecommons.org/choose/ if you are interested in specifying what"
+" others are able to do with your work. And remember to be specific about "
+"what elements of the site you are licensing!"
+msgstr "آیا دیگران حق نشر مجدد نوشته ها، عکس ها، ویدئو ها و/یا طرح هایی که شما و کاربرانتان ایجاد کرده اید دارند؟ اگر مایلید مشخص کنید که دیگران با کارهای شما چه می توانند کنند به پیوند https://creativecommons.org/choose/ بروید و به فراموش نکنید که در مورد  اینکه چه عناصری از سایت را پروانه دار می کنید دقیق باشید."
+
+#: tooltips.settings_site_email
+msgctxt "tooltips.settings_site_email"
+msgid ""
+"This is the email address that will receive email reports and messages from "
+"the contact form."
+msgstr "این آدرس ایمیلی است که گزارش های ایمیلی و پیامهای فرم ارتباط را دریافت می کند."
+
+#: tooltips.settings_site_message
+msgctxt "tooltips.settings_site_message"
+msgid ""
+"This is text that will appear above the map on the homepage. This is useful "
+"for giving important information to visitors on the site. To remove the box,"
+" simply delete the message here."
+msgstr "این نوشته ای است که بالای نقشه در صفحه ی خانه ی سایت نمایش داده می شود. می توانید از این برای دادن اطلاعات مهم به بازدیدکنندگان سایت استفاده کنید. برای پاک کردن جعبه، تنها کافی است پیام را اینجا پاک کنید. "
+
+#: tooltips.settings_site_name
+msgctxt "tooltips.settings_site_name"
+msgid "This is the name of the site that appears at the top of the main site."
+msgstr "این نام سایتی است که در بالای سایت اصلی نمایش داده می شود."
+
+#: tooltips.settings_site_submit_report_message
+msgctxt "tooltips.settings_site_submit_report_message"
+msgid ""
+"This is a message that will show up on the submit report page. This is good "
+"for disclaimers or further instructions for your visitors who are reporting."
+msgstr "این پیغامی است که در صفحه ثبت گزارش نمایش داده خواهد شد. اینجا محل خوبی است برای نوشتن بیانیه رفع مسئولیت یا دستورالعمل های بیشتر برای بازدیدکنندگانی که گزارش خواهند کرد."
+
+#: tooltips.settings_site_tagline
+msgctxt "tooltips.settings_site_tagline"
+msgid "In a few words, explain what this site is about."
+msgstr "در چند جمله کوتاه توضیح دهید این سایت درباره ی چیست."
+
+#: tooltips.settings_site_timezone
+msgctxt "tooltips.settings_site_timezone"
+msgid ""
+"This is the timezone that your site will operate on. This has an impact on "
+"any actions you have set up that utilize time and date, as well as the "
+"default current time for reports on the front and back end of the site."
+msgstr "این محدوده ی زمانی ای است که سایت شما در آن کار خواهد کرد. تنظیم این بر هریک ار عملیاتی که تنظیم کرده اید و از زمان و تاریخ استفاده می کنند و نیزبر  زمان پیش فرض گزارش ها در جلو و عقب وبسایت تاثیر خواهد داشت."
+
+#: tooltips.settings_twitter_configuration
+msgctxt "tooltips.settings_twitter_configuration"
+msgid "Set the twitter hashtag that will be used on a tweet"
+msgstr "تنظیم هشتگ توئییتری که در توئییت ها به کار برده خواهد شد."
+
+#: tooltips.feed_geolocation_user
+msgctxt "tooltips.feed_geolocation_user"
+msgid ""
+"If you want to geocode your feed entries, grab a user http://geonames.org, "
+"enable the free webservices and enter it here. Leave empty to disable this "
+"function.<br /><br />Beware of the the use limits!"
+msgstr ""

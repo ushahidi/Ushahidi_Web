@@ -1,0 +1,64 @@
+#. extracted from en_US/reporters.php, sr/reporters.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-25 00:10+0000\n"
+"PO-Revision-Date: 2012-09-25 00:10+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: sr\n"
+
+#: reporters.latitude.between
+msgctxt "reporters.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr ""
+
+#: reporters.latitude.required
+msgctxt "reporters.latitude.required"
+msgid "The latitude field is required. Please click on the map to pinpoint a location."
+msgstr ""
+
+#: reporters.level_id.numeric
+msgctxt "reporters.level_id.numeric"
+msgid "The Reporter Level field does not appear to contain a valid Level."
+msgstr ""
+
+#: reporters.level_id.required
+msgctxt "reporters.level_id.required"
+msgid "The Reporter Level field does not appear to contain a valid Level."
+msgstr ""
+
+#: reporters.location_name.length
+msgctxt "reporters.location_name.length"
+msgid "The location name field must be at least 3 and no more 200 characters long."
+msgstr ""
+
+#: reporters.location_name.required
+msgctxt "reporters.location_name.required"
+msgid "The location name field is required."
+msgstr ""
+
+#: reporters.longitude.between
+msgctxt "reporters.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr ""
+
+#: reporters.longitude.required
+msgctxt "reporters.longitude.required"
+msgid "The longitude field is required. Please click on the map to pinpoint a location."
+msgstr ""
+
+#: reporters.reporter_id.numeric
+msgctxt "reporters.reporter_id.numeric"
+msgid "Invalid Reporter"
+msgstr ""
+
+#: reporters.reporter_id.required
+msgctxt "reporters.reporter_id.required"
+msgid "Invalid Reporter"
+msgstr ""
+

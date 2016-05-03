@@ -1,0 +1,123 @@
+# 
+# Translators:
+# Suwandi Ahmad <ahmad.suwandi@gmail.com>, 2013
+# Vasanthi Hargyono <va.santhi@yahoo.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2015-05-20 04:01+0000\n"
+"Last-Translator: Vasanthi Hargyono <va.santhi@yahoo.com>\n"
+"Language-Team: Indonesian (Indonesia) (http://www.transifex.com/ushahidi/ushahidi-v2/language/id_ID/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id_ID\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: form.field_default.default
+msgctxt "form.field_default.default"
+msgid "The default value you have provided for the field is invalid."
+msgstr "Nilai default yang Anda sediakan untuk kolom ini tidak benar."
+
+#: form.field_default.length
+msgctxt "form.field_default.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 200 characters long."
+msgstr "Panjang Nama minimal 3 karakter tapi tidak boleh lebih dari 200 karakter."
+
+#: form.field_height.between
+msgctxt "form.field_height.between"
+msgid "Please enter a value 0 to 50 for the Field Height."
+msgstr "Tinggi Kolom hanya boleh diisi angka antara 0 - 50."
+
+#: form.field_isdate.between
+msgctxt "form.field_isdate.between"
+msgid "You have entered an invalid value for Date Field."
+msgstr "Format Tanggal yang Anda masukkan salah."
+
+#: form.field_isdate.required
+msgctxt "form.field_isdate.required"
+msgid "Please select Yes or No for the Date Field."
+msgstr "Mohon hanya pilih Ya atau Tidak pada kolom Tanggal."
+
+#: form.field_name.length
+msgctxt "form.field_name.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 100 characters long."
+msgstr "Panjang Nama minimal 3 karakter tapi tidak boleh lebih dari 100 karakter."
+
+#: form.field_name.required
+msgctxt "form.field_name.required"
+msgid "Please enter Field Name."
+msgstr "Masukan Nama Anda."
+
+#: form.field_name.duplicate
+msgctxt "form.field_name.duplicate"
+msgid ""
+"The field name you entered already exists on this form. Please enter another"
+" one."
+msgstr "Kolom nama yang Anda masukkan sudah ada. Gunakan nama lain."
+
+#: form.field_required.between
+msgctxt "form.field_required.between"
+msgid "You have entered an invalid value for Field Required."
+msgstr "Ada kesalahan di salah satu nilai pada kolom yang wajib diisi."
+
+#: form.field_required.required
+msgctxt "form.field_required.required"
+msgid "Please select Yes or No for Field Required."
+msgstr "Mohon hanya pilih Ya atau Tidak pada kolom yang diwajibkan."
+
+#: form.field_type.numeric
+msgctxt "form.field_type.numeric"
+msgid "Please select a valid Field Type."
+msgstr "Mohon pastikan Jenis Kolom yang Anda Pilih sudah benar."
+
+#: form.field_type.required
+msgctxt "form.field_type.required"
+msgid "Please select a Field Type."
+msgstr "Pilih Jenis Kolom."
+
+#: form.field_width.between
+msgctxt "form.field_width.between"
+msgid "Please enter a value 0 to 300 for the Field Width."
+msgstr "Lebar Kolom hanya boleh diisi angka antara 0 - 300."
+
+#: form.form_description.required
+msgctxt "form.form_description.required"
+msgid "Please enter form's Description."
+msgstr "Mohon masukkan Deskripsi mengenai formulirnya."
+
+#: form.form_id.default
+msgctxt "form.form_id.default"
+msgid "The default form cannot be deleted."
+msgstr "Formulir default tidak bisa dihapus."
+
+#: form.form_id.numeric
+msgctxt "form.form_id.numeric"
+msgid "Please select which form to add this field to."
+msgstr "Silakan pilih ke formulir yang mana kolom ini akan ditambahkan."
+
+#: form.form_id.required
+msgctxt "form.form_id.required"
+msgid "Please select which form to add this field to."
+msgstr "Silakan pilih ke kolom yang mana isian ini akan ditambahkan."
+
+#: form.form_title.length
+msgctxt "form.form_title.length"
+msgid ""
+"The form name field must be at least 3 and no more than 100 characters long."
+msgstr "Panjang nama minimal 3 karakter dan tidak boleh lebih dari 100 karakter."
+
+#: form.form_title.required
+msgctxt "form.form_title.required"
+msgid "Please enter the name of the form."
+msgstr "Masukan nama formulir."
+
+#: form.form_title.exists
+msgctxt "form.form_title.exists"
+msgid "A form with that title already exists. Please choose another."
+msgstr "Sebuah formulir dengan judul sama sudah ada. Gunakan nama lain."

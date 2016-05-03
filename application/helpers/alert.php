@@ -37,7 +37,7 @@ class alert_Core {
 		$message = Kohana::lang('ui_admin.confirmation_code').$alert_code
 			.'.'.Kohana::lang('ui_admin.not_case_sensitive');
 		// HT: verify link for mobile
-		$message .= ' '.Kohana::lang('alerts.confirm_request').url::site().'alerts/verify?c='.$alert_code."&m=".$alert_mobile;
+		$message .= ' '.Kohana::lang('alerts.confirm_request').' '.url::site().'alerts/verify?c='.$alert_code."&m=".$alert_mobile;
 	
 		if (sms::send($post->alert_mobile, $sms_from, $message) === true)
 		{
@@ -108,7 +108,7 @@ class alert_Core {
 			
 		}
 
-		$message .= Kohana::lang('alerts.confirm_request').url::site().'alerts/verify?c='.$alert_code."&e=".$alert_email;
+		$message .= Kohana::lang('alerts.confirm_request').' '.url::site().'alerts/verify?c='.$alert_code."&e=".$alert_email;
 
 		if (email::send($to, $from, $subject, $message, TRUE) == 1)
 		{

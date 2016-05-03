@@ -6,7 +6,7 @@
  * @requires media/js/OpenLayers.js
  */
 (function(){
-	
+
 	/**
 	 * Namespace: Ushahidi
 	 * The Ushahidi object provides a namespace for all things Ushahidi
@@ -62,6 +62,12 @@
 		 */
 		baseURL: '',
 
+		/**
+		 * APIProperty: lang
+		 * Language strings
+		 */
+		lang: {},
+
 	 	/**
 	 	 * APIProperty: geoJSONStyle
 	 	 * Default styling for GeoJSON data
@@ -81,7 +87,7 @@
 				fontWeight: "${fontweight}",
 				fontColor: "#ffffff",
 				fontSize: "${fontsize}",
-				title: "${title}"    
+				title: "${title}"
 			},
 			{
 				context: {
@@ -134,7 +140,7 @@
 						}
 					},
 					radius: function(feature) {
-						if (typeof(feature.attributes.radius) != 'undefined' && 
+						if (typeof(feature.attributes.radius) != 'undefined' &&
 							feature.attributes.radius != '') {
 							return feature.attributes.radius;
 						} else {
@@ -174,7 +180,7 @@
 						}
 					},
 					strokeWidth: function(feature) {
-						if ( typeof(feature.attributes.strokewidth) != 'undefined' && 
+						if ( typeof(feature.attributes.strokewidth) != 'undefined' &&
 							feature.attributes.strokewidth != '')
 						{
 							return feature.attributes.strokewidth;
@@ -216,7 +222,7 @@
 						return "#" + feature.attributes.color;
 					},
 					strokeColor: function(feature) {
-						if ( typeof(feature.attributes.strokecolor) != 'undefined' && 
+						if ( typeof(feature.attributes.strokecolor) != 'undefined' &&
 							feature.attributes.strokecolor != '')
 						{
 							return "#"+feature.attributes.strokecolor;
@@ -228,7 +234,7 @@
 					},
 					icon: function(feature) {
 						feature_icon = feature.attributes.icon;
-						
+
 						return (feature_icon !== "") ? feature_icon : "";
 					},
 					clusterCount: function(feature) {
@@ -248,7 +254,7 @@
 					},
 					opacity: function(feature) {
 						feature_icon = feature.attributes.icon;
-						if (typeof(feature.attributes.opacity) != 'undefined' && 
+						if (typeof(feature.attributes.opacity) != 'undefined' &&
 							feature.attributes.opacity != '')
 						{
 							return feature.attributes.opacity
@@ -263,7 +269,7 @@
 						}
 					},
 					strokeOpacity: function(feature) {
-						if(typeof(feature.attributes.strokeopacity) != 'undefined' && 
+						if(typeof(feature.attributes.strokeopacity) != 'undefined' &&
 							feature.attributes.strokeopacity != '')
 						{
 							return feature.attributes.strokeopacity;
@@ -307,7 +313,7 @@
 	 Ushahidi.Map = function(div, config) {
 	 	// Internal registry for the marker layers
 	 	this._registry = [];
-	 	
+
 	 	// Internal list of layers to keep at the top
 	 	this._onTop = [];
 
@@ -382,12 +388,12 @@
 			controls: [],
 			projection: Ushahidi.proj_900913,
 			'displayProjection': Ushahidi.proj_4326,
-			maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 
+			maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34,
 			                                 20037508.34, 20037508.34),
 			maxResolution: 156543.0339,
 			// Shrink the popup padding so popups don't land under zoom control
 			paddingForPopups: new OpenLayers.Bounds(40,15,15,15),
-			eventListeners: { 
+			eventListeners: {
 				// Trigger keepOnTop fn whenever new layers are added
 				addlayer: this.keepOnTop,
 				scope: this
@@ -449,8 +455,8 @@
 		this.register("deletelayer", this.deleteLayer, this);
 		this.register("baselayerchanged", this.updateBaseLayer, this);
 		this.register("mapcenterchanged", this.updateMapCenter, this);
-		
-		// Pre-load the background image for the popup so that it is 
+
+		// Pre-load the background image for the popup so that it is
 		// fetched from the cache when when popup is displayed
 		var popupBgImage = new Image();
 		popupBgImage.src = OpenLayers.Util.getImagesLocation() + 'cloud-popup-relative.png';
@@ -462,7 +468,7 @@
 	 * APIMethod addLayers
 	 *
 	 * Parameters:
-	 * layerType - {String} Type of marker to be added and could be one of the following 
+	 * layerType - {String} Type of marker to be added and could be one of the following
 	 *             (Ushahidi.REPORTS, Ushahidi.KML, Ushahidi.SHARES. Ushahidi.DEFAULT)
 	 * options   - {Object} Optional object key/value pairs of the markers to be added to the map
 	 *
@@ -475,26 +481,26 @@
 	 *               layer (Ushahidi.DEFAULT). The default value is true
 	 * transform - {Boolean} When true, transforms the featur geometry to spherical mercator
 	 *             The default value is false
-	 * features - {Array(OpenLayers.Feature.Vector)} Features to add to the layer 
+	 * features - {Array(OpenLayers.Feature.Vector)} Features to add to the layer
 	 *            When the features ar specified, the protocol property is omitted from the
 	 *            options passed to the layer constructor. The features property is used instead
 	 *
 	 * save -      {bool} Whether to save the layer in the internal registry of Ushahidi.Map This
 	 *             parameter should be set to true, if the layer being added is new so as to ensure
-	 *             that it is redrawn when the map is zoomed in/out or the report filters are updated   
+	 *             that it is redrawn when the map is zoomed in/out or the report filters are updated
 	 * keepOnTop - {bool} Whether to keep this layer above others.
 	 */
 	Ushahidi.Map.prototype.addLayer = function(layerType, options, save, keepOnTop) {
 		// Default markers layer
 		if (layerType == Ushahidi.DEFAULT) {
 			this.deleteLayer("default");
-			
+
 			var markers = null;
-			
+
 			if (options == undefined) {
 				options = {};
 			}
-			
+
 			// Check for the style map
 			if (options.styleMap != undefined) {
 
@@ -523,7 +529,7 @@
 					markers.addMarker(new OpenLayers.Marker(point));
 
 					point.transform(Ushahidi.proj_900913, Ushahidi.proj_4326);
-					
+
 					var coords = {latitude: point.lat, longitude: point.lon};
 					context.trigger("markerpositionchanged", coords);
 
@@ -538,7 +544,7 @@
 
 			return this;
 		}
-		
+
 		// Setup default protocol format
 		var protocolFormat = new OpenLayers.Format.GeoJSON();
 		// Switch protocol format if layer is KML
@@ -643,10 +649,10 @@
 
 		// Create the layer
 		var layer = new OpenLayers.Layer.Vector(options.name, layerOptions);
-		
+
 		// Store context for callbacks
 		var context = this;
-		
+
 		// Hide the layer until its loaded
 		// only delete the old layer on loadend
 		layer.display(false);
@@ -677,7 +683,7 @@
 				this._olMap.addControl(this._selectControl);
 				this._selectControl.activate();
 			}
-			
+
 			// Bind popup events for select/unselect
 			layer.events.on({
 				"featureselected": this.onFeatureSelect,
@@ -687,7 +693,7 @@
 		}
 		// Register display layer fn to run on load end
 		layer.events.register('loadend', this, displayLayer);
-		
+
 		// If features were passed in layer options
 		// Add features to layer and register display layer on layer added
 		if (options.features !== undefined && options.features.length > 0) {
@@ -815,37 +821,41 @@
 			image += "</div>";
 		}
 
+		var stringLink = event.feature.attributes.name;
+		var objLink = $(stringLink);
+		objLink.attr('target','_blank')
+
 		var content = "<div class=\"infowindow\">" + image +
 		    "<div class=\"infowindow_content\">"+
-		    "<div class=\"infowindow_list\">"+event.feature.attributes.name+"</div>\n" +
+		    "<div class=\"infowindow_list\">"+objLink.prop('outerHTML')+"</div>\n" +
 		    "<div class=\"infowindow_meta\">";
 
 		if (typeof(event.feature.attributes.link) != 'undefined' &&
 		    event.feature.attributes.link != '') {
 
 		    content += "<a href='"+event.feature.attributes.link+"'>" +
-			    "More Information</a><br/>";
+			    Ushahidi.lang.more_information+"</a><br/>";
 		}
 
 		content += "<a id=\"zoomIn\">";
-		content += "Zoom In</a>";
+		content += Ushahidi.lang.zoom_in+"</a>";
 		content += "&nbsp;&nbsp;|&nbsp;&nbsp;";
 		content += "<a id=\"zoomOut\">";
-		content += "Zoom Out</a></div>";
-		content += "</div><div style=\"clear:both;\"></div></div>";		
+		content += Ushahidi.lang.zoom_out+"</a></div>";
+		content += "</div><div style=\"clear:both;\"></div></div>";
 
 		if (content.search("<script") != -1) {
 			content = "Content contained Javascript! Escaped content " +
 			    "below.<br />" + content.replace(/</g, "&lt;");
 		}
-		  
+
 		// Destroy existing popups before opening a new one
 		if (event.feature.popup != null) {
 			map.removePopup(event.feature.popup);
 		}
 
 		// Create the popup
-		var popup = new OpenLayers.Popup.FramedCloud("chicken", 
+		var popup = new OpenLayers.Popup.FramedCloud("chicken",
 			event.feature.geometry.getBounds().getCenterLonLat(),
 			new OpenLayers.Size(100,100),
 			content,
@@ -857,11 +867,11 @@
 
 		// Register zoom in/out events
 		$("#zoomIn", popup.contentDiv).click(
-			{context: this, latitude: lat, longitude: lon, zoomFactor: 1}, 
+			{context: this, latitude: lat, longitude: lon, zoomFactor: 1},
 			this.zoomToSelectedFeature);
 
 		$("#zoomOut", popup.contentDiv).click(
-			{context: this, latitude: lat, longitude: lon, zoomFactor: -1}, 
+			{context: this, latitude: lat, longitude: lon, zoomFactor: -1},
 			this.zoomToSelectedFeature);
 	}
 
@@ -880,7 +890,7 @@
 
 	/**
 	 * APIMethod: onPopupClose
-	 * Callback to be executed when the "close" button in the 
+	 * Callback to be executed when the "close" button in the
 	 * popup is clicked
 	 */
 	Ushahidi.Map.prototype.onPopupClose = function(e) {
@@ -906,7 +916,7 @@
 	Ushahidi.Map.prototype.zoomToSelectedFeature = function(e) {
 		// Get the event data
 		var data = e.data;
-		
+
 		var point = new OpenLayers.LonLat(data.longitude, data.latitude);
 		var zoomLevel = data.zoomFactor + data.context._olMap.getZoom();
 
@@ -998,14 +1008,14 @@
 		var layers = name;
 		if (typeof name === 'string')
 			layers = this._olMap.getLayersByName(name);
-		
+
 		for (var i=0; i < layers.length; i++) {
 			// Set opacity to 0 then hide, using CSS3 transitions to fade the layer out
 			layers[i].div.style['opacity'] = 0.2;
 			layers[i].display(false);
 			// Skip layer if its not on the map
 			if (layers[i].map == null || this._olMap.getLayerIndex(layers[i]) == -1) continue;
-			
+
 			this._olMap.removeLayer(layers[i]);
 			if (layers[i].destroyFeatures !== undefined)
 				layers[i].destroyFeatures();
@@ -1039,7 +1049,7 @@
 			context.updateRadius(coords);
 			context.trigger("markerpositionchanged", coords);
 		});
-		
+
 	}
 
 	/**
@@ -1060,7 +1070,7 @@
 
 		if (options.latitude !== undefined && options.longitude !== undefined) {
 			this._currentMarkerPosition = {latitude: options.latitude, longitude: options.longitude};
-		} 
+		}
 
 		if (this._currentMarkerPosition.latitude == undefined ||
 			this._currentMarkerPosition.longitude == undefined) {
@@ -1144,7 +1154,7 @@
 		// Re-add the default layer
 		this.addLayer(Ushahidi.DEFAULT);
 
-		// Map center has changed, trigger 
+		// Map center has changed, trigger
 		this.trigger("markerpositionchanged", center);
 	}
 
@@ -1166,7 +1176,7 @@
 			this.addLayer(Ushahidi.DEFAULT);
 		}
 	}
-	
+
 	/**
 	 * APIMethod: keepOnTop
 	 * Forces specified layer(s) to the top of the stack
@@ -1175,7 +1185,7 @@
 		for (var i=0; i<this._onTop.length; i++) {
 			var layerName = this._onTop[i];
 			var layers = this._olMap.getLayersByName(layerName);
-			
+
 			for (var j=0; j<layers.length; j++) {
 				this._olMap.raiseLayer(layers[j], this._olMap.getNumLayers());
 			}

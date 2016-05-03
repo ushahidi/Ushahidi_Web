@@ -1,0 +1,59 @@
+#. extracted from en_US/layer.php, lg/layer.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-20 22:43+0000\n"
+"PO-Revision-Date: 2012-09-20 22:43+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: lg\n"
+
+#: layer.layer_color.length
+msgctxt "layer.layer_color.length"
+msgid "The color field must be 6 characters long."
+msgstr ""
+
+#: layer.layer_color.required
+msgctxt "layer.layer_color.required"
+msgid "The color field is required."
+msgstr ""
+
+#: layer.layer_file.type
+msgctxt "layer.layer_file.type"
+msgid "The file field does not appear to contain a valid file. The only accepted formats are .KMZ and .KML."
+msgstr ""
+
+#: layer.layer_file.valid
+msgctxt "layer.layer_file.valid"
+msgid "The file field does not appear to contain a valid file"
+msgstr ""
+
+#: layer.layer_name.length
+msgctxt "layer.layer_name.length"
+msgid "The name field must be at least 3 and no more 80 characters long."
+msgstr ""
+
+#: layer.layer_name.required
+msgctxt "layer.layer_name.required"
+msgid "The name field is required."
+msgstr ""
+
+#: layer.layer_url.atleast
+msgctxt "layer.layer_url.atleast"
+msgid "Either a KML URL or File is required."
+msgstr ""
+
+#: layer.layer_url.both
+msgctxt "layer.layer_url.both"
+msgid "You can't have both a KML file and a URL."
+msgstr ""
+
+#: layer.layer_url.url
+msgctxt "layer.layer_url.url"
+msgid "Please enter a valid URL, e.g. http://www.ushahidi.com/layerl.kml"
+msgstr ""
+

@@ -1,0 +1,860 @@
+# 
+# Translators:
+# daidungsi <daidungsi@gmail.com>, 2014
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-03-12 06:26+0000\n"
+"PO-Revision-Date: 2014-06-21 12:51+0000\n"
+"Last-Translator: daidungsi <daidungsi@gmail.com>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/projects/p/ushahidi-v2/language/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: settings.allow_comments.between
+msgctxt "settings.allow_comments.between"
+msgid "The allow comments field does not appear to contain a valid value."
+msgstr "Phần khung thông tin cho phép bình luận không chứa giá trị hợp lệ."
+
+#: settings.allow_comments.required
+msgctxt "settings.allow_comments.required"
+msgid "The allow comments field is required."
+msgstr "Phần khung thông tin cho phép bình luận không được để trống."
+
+#: settings.allow_feed.between
+msgctxt "settings.allow_feed.between"
+msgid "The include feed field does not appear to contain a valid value."
+msgstr "Phần khung thông tin bao gồm feed chứa định dạng không hợp lệ."
+
+#: settings.allow_feed.required
+msgctxt "settings.allow_feed.required"
+msgid "The include feed field is required."
+msgstr "Phần khung thông tin bao gồm feed không được để trống."
+
+#: settings.allow_feed_category.between
+msgctxt "settings.allow_feed_category.between"
+msgid ""
+"The include feed category field does not appear to contain a valid value."
+msgstr "Lĩnh vực danh mục nguồn cấp dữ liệu bao gồm không chứa một giá trị hợp lệ."
+
+#: settings.allow_feed_category.required
+msgctxt "settings.allow_feed_category.required"
+msgid "The include feed category field is required."
+msgstr "Lĩnh vực danh mục nguồn cấp dữ liệu bao gồm là bắt buộc."
+
+#: settings.allow_alerts.between
+msgctxt "settings.allow_alerts.between"
+msgid "The allow alerts field does not appear to contain a valid value."
+msgstr "Phần khung thông tin cho phép cảnh báo không chứa giá trị hợp lệ."
+
+#: settings.allow_alerts.required
+msgctxt "settings.allow_alerts.required"
+msgid "The allow alerts field is required."
+msgstr "Phần khung thông tin cho phép cảnh báo không được để trống."
+
+#: settings.allow_reports.between
+msgctxt "settings.allow_reports.between"
+msgid "The allow reports field does not appear to contain a valid value."
+msgstr "Phần khung thông tin cho phép cảnh báo không chứa giá trị hợp lệ."
+
+#: settings.allow_reports.required
+msgctxt "settings.allow_reports.required"
+msgid "The allow reports field is required."
+msgstr "Phần khung thông tin cho phép báo cáo không được để trống."
+
+#: settings.allow_stat_sharing.between
+msgctxt "settings.allow_stat_sharing.between"
+msgid "The stat sharing field does not appear to contain a valid value."
+msgstr "Phần khung thông tin về trạng thái chia sẻ chứa giá trị không hợp lệ."
+
+#: settings.allow_stat_sharing.required
+msgctxt "settings.allow_stat_sharing.required"
+msgid "The stat sharing field is required."
+msgstr "Phần khung thông tin trạng thái chia sẻ không được để trống."
+
+#: settings.api.default_record_limit
+msgctxt "settings.api.default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "Số lượng mặc định các bản tin được tải về với từng yêu cầu API"
+
+#: settings.api.maximum_record_limit
+msgctxt "settings.api.maximum_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "Số lượng tối đa các bản tin được tải về với từng yêu cầu API"
+
+#: settings.api.maximum_requests_per_ip_address
+msgctxt "settings.api.maximum_requests_per_ip_address"
+msgid "Maximum number of API requests per IP address"
+msgstr "Số lượng tối đa các API được yêu cầu với từng địa chỉ IP"
+
+#: settings.api_akismet.alpha_numeric
+msgctxt "settings.api_akismet.alpha_numeric"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "Phần khung thông tin về Akismet không chứa giá trị hợp lệ."
+
+#: settings.api_akismet.length
+msgctxt "settings.api_akismet.length"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "Phần khung thông tin về Akismet không chứa giá trị hợp lệ."
+
+#: settings.banner_image.type
+msgctxt "settings.banner_image.type"
+msgid ""
+"The Site Banner field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "Phần khung thông tin về hỉnh ảnh băng rôn chứa hình ảnh không hợp lệ. Chỉ chấp nhận các định dạng .JPG, .PNG và .GIF."
+
+#: settings.banner_image.size
+msgctxt "settings.banner_image.size"
+msgid "Please ensure that \"Banner Image\" size is less than 250 KB."
+msgstr "Xin chắc rằng \"Hình ảnh băng rôn\" có dung lượng nhỏ hơn 250 KB."
+
+#: settings.banner_image.valid
+msgctxt "settings.banner_image.valid"
+msgid "The \"Banner Image\" field does not appear to contain a valid file."
+msgstr "Phần khung thông tin về \"Hình Ảnh Băng Rôn\" không chứa định dạng tập tin hợp lệ."
+
+#: settings.cache_pages.between
+msgctxt "settings.cache_pages.between"
+msgid "The cache pages field is required."
+msgstr "Phần khung thông tin số trang trong bộ nhớ đệm không được để trống."
+
+#: settings.cache_pages.required
+msgctxt "settings.cache_pages.required"
+msgid "The cache pages field does not appear to contain a valid value."
+msgstr "Phần khung thông tin về số trang trong bộ nhớ đệm không chứa giá trị hợp lệ."
+
+#: settings.cache_pages_lifetime.in_array
+msgctxt "settings.cache_pages_lifetime.in_array"
+msgid ""
+"The cache pages lifetime field does not appear to contain a valid value."
+msgstr "Phần khung thông tin về thời gian thực thi của số trang trong bộ nhớ đệm không chứa giá trị hợp lệ."
+
+#: settings.cache_pages_lifetime.required
+msgctxt "settings.cache_pages_lifetime.required"
+msgid "The cache pages lifetime field is required."
+msgstr "Phần khung thông tin về thời gian thực thi của số trang trong bộ nhớ đệm không được để trống."
+
+#: settings.cleanurl.clean_url_disabled
+msgctxt "settings.cleanurl.clean_url_disabled"
+msgid ""
+"It looks like your server is not configured to handle clean URLs. You will "
+"need to change the configuration of your server before you can enable clean "
+"URLs. See more info on how to enable clean URLs at <a "
+"href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-"
+"rewrite\" target=\"_blank\">this forum post</a>"
+msgstr "Có vẻ như phía máy chủ của bạn vẫn chưa được cấu hình để dọn dẹp các đường dẫn liên kết. Bạn cần thay đổi cấu hình của phía máy chủ do bạn đảm nhiệm trước khi bạn muốn dọn dẹp các đường dẫn liên kết. Tìm hiểu thêm tại <a href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite\" target=\"_blank\">phần bài mục này trong diễn đàn</a>"
+
+#: settings.cleanurl.clean_url_enabled
+msgctxt "settings.cleanurl.clean_url_enabled"
+msgid ""
+"This option makes Ushahidi to be accessed via \"clean\" URLs (without "
+"\"index.php\" in the URL)."
+msgstr "Tùy chọn này cho phép truy cập Ushahidi thông qua các đường dẫn liên kết sạch (không có phần \"index.php\" trong đường dẫn)."
+
+#: settings.cleanurl.enable_clean_url
+msgctxt "settings.cleanurl.enable_clean_url"
+msgid "Enable Clean URLs"
+msgstr "Bật tính năng dọn dẹp đường dẫn liên kết"
+
+#: settings.cleanurl.title
+msgctxt "settings.cleanurl.title"
+msgid "Clean URLs"
+msgstr "Dọn dẹp đường dẫn liên kết"
+
+#: settings.clickatell_api.length
+msgctxt "settings.clickatell_api.length"
+msgid "The Clickatell API number field must be no more 20 characters long."
+msgstr "Phần khung thông tin về số lượng Clickatel API không được quá 200 ký tự về độ dài."
+
+#: settings.clickatell_api.required
+msgctxt "settings.clickatell_api.required"
+msgid "The Clickatell API number field is required."
+msgstr "Phần khung thông tin về thời gian thực thi của số trang trong bộ nhớ đệm không được để trống."
+
+#: settings.clickatell_password.length
+msgctxt "settings.clickatell_password.length"
+msgid ""
+"The Clickatell Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "Phần khung thông tin về Mật Khẩu Clickatel phải chứa ít nhất 5 ký tự và tối đa 50 ký tự về độ dài."
+
+#: settings.clickatell_password.required
+msgctxt "settings.clickatell_password.required"
+msgid "The Clickatell Password field is required."
+msgstr "Phần khung thông tin mật Khẩu Clickatel không được để trống."
+
+#: settings.clickatell_username.length
+msgctxt "settings.clickatell_username.length"
+msgid "The Clickatell Username field must be no more 50 characters long."
+msgstr "Phần khung thông tin Tên Người Dùng Clickatel không được quá 50 ký tự về độ dài."
+
+#: settings.clickatell_username.required
+msgctxt "settings.clickatell_username.required"
+msgid "The Clickatell Username field is required."
+msgstr "Phần khung thông tin về Tên Người Dùng Clickatel không được để trống."
+
+#: settings.configure_map
+msgctxt "settings.configure_map"
+msgid "Configure Map"
+msgstr "Chỉnh cấu hình bản đồ"
+
+#: settings.default_location
+msgctxt "settings.default_location"
+msgid "Default Location"
+msgstr "Địa điểm mặc định"
+
+#: settings.default_map_all.alpha_numeric
+msgctxt "settings.default_map_all.alpha_numeric"
+msgid "The color feed field does not appear to contain a valid value."
+msgstr "Phần khung thông tin về màu sắc của feed chứa định dạng không hợp lệ."
+
+#: settings.default_map_all.length
+msgctxt "settings.default_map_all.length"
+msgid "The color field must be no more 6 characters long."
+msgstr "Phần khung thông tin màu sắc không được vượt quá 6 ký tự về độ dài."
+
+#: settings.default_map_all.required
+msgctxt "settings.default_map_all.required"
+msgid "The color field is required."
+msgstr "Phần khung thông tin về màu sắc không được để trống."
+
+#: settings.default_map_view
+msgctxt "settings.default_map_view"
+msgid "Default Map View"
+msgstr "Chế độ xem bản đồ mặc định"
+
+#: settings.default_zoom_level
+msgctxt "settings.default_zoom_level"
+msgid "Default Zoom Level"
+msgstr "Mức độ phóng to mặc định"
+
+#: settings.download_city_list
+msgctxt "settings.download_city_list"
+msgid "Retrieve Cities From Geonames"
+msgstr "Nhận danh sách các thành phố từ Geonames"
+
+#: settings.email_host.length
+msgctxt "settings.email_host.length"
+msgid "The Mail server port field is too long."
+msgstr "Phần khung thông tin về cổng kết nối đến máy chủ mail quá dài."
+
+#: settings.email_host.numeric
+msgctxt "settings.email_host.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "Phần khung thông tin về cổng kết nối đến máy chủ mail chỉ nên chứa các ký tự số."
+
+#: settings.email_password.length
+msgctxt "settings.email_password.length"
+msgid ""
+"The Mail Server Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "Phần khung thông tin về Mật Khẩu của máy chủ mail phải chứa ít nhất 5 ký tự và tối đa 50 ký tự về độ dài."
+
+#: settings.email_password.required
+msgctxt "settings.email_password.required"
+msgid "The Mail Server Password field is required."
+msgstr "Phần mật khẩu mail phía máy chủ không được để trống."
+
+#: settings.email_port.length
+msgctxt "settings.email_port.length"
+msgid "The Mail server port field is too long."
+msgstr "Phần khung thông tin về cổng kết nối đến máy chủ mail quá dài."
+
+#: settings.email_port.numeric
+msgctxt "settings.email_port.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "Phần khung thông tin về cổng kết nối đến máy chủ mail chỉ nên chứa các ký tự số."
+
+#: settings.email_servertype.length
+msgctxt "settings.email_servertype.length"
+msgid "The Mail server port field is too long."
+msgstr "Phần khung thông tin về cổng kết nối đến máy chủ mail quá dài."
+
+#: settings.email_servertype.required
+msgctxt "settings.email_servertype.required"
+msgid "The Mail Server Type field is required."
+msgstr "Phần loại mail phía máy chủ không được để trống."
+
+#: settings.email_username.length
+msgctxt "settings.email_username.length"
+msgid "The Mail Server Username field must be no more 50 characters long."
+msgstr "Phần khung thông tin Tên Người Dùng Máy Chủ Mail không được quá 50 ký tự về độ dài."
+
+#: settings.email_username.required
+msgctxt "settings.email_username.required"
+msgid "The Mail Server Username field is required."
+msgstr "Phần tên người dùng mail phía máy chủ không được để trống."
+
+#: settings.facebook.title
+msgctxt "settings.facebook.title"
+msgid "Facebook Setup Options"
+msgstr "Tùy chọn cài đặt Facebook"
+
+#: settings.facebook.description
+msgctxt "settings.facebook.description"
+msgid ""
+"To get the information below you will need to create a new Facebook "
+"application at"
+msgstr "Để nhận thêm thông tin bên dưới bạn sẽ cần phải tạo một ứng dụng Facebook mới tại"
+
+#: settings.facebook.description_2
+msgctxt "settings.facebook.description_2"
+msgid ""
+"These settings allow users to login via Facebook, this <strong>does "
+"not</strong> create a facebook application for your deployment"
+msgstr "Các thiết lập sao cho phép người dùng đăng nhập thông qua Facebook, thao tác này <strong>does not</strong> tạo một ứng dụng facebook cho dự án của bạn"
+
+#: settings.facebook.app_id
+msgctxt "settings.facebook.app_id"
+msgid "Facebook App ID"
+msgstr "Facebook App ID"
+
+#: settings.facebook.app_secret
+msgctxt "settings.facebook.app_secret"
+msgid "Facebook App Secret"
+msgstr "Facebook App Secret"
+
+#: settings.google_analytics.length
+msgctxt "settings.google_analytics.length"
+msgid ""
+"The Google Analytics field must contain a valid Web Property ID in the "
+"format UA-XXXXX-XX."
+msgstr "Phần khung thông tin Google Analytics phải chứa một Web Property ID hợp lệ theo định dạng UA-XXXXX-XX."
+
+#: settings.https.enable_https
+msgctxt "settings.https.enable_https"
+msgid "Enable HTTPS"
+msgstr "Bật HTTPS"
+
+#: settings.https.https_disabled
+msgctxt "settings.https.https_disabled"
+msgid ""
+"This option makes Ushahidi be accessed in unsecure mode; "
+"<strong>without</strong> \"https://\" in the URL prefix"
+msgstr "Tùy chọn này cho phép truy cập Ushahidi thông qua các đường dẫn liên kết không an toàn; <strong>không có phần</strong> \"https://\" ở phía trước đường dẫn liên kết"
+
+#: settings.https.https_enabled
+msgctxt "settings.https.https_enabled"
+msgid ""
+"This option makes Ushahidi be accessed in secure mode; with "
+"<strong>https</strong> in the URL prefix"
+msgstr "Tùy chọn này cho phép truy cập Ushahidi thông qua các chế độ truy cập an toàn; <strong>có phần</strong> \"https://\" ở phía trước đường dẫn liên kết"
+
+#: settings.https.title
+msgctxt "settings.https.title"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: settings.items_per_page.between
+msgctxt "settings.items_per_page.between"
+msgid ""
+"The items per page (Frontend) field does not appear to contain a valid "
+"value."
+msgstr "Phần khung thông tin về số lượng đối tượng mỗi trang (Frontend) chứa giá trị không hợp lệ."
+
+#: settings.items_per_page.required
+msgctxt "settings.items_per_page.required"
+msgid "The items per page (Frontend) field is required."
+msgstr "Phần khung thông tin số lượng đối tượng mỗi trang (Frontend) không được để trống."
+
+#: settings.items_per_page_admin.between
+msgctxt "settings.items_per_page_admin.between"
+msgid ""
+"The items per page (Admin) field does not appear to contain a valid value."
+msgstr "Phần khung thông tin về số lượng đối tượng mỗi trang (Admin) chứa giá trị không hợp lệ."
+
+#: settings.items_per_page_admin.required
+msgctxt "settings.items_per_page_admin.required"
+msgid "The items per page (Admin) field is required."
+msgstr "Phần khung thông tin về số lượng đối tượng mỗi trang (Admin) không được để trống."
+
+#: settings.map.default_location
+msgctxt "settings.map.default_location"
+msgid ""
+"Setting up your map provider is a straight- forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "Cài đặt tiến trình lựa chọn nhà cung cấp bản đồ theo xu hướng thẳng tiến. Chọn một nhà lựa chọn, nhận một khóa API từ nhà cung cấp bản đồ, điền vào khóa API."
+
+#: settings.map.zoom
+msgctxt "settings.map.zoom"
+msgid "Zoom Level"
+msgstr "Mức độ phóng to"
+
+#: settings.map_provider.choose
+msgctxt "settings.map_provider.choose"
+msgid "Select a Map Provider"
+msgstr "Chọn một nhà cung cấp bản đồ"
+
+#: settings.map_provider.enter_api
+msgctxt "settings.map_provider.enter_api"
+msgid "Enter the new API Key"
+msgstr "Điền vào khóa API mới"
+
+#: settings.map_provider.get_api
+msgctxt "settings.map_provider.get_api"
+msgid "Get an API Key"
+msgstr "Nhận một khóa API"
+
+#: settings.map_provider.info
+msgctxt "settings.map_provider.info"
+msgid ""
+"Setting up your map provider is a straight-forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "Cài đặt tiến trình lựa chọn nhà cung cấp bản đồ theo xu hướng thẳng tiến. Chọn một nhà lựa chọn, nhận một khóa API từ nhà cung cấp bản đồ, điền vào khóa API."
+
+#: settings.map_provider.name
+msgctxt "settings.map_provider.name"
+msgid "Map provider"
+msgstr "Nhà cung cấp bản đồ"
+
+#: settings.map_timeline
+msgctxt "settings.map_timeline"
+msgid "Map Timeline"
+msgstr "Thời gian bản đồ"
+
+#: settings.map_settings
+msgctxt "settings.map_settings"
+msgid "Map Settings"
+msgstr "Thiết lập bản đồ"
+
+#: settings.multiple_countries
+msgctxt "settings.multiple_countries"
+msgid "Does this Ushahidi Deployment span multiple countries?"
+msgstr "Viện triển khai Ushahidi có được tiến hành ở nhiều quốc gia hay không?"
+
+#: settings.select_default_location
+msgctxt "settings.select_default_location"
+msgid "Please select a default country"
+msgstr "Xin vui lòng chọn một quốc gia mặc định."
+
+#: settings.set_location
+msgctxt "settings.set_location"
+msgid "Click and drag the map to set your exact location"
+msgstr "Click và rê bản đồ để chọn địa điểm chính xác"
+
+#: settings.site.allow_clustering
+msgctxt "settings.site.allow_clustering"
+msgid "Cluster Reports on Map"
+msgstr "Gom lại các báo cáo trên bản đồ"
+
+#: settings.site.allow_comments
+msgctxt "settings.site.allow_comments"
+msgid "Allow Users to Submit Comments to Reports"
+msgstr "Cho phép người dùng đệ trình bình luận đến các báo cáo"
+
+#: settings.site.allow_feed
+msgctxt "settings.site.allow_feed"
+msgid "Include RSS News Feed on Website"
+msgstr "Bao gồm thông tin RSS dạng Feed trên Website"
+
+#: settings.site.allow_feed_category
+msgctxt "settings.site.allow_feed_category"
+msgid "Create New Category from Feeds"
+msgstr "Tạo hạng mục mới từ những nguồn cấp dữ liệu"
+
+#: settings.site.allow_alerts
+msgctxt "settings.site.allow_alerts"
+msgid "Allow Users To Subscribe For Alerts"
+msgstr "Cho phép người dùng đăng ký theo dõi các cảnh báo"
+
+#: settings.site.allow_reports
+msgctxt "settings.site.allow_reports"
+msgid "Allow Users To Submit Reports"
+msgstr "Cho phép người dùng đệ trình các báo cáo"
+
+#: settings.site.api_akismet
+msgctxt "settings.site.api_akismet"
+msgid "Akismet Key"
+msgstr "Khóa Akismet"
+
+#: settings.site.banner
+msgctxt "settings.site.banner"
+msgid "Site Banner"
+msgstr "Băng rông đặt trên trang"
+
+#: settings.site.blocks_per_row
+msgctxt "settings.site.blocks_per_row"
+msgid "Blocks Per Row"
+msgstr "Khóa theo dòng"
+
+#: settings.site.cache_pages
+msgctxt "settings.site.cache_pages"
+msgid "Cache Pages"
+msgstr "Bộ nhớ đệm dành cho trang"
+
+#: settings.site.cache_pages_lifetime
+msgctxt "settings.site.cache_pages_lifetime"
+msgid "Cache Pages Lifetime"
+msgstr "Thời gian thực thi bộ nhớ đệm cho trang"
+
+#: settings.site.checkins
+msgctxt "settings.site.checkins"
+msgid "Enable Checkins"
+msgstr "Bật tính năng điểm đến"
+
+#: settings.site.copyright_statement
+msgctxt "settings.site.copyright_statement"
+msgid "Site Copyright Statement"
+msgstr "Thông báo về bản quyền trên trang"
+
+#: settings.site.default_category_colors
+msgctxt "settings.site.default_category_colors"
+msgid "Default Color For All Categories"
+msgstr "Màu mặc định cho tất cả phân loại"
+
+#: settings.site.default_category_icons
+msgctxt "settings.site.default_category_icons"
+msgid "Default Icon For All Categories"
+msgstr "Biểu tượng mặc định cho tất cả phân loại"
+
+#: settings.site.delete_banner_image
+msgctxt "settings.site.delete_banner_image"
+msgid "Delete Banner Image"
+msgstr "Xóa hình ảnh băng rôn"
+
+#: settings.site.delete_default_map_all_icon
+msgctxt "settings.site.delete_default_map_all_icon"
+msgid "Delete Default Icon"
+msgstr "Xóa biểu tượng mặc định"
+
+#: settings.site.display_contact_page
+msgctxt "settings.site.display_contact_page"
+msgid "Display Contact Page"
+msgstr "Hiển thị trang liên lạc"
+
+#: settings.site.display_howtohelp_page
+msgctxt "settings.site.display_howtohelp_page"
+msgid "Display \"How to Help\" Page"
+msgstr "Hiển thị trang \"Làm cách nào để nhận trợ giúp\""
+
+#: settings.site.email_alerts
+msgctxt "settings.site.email_alerts"
+msgid "Alerts Email Address"
+msgstr "Địa chỉ email cảnh báo"
+
+#: settings.site.email_notice
+msgctxt "settings.site.email_notice"
+msgid ""
+"<span>In order to receive reports by email, please configure your email "
+"account settings.</span>"
+msgstr "<span>Để có thể nhận các báo cáo bằng email, vui lòng cấu hình lại thiết lập dành cho tài khoản email của bạn.</span>"
+
+#: settings.site.email_site
+msgctxt "settings.site.email_site"
+msgid "Site Email Address"
+msgstr "Địa chỉ email nhận cảnh báo"
+
+#: settings.site.google_analytics
+msgctxt "settings.site.google_analytics"
+msgid "Google Analytics"
+msgstr "Google Analytics"
+
+#: settings.site.google_analytics_example
+msgctxt "settings.site.google_analytics_example"
+msgid "Web Property ID - Format: UA-XXXXX-XX"
+msgstr "Web Property ID - Định dạng: UA-XXXXX-XX"
+
+#: settings.site.items_per_page
+msgctxt "settings.site.items_per_page"
+msgid "Items Per Page - Front End"
+msgstr "Số đối tượng mỗi trang - Front End"
+
+#: settings.site.items_per_page_admin
+msgctxt "settings.site.items_per_page_admin"
+msgid "Items Per Page - Admin"
+msgstr "Số đối tượng mỗi trang - Admin"
+
+#: settings.site.kismet_notice
+msgctxt "settings.site.kismet_notice"
+msgid ""
+"Prevent comment spam using <a href=\"http://akismet.com/\" "
+"target=\"_blank\">Akismet</a> from Automattic. <BR />You can get a free API "
+"key by registering for a <a href=\"http://en.wordpress.com/api-keys/\" "
+"target=\"_blank\">WordPress.com user account</a>"
+msgstr "Chặn các bình luận dạng spam bằng<a href=\"http://akismet.com/\" target=\"_blank\">Akismet</a> theo kiểu tự động. <BR />Bạn có thể đăng ký nhận một khóa API miễn phí từ <a href=\"http://en.wordpress.com/api-keys/\" target=\"_blank\">tài khoản người dùng ở WordPress.com</a>"
+
+#: settings.site.laconica_configuration
+msgctxt "settings.site.laconica_configuration"
+msgid "Laconica Credentials"
+msgstr "Laconica Credentials"
+
+#: settings.site.laconica_site
+msgctxt "settings.site.laconica_site"
+msgid "Laconica Site "
+msgstr "Trang Laconica"
+
+#: settings.site.language
+msgctxt "settings.site.language"
+msgid "Site Language"
+msgstr "Ngôn ngữ trang"
+
+#: settings.site.manually_approve_users
+msgctxt "settings.site.manually_approve_users"
+msgid "Manually Approve Users"
+msgstr "Chấp thuận bởi người sử dụng"
+
+#: settings.site.message
+msgctxt "settings.site.message"
+msgid "Site Message"
+msgstr "Trang tin nhắn"
+
+#: settings.site.name
+msgctxt "settings.site.name"
+msgid "Site Name"
+msgstr "Tên trang"
+
+#: settings.site.private_deployment
+msgctxt "settings.site.private_deployment"
+msgid "Private Deployment"
+msgstr "Tiến trình riêng tư"
+
+#: settings.site.require_email_confirmation
+msgctxt "settings.site.require_email_confirmation"
+msgid "Require User Email Confirmation"
+msgstr "Yêu cầu cần có email xác nhận"
+
+#: settings.site.submit_report_message
+msgctxt "settings.site.submit_report_message"
+msgid "Submit Report Message"
+msgstr "Đệ trình tin nhắn báo cáo"
+
+#: settings.site.share_site_stats
+msgctxt "settings.site.share_site_stats"
+msgid "Enable Statistics (Stored on Ushahidi's server)"
+msgstr "Bật tính năng thống kê (được lưu trữ ở phía máy chủ của Ushahidi)"
+
+#: settings.site.tagline
+msgctxt "settings.site.tagline"
+msgid "Site Tagline"
+msgstr "Các thẻ đánh dấu liên quan đến trang"
+
+#: settings.site.timezone
+msgctxt "settings.site.timezone"
+msgid "Timezone"
+msgstr "Múi giờ"
+
+#: settings.site.title
+msgctxt "settings.site.title"
+msgid "Site Settings"
+msgstr "Thiết lập trang"
+
+#: settings.site.twitter_configuration
+msgctxt "settings.site.twitter_configuration"
+msgid "Twitter Search Terms"
+msgstr "Tìm các cụm từ trong Twitter"
+
+#: settings.site.twitter_hashtags
+msgctxt "settings.site.twitter_hashtags"
+msgid "Hashtags - Separate with commas "
+msgstr "Hashtags - Tách biệt bởi dấu phẩy"
+
+#: settings.site.feed_geolocation_user
+msgctxt "settings.site.feed_geolocation_user"
+msgid "Feeds geolocation - Geonames username"
+msgstr "Cấp dữ liệu vị trí địa lý - cơ sở dữ liệu địa lý tên người dùng"
+
+#: settings.site_email.email
+msgctxt "settings.site_email.email"
+msgid "The site email field does not appear to contain a valid email address."
+msgstr "Phần khung thông tin trang email dường như chứa địa chỉ email không hợp lệ."
+
+#: settings.site_email.length
+msgctxt "settings.site_email.length"
+msgid ""
+"The site email field must be at least 4 and no more 100 characters long."
+msgstr "Phần khung thông tin trang email phải có ít nhất 4 ký tự và tối đa 100 ký tự về độ dài."
+
+#: settings.site_name.length
+msgctxt "settings.site_name.length"
+msgid "The site name field must be at least 3 and no more 50 characters long."
+msgstr "Phần khung thông tin tên trang phải có ít nhất 3 ký tự và tối đa 50 ký tự về độ dài."
+
+#: settings.site_name.required
+msgctxt "settings.site_name.required"
+msgid "The site name field is required."
+msgstr "Phần khung thông tin tên trang không được để trống."
+
+#: settings.site_tagline.length
+msgctxt "settings.site_tagline.length"
+msgid "The tagline field must be at least 3 and no more 100 characters long."
+msgstr "Phần khung thông tin tagline phải có ít nhất 3 ký tự và tối đa 100 ký tự về độ dài."
+
+#: settings.site_tagline.required
+msgctxt "settings.site_tagline.required"
+msgid "The tagline field is required."
+msgstr "Phần khung thông tin về tagline không được để trống."
+
+#: settings.sms.clickatell_api
+msgctxt "settings.sms.clickatell_api"
+msgid "Your Clickatell API Number"
+msgstr "Số Clickatell API của bạn"
+
+#: settings.sms.clickatell_check_balance
+msgctxt "settings.sms.clickatell_check_balance"
+msgid "Check Your Clickatell Credit Balance"
+msgstr "Kiểm tra trạng thái cân bằng tín dụng trên Clickatell của bạn"
+
+#: settings.sms.clickatell_load_balance
+msgctxt "settings.sms.clickatell_load_balance"
+msgid "Load Credit Balance"
+msgstr "Tải trạng thái cân bằng tín dụng"
+
+#: settings.sms.clickatell_password
+msgctxt "settings.sms.clickatell_password"
+msgid "Your Clickatell Password"
+msgstr "Mật khẩu tài khoản Clickatell của bạn"
+
+#: settings.sms.clickatell_text_1
+msgctxt "settings.sms.clickatell_text_1"
+msgid ""
+"Sign up for Clickatells service by <a "
+"href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" "
+"target=\"_blank\">clicking here</a>"
+msgstr "Đăng ký sử dụng dịch vụ Clickatells bằng cách <a href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" target=\"_blank\">click vào đây</a>"
+
+#: settings.sms.clickatell_text_2
+msgctxt "settings.sms.clickatell_text_2"
+msgid "Enter your Clickatell access information below"
+msgstr "Điền vào thông tin truy cập tài khoản Clickatell của bạn bên dưới"
+
+#: settings.sms.clickatell_username
+msgctxt "settings.sms.clickatell_username"
+msgid "Your Clickatell User Name"
+msgstr "Điền vào tên tài khoản Clickatell của bạn"
+
+#: settings.sms.flsms_description
+msgctxt "settings.sms.flsms_description"
+msgid ""
+"FrontlineSMS is free and open source software that enables users to send and"
+" receive text messages with large groups of people through mobile phones. "
+"Click on the box below to download the latest version from FrontlineSMS.com."
+msgstr "FrontlineSMS là phần mềm miễn phí mã nguồn mở cho phép người dùng gửi và nhận tin nhắn văn bản đến số một số lượng lớn người dùng có liên kết với nhau theo nhóm thông qua điện thoại. Click vào ô bên dưới để tải về phiên bản mới nhất từ FrontlineSMS.com."
+
+#: settings.sms.flsms_download
+msgctxt "settings.sms.flsms_download"
+msgid "Download and install FrontlineSMS"
+msgstr "Tải và cài đặt FrontlineSMS"
+
+#: settings.sms.flsms_instructions
+msgctxt "settings.sms.flsms_instructions"
+msgid ""
+"Detailed instructions on how to send SMS from your FronlineSMS installation "
+"are available <strong><a "
+"href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" "
+"target=\"_blank\">here</a></strong>. The URL and API Key below are required "
+"to set up the sync with FrontlineSMS."
+msgstr "Thông tin chi tiết về hướng dẫn cách gửi SMS từ FronlineSMS hiện có ở <strong><a href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" target=\"_blank\">here</a></strong>. Đường dẫn liên kết và khóa API bên dưới cần được thêm vào để cài đặt phần đồng bộ hóa với FronlineSMS."
+
+#: settings.sms.flsms_link
+msgctxt "settings.sms.flsms_link"
+msgid "Copy and paste this into the FrontlineSMS \"Address\" field"
+msgstr "Sao chép và dán phần này vào trong phần thông tin \"Địa Chỉ\" của FrontlineSMS"
+
+#: settings.sms.flsms_key
+msgctxt "settings.sms.flsms_key"
+msgid "Copy and paste this into the FrontlineSMS \"Ushahidi API Key\" field"
+msgstr "Sao chép và dán phần này vào trong khung thông tin \"Ushahidi API Key\" của FrontlineSMS"
+
+#: settings.sms.flsms_synchronize
+msgctxt "settings.sms.flsms_synchronize"
+msgid "Connecting FrontlineSMS to this Ushahidi deployment"
+msgstr "Đang kết nối FrontlineSMS đến phần giao tiếp với Ushahidi"
+
+#: settings.sms.flsms_text_1
+msgctxt "settings.sms.flsms_text_1"
+msgid "Enter phone number(s) connected to Frontline SMS in the field(s) below"
+msgstr "Điền vào (những) số điện thoại được kết nối đến SMS Frontline ở (những) khung thông tin bên dưới"
+
+#: settings.sms.flsms_text_2
+msgctxt "settings.sms.flsms_text_2"
+msgid "Enter the number without any + or dashes below"
+msgstr "Điền vào số và nên nhớ không đặt vào dấu + hay dấu gạch ngang"
+
+#: settings.sms.option_1
+msgctxt "settings.sms.option_1"
+msgid "Option 1: Use Frontline SMS"
+msgstr "Tùy chọn 1: Sử dụng Frontline SMS"
+
+#: settings.sms.option_2
+msgctxt "settings.sms.option_2"
+msgid "Option 2: Use a Global SMS Gateway"
+msgstr "Tùy chọn 2: Sử dụng Global SMS Gateway"
+
+#: settings.sms.title
+msgctxt "settings.sms.title"
+msgid "SMS Setup Options"
+msgstr "Tùy chọn cài đặt SMS"
+
+#: settings.sms_no1.length
+msgctxt "settings.sms_no1.length"
+msgid "The phone 1 field does not appear to contain a valid value."
+msgstr "Số điện thoại 1 ở khung thông tin không chứa giá trị hợp lệ."
+
+#: settings.sms_no1.numeric
+msgctxt "settings.sms_no1.numeric"
+msgid "The phone 1 field should contain numbers only."
+msgstr "Phần khung thông tin số điện thoại 1 chỉ nên chứa số."
+
+#: settings.sms_no2.length
+msgctxt "settings.sms_no2.length"
+msgid "The phone 2 field is too long."
+msgstr "Phần số điện thoại 2 quá dài."
+
+#: settings.sms_no2.numeric
+msgctxt "settings.sms_no2.numeric"
+msgid "The phone 2 field should contain numbers only."
+msgstr "Phần khung thông tin số điện thoại 2 chỉ nên chứa số."
+
+#: settings.sms_no3.length
+msgctxt "settings.sms_no3.length"
+msgid "The phone 3 field is too long."
+msgstr "Phần số điện thoại 3 quá dài."
+
+#: settings.sms_no3.numeric
+msgctxt "settings.sms_no3.numeric"
+msgid "The phone 3 field should contain numbers only."
+msgstr "Phần khung thông tin số điện thoại 3 chỉ nên chứa số."
+
+#: settings.twitter.title
+msgctxt "settings.twitter.title"
+msgid "Twitter Setup Options"
+msgstr "Tùy chọn cài đặt Twitter"
+
+#: settings.twitter.description
+msgctxt "settings.twitter.description"
+msgid ""
+"To get the information below, set up your deployment as a new Twitter "
+"application at"
+msgstr "Để nhận thêm thông tin bên dưới bạn sẽ cần phải tạo một ứng dụng Twitter mới tại"
+
+#: settings.twitter.api_key
+msgctxt "settings.twitter.api_key"
+msgid "Consumer Key"
+msgstr "Khóa người tiêu dùng"
+
+#: settings.twitter.api_key_secret
+msgctxt "settings.twitter.api_key_secret"
+msgid "Consumer secret"
+msgstr "Bí mật người tiêu dùng"
+
+#: settings.twitter.token
+msgctxt "settings.twitter.token"
+msgid "Access Token"
+msgstr "Token truy cập"
+
+#: settings.twitter.token_secret
+msgctxt "settings.twitter.token_secret"
+msgid "Access Token Secret"
+msgstr "Token bí mật truy cập"
+
+#: settings.test_settings
+msgctxt "settings.test_settings"
+msgid "Test settings"
+msgstr "Thử các thiết lập"

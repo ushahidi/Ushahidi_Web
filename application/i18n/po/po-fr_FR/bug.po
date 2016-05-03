@@ -1,0 +1,67 @@
+# 
+# Translators:
+# Thierry Gaillou <titier@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-11-19 16:52+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: French (France) (http://www.transifex.com/ushahidi/ushahidi-v2/language/fr_FR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: bug.captcha.default
+msgctxt "bug.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "Veuillez entrer un code de sécurité valide."
+
+#: bug.captcha.required
+msgctxt "bug.captcha.required"
+msgid "Please enter the security code."
+msgstr "Veuillez entrer le code de sécurité."
+
+#: bug.email.email
+msgctxt "bug.email.email"
+msgid "The Email field does not appear to contain a valid email address?"
+msgstr "Le champ e-mail ne semble pas contenir une adresse email valide ?"
+
+#: bug.email.length
+msgctxt "bug.email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "L\\'e-mail doit contenir entre 4 et 64 caractères."
+
+#: bug.email.required
+msgctxt "bug.email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "L\\'e-mail est obligatoire si la case est cochée."
+
+#: bug.error.required
+msgctxt "bug.error.required"
+msgid "The error field is required."
+msgstr "Le champ d\\'erreur est requise."
+
+#: bug.subject.length
+msgctxt "bug.subject.length"
+msgid "The subject field must be at least 3 characters long."
+msgstr "Le sujet doit avoir au moins 3 caractères."
+
+#: bug.subject.required
+msgctxt "bug.subject.required"
+msgid "The subject field is required."
+msgstr "Le sujet est obligatoire."
+
+#: bug.yourname.length
+msgctxt "bug.yourname.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "Le nom doit comporter au moins 3 caractères."
+
+#: bug.yourname.required
+msgctxt "bug.yourname.required"
+msgid "The name field is required."
+msgstr "Le nom est obligatoire."

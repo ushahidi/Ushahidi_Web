@@ -1,0 +1,104 @@
+#. extracted from en_US/form.php, ur_PK/form.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-09-20 22:18+0000\n"
+"PO-Revision-Date: 2012-09-20 22:18+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: ur_PK\n"
+
+#: form.field_default.default
+msgctxt "form.field_default.default"
+msgid "The default value you have provided for the field is invalid."
+msgstr ""
+
+#: form.field_default.length
+msgctxt "form.field_default.length"
+msgid "The Field Name must be at least 3 and no more than 200 characters long."
+msgstr ""
+
+#: form.field_height.between
+msgctxt "form.field_height.between"
+msgid "Please enter a value 0 to 50 for the Field Height."
+msgstr ""
+
+#: form.field_isdate.between
+msgctxt "form.field_isdate.between"
+msgid "You have entered an invalid value for Date Field."
+msgstr ""
+
+#: form.field_isdate.required
+msgctxt "form.field_isdate.required"
+msgid "Please select Yes or No for the Date Field."
+msgstr ""
+
+#: form.field_name.length
+msgctxt "form.field_name.length"
+msgid "The Field Name must be at least 3 and no more than 100 characters long."
+msgstr ""
+
+#: form.field_name.required
+msgctxt "form.field_name.required"
+msgid "Please enter Field Name."
+msgstr ""
+
+#: form.field_required.between
+msgctxt "form.field_required.between"
+msgid "You have entered an invalid value for Field Required."
+msgstr ""
+
+#: form.field_required.required
+msgctxt "form.field_required.required"
+msgid "Please select Yes or No for Field Required."
+msgstr ""
+
+#: form.field_type.numeric
+msgctxt "form.field_type.numeric"
+msgid "Please select a valid Field Type."
+msgstr ""
+
+#: form.field_type.required
+msgctxt "form.field_type.required"
+msgid "Please select a Field Type."
+msgstr ""
+
+#: form.field_width.between
+msgctxt "form.field_width.between"
+msgid "Please enter a value 0 to 300 for the Field Width."
+msgstr ""
+
+#: form.form_description.required
+msgctxt "form.form_description.required"
+msgid "Please enter form's Description."
+msgstr ""
+
+#: form.form_id.default
+msgctxt "form.form_id.default"
+msgid "The default form cannot be deleted."
+msgstr ""
+
+#: form.form_id.numeric
+msgctxt "form.form_id.numeric"
+msgid "Please select which form to add this field to."
+msgstr ""
+
+#: form.form_id.required
+msgctxt "form.form_id.required"
+msgid "Please select which form to add this field to."
+msgstr ""
+
+#: form.form_title.length
+msgctxt "form.form_title.length"
+msgid "The form name field must be at least 3 and no more than 100 characters long."
+msgstr ""
+
+#: form.form_title.required
+msgctxt "form.form_title.required"
+msgid "Please enter the name of the form."
+msgstr ""
+

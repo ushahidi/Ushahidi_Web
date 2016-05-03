@@ -1,0 +1,61 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:05+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Hebrew (Israel) (http://www.transifex.com/ushahidi/ushahidi-v2/language/he_IL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he_IL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: comments.captcha.default
+msgctxt "comments.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "נא להזין קוד אבטחה חוקי"
+
+#: comments.captcha.required
+msgctxt "comments.captcha.required"
+msgid "Please enter the security code."
+msgstr "נא להזין את קוד האבטחה"
+
+#: comments.captcha.valid
+msgctxt "comments.captcha.valid"
+msgid "You entered the wrong security code."
+msgstr ""
+
+#: comments.comment_author.length
+msgctxt "comments.comment_author.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "על השם להיות באורך 3 תווים לפחות."
+
+#: comments.comment_author.required
+msgctxt "comments.comment_author.required"
+msgid "The name field is required."
+msgstr "שדה השם הוא שדה נדרש."
+
+#: comments.comment_description.required
+msgctxt "comments.comment_description.required"
+msgid "The comments field is required."
+msgstr "שדה ההערה הוא שדה נדרש."
+
+#: comments.comment_email.email
+msgctxt "comments.comment_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "כתובת האימייל שהוזנה לא תקינה."
+
+#: comments.comment_email.length
+msgctxt "comments.comment_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "על הדואר האלקטרוני להיות באורך 4 עד 64 תווים."
+
+#: comments.comment_email.required
+msgctxt "comments.comment_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "שדה הדואר האלקטרוני הוא שדה נדרש אם תיבת הסימון מסומנת."

@@ -1,0 +1,23 @@
+#. extracted from en_US/imap.php, pr_US/imap.php
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-15 04:40+0000\n"
+"PO-Revision-Date: 2012-08-15 04:40+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+"Language: pr_US\n"
+
+#: imap.imap_stream_not_opened
+msgctxt "imap.imap_stream_not_opened"
+msgid "Could not open IMAP stream."
+msgstr ""
+
+#: imap.unsupported_service
+msgctxt "imap.unsupported_service"
+msgid "The email service is not supported."
+msgstr ""
+

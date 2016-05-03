@@ -1,0 +1,148 @@
+#. extracted from en_US/import.php, en_US/import.php#
+# Translators: 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi-Localizations\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: import.csv.approved
+msgctxt "import.csv.approved"
+msgid "APPROVED must be either YES or NO on line "
+msgstr ""
+
+#: import.csv.required_column
+msgctxt "import.csv.required_column"
+msgid "CSV file is missing required column"
+msgstr ""
+
+#: import.csv.verified
+msgctxt "import.csv.verified"
+msgid "VERIFIED must be either YES or NO on line "
+msgstr ""
+
+#: import.incident_exists
+msgctxt "import.incident_exists"
+msgid "Incident already exists for ID #"
+msgstr ""
+
+#: import.incident_date
+msgctxt "import.incident_date"
+msgid "Could not parse incident date on report # "
+msgstr ""
+
+#: import.new_category
+msgctxt "import.new_category"
+msgid "New category added to database: "
+msgstr ""
+
+#: import.xml.category_error
+msgctxt "import.xml.category_error"
+msgid "The category title and category description fields are required. XML Import failed for category #"
+msgstr ""
+
+#: import.xml.field_datatype
+msgctxt "import.xml.field_datatype"
+msgid "Field datatype option added for field "
+msgstr ""
+
+#: import.xml.field_default
+msgctxt "import.xml.field_default"
+msgid "Default values are required for radio, checkbox and dropdown fields for the following field on form "
+msgstr ""
+
+#: import.xml.field_error
+msgctxt "import.xml.field_error"
+msgid "Custom field name missing/field type not allowed. Import failed for the following field on form "
+msgstr ""
+
+#: import.xml.field_hidden
+msgctxt "import.xml.field_hidden"
+msgid "Field hidden option added for field "
+msgstr ""
+
+#: import.xml.file_empty
+msgctxt "import.xml.file_empty"
+msgid "Import failed. The file you have uploaded is empty."
+msgstr ""
+
+#: import.xml.form_field_no_match
+msgctxt "import.xml.form_field_no_match"
+msgid "The following field does not exist on the form listed in report #"
+msgstr ""
+
+#: import.xml.incident_title_date
+msgctxt "import.xml.incident_title_date"
+msgid "Both Report Title and Report Date are required for incident #"
+msgstr ""
+
+#: import.xml.invalid_response
+msgctxt "import.xml.invalid_response"
+msgid "Invalid field response for the following field on report #"
+msgstr ""
+
+#: import.xml.missing_elements
+msgctxt "import.xml.missing_elements"
+msgid "XML file selected for import must have at least one of the following: Categories, Custom forms or Reports"
+msgstr ""
+
+#: import.xml.missing_form_title
+msgctxt "import.xml.missing_form_title"
+msgid "Form title must be provided for form #"
+msgstr ""
+
+#: import.xml.missing_localization
+msgctxt "import.xml.missing_localization"
+msgid "Could not import empty category translation for localization for category #"
+msgstr ""
+
+#: import.xml.new_field
+msgctxt "import.xml.new_field"
+msgid "New field added to database: "
+msgstr ""
+
+#: import.xml.new_form
+msgctxt "import.xml.new_form"
+msgid "New form added to database: "
+msgstr ""
+
+#: import.xml.no_categories
+msgctxt "import.xml.no_categories"
+msgid "There are no categories to import"
+msgstr ""
+
+#: import.xml.no_category_exists
+msgctxt "import.xml.no_category_exists"
+msgid "The following category does not exist, listed in report #"
+msgstr ""
+
+#: import.xml.no_custom_forms
+msgctxt "import.xml.no_custom_forms"
+msgid "There are no custom forms to import."
+msgstr ""
+
+#: import.xml.no_form_exists
+msgctxt "import.xml.no_form_exists"
+msgid "The following form does not exist, listed on report #"
+msgstr ""
+
+#: import.xml.no_reports
+msgctxt "import.xml.no_reports"
+msgid "There are no reports to import."
+msgstr ""
+
+#: import.xml.translation_title
+msgctxt "import.xml.translation_title"
+msgid "Category translation import failed. Missing category title for the following localization on category #"
+msgstr ""
+
+#: import.xml.translation_added
+msgctxt "import.xml.translation_added"
+msgid "Category translation added: Localization "
+msgstr ""
+

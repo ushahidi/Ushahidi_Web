@@ -1,0 +1,3168 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-09-27 05:08+0000\n"
+"PO-Revision-Date: 2014-09-27 05:31+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Albanian (Albania) (http://www.transifex.com/ushahidi/ushahidi-v2/language/sq_AL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sq_AL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_main.about
+msgctxt "ui_main.about"
+msgid "About "
+msgstr "Rreth "
+
+#: ui_main.access
+msgctxt "ui_main.access"
+msgid "Access"
+msgstr "Akses"
+
+#: ui_main.access_limits
+msgctxt "ui_main.access_limits"
+msgid "Access Limits"
+msgstr "Limitet e aksesit "
+
+#: ui_main.account_name
+msgctxt "ui_main.account_name"
+msgid "Account Name"
+msgstr "Emri i Llogaris&euml;"
+
+#: ui_main.actions
+msgctxt "ui_main.actions"
+msgid "Actions"
+msgstr "Veprime"
+
+#: ui_main.action_confirm
+msgctxt "ui_main.action_confirm"
+msgid "This action cannot be undone. Are you sure you want to continue?"
+msgstr "Ky veprim nuk mund t&euml; `b&euml;het.  Jeni i sigurt q&euml; doni t&euml; vazhdoni?"
+
+#: ui_main.activate
+msgctxt "ui_main.activate"
+msgid "Activate"
+msgstr "Aktivizoni"
+
+#: ui_main.active
+msgctxt "ui_main.active"
+msgid "Active"
+msgstr "Aktiv"
+
+#: ui_main.add
+msgctxt "ui_main.add"
+msgid "Add"
+msgstr "Shto"
+
+#: ui_main.added_by
+msgctxt "ui_main.added_by"
+msgid "Added By"
+msgstr "Shtuar nga "
+
+#: ui_main.additional_data
+msgctxt "ui_main.additional_data"
+msgid "Additional Data"
+msgstr "T&euml; dh&euml;na Plot&euml;suese"
+
+#: ui_main.additional_reports
+msgctxt "ui_main.additional_reports"
+msgid "Additional Reports"
+msgstr " Raporte plot&euml;suese"
+
+#: ui_main.add_edit
+msgctxt "ui_main.add_edit"
+msgid "Add/Edit"
+msgstr "Shto\\modifiko"
+
+#: ui_main.add_field
+msgctxt "ui_main.add_field"
+msgid "Add a Field"
+msgstr "Shto nj&euml; fush&euml;"
+
+#: ui_main.add_language
+msgctxt "ui_main.add_language"
+msgid "Add Language"
+msgstr "Shto nj&euml; gjuh&euml;"
+
+#: ui_main.add_new
+msgctxt "ui_main.add_new"
+msgid "Add New"
+msgstr "Shto t&euml; re"
+
+#: ui_main.add_new_category
+msgctxt "ui_main.add_new_category"
+msgid "Add New Category"
+msgstr "Shto nj&euml; kategori t&euml; re"
+
+#: ui_main.add_translation
+msgctxt "ui_main.add_translation"
+msgid "Add Translation"
+msgstr "P&euml;rkthe"
+
+#: ui_main.admin
+msgctxt "ui_main.admin"
+msgid "Administration"
+msgstr "Administrim"
+
+#: ui_main.alerts
+msgctxt "ui_main.alerts"
+msgid "Get Alerts"
+msgstr "Merr sinjale"
+
+#: ui_main.alerts_alert_me
+msgctxt "ui_main.alerts_alert_me"
+msgid "Alert me if a report is filed in, or around:"
+msgstr "M&euml; sinjalizo n&euml;se nj&euml; raport &euml;sht&euml; paraqitur ose po paraqitet:"
+
+#: ui_main.alerts_btn_send
+msgctxt "ui_main.alerts_btn_send"
+msgid "Save My Alert"
+msgstr "Ruaj denoncimin tim"
+
+#: ui_main.alerts_email
+msgctxt "ui_main.alerts_email"
+msgid "Email address:"
+msgstr "Adres&euml; email-i:"
+
+#: ui_main.alerts_enter_email
+msgctxt "ui_main.alerts_enter_email"
+msgid "enter email address"
+msgstr "Fusni adres&euml;n e email-it"
+
+#: ui_main.alerts_enter_mobile
+msgctxt "ui_main.alerts_enter_mobile"
+msgid "enter mobile number with country code"
+msgstr "Fusni numrin tuaj t&euml; telefonit me prefiksin e vendit tuaj"
+
+#: ui_main.alerts_get
+msgctxt "ui_main.alerts_get"
+msgid "Get Alerts"
+msgstr "Merr denoncime"
+
+#: ui_main.alert_has_been
+msgctxt "ui_main.alert_has_been"
+msgid "Alert has been"
+msgstr ""
+
+#: ui_main.alerts_mobile_phone
+msgctxt "ui_main.alerts_mobile_phone"
+msgid "Mobile phone:"
+msgstr "Num&euml;r telefoni:"
+
+#: ui_main.alerts_place_spot
+msgctxt "ui_main.alerts_place_spot"
+msgid ""
+"Or place a spot on the map below, and we will alert you when a report is "
+"submitted within 20 kilometers."
+msgstr "Ose vendosni nj&euml; shenj&euml; n&euml; hart&euml;n m&euml; posht&euml; dhe do t&euml; merrni t&euml; gjith&euml; denoncimet me nj&euml; distanc&euml; 20 kilometra."
+
+#: ui_main.alerts_place_spot2
+msgctxt "ui_main.alerts_place_spot2"
+msgid ""
+"If you can't find your location, please click on the map to pinpoint the "
+"correct location."
+msgstr "N&euml;se ju nuk mund t&euml; gjeni vendndodhjen ju lutemi klikoni n&euml; hart&euml; p&euml;r t&euml; sh&euml;nuar vendndodhjen korrekte."
+
+#: ui_main.alerts_rss
+msgctxt "ui_main.alerts_rss"
+msgid "RSS Feeds (copy the URL below)"
+msgstr "Lajmet RSS (kopjoni URL e m&euml;poshtme)"
+
+#: ui_main.alerts_select_city
+msgctxt "ui_main.alerts_select_city"
+msgid "Select a city"
+msgstr "Zgjidhni nj&euml; Qytet"
+
+#: ui_main.alerts_step1_select_city
+msgctxt "ui_main.alerts_step1_select_city"
+msgid "<strong>Step 1:</strong> Select your city or location:"
+msgstr "<strong>Step 1:</strong>  Zgjidhni qytetin ose vendodhjen tuaj:"
+
+#: ui_main.alerts_step2_send_alerts
+msgctxt "ui_main.alerts_step2_send_alerts"
+msgid "<strong>Step 2:</strong> Send alerts to my:"
+msgstr "<strong>Step 2:</strong> D&euml;rgoni denoncime n&euml;:"
+
+#: ui_main.alerts_step3_select_catgories
+msgctxt "ui_main.alerts_step3_select_catgories"
+msgid "<strong>Step 3 (Optional):</strong> Select Categories"
+msgstr "<strong>Hapi 3 (Fakultativ):</strong> Zgjidh Kategorit&euml;"
+
+#: ui_main.alert_confirm_previous
+msgctxt "ui_main.alert_confirm_previous"
+msgid "Confirm A Previous Alert Request"
+msgstr "Konfirmo nj&euml; k&euml;rkes&euml; t&euml; m&euml;parshme p&euml;r denoncim"
+
+#: ui_main.alert_saved
+msgctxt "ui_main.alert_saved"
+msgid "Your Alert Has Been Saved!"
+msgstr "Denoncimi juaj &euml;sht&euml; ruajtur!"
+
+#: ui_main.all
+msgctxt "ui_main.all"
+msgid "All"
+msgstr "T&euml; gjitha "
+
+#: ui_main.allowed
+msgctxt "ui_main.allowed"
+msgid "Allowed"
+msgstr "I lejuar"
+
+#: ui_main.allowed_tags
+msgctxt "ui_main.allowed_tags"
+msgid "Allowed HTML tags: \"%s\"."
+msgstr ""
+
+#: ui_main.allowed_iframes
+msgctxt "ui_main.allowed_iframes"
+msgid "Iframes are only allowed from: %s."
+msgstr ""
+
+#: ui_main.all_categories
+msgctxt "ui_main.all_categories"
+msgid "All Categories"
+msgstr "T&euml; gjitha kategorit&euml;"
+
+#: ui_main.all_time
+msgctxt "ui_main.all_time"
+msgid "All Time"
+msgstr "Gjith&euml; koh&euml;s"
+
+#: ui_main.and
+msgctxt "ui_main.and"
+msgid "and"
+msgstr "dhe"
+
+#: ui_main.api
+msgctxt "ui_main.api"
+msgid "API"
+msgstr ""
+
+#: ui_main.approve
+msgctxt "ui_main.approve"
+msgid "Approve"
+msgstr "Aprovoj"
+
+#: ui_main.approved
+msgctxt "ui_main.approved"
+msgid "Approved"
+msgstr "Aprovuar"
+
+#: ui_main.approved_reports
+msgctxt "ui_main.approved_reports"
+msgid "Approved Reports"
+msgstr "Reporte t&euml; aprovuara"
+
+#: ui_main.approve_this_report
+msgctxt "ui_main.approve_this_report"
+msgid "Approve this Report"
+msgstr "Aprovo k&euml;t&euml; raport"
+
+#: ui_main.approximate
+msgctxt "ui_main.approximate"
+msgid "Approximate"
+msgstr "I p&euml;raf&euml;rt"
+
+#: ui_main.archive
+msgctxt "ui_main.archive"
+msgid "Archive"
+msgstr "Arkivo"
+
+#: ui_main.archived
+msgctxt "ui_main.archived"
+msgid "Archived"
+msgstr "E arkivuar"
+
+#: ui_main.ascending
+msgctxt "ui_main.ascending"
+msgid "Ascending"
+msgstr ""
+
+#: ui_main.at
+msgctxt "ui_main.at"
+msgid "at"
+msgstr "tek"
+
+#: ui_main.author
+msgctxt "ui_main.author"
+msgid "Author"
+msgstr "Autor"
+
+#: ui_main.auto_checkin
+msgctxt "ui_main.auto_checkin"
+msgid "Auto Checkin"
+msgstr "Vet kontroll"
+
+#: ui_main.Auto
+msgctxt "ui_main.Auto"
+msgid "Auto"
+msgstr ""
+
+#: ui_main.avg_reports_per_day
+msgctxt "ui_main.avg_reports_per_day"
+msgid "Avg Reports Per Day"
+msgstr "Raporte mesatare n&euml; dit&euml;"
+
+#: ui_main.awaiting_approval
+msgctxt "ui_main.awaiting_approval"
+msgid "Awaiting Approval"
+msgstr "N&euml; pritje p&euml;r tu aprovuar"
+
+#: ui_main.awaiting_verification
+msgctxt "ui_main.awaiting_verification"
+msgid "Awaiting Verification"
+msgstr "N&euml; pritje p&euml;r tu verifikuar"
+
+#: ui_main.badge
+msgctxt "ui_main.badge"
+msgid "Badge"
+msgstr "Logo"
+
+#: ui_main.badges
+msgctxt "ui_main.badges"
+msgid "Badges"
+msgstr "Logot"
+
+#: ui_main.badge_image
+msgctxt "ui_main.badge_image"
+msgid "Badge Image"
+msgstr "Imazhi i logos"
+
+#: ui_main.badge_image_upload_your_own
+msgctxt "ui_main.badge_image_upload_your_own"
+msgid "Or you can upload your own badge image instead."
+msgstr "Ju mund t&euml; ngarkoni imazhin tuaj p&euml;r logon."
+
+#: ui_main.badge_pack
+msgctxt "ui_main.badge_pack"
+msgid "Badge Pack"
+msgstr "Seria e Logove"
+
+#: ui_main.badge_select
+msgctxt "ui_main.badge_select"
+msgid "Select a Badge"
+msgstr "Zgjidhni nj&euml; logo"
+
+#: ui_main.blog
+msgctxt "ui_main.blog"
+msgid "Blog"
+msgstr "blog"
+
+#: ui_main.browse_profiles
+msgctxt "ui_main.browse_profiles"
+msgid "Browse Profiles"
+msgstr "Shfleto profilin"
+
+#: ui_main.cancel
+msgctxt "ui_main.cancel"
+msgid "Cancel"
+msgstr "Anullo"
+
+#: ui_main.categories
+msgctxt "ui_main.categories"
+msgid "Categories"
+msgstr "Kategori"
+
+#: ui_main.category
+msgctxt "ui_main.category"
+msgid "Category"
+msgstr "Kategori"
+
+#: ui_main.category_filter
+msgctxt "ui_main.category_filter"
+msgid "Category Filter"
+msgstr "Filteri i Kategoris&euml;"
+
+#: ui_main.category_has_been
+msgctxt "ui_main.category_has_been"
+msgid "The category has been "
+msgstr "Kategoria ka q&euml;n&euml; "
+
+#: ui_main.category_name
+msgctxt "ui_main.category_name"
+msgid "Category Name"
+msgstr "Emri i kategoris&euml;"
+
+#: ui_main.change_date_range
+msgctxt "ui_main.change_date_range"
+msgid "Change Date Range"
+msgstr "Ndryshoni periudh&euml;n kohore"
+
+#: ui_main.change_password
+msgctxt "ui_main.change_password"
+msgid "Change Password"
+msgstr "Ndryshoni fjal&euml;kalimin"
+
+#: ui_main.change_picture
+msgctxt "ui_main.change_picture"
+msgid "Change My Picture"
+msgstr "Ndrysho fotografin&euml; time"
+
+#: ui_main.choose
+msgctxt "ui_main.choose"
+msgid "Choose a"
+msgstr "Zgjidh nj&euml;"
+
+#: ui_main.choose_data_points
+msgctxt "ui_main.choose_data_points"
+msgid "Choose data points to download"
+msgstr "Zgjidhni t&euml; dh&euml;na specifike p&euml;r t&euml; shkarkuar"
+
+#: ui_main.choose_date_range
+msgctxt "ui_main.choose_date_range"
+msgid "Or choose your own date range"
+msgstr "Ose Zgjidhni periudhen tuaj kohore"
+
+#: ui_main.choose_field_type
+msgctxt "ui_main.choose_field_type"
+msgid "Choose field type"
+msgstr "Zgjidhni tipin e hap&euml;sir&euml;s"
+
+#: ui_main.cleanurl
+msgctxt "ui_main.cleanurl"
+msgid "Clean URLs"
+msgstr "Pastro URL-n&euml;"
+
+#: ui_main.clear
+msgctxt "ui_main.clear"
+msgid "Clear"
+msgstr "Pastro"
+
+#: ui_main.clear_map
+msgctxt "ui_main.clear_map"
+msgid "Clear Map"
+msgstr "Pastro hart&euml;n"
+
+#: ui_main.close
+msgctxt "ui_main.close"
+msgid "Close"
+msgstr "Mbyll"
+
+#: ui_main.clusters
+msgctxt "ui_main.clusters"
+msgid "clusters"
+msgstr "Prov&euml;za"
+
+#: ui_main.color
+msgctxt "ui_main.color"
+msgid "Color"
+msgstr "Ngjyra"
+
+#: ui_main.comment
+msgctxt "ui_main.comment"
+msgid "Comment"
+msgstr "Koment"
+
+#: ui_main.comments
+msgctxt "ui_main.comments"
+msgid "Comments"
+msgstr "Komente"
+
+#: ui_main.comment_details
+msgctxt "ui_main.comment_details"
+msgid "Comment Details"
+msgstr "Detajet e Komentit"
+
+#: ui_main.configuration_saved
+msgctxt "ui_main.configuration_saved"
+msgid "Your Settings Have Been Saved!"
+msgstr "Opsionet tuaja tashm&euml; jan&euml; ruajtur !"
+
+#: ui_main.configure
+msgctxt "ui_main.configure"
+msgid "Configure"
+msgstr "Konfiguro"
+
+#: ui_main.confirm_email_successful
+msgctxt "ui_main.confirm_email_successful"
+msgid ""
+"You have successfully confirmed your email address! Please login below."
+msgstr "Ju keni konfirmuar adres&euml;n tuaj t&euml; email-it n&euml; m&euml;nyr&euml; t&euml; suksesshme. Ju lutemi identifikohu m&euml; posht&euml;."
+
+#: ui_main.confirm_email_successful_and_approval
+msgctxt "ui_main.confirm_email_successful_and_approval"
+msgid ""
+"You have successfully confirmed your email address! An administrator must "
+"approve your account before you login"
+msgstr ""
+
+#: ui_main.confirm_email_failed
+msgctxt "ui_main.confirm_email_failed"
+msgid ""
+"Email confirmation failed! You can request a new email confirmation below."
+msgstr ""
+
+#: ui_main.contact
+msgctxt "ui_main.contact"
+msgid "Contact Us"
+msgstr "Na kontaktoni"
+
+#: ui_main.contact_code
+msgctxt "ui_main.contact_code"
+msgid "Security Code"
+msgstr "Kodi i siguris&euml;"
+
+#: ui_main.contact_email
+msgctxt "ui_main.contact_email"
+msgid "Your Email Address"
+msgstr "Adresa juaj e e-mailit"
+
+#: ui_main.contact_message
+msgctxt "ui_main.contact_message"
+msgid "Message"
+msgstr "Mesazh"
+
+#: ui_main.contact_message_has_send
+msgctxt "ui_main.contact_message_has_send"
+msgid "Your Message Has Been Sent!"
+msgstr "Mesazhi juaj u d&euml;rgua me sukses!"
+
+#: ui_main.contact_name
+msgctxt "ui_main.contact_name"
+msgid "Your Name"
+msgstr "Emri juaj"
+
+#: ui_main.contact_phone
+msgctxt "ui_main.contact_phone"
+msgid "Your Phone Number"
+msgstr "Numri juaj i telefonit"
+
+#: ui_main.contact_send
+msgctxt "ui_main.contact_send"
+msgid "Send Message"
+msgstr "D&euml;rgo mesazhin"
+
+#: ui_main.contact_subject
+msgctxt "ui_main.contact_subject"
+msgid "Message Subject"
+msgstr "P&euml;rmbajtja e mesazhit"
+
+#: ui_main.copyright
+msgctxt "ui_main.copyright"
+msgid "Copyright ©"
+msgstr "E drejta e autorit ©"
+
+#: ui_main.create
+msgctxt "ui_main.create"
+msgid "Create"
+msgstr "Krijo"
+
+#: ui_main.create_edit
+msgctxt "ui_main.create_edit"
+msgid "Create/Edit"
+msgstr "Krijo\\modifiko"
+
+#: ui_main.create_new
+msgctxt "ui_main.create_new"
+msgid "Create New"
+msgstr "Krijo t&euml; ri"
+
+#: ui_main.create_new_password
+msgctxt "ui_main.create_new_password"
+msgid "Create New Password"
+msgstr "Krijoni nj&euml; fjal&euml;kalim t&euml; ri"
+
+#: ui_main.create_report
+msgctxt "ui_main.create_report"
+msgid "Create Report"
+msgstr "Krijoni nj&euml; raport"
+
+#: ui_main.credibility
+msgctxt "ui_main.credibility"
+msgid "Credibility"
+msgstr "Besueshm&euml;ria"
+
+#: ui_main.current_password
+msgctxt "ui_main.current_password"
+msgid "Current Password"
+msgstr "Fjal&euml;kalimi aktual"
+
+#: ui_main.custom_fields
+msgctxt "ui_main.custom_fields"
+msgid "Custom Fields"
+msgstr "Fusha e klientit"
+
+#: ui_main.data
+msgctxt "ui_main.data"
+msgid "Information"
+msgstr "Informacion"
+
+#: ui_main.date
+msgctxt "ui_main.date"
+msgid "Date"
+msgstr "Dat&euml;"
+
+#: ui_main.date_format
+msgctxt "ui_main.date_format"
+msgid "(mm/dd/yyyy)"
+msgstr "(muaj/dita/viti)"
+
+#: ui_main.date_time
+msgctxt "ui_main.date_time"
+msgid "Date & Time"
+msgstr "Data & ora"
+
+#: ui_main.day
+msgctxt "ui_main.day"
+msgid "day"
+msgstr "dita"
+
+#: ui_main.Daily
+msgctxt "ui_main.Daily"
+msgid "Daily"
+msgstr ""
+
+#: ui_main.deactivate
+msgctxt "ui_main.deactivate"
+msgid "Deactivate"
+msgstr "`aktivizo"
+
+#: ui_main.default_location_name
+msgctxt "ui_main.default_location_name"
+msgid "Nairobi, Kenya"
+msgstr "Tiran&euml;, Shqip&euml;ri"
+
+#: ui_main.delete
+msgctxt "ui_main.delete"
+msgid "Delete"
+msgstr "Fshi"
+
+#: ui_main.deleted
+msgctxt "ui_main.deleted"
+msgid "Deleted"
+msgstr "U fshi"
+
+#: ui_main.deletes
+msgctxt "ui_main.deletes"
+msgid "Deletes"
+msgstr "T&euml; fshira"
+
+#: ui_main.delete_disabled
+msgctxt "ui_main.delete_disabled"
+msgid "Delete Disabled"
+msgstr "Opsioni i fshirjes &euml;sht&euml; aktivizuar"
+
+#: ui_main.delete_last
+msgctxt "ui_main.delete_last"
+msgid "Delete Last"
+msgstr "Fshij t&euml; fundit"
+
+#: ui_main.delete_report
+msgctxt "ui_main.delete_report"
+msgid "Delete this Report"
+msgstr "Fshij k&euml;t&euml; raport"
+
+#: ui_main.delete_selected
+msgctxt "ui_main.delete_selected"
+msgid "Delete Selected"
+msgstr "Fshij at&euml; qe &euml;sht&euml; zgjedhur"
+
+#: ui_main.delete_spam
+msgctxt "ui_main.delete_spam"
+msgid "Delete Spam"
+msgstr "fshij spam"
+
+#: ui_main.demo
+msgctxt "ui_main.demo"
+msgid "Demo"
+msgstr "Demostrative"
+
+#: ui_main.description
+msgctxt "ui_main.description"
+msgid "Description"
+msgstr "Pershkrim"
+
+#: ui_main.descending
+msgctxt "ui_main.descending"
+msgid "Descending"
+msgstr ""
+
+#: ui_main.detailed_location_example
+msgctxt "ui_main.detailed_location_example"
+msgid "Example: Corner of City Market, 5th Street & 4th Avenue, Johannesburg"
+msgstr "Shembull: Pran&euml; karburant Fredi, rruga Mine Peza, pallati 208"
+
+#: ui_main.details
+msgctxt "ui_main.details"
+msgid "Details"
+msgstr "Detaje"
+
+#: ui_main.direct_report
+msgctxt "ui_main.direct_report"
+msgid "Direct Report"
+msgstr "Raport direkt"
+
+#: ui_main.disabled
+msgctxt "ui_main.disabled"
+msgid "Disabled"
+msgstr "I pa aktivizuar"
+
+#: ui_main.disapprove
+msgctxt "ui_main.disapprove"
+msgid "Unapprove"
+msgstr "Mosaprovim"
+
+#: ui_main.download_reports
+msgctxt "ui_main.download_reports"
+msgid "Download Reports"
+msgstr "Shkarko raportet"
+
+#: ui_main.download
+msgctxt "ui_main.download"
+msgid "Download"
+msgstr ""
+
+#: ui_main.edit
+msgctxt "ui_main.edit"
+msgid "Edit"
+msgstr "Modifiko"
+
+#: ui_main.edit_form_fields
+msgctxt "ui_main.edit_form_fields"
+msgid "Edit Form Fields"
+msgstr "Modifiko hap&euml;sir&euml;n e formularit"
+
+#: ui_main.edit_report
+msgctxt "ui_main.edit_report"
+msgid "Edit Report"
+msgstr "Modifiko Raportin"
+
+#: ui_main.email
+msgctxt "ui_main.email"
+msgid "Email"
+msgstr "Email-i"
+
+#: ui_main.email_address
+msgctxt "ui_main.email_address"
+msgid "Email Address"
+msgstr "Adres&euml; emaili"
+
+#: ui_main.email_configuration
+msgctxt "ui_main.email_configuration"
+msgid "Mail Server Settings"
+msgstr "Opsionet e Mail Server"
+
+#: ui_main.email_server_host
+msgctxt "ui_main.email_server_host"
+msgid "Mail Server Host"
+msgstr ""
+
+#: ui_main.email_server_password
+msgctxt "ui_main.email_server_password"
+msgid "Mail Server Password"
+msgstr "Fjal&euml;kalimi i Mail Server"
+
+#: ui_main.email_server_port
+msgctxt "ui_main.email_server_port"
+msgid "Mail Server Port"
+msgstr "Porta e Mail Server "
+
+#: ui_main.email_server_ssl_support
+msgctxt "ui_main.email_server_ssl_support"
+msgid "Mail Server SSL support"
+msgstr "mb&euml;shtetja e Mail Server SSL"
+
+#: ui_main.email_server_type
+msgctxt "ui_main.email_server_type"
+msgid "Mail Server Type"
+msgstr "Tipi Mail Server"
+
+#: ui_main.email_server_username
+msgctxt "ui_main.email_server_username"
+msgid "Mail Server Username"
+msgstr "Emri i p&euml;rdorimit t&euml; Mail Server "
+
+#: ui_main.email_settings_comment_0
+msgctxt "ui_main.email_settings_comment_0"
+msgid "so your settings have to be associated with this email address"
+msgstr "Pra opsionet tuaja duhet t&euml; shoq&euml;rohen me k&euml;t&euml; adres&euml; emaili "
+
+#: ui_main.email_settings_comment_00
+msgctxt "ui_main.email_settings_comment_00"
+msgid ""
+"In order to receive reports by email, please input your email account "
+"settings below. Please note that emails will be received at your"
+msgstr "P&euml;r t&euml; mar&euml; raportet n&euml;p&euml;rmjet email-it, ju lutemi rivendosni opsionet e llogaris&euml; suaj t&euml; email-it. Email-et do t&euml; merren nga "
+
+#: ui_main.email_settings_comment_1
+msgctxt "ui_main.email_settings_comment_1"
+msgid "Some servers require a complete email address"
+msgstr "Disa server-a k&euml;rkojne nj&euml; adres&euml; t&euml; plot&euml; email-i"
+
+#: ui_main.email_settings_comment_2
+msgctxt "ui_main.email_settings_comment_2"
+msgid "Email account password"
+msgstr "Fjal&euml;kalimi i llogarise suaj t&euml; email-it"
+
+#: ui_main.email_settings_comment_3
+msgctxt "ui_main.email_settings_comment_3"
+msgid "Common ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+msgstr "Porta t&euml; zakonshme: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)"
+
+#: ui_main.email_settings_comment_4
+msgctxt "ui_main.email_settings_comment_4"
+msgid "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+msgstr "Shembull: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com"
+
+#: ui_main.email_settings_comment_5
+msgctxt "ui_main.email_settings_comment_5"
+msgid "Examples: pop3, imap"
+msgstr "Shembuj: pop3, imap"
+
+#: ui_main.email_settings_comment_6
+msgctxt "ui_main.email_settings_comment_6"
+msgid "Enable or disable SSL connections"
+msgstr "E aktivizuar apo e pa aktivizuar lidhja e SSL"
+
+#: ui_main.empty
+msgctxt "ui_main.empty"
+msgid "---EMPTY---"
+msgstr "---Bosh---"
+
+#: ui_main.end_point
+msgctxt "ui_main.end_point"
+msgid "to"
+msgstr "Tek"
+
+#: ui_main.error
+msgctxt "ui_main.error"
+msgid "Error!"
+msgstr "Gabim!"
+
+#: ui_main.example
+msgctxt "ui_main.example"
+msgid "Example"
+msgstr "Shembull"
+
+#: ui_main.example_country
+msgctxt "ui_main.example_country"
+msgid "Kenya"
+msgstr "Shqip&euml;ri"
+
+#: ui_main.external_apps
+msgctxt "ui_main.external_apps"
+msgid "External Apps"
+msgstr "Aplikacione t&euml; jashtme"
+
+#: ui_main.external_video_link
+msgctxt "ui_main.external_video_link"
+msgid "External Video Link"
+msgstr "Link i jasht&euml;m videoje"
+
+#: ui_main.facebook
+msgctxt "ui_main.facebook"
+msgid "Facebook"
+msgstr ""
+
+#: ui_main.feed
+msgctxt "ui_main.feed"
+msgid "Feed"
+msgstr "Lajmet e dit&euml;s"
+
+#: ui_main.feedback
+msgctxt "ui_main.feedback"
+msgid "Provide Feedback"
+msgstr "Merrni nj&euml; reagim"
+
+#: ui_main.feedback_reports
+msgctxt "ui_main.feedback_reports"
+msgid "Please give us feedback about your experience by sending an email to "
+msgstr ""
+
+#: ui_main.feeds
+msgctxt "ui_main.feeds"
+msgid "Feeds"
+msgstr "Lajmet e dit&euml;s"
+
+#: ui_main.feed_has_been
+msgctxt "ui_main.feed_has_been"
+msgid "The feed has been"
+msgstr "Lajmi ka q&euml;n&euml;"
+
+#: ui_main.feed_items
+msgctxt "ui_main.feed_items"
+msgid "Feed Items"
+msgstr "Artikujt"
+
+#: ui_main.feed_name
+msgctxt "ui_main.feed_name"
+msgid "Feed Name"
+msgstr "Emri i lajmit"
+
+#: ui_main.feed_url
+msgctxt "ui_main.feed_url"
+msgid "Feed URL"
+msgstr "URL e lajmit"
+
+#: ui_main.field_unused
+msgctxt "ui_main.field_unused"
+msgid "Unused field"
+msgstr "Hap&euml;sir&euml; e pap&euml;rdorur"
+
+#: ui_main.file
+msgctxt "ui_main.file"
+msgid "File"
+msgstr "Skedar"
+
+#: ui_main.file_over_max_allowed
+msgctxt "ui_main.file_over_max_allowed"
+msgid "Your file is over the maximum allowed filesize."
+msgstr "Skedari juaj kalon madh&euml;sin&euml; e lejuar."
+
+#: ui_main.filters
+msgctxt "ui_main.filters"
+msgid "Filters"
+msgstr "Filterat"
+
+#: ui_main.filter_reports
+msgctxt "ui_main.filter_reports"
+msgid "Filter Reports"
+msgstr "Filterat e Raporteve"
+
+#: ui_main.filter_reports_by
+msgctxt "ui_main.filter_reports_by"
+msgid "Filter Reports By"
+msgstr "Filteri i raporteve"
+
+#: ui_main.filter_reports_contain
+msgctxt "ui_main.filter_reports_contain"
+msgid "Filter reports that contain"
+msgstr "Filterat e raporteve q&euml; p&euml;rmbajn&euml;"
+
+#: ui_main.find
+msgctxt "ui_main.find"
+msgid "Find"
+msgstr "Gjej"
+
+#: ui_main.find_location
+msgctxt "ui_main.find_location"
+msgid "Find Location"
+msgstr "Gjej vendndodhjen"
+
+#: ui_main.first_name
+msgctxt "ui_main.first_name"
+msgid "First Name"
+msgstr "Emri"
+
+#: ui_main.force_run_scheduler
+msgctxt "ui_main.force_run_scheduler"
+msgid "Force Run Scheduler"
+msgstr "Skeduluesi Nxit nisjen"
+
+#: ui_main.forgot_password
+msgctxt "ui_main.forgot_password"
+msgid "Forgot your password?"
+msgstr "Keni harruar fjal&euml;kalimin tuaj?"
+
+#: ui_main.form
+msgctxt "ui_main.form"
+msgid "Form"
+msgstr "Formular"
+
+#: ui_main.forms
+msgctxt "ui_main.forms"
+msgid "Forms"
+msgstr "Formular&euml;"
+
+#: ui_main.form_description
+msgctxt "ui_main.form_description"
+msgid "Form Description"
+msgstr "P&euml;rshkrimi i formularit"
+
+#: ui_main.form_edit
+msgctxt "ui_main.form_edit"
+msgid "Edit this Form"
+msgstr "Modifiko k&euml;t&euml; formular"
+
+#: ui_main.form_has_been
+msgctxt "ui_main.form_has_been"
+msgid "The form has been"
+msgstr "formulari ka q&euml;n&euml;"
+
+#: ui_main.form_title
+msgctxt "ui_main.form_title"
+msgid "Form Title"
+msgstr "Titulli i formularit"
+
+#: ui_main.from
+msgctxt "ui_main.from"
+msgid "From"
+msgstr "Nga"
+
+#: ui_main.full_name
+msgctxt "ui_main.full_name"
+msgid "Full Name"
+msgstr "Emri i plot&euml;"
+
+#: ui_main.geolocation_available
+msgctxt "ui_main.geolocation_available"
+msgid "GeoLocation Available"
+msgstr "Vendndodhje qjeografike e vlefshme"
+
+#: ui_main.geometry_color
+msgctxt "ui_main.geometry_color"
+msgid "Color"
+msgstr "Ngjyr&euml;"
+
+#: ui_main.geometry_comments
+msgctxt "ui_main.geometry_comments"
+msgid "Comments"
+msgstr "Komente"
+
+#: ui_main.geometry_label
+msgctxt "ui_main.geometry_label"
+msgid "Label"
+msgstr "Etiket&euml;"
+
+#: ui_main.geometry_strokewidth
+msgctxt "ui_main.geometry_strokewidth"
+msgid "Stroke Width"
+msgstr "Trash&euml;sia e vij&euml;s"
+
+#: ui_main.go
+msgctxt "ui_main.go"
+msgid "Go"
+msgstr "Shko"
+
+#: ui_main.hashtag
+msgctxt "ui_main.hashtag"
+msgid "Hashtag"
+msgstr "fjal&euml; shoq&euml;ruar me simbolin # (hashtag)"
+
+#: ui_main.has_been
+msgctxt "ui_main.has_been"
+msgid "Has Been"
+msgstr "Ka q&euml;n&euml;"
+
+#: ui_main.help
+msgctxt "ui_main.help"
+msgid "How to Help"
+msgstr "Si t&euml; ndihmosh"
+
+#: ui_main.hidden
+msgctxt "ui_main.hidden"
+msgid "Hidden"
+msgstr "I fshehur"
+
+#: ui_main.hide
+msgctxt "ui_main.hide"
+msgid "Hide"
+msgstr "Fsheh"
+
+#: ui_main.hide_this_message
+msgctxt "ui_main.hide_this_message"
+msgid "hide this message"
+msgstr "Fshih k&euml;t&euml; mesazh"
+
+#: ui_main.home
+msgctxt "ui_main.home"
+msgid "Home"
+msgstr "Kreu"
+
+#: ui_main.Hourly
+msgctxt "ui_main.Hourly"
+msgid "Hourly"
+msgstr ""
+
+#: ui_main.how_to_report
+msgctxt "ui_main.how_to_report"
+msgid "How to Report"
+msgstr "Si t&euml; raportosh"
+
+#: ui_main.https
+msgctxt "ui_main.https"
+msgid "HTTPS"
+msgstr ""
+
+#: ui_main.id
+msgctxt "ui_main.id"
+msgid "ID"
+msgstr ""
+
+#: ui_main.identify_you
+msgctxt "ui_main.identify_you"
+msgid "Used to identify you on the site to other users."
+msgstr "P&euml;rdoret p&euml;r t`ju identifikuar n&euml; faqen e internetit p&euml;r p&euml;rdoruesit e tjer&euml;."
+
+#: ui_main.image
+msgctxt "ui_main.image"
+msgid "Image"
+msgstr "Imazh"
+
+#: ui_main.images
+msgctxt "ui_main.images"
+msgid "Images"
+msgstr "Imazhe"
+
+#: ui_main.image_icon
+msgctxt "ui_main.image_icon"
+msgid "Image/Icon"
+msgstr "Imazhe/Ikon&euml;"
+
+#: ui_main.inactive
+msgctxt "ui_main.inactive"
+msgid "Inactive"
+msgstr "Jo aktiv"
+
+#: ui_main.inbox
+msgctxt "ui_main.inbox"
+msgid "Inbox"
+msgstr "Mesazhet e marra"
+
+#: ui_main.incident
+msgctxt "ui_main.incident"
+msgid "Incident"
+msgstr ""
+
+#: ui_main.incidents_nearby
+msgctxt "ui_main.incidents_nearby"
+msgid "Incidents Nearby"
+msgstr "Incidente p&euml;rreth"
+
+#: ui_main.incident_location
+msgctxt "ui_main.incident_location"
+msgid "Incident Location"
+msgstr "Vendndodhja e incidenteve"
+
+#: ui_main.include
+msgctxt "ui_main.include"
+msgid "Include"
+msgstr "P&euml;rfshi"
+
+#: ui_main.include_categories
+msgctxt "ui_main.include_categories"
+msgid "Include Categories"
+msgstr "P&euml;rfshi kategori"
+
+#: ui_main.include_custom_fields
+msgctxt "ui_main.include_custom_fields"
+msgid "Include Custom Fields"
+msgstr "P&euml;rfshi hap&euml;sir&euml;n p&euml;r klientin"
+
+#: ui_main.include_description
+msgctxt "ui_main.include_description"
+msgid "Include Description"
+msgstr "P&euml;rfshi nj&euml; p&euml;rshkrim"
+
+#: ui_main.include_detail
+msgctxt "ui_main.include_detail"
+msgid "Include as much detail as possible"
+msgstr "P&euml;rfshi sa m&euml; shum&euml; detaje t&euml; jet&euml; e mundur"
+
+#: ui_main.include_latitude
+msgctxt "ui_main.include_latitude"
+msgid "Include Latitude"
+msgstr "p&euml;rfshi gjat&euml;sin&euml;"
+
+#: ui_main.include_location_information
+msgctxt "ui_main.include_location_information"
+msgid "Include Location Information"
+msgstr "P&euml;rfshi vendndodhjen "
+
+#: ui_main.include_longitude
+msgctxt "ui_main.include_longitude"
+msgid "Include Longitude"
+msgstr "P&euml;rfshi gj&euml;r&euml;sin&euml;"
+
+#: ui_main.include_personal_info
+msgctxt "ui_main.include_personal_info"
+msgid "Include Personal Information"
+msgstr ""
+
+#: ui_main.incoming_media
+msgctxt "ui_main.incoming_media"
+msgid "Incoming Media"
+msgstr "Media hyr&euml;se"
+
+#: ui_main.information_evaluation
+msgctxt "ui_main.information_evaluation"
+msgid "Information Evaluation"
+msgstr "Vler&euml;simi i infomacionit"
+
+#: ui_main.input_location
+msgctxt "ui_main.input_location"
+msgid "Enter your precise location"
+msgstr "Vendosni vendndodhjen tuaj ekzakte"
+
+#: ui_main.insufficient_role
+msgctxt "ui_main.insufficient_role"
+msgid ""
+"Your account doesn't have the proper permission to fully log you in. Please "
+"contact the administrator."
+msgstr "Llogaria juaj nuk ka lejen e duhur p&euml;r tu lejuar t&euml; keni akses t&euml; plot&euml;. Ju lutemi kontaktoni administratorin"
+
+#: ui_main.interval
+msgctxt "ui_main.interval"
+msgid "Interval"
+msgstr ""
+
+#: ui_main.in_response_to
+msgctxt "ui_main.in_response_to"
+msgid "In response to"
+msgstr "N&euml; p&euml;rgjigje t&euml;"
+
+#: ui_main.ip_address
+msgctxt "ui_main.ip_address"
+msgid "IP Address"
+msgstr "Adresa e IP"
+
+#: ui_main.is_this_your_profile
+msgctxt "ui_main.is_this_your_profile"
+msgid "Is this your profile?"
+msgstr "A &euml;sht&euml; ky profili juaj?"
+
+#: ui_main.item
+msgctxt "ui_main.item"
+msgid "item"
+msgstr "Artikull"
+
+#: ui_main.items
+msgctxt "ui_main.items"
+msgid "items"
+msgstr "Artikuj"
+
+#: ui_main.item_details
+msgctxt "ui_main.item_details"
+msgid "item_details"
+msgstr "Detajet e artikullit"
+
+#: ui_main.item_title
+msgctxt "ui_main.item_title"
+msgid "Item Title"
+msgstr "Titulli i artikullit"
+
+#: ui_main.key
+msgctxt "ui_main.key"
+msgid "Key"
+msgstr "el&euml;s"
+
+#: ui_main.keywords
+msgctxt "ui_main.keywords"
+msgid "Keywords"
+msgstr ""
+
+#: ui_main.kml_kmz_file
+msgctxt "ui_main.kml_kmz_file"
+msgid "KMZ/KML File"
+msgstr "Skedari KMZ/KML"
+
+#: ui_main.kml_kmz_upload
+msgctxt "ui_main.kml_kmz_upload"
+msgid "Upload KMZ/KML File"
+msgstr "Ngarko skedarin KMZ/KML "
+
+#: ui_main.kml_url
+msgctxt "ui_main.kml_url"
+msgid "KML URL"
+msgstr ""
+
+#: ui_main.laconica
+msgctxt "ui_main.laconica"
+msgid "Laconica"
+msgstr ""
+
+#: ui_main.language
+msgctxt "ui_main.language"
+msgid "Language"
+msgstr "Gjuh&euml;"
+
+#: ui_main.last
+msgctxt "ui_main.last"
+msgid "Last"
+msgstr "E fundit"
+
+#: ui_main.last_month
+msgctxt "ui_main.last_month"
+msgid "Last Month"
+msgstr "Muaji i fundit"
+
+#: ui_main.last_name
+msgctxt "ui_main.last_name"
+msgid "Last Name"
+msgstr "Mbiemri"
+
+#: ui_main.last_year
+msgctxt "ui_main.last_year"
+msgid "Last Year"
+msgstr "Viti i fundit"
+
+#: ui_main.latitude
+msgctxt "ui_main.latitude"
+msgid "Latitude"
+msgstr "Gjat&euml;si"
+
+#: ui_main.layers
+msgctxt "ui_main.layers"
+msgid "Layers"
+msgstr "Shtresa"
+
+#: ui_main.layers_filter
+msgctxt "ui_main.layers_filter"
+msgid "Other Layers"
+msgstr "Shtresa t&euml; tjera"
+
+#: ui_main.layer_has_been
+msgctxt "ui_main.layer_has_been"
+msgid "The Layer Has Been"
+msgstr "Shtresa ka q&euml;n&euml;"
+
+#: ui_main.layer_name
+msgctxt "ui_main.layer_name"
+msgid "Layer Name"
+msgstr "Emri i Shtres&euml;s"
+
+#: ui_main.layer_url
+msgctxt "ui_main.layer_url"
+msgid "Layer URL"
+msgstr "Shtresa URL"
+
+#: ui_main.leave_a_comment
+msgctxt "ui_main.leave_a_comment"
+msgid "Leave a Comment"
+msgstr "Lini nj&euml; koment"
+
+#: ui_main.less_information
+msgctxt "ui_main.less_information"
+msgid "Less Information"
+msgstr "M&euml; pak informacion"
+
+#: ui_main.level
+msgctxt "ui_main.level"
+msgid "Level"
+msgstr "Nivel"
+
+#: ui_main.level_has_been
+msgctxt "ui_main.level_has_been"
+msgid "This level has been"
+msgstr "Ky nivel ka q&euml;n&euml;"
+
+#: ui_main.level_name
+msgctxt "ui_main.level_name"
+msgid "Level Name"
+msgstr "Emri i nivelit"
+
+#: ui_main.limited
+msgctxt "ui_main.limited"
+msgid "Limited"
+msgstr "E kufizuar"
+
+#: ui_main.link
+msgctxt "ui_main.link"
+msgid "Link"
+msgstr ""
+
+#: ui_main.list
+msgctxt "ui_main.list"
+msgid "List"
+msgstr "List&euml;"
+
+#: ui_main.loading_reports
+msgctxt "ui_main.loading_reports"
+msgid "Loading Reports"
+msgstr "Duke ngarkuar raportet"
+
+#: ui_main.location
+msgctxt "ui_main.location"
+msgid "Location"
+msgstr "Vendndodhje"
+
+#: ui_main.locations
+msgctxt "ui_main.locations"
+msgid "Locations"
+msgstr "Vendndodhje"
+
+#: ui_main.location_example
+msgctxt "ui_main.location_example"
+msgid "City, State and/or Country"
+msgstr "Qytet, Shtet"
+
+#: ui_main.login
+msgctxt "ui_main.login"
+msgid "Login"
+msgstr "Hyrje"
+
+#: ui_main.login_account_creation_successful
+msgctxt "ui_main.login_account_creation_successful"
+msgid "Account created successfully. You may log in now."
+msgstr "Llogaria u krijua n&euml; m&euml;nyr&euml; t&euml; suksesshme. Ju mund t&euml; hyni tani."
+
+#: ui_main.login_confirmation_sent
+msgctxt "ui_main.login_confirmation_sent"
+msgid "A confirmation has been sent to your email address."
+msgstr "Nj&euml; konfirmim &euml;sht&euml; d&euml;rguar n&euml; adres&euml;n tuaj t&euml; email-it."
+
+#: ui_main.login_approval_required
+msgctxt "ui_main.login_approval_required"
+msgid ""
+"Account created. Your account must be approved by an admin before you can "
+"login."
+msgstr ""
+
+#: ui_main.login_email_doesnt_exist
+msgctxt "ui_main.login_email_doesnt_exist"
+msgid ""
+"Email address doesn't exist. Try a different address or create an account."
+msgstr "Adresa e email-it nuk ekziston. Tentoni me nj&euml; tjet&euml;r adres&euml; ose krijoni nj&euml; llogari t&euml; re."
+
+#: ui_main.login_select_openid
+msgctxt "ui_main.login_select_openid"
+msgid "Please click your account provider"
+msgstr "Ju lutem zgjidhni ofruesin tuaj t&euml; llogaris&euml;"
+
+#: ui_main.login_with
+msgctxt "ui_main.login_with"
+msgid "Login with"
+msgstr "Hyni me"
+
+#: ui_main.login_userpass
+msgctxt "ui_main.login_userpass"
+msgid "Email and Password"
+msgstr "Emai-i dhe fjal&euml;kalimi"
+
+#: ui_main.login_openid
+msgctxt "ui_main.login_openid"
+msgid "OpenID"
+msgstr "ID e hapur"
+
+#: ui_main.login_signup
+msgctxt "ui_main.login_signup"
+msgid "Sign Up"
+msgstr "Rregjistrohu"
+
+#: ui_main.login_signup_click
+msgctxt "ui_main.login_signup_click"
+msgid "Create an Account"
+msgstr "Krijoni nj&euml; llogari"
+
+#: ui_main.login_signup_confirmation_message
+msgctxt "ui_main.login_signup_confirmation_message"
+msgid ""
+"Thank you for signing up at %1$s. To confirm your email address, please go "
+"to the following URL: %2$s"
+msgstr ""
+
+#: ui_main.login_signup_confirmation_subject
+msgctxt "ui_main.login_signup_confirmation_subject"
+msgid "Signup Confirmation"
+msgstr "Konfirmimi i rregjistrimit"
+
+#: ui_main.login_signup_admin_approval_message
+msgctxt "ui_main.login_signup_admin_approval_message"
+msgid ""
+"An new user has signed up at %1$s. To approve their registration please go "
+"to the following URL: %2$s"
+msgstr ""
+
+#: ui_main.login_signup_admin_approval_subject
+msgctxt "ui_main.login_signup_admin_approval_subject"
+msgid "New User Approval"
+msgstr ""
+
+#: ui_main.login_signup_approval_message
+msgctxt "ui_main.login_signup_approval_message"
+msgid ""
+"Your user account has been approved for %1$s. To login go to the following "
+"URL: %2$s"
+msgstr ""
+
+#: ui_main.login_signup_approval_subject
+msgctxt "ui_main.login_signup_approval_subject"
+msgid "User account approved"
+msgstr ""
+
+#: ui_main.login_signup_text
+msgctxt "ui_main.login_signup_text"
+msgid "Create an account now to take advantage of more features on the site."
+msgstr "Krijoni tani nj&euml; llogari p&euml;r t&euml; p&euml;rfituar m&euml; shum&euml; karakteristika t&euml; faqes."
+
+#: ui_main.longitude
+msgctxt "ui_main.longitude"
+msgid "Longitude"
+msgstr "Gjer&euml;si"
+
+#: ui_main.map
+msgctxt "ui_main.map"
+msgid "Map"
+msgstr "Hart&euml;"
+
+#: ui_main.mark_read
+msgctxt "ui_main.mark_read"
+msgid "Mark as Read"
+msgstr "Sh&euml;noje si t&euml; lexuar"
+
+#: ui_main.mark_unread
+msgctxt "ui_main.mark_unread"
+msgid "Mark as Unread"
+msgstr "Sh&euml;noje si t&euml; palexuar"
+
+#: ui_main.maximum_filesize
+msgctxt "ui_main.maximum_filesize"
+msgid "Maximum filesize"
+msgstr "Madh&euml;sia maksimale e skedarit"
+
+#: ui_main.media
+msgctxt "ui_main.media"
+msgid "Media"
+msgstr ""
+
+#: ui_main.media_filter
+msgctxt "ui_main.media_filter"
+msgid "Media Filter"
+msgstr "Filteri i Media-s"
+
+#: ui_main.members
+msgctxt "ui_main.members"
+msgid "Members"
+msgstr "An&euml;tar&euml;"
+
+#: ui_main.manage_your_account
+msgctxt "ui_main.manage_your_account"
+msgid "Manage Your Account"
+msgstr "Menaxhoni llogarin&euml; tuaj"
+
+#: ui_main.message
+msgctxt "ui_main.message"
+msgid "Message"
+msgstr "Mesazh"
+
+#: ui_main.messages
+msgctxt "ui_main.messages"
+msgid "Messages"
+msgstr "Mesazhe"
+
+#: ui_main.message_details
+msgctxt "ui_main.message_details"
+msgid "Message Details"
+msgstr "Detajet e mesazhit"
+
+#: ui_main.message_non_numeric_source
+msgctxt "ui_main.message_non_numeric_source"
+msgid "Message from a non-numeric source:"
+msgstr "Mesazh nga nj&euml; burim jo-numerik:"
+
+#: ui_main.mobile
+msgctxt "ui_main.mobile"
+msgid "Mobile"
+msgstr "Celular"
+
+#: ui_main.modify
+msgctxt "ui_main.modify"
+msgid "Modify"
+msgstr "Modifiko"
+
+#: ui_main.modify_date
+msgctxt "ui_main.modify_date"
+msgid "Modify Date"
+msgstr "Data e modifikimit"
+
+#: ui_main.month
+msgctxt "ui_main.month"
+msgid "month"
+msgstr "Muaj"
+
+#: ui_main.Monthly
+msgctxt "ui_main.Monthly"
+msgid "Monthly"
+msgstr ""
+
+#: ui_main.more
+msgctxt "ui_main.more"
+msgid "More"
+msgstr "M&euml; shum&euml;"
+
+#: ui_main.more_information
+msgctxt "ui_main.more_information"
+msgid "More Information"
+msgstr "M&euml; shum&euml; Informacion"
+
+#: ui_main.multi_country_instance
+msgctxt "ui_main.multi_country_instance"
+msgid "Does this Ushahidi Deployment Span Multiple Countries"
+msgstr "A mund t&euml; shtrihet Ushahidi n&euml; shum&euml; vende"
+
+#: ui_main.must_confirm_email_address
+msgctxt "ui_main.must_confirm_email_address"
+msgid ""
+"You must confirm your email address to access this deployment. If you lost "
+"your confirmation email, you can request a new one below."
+msgstr "P&euml;r tu lejuar n&euml; k&euml;t&euml; vendosje ju duhet t&euml; konformoni adres&euml;n tuaj t&euml; emailit. N&euml;se ju humbisni email-in e konfirmimit ju mund t&euml; k&euml;rkoni nj&euml; tjet&euml;r m&euml; posht&euml;."
+
+#: ui_main.name
+msgctxt "ui_main.name"
+msgid "Name"
+msgstr "Em&euml;r"
+
+#: ui_main.nearby_report
+msgctxt "ui_main.nearby_report"
+msgid "Nearby Report"
+msgstr "Raportime t&euml; af&euml;rta"
+
+#: ui_main.new
+msgctxt "ui_main.new"
+msgid "New"
+msgstr "I\\E Re"
+
+#: ui_main.news
+msgctxt "ui_main.news"
+msgid "News"
+msgstr "Lajme"
+
+#: ui_main.news_feeds
+msgctxt "ui_main.news_feeds"
+msgid "News Feeds"
+msgstr "Lajmet e fundit"
+
+#: ui_main.news_source
+msgctxt "ui_main.news_source"
+msgid "News Source"
+msgstr "Burimi i lajmeve"
+
+#: ui_main.new_category
+msgctxt "ui_main.new_category"
+msgid "New Category"
+msgstr "Kategori e re"
+
+#: ui_main.new_password
+msgctxt "ui_main.new_password"
+msgid "New Password"
+msgstr "Fjal&euml;kalim i ri"
+
+#: ui_main.new_report
+msgctxt "ui_main.new_report"
+msgid "New Report"
+msgstr "Raport i ri"
+
+#: ui_main.next
+msgctxt "ui_main.next"
+msgid "Next"
+msgstr "Tjetri"
+
+#: ui_main.no
+msgctxt "ui_main.no"
+msgid "No"
+msgstr "Jo"
+
+#: ui_main.no_checkins
+msgctxt "ui_main.no_checkins"
+msgid "No checkins to display."
+msgstr "Asnj&euml; regjistrim p&euml;r t&euml; shfaqur."
+
+#: ui_main.no_data
+msgctxt "ui_main.no_data"
+msgid "No data"
+msgstr "Ska t&euml; dh&euml;na"
+
+#: ui_main.none
+msgctxt "ui_main.none"
+msgid "None"
+msgstr "Asnj&euml;"
+
+#: ui_main.notices
+msgctxt "ui_main.notices"
+msgid "Notices"
+msgstr "Sh&euml;nime"
+
+#: ui_main.not_approved
+msgctxt "ui_main.not_approved"
+msgid "Not Approved"
+msgstr "E pa aprovuar"
+
+#: ui_main.not_approved_singular
+msgctxt "ui_main.not_approved_singular"
+msgid "Not Approved"
+msgstr "E pa aprovuar"
+
+#: ui_main.not_selected
+msgctxt "ui_main.not_selected"
+msgid "---Not Selected---"
+msgstr "---E pa-zgjedhur---"
+
+#: ui_main.not_spam
+msgctxt "ui_main.not_spam"
+msgid "not spam"
+msgstr "jo spam"
+
+#: ui_main.not_specified
+msgctxt "ui_main.not_specified"
+msgid "Not Specified"
+msgstr "E paspecifikuar"
+
+#: ui_main.no_reports
+msgctxt "ui_main.no_reports"
+msgid "There are no reports"
+msgstr "Nuk ka raporte"
+
+#: ui_main.no_results
+msgctxt "ui_main.no_results"
+msgid "There are no results"
+msgstr "Nuk ka rezultate"
+
+#: ui_main.off
+msgctxt "ui_main.off"
+msgid "Off"
+msgstr ""
+
+#: ui_main.official_news
+msgctxt "ui_main.official_news"
+msgid "Official &amp; mainstream news"
+msgstr "Zyrtare ; lajmet kryesore"
+
+#: ui_main.on
+msgctxt "ui_main.on"
+msgid "On"
+msgstr ""
+
+#: ui_main.option
+msgctxt "ui_main.option"
+msgid "Option"
+msgstr "Opsioni"
+
+#: ui_main.optional
+msgctxt "ui_main.optional"
+msgid "Optional"
+msgstr "Opsionale"
+
+#: ui_main.options
+msgctxt "ui_main.options"
+msgid "Options"
+msgstr "Opsionet"
+
+#: ui_main.organization
+msgctxt "ui_main.organization"
+msgid "Organization"
+msgstr "Organizata"
+
+#: ui_main.organizations
+msgctxt "ui_main.organizations"
+msgid "Organizations"
+msgstr "Organizatat"
+
+#: ui_main.organization_description
+msgctxt "ui_main.organization_description"
+msgid "Organization Description"
+msgstr "P&euml;rshkrimi i organizat&euml;s"
+
+#: ui_main.organization_email
+msgctxt "ui_main.organization_email"
+msgid "Organization Email"
+msgstr "Email-i i organizat&euml;s"
+
+#: ui_main.organization_has_been
+msgctxt "ui_main.organization_has_been"
+msgid "The Organization Has Been"
+msgstr "Organizata ka q&euml;n&euml;"
+
+#: ui_main.organization_name
+msgctxt "ui_main.organization_name"
+msgid "Organization Name"
+msgstr "Emri i organizat&euml;s"
+
+#: ui_main.organization_phone_1
+msgctxt "ui_main.organization_phone_1"
+msgid "Organization Phone 1"
+msgstr "Numri i telefonit 1"
+
+#: ui_main.organization_phone_2
+msgctxt "ui_main.organization_phone_2"
+msgid "Organization Phone 2"
+msgstr "Numri i telefonit 2"
+
+#: ui_main.organization_website
+msgctxt "ui_main.organization_website"
+msgid "Organization Website"
+msgstr "Website i organizat&euml;s"
+
+#: ui_main.original
+msgctxt "ui_main.original"
+msgid "Original"
+msgstr "Origjinale"
+
+#: ui_main.original_description
+msgctxt "ui_main.original_description"
+msgid "Original Description"
+msgstr "P&euml;rshkrimi origjinal"
+
+#: ui_main.original_title
+msgctxt "ui_main.original_title"
+msgid "Original Title"
+msgstr "titulli origjinal"
+
+#: ui_main.other_ushahidi_instances
+msgctxt "ui_main.other_ushahidi_instances"
+msgid "Other Deployments"
+msgstr "Vendosje t&euml; tjera"
+
+#: ui_main.outbox
+msgctxt "ui_main.outbox"
+msgid "Outbox"
+msgstr "Mesazhet e d&euml;rguara"
+
+#: ui_main.outgoing
+msgctxt "ui_main.outgoing"
+msgid "Outgoing"
+msgstr "duke u nisur"
+
+#: ui_main.page
+msgctxt "ui_main.page"
+msgid "Page"
+msgstr "Faqja"
+
+#: ui_main.pages
+msgctxt "ui_main.pages"
+msgid "Pages"
+msgstr "Faqet"
+
+#: ui_main.page_description
+msgctxt "ui_main.page_description"
+msgid "Page Description"
+msgstr "P&euml;rshkrimi i faqes"
+
+#: ui_main.page_has_been
+msgctxt "ui_main.page_has_been"
+msgid "The Page Has Been"
+msgstr "Faqja ka q&euml;n&euml;"
+
+#: ui_main.page_tab_name
+msgctxt "ui_main.page_tab_name"
+msgid "Page Tab Name"
+msgstr "Emri i faqes lidh&euml;se"
+
+#: ui_main.page_title
+msgctxt "ui_main.page_title"
+msgid "Page Title"
+msgstr "Titulli i faqes"
+
+#: ui_main.parent_category
+msgctxt "ui_main.parent_category"
+msgid "Parent Category"
+msgstr "Kategoria prind"
+
+#: ui_main.password
+msgctxt "ui_main.password"
+msgid "Password"
+msgstr "Fjal&euml;kalimi"
+
+#: ui_main.password_again
+msgctxt "ui_main.password_again"
+msgid "Verify Password"
+msgstr "Verifikoni fjal&euml;kalimin"
+
+#: ui_main.password_changed_successfully
+msgctxt "ui_main.password_changed_successfully"
+msgid "Password changed successfully! Login below."
+msgstr "Fjal&euml;kalimi u ndryshua me sukses! Identifikohuni m&euml; posht&euml;."
+
+#: ui_main.password_forgot
+msgctxt "ui_main.password_forgot"
+msgid "Forgot your password?"
+msgstr "Keni harruar fjal&euml;kalimin?"
+
+#: ui_main.password_reset_confirm
+msgctxt "ui_main.password_reset_confirm"
+msgid "Check your email for the new password."
+msgstr "Kontrolloni email p&euml;r fjal&euml;kalinin e ri."
+
+#: ui_main.password_save
+msgctxt "ui_main.password_save"
+msgid "Stay logged in on this computer?"
+msgstr "Q&euml;ndro i identifikuar n&euml; k&euml;t&euml; kompjuter?"
+
+#: ui_main.past_month
+msgctxt "ui_main.past_month"
+msgid "Past Month"
+msgstr "Muajin e kaluar"
+
+#: ui_main.past_year
+msgctxt "ui_main.past_year"
+msgid "Past Year"
+msgstr "Vitin e shkuar"
+
+#: ui_main.pending
+msgctxt "ui_main.pending"
+msgid "Pending"
+msgstr "N&euml; pritje"
+
+#: ui_main.per
+msgctxt "ui_main.per"
+msgid "per"
+msgstr "p&euml;r"
+
+#: ui_main.personal_information
+msgctxt "ui_main.personal_information"
+msgid "Personal Information <span>Optional.</span>"
+msgstr "Informacion personal <span>Opsional.</span>"
+
+#: ui_main.phone
+msgctxt "ui_main.phone"
+msgid "Phone"
+msgstr "Telefoni"
+
+#: ui_main.photos
+msgctxt "ui_main.photos"
+msgid "Photos"
+msgstr "Foto"
+
+#: ui_main.pictures
+msgctxt "ui_main.pictures"
+msgid "Pictures"
+msgstr "Pamje"
+
+#: ui_main.pictures_and_videos
+msgctxt "ui_main.pictures_and_videos"
+msgid "Pictures and Videos"
+msgstr "Paje dhe Video"
+
+#: ui_main.pinpoint_location
+msgctxt "ui_main.pinpoint_location"
+msgid ""
+"* Search for your location using a location name OR latitude,longitude "
+"coordinates (format: 38.19, 85.61), OR click on the map to pinpoint the "
+"correct location."
+msgstr "* K&euml;rkoni p&euml;r vendndodhjen tuaj duke p&euml;rdorur nje em&euml;r vendndodhjeje ose kordinata t&euml; gjer&euml;sis&euml; dhe gjat&euml;sis&euml;(formati: 38.19, 85.61), ose klikoni n&euml; hart&euml; p&euml;r t&euml; sh&euml;nuar pozicionin e sakt&euml;."
+
+#: ui_main.play
+msgctxt "ui_main.play"
+msgid "Play"
+msgstr "Fillo"
+
+#: ui_main.please_note
+msgctxt "ui_main.please_note"
+msgid "Please Note"
+msgstr "Ju lutem vini re"
+
+#: ui_main.plugins
+msgctxt "ui_main.plugins"
+msgid "Plugins"
+msgstr ""
+
+#: ui_main.plugin_url
+msgctxt "ui_main.plugin_url"
+msgid "Plugin Website"
+msgstr ""
+
+#: ui_main.public_profile
+msgctxt "ui_main.public_profile"
+msgid "Public Profile"
+msgstr "Profil Publik"
+
+#: ui_main.public_profile_url
+msgctxt "ui_main.public_profile_url"
+msgid "Public Profile URL"
+msgstr "URL e profilit publik"
+
+#: ui_main.preview
+msgctxt "ui_main.preview"
+msgid "Preview"
+msgstr "Paraqit"
+
+#: ui_main.preview_item
+msgctxt "ui_main.preview_item"
+msgid "Preview Item"
+msgstr "Paraqit artikujt"
+
+#: ui_main.preview_message
+msgctxt "ui_main.preview_message"
+msgid "Preview Message"
+msgstr "Mesazhi i m&euml;parsh&euml;m"
+
+#: ui_main.previous
+msgctxt "ui_main.previous"
+msgid "Previous"
+msgstr "I m&euml;parsh&euml;m"
+
+#: ui_main.private
+msgctxt "ui_main.private"
+msgid "Private"
+msgstr "Privat"
+
+#: ui_main.profile_color
+msgctxt "ui_main.profile_color"
+msgid "Profile Color"
+msgstr "Ngjyra e profilit"
+
+#: ui_main.profile_saved
+msgctxt "ui_main.profile_saved"
+msgid "Your Profile Has Been Saved"
+msgstr "Profili u ruajt"
+
+#: ui_main.quick_stats
+msgctxt "ui_main.quick_stats"
+msgid "Quick Stats"
+msgstr "T&euml; dh&euml;na t&euml; shpejta"
+
+#: ui_main.rating
+msgctxt "ui_main.rating"
+msgid "Rating"
+msgstr "Renditja"
+
+#: ui_main.read
+msgctxt "ui_main.read"
+msgid "Read"
+msgstr "Lexo"
+
+#: ui_main.receive
+msgctxt "ui_main.receive"
+msgid "Receive"
+msgstr "Merr"
+
+#: ui_main.receive_from
+msgctxt "ui_main.receive_from"
+msgid "Receive from"
+msgstr "Marr&euml; nga"
+
+#: ui_main.receive_notifications
+msgctxt "ui_main.receive_notifications"
+msgid "Receive Notifications"
+msgstr "Prano lajm&euml;rime"
+
+#: ui_main.recent_reports
+msgctxt "ui_main.recent_reports"
+msgid "Recent Reports"
+msgstr "Raportet m&euml; t&euml; fundit"
+
+#: ui_main.refresh_news_feeds
+msgctxt "ui_main.refresh_news_feeds"
+msgid "Refresh News Feeds"
+msgstr "Rifresko Lajmet e Dit&euml;s"
+
+#: ui_main.registered_email
+msgctxt "ui_main.registered_email"
+msgid "Registered Email"
+msgstr "Email i regjistruar"
+
+#: ui_main.remove
+msgctxt "ui_main.remove"
+msgid "Remove"
+msgstr "Fshi"
+
+#: ui_main.reply
+msgctxt "ui_main.reply"
+msgid "Reply"
+msgstr "P&euml;rgjigju"
+
+#: ui_main.report
+msgctxt "ui_main.report"
+msgid "Report"
+msgstr "Raporto"
+
+#: ui_main.reports_listed
+msgctxt "ui_main.reports_listed"
+msgid "Reports <span>(from the map, listed in chronological order)</span>"
+msgstr "Raportet <span>(nga harta,t&euml; listuara n&euml; rend kronologjik)</span>"
+
+#: ui_main.reporter
+msgctxt "ui_main.reporter"
+msgid "Reporter"
+msgstr "Raportuesi"
+
+#: ui_main.reporters
+msgctxt "ui_main.reporters"
+msgid "Reporters"
+msgstr "Raportuesit"
+
+#: ui_main.reporter_date
+msgctxt "ui_main.reporter_date"
+msgid "Reporter Date"
+msgstr "Data e raportimit"
+
+#: ui_main.reporter_email
+msgctxt "ui_main.reporter_email"
+msgid "Reporter Email"
+msgstr "Email-i i raportuesit"
+
+#: ui_main.reporter_first_name
+msgctxt "ui_main.reporter_first_name"
+msgid "Reporter First Name"
+msgstr "Emri i raportuesit"
+
+#: ui_main.reporter_has_been
+msgctxt "ui_main.reporter_has_been"
+msgid "The Reporter Has Been"
+msgstr "Raportuesi ka q&euml;n&euml;"
+
+#: ui_main.reporter_ip
+msgctxt "ui_main.reporter_ip"
+msgid "Reporter IP Address"
+msgstr "Adresa IP e raportuesit"
+
+#: ui_main.reporter_last_name
+msgctxt "ui_main.reporter_last_name"
+msgid "Reporter Last Name"
+msgstr "Mbiemri i raportuesit"
+
+#: ui_main.reporter_level
+msgctxt "ui_main.reporter_level"
+msgid "Reporter Level"
+msgstr "Niveli i raportuesit"
+
+#: ui_main.reporter_levels
+msgctxt "ui_main.reporter_levels"
+msgid "Reporter Levels"
+msgstr "Nivelet e raportuesit"
+
+#: ui_main.reporter_phone
+msgctxt "ui_main.reporter_phone"
+msgid "Reporter Phone"
+msgstr "Telefoni i raportuesit"
+
+#: ui_main.reports
+msgctxt "ui_main.reports"
+msgid "Reports"
+msgstr "Raportet"
+
+#: ui_main.reports_btn_browse
+msgctxt "ui_main.reports_btn_browse"
+msgid "Browse"
+msgstr "Shfleto"
+
+#: ui_main.reports_btn_submit
+msgctxt "ui_main.reports_btn_submit"
+msgid "Submit"
+msgstr "Prano"
+
+#: ui_main.reports_by_this_user
+msgctxt "ui_main.reports_by_this_user"
+msgid "Reports By This User"
+msgstr "Raportet nga ky p&euml;rdorues"
+
+#: ui_main.reports_categories
+msgctxt "ui_main.reports_categories"
+msgid "Categories"
+msgstr "Kategorit&euml;"
+
+#: ui_main.reports_count
+msgctxt "ui_main.reports_count"
+msgid "%d Reports"
+msgstr ""
+
+#: ui_main.reports_date
+msgctxt "ui_main.reports_date"
+msgid "Date"
+msgstr "Data"
+
+#: ui_main.reports_description
+msgctxt "ui_main.reports_description"
+msgid "Description"
+msgstr "P&euml;rshkrimi"
+
+#: ui_main.reports_download_csv
+msgctxt "ui_main.reports_download_csv"
+msgid "Reports will be downloaded in CSV format"
+msgstr "Raportet do shkarkohen ne formatin CSV"
+
+#: ui_main.reports_email
+msgctxt "ui_main.reports_email"
+msgid "Email"
+msgstr ""
+
+#: ui_main.reports_features
+msgctxt "ui_main.reports_features"
+msgid "Features"
+msgstr "Karakteristika"
+
+#: ui_main.reports_find_location
+msgctxt "ui_main.reports_find_location"
+msgid "Find a location near you"
+msgstr "Gjeni nj&euml; vend pran&euml; jush"
+
+#: ui_main.reports_first
+msgctxt "ui_main.reports_first"
+msgid "First Name"
+msgstr "Emri"
+
+#: ui_main.reports_last
+msgctxt "ui_main.reports_last"
+msgid "Last Name"
+msgstr "Mbiemri"
+
+#: ui_main.reports_location_name
+msgctxt "ui_main.reports_location_name"
+msgid "Location Name"
+msgstr "P&euml;rpuno emrin e vendodhjes"
+
+#: ui_main.reports_news
+msgctxt "ui_main.reports_news"
+msgid "News Source Link"
+msgstr "Burimi i lidhjes p&euml;r lajmet"
+
+#: ui_main.reports_optional
+msgctxt "ui_main.reports_optional"
+msgid "Optional Information"
+msgstr "Informacion fakultativ"
+
+#: ui_main.reports_photos
+msgctxt "ui_main.reports_photos"
+msgid "Upload Photos"
+msgstr "Ngarko Foto"
+
+#: ui_main.reports_return
+msgctxt "ui_main.reports_return"
+msgid "Return to the reports page"
+msgstr "Kthehu tek faqja e raporteve"
+
+#: ui_main.reports_select_city
+msgctxt "ui_main.reports_select_city"
+msgid "Select a City"
+msgstr "Zgjidh nj&euml; qytet"
+
+#: ui_main.reports_submitted
+msgctxt "ui_main.reports_submitted"
+msgid ""
+"Your Report has been submitted to our staff for review. We will get back to "
+"you shortly if necessary."
+msgstr "Raporti juaj &euml;sht&euml; pranuar nga stafi dhe po shqyrtohet. Do ju kontaktojm&euml; n&euml;se e shikojm&euml; t&euml; nevojshme."
+
+#: ui_main.reports_submit_new
+msgctxt "ui_main.reports_submit_new"
+msgid "Submit a New Report"
+msgstr "Shto nj&euml; raport t&euml; ri"
+
+#: ui_main.reports_time
+msgctxt "ui_main.reports_time"
+msgid "Time"
+msgstr "Koha"
+
+#: ui_main.reports_timeline
+msgctxt "ui_main.reports_timeline"
+msgid "Reports Timeline"
+msgstr "Afati kohor"
+
+#: ui_main.reports_title
+msgctxt "ui_main.reports_title"
+msgid "Report Title"
+msgstr "Titulli i raportit"
+
+#: ui_main.reports_video
+msgctxt "ui_main.reports_video"
+msgid "Video link"
+msgstr ""
+
+#: ui_main.report_an_incident
+msgctxt "ui_main.report_an_incident"
+msgid "Report an Incident"
+msgstr "Raporto nj&euml; Ngjarje"
+
+#: ui_main.report_details
+msgctxt "ui_main.report_details"
+msgid "Report Details"
+msgstr "Detaje t&euml; raportit"
+
+#: ui_main.report_option_1
+msgctxt "ui_main.report_option_1"
+msgid "By sending a message to"
+msgstr "Duke d&euml;rguar nj&euml; mesazh tek"
+
+#: ui_main.report_option_2
+msgctxt "ui_main.report_option_2"
+msgid "By sending an email"
+msgstr "Duke d&euml;rguar nj&euml; email"
+
+#: ui_main.report_option_3
+msgctxt "ui_main.report_option_3"
+msgid "By sending a tweet with the hashtag/s"
+msgstr "Duke derguar nj&euml; mesazh tweet"
+
+#: ui_main.report_option_4
+msgctxt "ui_main.report_option_4"
+msgid "By filling this form on our website."
+msgstr "Duke plot&euml;suar k&euml;t&euml; formular ne websitin ton&euml;."
+
+#: ui_main.report_option_external_apps
+msgctxt "ui_main.report_option_external_apps"
+msgid "By using an app"
+msgstr "Duke p&euml;rdorur nj&euml; aplikim"
+
+#: ui_main.report_saved
+msgctxt "ui_main.report_saved"
+msgid "Your Report Has Been Saved"
+msgstr "Raporti u ruajt"
+
+#: ui_main.report_title
+msgctxt "ui_main.report_title"
+msgid "Report Title"
+msgstr "Titulli i raportit"
+
+#: ui_main.request_information
+msgctxt "ui_main.request_information"
+msgid "Request more information"
+msgstr "K&euml;rko m&euml; shum&euml; informacion"
+
+#: ui_main.request_location
+msgctxt "ui_main.request_location"
+msgid "Request location"
+msgstr "K&euml;rko vendndodhjen"
+
+#: ui_main.required
+msgctxt "ui_main.required"
+msgid "Required"
+msgstr "I detyruesh&euml;m"
+
+#: ui_main.requirements
+msgctxt "ui_main.requirements"
+msgid "Requirements"
+msgstr "K&euml;rkesat"
+
+#: ui_main.resend_confirm_email
+msgctxt "ui_main.resend_confirm_email"
+msgid "Resend Confirmation Email"
+msgstr "Rid&euml;rgo Email e konfirmimit"
+
+#: ui_main.reset
+msgctxt "ui_main.reset"
+msgid "Reset"
+msgstr "Ndrysho"
+
+#: ui_main.reset_all_filters
+msgctxt "ui_main.reset_all_filters"
+msgid "Reset all filters"
+msgstr "Ndrysho filtrat"
+
+#: ui_main.reset_password
+msgctxt "ui_main.reset_password"
+msgid "Reset Password"
+msgstr "Ndrysho fjal&euml;kalimin"
+
+#: ui_main.retrieve_city_names
+msgctxt "ui_main.retrieve_city_names"
+msgid "Retrieve city names for the selected country"
+msgstr "Shfaq emrat e qyteteve p&euml;r shtetin e zgjedhur"
+
+#: ui_main.riverid_information
+msgctxt "ui_main.riverid_information"
+msgid "Accounts managed by the %s service."
+msgstr "Llogari t&euml; menaxhuara nga sh&euml;rbimi %s."
+
+#: ui_main.riverid_exists_login
+msgctxt "ui_main.riverid_exists_login"
+msgid ""
+"You already have an account managed by CrowdmapID! Try using your CrowdmapID"
+" email and password to login."
+msgstr ""
+
+#: ui_main.role
+msgctxt "ui_main.role"
+msgid "Role"
+msgstr "Roli"
+
+#: ui_main.rss
+msgctxt "ui_main.rss"
+msgid "RSS"
+msgstr ""
+
+#: ui_main.save
+msgctxt "ui_main.save"
+msgid "Save"
+msgstr "Ruaj"
+
+#: ui_main.saved
+msgctxt "ui_main.saved"
+msgid "Saved"
+msgstr "U ruajt"
+
+#: ui_main.save_add_new
+msgctxt "ui_main.save_add_new"
+msgid "Save & Add New"
+msgstr "Ruaj & Shto tjet&euml;r"
+
+#: ui_main.save_close
+msgctxt "ui_main.save_close"
+msgid "Save & Close"
+msgstr "Ruaj & Mbyll"
+
+#: ui_main.save_report
+msgctxt "ui_main.save_report"
+msgid "Save Report"
+msgstr "Ruaj raportin"
+
+#: ui_main.schedule
+msgctxt "ui_main.schedule"
+msgid "Schedule"
+msgstr "Skeduli"
+
+#: ui_main.scheduler
+msgctxt "ui_main.scheduler"
+msgid "Scheduler"
+msgstr "Skedulues"
+
+#: ui_main.scheduler_day
+msgctxt "ui_main.scheduler_day"
+msgid "Day"
+msgstr "Dit&euml;"
+
+#: ui_main.scheduler_hour
+msgctxt "ui_main.scheduler_hour"
+msgid "Hour"
+msgstr "Or&euml;"
+
+#: ui_main.scheduler_log
+msgctxt "ui_main.scheduler_log"
+msgid "Scheduler Log"
+msgstr "Hyrja e Skeduluesit"
+
+#: ui_main.scheduler_minute
+msgctxt "ui_main.scheduler_minute"
+msgid "Minute"
+msgstr "Minuta"
+
+#: ui_main.scheduler_weekday
+msgctxt "ui_main.scheduler_weekday"
+msgid "Day of the Week"
+msgstr "Dit&euml; e jav&euml;s"
+
+#: ui_main.search
+msgctxt "ui_main.search"
+msgid "Search"
+msgstr "K&euml;rko"
+
+#: ui_main.search_results
+msgctxt "ui_main.search_results"
+msgid "Search Results"
+msgstr "Rezultatet e k&euml;rkimit"
+
+#: ui_main.security_code
+msgctxt "ui_main.security_code"
+msgid "Security Code"
+msgstr "Kodi i siguris&euml;"
+
+#: ui_main.select_all
+msgctxt "ui_main.select_all"
+msgid "Select All"
+msgstr "Zgjidh t&euml; gjitha"
+
+#: ui_main.select_field_type
+msgctxt "ui_main.select_field_type"
+msgid "Select a Field Type"
+msgstr "Zgjidh llojin e fush&euml;s"
+
+#: ui_main.select_form_type
+msgctxt "ui_main.select_form_type"
+msgid "Select A Form Type"
+msgstr "Zgjidh tipin e formularit"
+
+#: ui_main.select_in_map
+msgctxt "ui_main.select_in_map"
+msgid "Select in the map"
+msgstr "Zgjidh n&euml; hart&euml;"
+
+#: ui_main.select_multiple
+msgctxt "ui_main.select_multiple"
+msgid "Select as many as needed"
+msgstr "Zgjidh aq sa duhet"
+
+#: ui_main.select_one
+msgctxt "ui_main.select_one"
+msgid "Please verify that you have checked an item"
+msgstr "Ju lutem verifikoni se keni zgjedhur k&euml;t&euml; artikull"
+
+#: ui_main.select_theme
+msgctxt "ui_main.select_theme"
+msgid "Select Theme"
+msgstr "Zgjidhni tem&euml;n"
+
+#: ui_main.send
+msgctxt "ui_main.send"
+msgid "Send"
+msgstr "D&euml;rgo"
+
+#: ui_main.send_confirmation
+msgctxt "ui_main.send_confirmation"
+msgid "Send Confirmation"
+msgstr "D&euml;rgo konfirmimin"
+
+#: ui_main.sending_to
+msgctxt "ui_main.sending_to"
+msgid "Sending To"
+msgstr "D&euml;rguar tek"
+
+#: ui_main.sent
+msgctxt "ui_main.sent"
+msgid "Sent"
+msgstr "D&euml;rguar"
+
+#: ui_main.sent_by
+msgctxt "ui_main.sent_by"
+msgid "Sent by"
+msgstr "D&euml;rguar n&euml;p&euml;rmjet"
+
+#: ui_main.server_address
+msgctxt "ui_main.server_address"
+msgid "Server address"
+msgstr "Adresa e serverit"
+
+#: ui_main.server_type
+msgctxt "ui_main.server_type"
+msgid "Server type"
+msgstr "Tipi i serverit"
+
+#: ui_main.service
+msgctxt "ui_main.service"
+msgid "Service"
+msgstr "Sh&euml;rbimi"
+
+#: ui_main.service_username
+msgctxt "ui_main.service_username"
+msgid "Service Username"
+msgstr "Emri i p&euml;rdoruesit t&euml; serverit"
+
+#: ui_main.service_user_id
+msgctxt "ui_main.service_user_id"
+msgid "Service User ID"
+msgstr "ID e p&euml;rdoruesit t&euml; sh&euml;rbimit"
+
+#: ui_main.share
+msgctxt "ui_main.share"
+msgid "Share"
+msgstr "Shp&euml;rnda"
+
+#: ui_main.shared_data
+msgctxt "ui_main.shared_data"
+msgid "Shared data"
+msgstr "T&euml; dh&euml;nat e shp&euml;rndara"
+
+#: ui_main.share_has_been
+msgctxt "ui_main.share_has_been"
+msgid "The share has been"
+msgstr "Shp&euml;rndarja u krye"
+
+#: ui_main.sharing
+msgctxt "ui_main.sharing"
+msgid "Sharing"
+msgstr "Duke shp&euml;rndare"
+
+#: ui_main.shorter_map
+msgctxt "ui_main.shorter_map"
+msgid "Shorter Map"
+msgstr ""
+
+#: ui_main.show
+msgctxt "ui_main.show"
+msgid "Show"
+msgstr "Trego"
+
+#: ui_main.show_all
+msgctxt "ui_main.show_all"
+msgid "Show all"
+msgstr "Trego t&euml; gjitha"
+
+#: ui_main.show_messages
+msgctxt "ui_main.show_messages"
+msgid "Show Messages"
+msgstr "Trego mesazhet"
+
+#: ui_main.showing_reports_from
+msgctxt "ui_main.showing_reports_from"
+msgid "Showing Reports From <span class=\"time-period\">%1$s to %2$s</span>"
+msgstr ""
+
+#: ui_main.site
+msgctxt "ui_main.site"
+msgid "Website"
+msgstr "Faqja e web"
+
+#: ui_main.site_email_address
+msgctxt "ui_main.site_email_address"
+msgid "site email address"
+msgstr "adresa e email e faqes"
+
+#: ui_main.site_url
+msgctxt "ui_main.site_url"
+msgid "Site URL"
+msgstr "URL e faqes"
+
+#: ui_main.smaller_map
+msgctxt "ui_main.smaller_map"
+msgid "Smaller Map"
+msgstr ""
+
+#: ui_main.sms
+msgctxt "ui_main.sms"
+msgid "SMS"
+msgstr ""
+
+#: ui_main.sorry_no_badges
+msgctxt "ui_main.sorry_no_badges"
+msgid "Sorry, you do not have any badges."
+msgstr "Na vjen keq, ju nuk keni m&euml; simbole."
+
+#: ui_main.source
+msgctxt "ui_main.source"
+msgid "Source"
+msgstr "Burimi"
+
+#: ui_main.source_name
+msgctxt "ui_main.source_name"
+msgid "Source name"
+msgstr "Emri i burimit"
+
+#: ui_main.sort
+msgctxt "ui_main.sort"
+msgid "Sort"
+msgstr ""
+
+#: ui_main.sort_by
+msgctxt "ui_main.sort_by"
+msgid "Sort By"
+msgstr ""
+
+#: ui_main.source_url
+msgctxt "ui_main.source_url"
+msgid "Source URL"
+msgstr "URL e burimit"
+
+#: ui_main.spam
+msgctxt "ui_main.spam"
+msgid "Spam"
+msgstr ""
+
+#: ui_main.ssl_support
+msgctxt "ui_main.ssl_support"
+msgid "SSL Support?"
+msgstr "Sh&euml;rbimi SSL?"
+
+#: ui_main.start_point
+msgctxt "ui_main.start_point"
+msgid "From"
+msgstr "Nga"
+
+#: ui_main.step
+msgctxt "ui_main.step"
+msgid "Step"
+msgstr "Hapi"
+
+#: ui_main.submit
+msgctxt "ui_main.submit"
+msgid "Submit a Report"
+msgstr "Shto nj&euml; Raport"
+
+#: ui_main.submitted_by
+msgctxt "ui_main.submitted_by"
+msgid "Submitted by <strong>%1$s</strong> via <strong>%2$s</strong>"
+msgstr ""
+
+#: ui_main.submit_sms
+msgctxt "ui_main.submit_sms"
+msgid "Submit via SMS"
+msgstr "Shto n&euml;p&euml;rmjet SMS"
+
+#: ui_main.submit_sms1
+msgctxt "ui_main.submit_sms1"
+msgid "Send your SMS to"
+msgstr "D&euml;rgoni SMS tek"
+
+#: ui_main.submit_sms2
+msgctxt "ui_main.submit_sms2"
+msgid "on your phone"
+msgstr "n&euml; celularin tuaj"
+
+#: ui_main.success
+msgctxt "ui_main.success"
+msgid "Success!"
+msgstr "Sukses!"
+
+#: ui_main.successfuly_imported
+msgctxt "ui_main.successfuly_imported"
+msgid "Succesfully imported"
+msgstr "U mor me sukses"
+
+#: ui_main.surname
+msgctxt "ui_main.surname"
+msgid "Surname"
+msgstr "Mbiemri"
+
+#: ui_main.survey
+msgctxt "ui_main.survey"
+msgid "Survey"
+msgstr "V&euml;zhgim"
+
+#: ui_main.system
+msgctxt "ui_main.system"
+msgid "System"
+msgstr "Sistem"
+
+#: ui_main.taller_map
+msgctxt "ui_main.taller_map"
+msgid "Taller Map"
+msgstr ""
+
+#: ui_main.tcp_port
+msgctxt "ui_main.tcp_port"
+msgid "TCP Port"
+msgstr ""
+
+#: ui_main.themes
+msgctxt "ui_main.themes"
+msgid "Themes"
+msgstr "Tema"
+
+#: ui_main.theme_default
+msgctxt "ui_main.theme_default"
+msgid "Default Ushahidi Theme"
+msgstr "Tema fillestare Ushahidi"
+
+#: ui_main.theme_settings
+msgctxt "ui_main.theme_settings"
+msgid "Theme Settings"
+msgstr "Opsionet e tem&euml;s"
+
+#: ui_main.this
+msgctxt "ui_main.this"
+msgid "This"
+msgstr "K&euml;t&euml;"
+
+#: ui_main.this_day
+msgctxt "ui_main.this_day"
+msgid "Today"
+msgstr "Sot"
+
+#: ui_main.this_month
+msgctxt "ui_main.this_month"
+msgid "This Month"
+msgstr "K&euml;t&euml; muaj"
+
+#: ui_main.this_week
+msgctxt "ui_main.this_week"
+msgid "This Week"
+msgstr "K&euml;t&euml; jav&euml;"
+
+#: ui_main.this_year
+msgctxt "ui_main.this_year"
+msgid "This Year"
+msgstr "K&euml;t&euml; vit"
+
+#: ui_main.this_is_your_profile
+msgctxt "ui_main.this_is_your_profile"
+msgid "This is your profile."
+msgstr "Ky &euml;sht&euml; profili juaj."
+
+#: ui_main.time
+msgctxt "ui_main.time"
+msgid "Time"
+msgstr "Koha"
+
+#: ui_main.title
+msgctxt "ui_main.title"
+msgid "Title "
+msgstr "Titulli "
+
+#: ui_main.to
+msgctxt "ui_main.to"
+msgid "to"
+msgstr "tek"
+
+#: ui_main.today
+msgctxt "ui_main.today"
+msgid "Today"
+msgstr "Sot"
+
+#: ui_main.today_at
+msgctxt "ui_main.today_at"
+msgid "Today at"
+msgstr "Sot n&euml;"
+
+#: ui_main.token
+msgctxt "ui_main.token"
+msgid "Token"
+msgstr "Shenj&euml;"
+
+#: ui_main.total_reports
+msgctxt "ui_main.total_reports"
+msgid "Total Reports"
+msgstr "Raportet totale"
+
+#: ui_main.translated
+msgctxt "ui_main.translated"
+msgid "Translated"
+msgstr "E p&euml;rkthyer"
+
+#: ui_main.translated_description
+msgctxt "ui_main.translated_description"
+msgid "Translated Description"
+msgstr "P&euml;rkthimi i p&euml;rshkrimit"
+
+#: ui_main.translated_title
+msgctxt "ui_main.translated_title"
+msgid "Translated Title"
+msgstr "Titulli i p&euml;rkthyer"
+
+#: ui_main.translate_to
+msgctxt "ui_main.translate_to"
+msgid "Translate to"
+msgstr "P&euml;rkthyer n&euml;"
+
+#: ui_main.translation
+msgctxt "ui_main.translation"
+msgid "Translation"
+msgstr "P&euml;rkthimi"
+
+#: ui_main.translation_saved
+msgctxt "ui_main.translation_saved"
+msgid "Translation has been saved"
+msgstr "P&euml;rkthimi u ruajt"
+
+#: ui_main.trusted
+msgctxt "ui_main.trusted"
+msgid "Trusted"
+msgstr ""
+
+#: ui_main.type
+msgctxt "ui_main.type"
+msgid "Type"
+msgstr "Tipi"
+
+#: ui_main.twitter
+msgctxt "ui_main.twitter"
+msgid "Twitter"
+msgstr ""
+
+#: ui_main.unable_send_email
+msgctxt "ui_main.unable_send_email"
+msgid "Unable to send email."
+msgstr "Nuk u b&euml; e mundur d&euml;rgimi i email."
+
+#: ui_main.uncategorized_reports
+msgctxt "ui_main.uncategorized_reports"
+msgid "Uncategorized Reports"
+msgstr "Raporte t&euml; pa kategorizuara"
+
+#: ui_main.unread
+msgctxt "ui_main.unread"
+msgid "unread"
+msgstr "i palexuar"
+
+#: ui_main.unverified
+msgctxt "ui_main.unverified"
+msgid "Unverified"
+msgstr "I pa verifikuar"
+
+#: ui_main.update_feeds
+msgctxt "ui_main.update_feeds"
+msgid "Update feeds"
+msgstr "lajme t&euml; p&euml;rdit&euml;suara"
+
+#: ui_main.upload
+msgctxt "ui_main.upload"
+msgid "Upload"
+msgstr "T&euml; p&euml;rdit&euml;suara"
+
+#: ui_main.upload_guide
+msgctxt "ui_main.upload_guide"
+msgid "View our report upload guides:-"
+msgstr ""
+
+#: ui_main.upload_docs_1
+msgctxt "ui_main.upload_docs_1"
+msgid "XML Upload guide"
+msgstr ""
+
+#: ui_main.upload_docs_2
+msgctxt "ui_main.upload_docs_2"
+msgid "CSV Upload guide"
+msgstr ""
+
+#: ui_main.upload_file
+msgctxt "ui_main.upload_file"
+msgid "File to upload"
+msgstr "Skedar p&euml;r tu p&euml;rdit&euml;suar"
+
+#: ui_main.upload_reports
+msgctxt "ui_main.upload_reports"
+msgid "Upload Reports"
+msgstr "Ngarko Raporte"
+
+#: ui_main.upload_reports_custom_forms
+msgctxt "ui_main.upload_reports_custom_forms"
+msgid ""
+"Custom field columns must have their form_id appended to them e.g custom "
+"field Test, on the default form, whose id is 1, will be Test-1. During "
+"custom form field import, ensure that"
+msgstr ""
+
+#: ui_main.upload_reports_detail_1
+msgctxt "ui_main.upload_reports_detail_1"
+msgid ""
+"With the form below, you can import incidents into the Ushahidi engine."
+msgstr "Me formularin e m&euml;poshtme, ju mund t&euml; importoni t&euml; dh&euml;na nga Ushahidi."
+
+#: ui_main.upload_reports_detail_2
+msgctxt "ui_main.upload_reports_detail_2"
+msgid "Reports must be uploaded in either CSV or XML format."
+msgstr ""
+
+#: ui_main.upload_reports_detail_3
+msgctxt "ui_main.upload_reports_detail_3"
+msgid ""
+"When incident ID already exists in the database, the entry in the CSV/XML "
+"file will be ignored."
+msgstr ""
+
+#: ui_main.upload_reports_detail_4
+msgctxt "ui_main.upload_reports_detail_4"
+msgid "It must contain at least Incident Title and Incident Date."
+msgstr "Duhet t&euml; p&euml;rmbaj&euml; t&euml; pakt&euml;n titullin dhe dat&euml;n e Incidentit."
+
+#: ui_main.upload_reports_detail_4b
+msgctxt "ui_main.upload_reports_detail_4b"
+msgid ""
+"If no latitude and longitude columns are supplied, the location will be "
+"geocoded using the Google Geocoder."
+msgstr "N&euml;se kolonat e gjat&euml;sis&euml; dhe gjer&euml;sis&euml; nuk ofrohen, lokacioni do kodohet duke p&euml;rdorur Google Geocoder."
+
+#: ui_main.upload_reports_detail_4c
+msgctxt "ui_main.upload_reports_detail_4c"
+msgid ""
+"If importing additional info i.e personal information and/or custom form "
+"fields"
+msgstr ""
+
+#: ui_main.upload_reports_detail_4d
+msgctxt "ui_main.upload_reports_detail_4d"
+msgid ""
+"At least one of the personal information fields(name, surname,email) entries"
+" MUST exist. Empty records will not be imported"
+msgstr ""
+
+#: ui_main.upload_reports_detail_4e
+msgctxt "ui_main.upload_reports_detail_4e"
+msgid ""
+"Your entries for dropdown fields, radio buttons and checkboxes match the "
+"options provided for the custom field on your instance"
+msgstr ""
+
+#: ui_main.upload_reports_detail_4f
+msgctxt "ui_main.upload_reports_detail_4f"
+msgid ""
+"Checkbox options are separated by a comma e.g if your selected choice of "
+"fruits is apples,mangoes and grapes, your entry for this should be "
+"\"apples,mangoes,grapes\""
+msgstr ""
+
+#: ui_main.upload_reports_detail_4g
+msgctxt "ui_main.upload_reports_detail_4g"
+msgid ""
+"Date field values are in the following format: mm/dd/yyyy e.g 3rd October "
+"2012 = 10/03/2012"
+msgstr ""
+
+#: ui_main.upload_reports_detail_5
+msgctxt "ui_main.upload_reports_detail_5"
+msgid "A Sample CSV Report"
+msgstr "Shembull i raportit CSV "
+
+#: ui_main.upload_reports_detail_6
+msgctxt "ui_main.upload_reports_detail_6"
+msgid ""
+"#,INCIDENT TITLE,INCIDENT "
+"DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED,LATITUDE,LONGITUDE<br "
+"/>\"1\",\"Suspected death in Nairobi\",\"2009-05-15 "
+"01:06:00\",\"Nairobi\",\"Three cases have been confirmed in C. del "
+"Uruguay\",\"DEATHS, CIVILIANS, \",YES,YES,\"-1.287\",\"36.821\""
+msgstr "#,TITULLI I INCIDENTIT,DATA,LOKACIONI,P&euml;RSHKRIMI,KATEGORIA,U APROVUA,U VERIFIKUA,GJAT&euml;SIA,GJ&euml;R&euml;SIA<br />\"1\",\"Dyshohet p&euml;r vdekje n&euml; Nairobi\",\"2009-05-15 01:06:00\",\"Nairobi\",\"Tre raste jan&euml; konfirmuar n&euml; Tiran&euml;\",\"VDEKJE, QYTETAR&euml;, \",PO,PO,\"-1.287\",\"36.821\""
+
+#: ui_main.upload_reports_detail_7
+msgctxt "ui_main.upload_reports_detail_7"
+msgid ""
+"\"2\",\"Looting\",\"2009-03-18 10:10:00\",\"Accra\",\"Looting happening "
+"everywhere\",\"RIOTS, DEATHS, PROPERTY LOSS, "
+"\",YES,NO,\"5.55\",\"-0.2166667\""
+msgstr "\"2\",\"Grabitje\",\"2009-03-18 10:10:00\",\"Vor&euml;\",\"Grabitje kudo\",\"trazira, vdekje, humbje t&euml; pron&euml;s, \",PO,JO,\"5.55\",\"-0.2166667\""
+
+#: ui_main.upload_successful
+msgctxt "ui_main.upload_successful"
+msgid "Upload Successful"
+msgstr "Ngarkimi u krye me sukses"
+
+#: ui_main.upload_video
+msgctxt "ui_main.upload_video"
+msgid "Upload Video"
+msgstr "Ngarko Video"
+
+#: ui_main.url
+msgctxt "ui_main.url"
+msgid "URL"
+msgstr ""
+
+#: ui_main.user
+msgctxt "ui_main.user"
+msgid "User"
+msgstr "P&euml;rdoruesi"
+
+#: ui_main.username
+msgctxt "ui_main.username"
+msgid "Username"
+msgstr "Emri i p&euml;rdoruesit"
+
+#: ui_main.ushahidi_admin
+msgctxt "ui_main.ushahidi_admin"
+msgid "Ushahidi Admin"
+msgstr "Admin Ushahidi"
+
+#: ui_main.verification
+msgctxt "ui_main.verification"
+msgid "Verification"
+msgstr "Verifikim"
+
+#: ui_main.verified
+msgctxt "ui_main.verified"
+msgid "Verified"
+msgstr "I verifikuar"
+
+#: ui_main.verified_reports
+msgctxt "ui_main.verified_reports"
+msgid "Verified Reports"
+msgstr "Raporte t&euml; verifikuara"
+
+#: ui_main.verify
+msgctxt "ui_main.verify"
+msgid "Verify"
+msgstr "Verifiko"
+
+#: ui_main.verify_this_report
+msgctxt "ui_main.verify_this_report"
+msgid "Verify this Report"
+msgstr "Verifiko k&euml;t&euml; raport"
+
+#: ui_main.version
+msgctxt "ui_main.version"
+msgid "Version"
+msgstr "Versioni"
+
+#: ui_main.via
+msgctxt "ui_main.via"
+msgid "via"
+msgstr "n&euml;p&euml;rmjet"
+
+#: ui_main.video
+msgctxt "ui_main.video"
+msgid "Video"
+msgstr ""
+
+#: ui_main.view
+msgctxt "ui_main.view"
+msgid "View"
+msgstr "Paraqitja"
+
+#: ui_main.views
+msgctxt "ui_main.views"
+msgid "Views"
+msgstr "Shimiket"
+
+#: ui_main.view_all
+msgctxt "ui_main.view_all"
+msgid "View All"
+msgstr "Shiko t&euml; gjitha"
+
+#: ui_main.view_all_feeds
+msgctxt "ui_main.view_all_feeds"
+msgid "View all feeds"
+msgstr "Shiko t&euml; gjith&euml; lajmet e fundit"
+
+#: ui_main.view_all_reports
+msgctxt "ui_main.view_all_reports"
+msgid "View all reports"
+msgstr "Shiko t&euml; gjith&euml; raportet"
+
+#: ui_main.view_items
+msgctxt "ui_main.view_items"
+msgid "View Items"
+msgstr "Shiko artikujt"
+
+#: ui_main.view_more
+msgctxt "ui_main.view_more"
+msgid "View More"
+msgstr "Shiko m&euml; shum&euml;"
+
+#: ui_main.view_public_profile
+msgctxt "ui_main.view_public_profile"
+msgid "View Public Profile"
+msgstr "Shiko profilin publik"
+
+#: ui_main.view_report
+msgctxt "ui_main.view_report"
+msgid "View Report"
+msgstr "Shiko raportin"
+
+#: ui_main.view_reports
+msgctxt "ui_main.view_reports"
+msgid "View Reports"
+msgstr "Shiko raportet"
+
+#: ui_main.view_video
+msgctxt "ui_main.view_video"
+msgid "View Video"
+msgstr ""
+
+#: ui_main.visible
+msgctxt "ui_main.visible"
+msgid "Visible"
+msgstr "E dukshme"
+
+#: ui_main.waiting_approval
+msgctxt "ui_main.waiting_approval"
+msgid "Waiting Approval"
+msgstr "N&euml; pritje t&euml; aprovimit"
+
+#: ui_main.waiting_verification
+msgctxt "ui_main.waiting_verification"
+msgid "Waiting Verification"
+msgstr "N&euml; pritje t&euml; verifikimit"
+
+#: ui_main.wider_map
+msgctxt "ui_main.wider_map"
+msgid "Wider Map"
+msgstr ""
+
+#: ui_main.web_form
+msgctxt "ui_main.web_form"
+msgid "Web Form"
+msgstr "Forumi n&euml; rrjet"
+
+#: ui_main.web
+msgctxt "ui_main.web"
+msgid "Web"
+msgstr ""
+
+#: ui_main.weight
+msgctxt "ui_main.weight"
+msgid "Weight"
+msgstr "Pesha"
+
+#: ui_main.Weekly
+msgctxt "ui_main.Weekly"
+msgid "Weekly"
+msgstr ""
+
+#: ui_main.yes
+msgctxt "ui_main.yes"
+msgid "Yes"
+msgstr "Po"
+
+#: ui_main.yesterday
+msgctxt "ui_main.yesterday"
+msgid "Yesterday"
+msgstr "Dje"
+
+#: ui_main.your_dashboard
+msgctxt "ui_main.your_dashboard"
+msgid "Your Dashboard"
+msgstr "Paneli juaj"
+
+#: ui_main.your_file
+msgctxt "ui_main.your_file"
+msgid "Your file"
+msgstr "Skedari"
+
+#: ui_main.zoom_in
+msgctxt "ui_main.zoom_in"
+msgid "Zoom In"
+msgstr "Afro"
+
+#: ui_main.zoom_out
+msgctxt "ui_main.zoom_out"
+msgid "Zoom Out"
+msgstr "Largo"

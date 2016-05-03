@@ -1,0 +1,53 @@
+# 
+# Translators:
+# José Jiménez <elcarupanero@gmail.com>, 2013
+# lcs <lucas-r-l@hotmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2014-03-27 15:33+0000\n"
+"Last-Translator: lcs <lucas-r-l@hotmail.com>\n"
+"Language-Team: Spanish (Spain) (http://www.transifex.com/ushahidi/ushahidi-v2/language/es_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: reports.incident_id.required
+msgctxt "reports.incident_id.required"
+msgid "Please verify that you have checked an item"
+msgstr "Por favor, verificar que ha marcado un elemento"
+
+#: reports.incident_id.numeric
+msgctxt "reports.incident_id.numeric"
+msgid "Please verify that you have checked an item"
+msgstr "Por favor, verificar que ha marcado un elemento"
+
+#: reports.incident_id.categories_required
+msgctxt "reports.incident_id.categories_required"
+msgid "Reports must be categorized before they can be approved"
+msgstr "Los informes deben pertenecer a una categoría antes de ser aprovados."
+
+#: reports.action.permission
+msgctxt "reports.action.permission"
+msgid "You don't have permission to perform this action"
+msgstr "No tienes permiso para realizar esa acción"
+
+#: reports.uploadfile.required
+msgctxt "reports.uploadfile.required"
+msgid "You must select a file to upload"
+msgstr "Tienes que seleccionar un archivo para subir"
+
+#: reports.uploadfile.type
+msgctxt "reports.uploadfile.type"
+msgid "The upload file must either be of .csv or .xml format"
+msgstr "El archivo tiene que ser .csv o .xml"
+
+#: reports.uploadfile.valid
+msgctxt "reports.uploadfile.valid"
+msgid "The file upload field does not seem to contain a valid file"
+msgstr "Parece que el archivo no es válido"

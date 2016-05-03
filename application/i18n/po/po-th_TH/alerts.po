@@ -1,0 +1,232 @@
+# 
+# Translators:
+# Boripat Lebel <inactive+boripatlebel@transifex.com>, 2014
+# Ngamnet_review <ngamnetaektasaeng@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2014-08-09 02:15+0000\n"
+"Last-Translator: Ngamnet_review <ngamnetaektasaeng@gmail.com>\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/ushahidi/ushahidi-v2/language/th_TH/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th_TH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: alerts.alert_email.email
+msgctxt "alerts.alert_email.email"
+msgid "The Email field does not appear to contain a valid email address?"
+msgstr "ช่องอีเมลมีอีเมล์ที่ไม่ถูกต้อง?"
+
+#: alerts.alert_email.email_check
+msgctxt "alerts.alert_email.email_check"
+msgid ""
+"That Email address has already been registered to receive alerts for that "
+"location."
+msgstr "อีเมล์นั้นได้รับการลงทะเบียนแล้วเพื่อรับการแจ้งเตือนสำหรับตำแหน่งนั้น"
+
+#: alerts.alert_email.length
+msgctxt "alerts.alert_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "อีเมล์ต้องมีอย่างน้อย 4 ตัวอักษร และไม่เกิน 64 ตัวอักษร"
+
+#: alerts.alert_email.required
+msgctxt "alerts.alert_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "จำเป็นต้องใส่อีเมล์หากช่องเครื่องหมายเช็คถูก"
+
+#: alerts.alert_country.single_country
+msgctxt "alerts.alert_country.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the alert "
+"location is within the country %s."
+msgstr "การใช้งานนี้ครอบคลุมประเทศเดียวเท่านั้น โปรดตรวจสอบว่าตำแหน่งที่แจ้งเตือนอยู่ภายในประเทศนี้ %s"
+
+#: alerts.alert_lat.between
+msgctxt "alerts.alert_lat.between"
+msgid "You have not selected a valid location on the map."
+msgstr "คุณไม่ได้เลือกตำแหน่งที่ถูกต้องบนแผนที่"
+
+#: alerts.alert_lat.required
+msgctxt "alerts.alert_lat.required"
+msgid "You have not selected a valid location on the map."
+msgstr "คุณไม่ได้เลือกตำแหน่งที่ถูกต้องบนแผนที่"
+
+#: alerts.alert_lon.between
+msgctxt "alerts.alert_lon.between"
+msgid "You have not selected a valid location on the map."
+msgstr "คุณไม่ได้เลือกตำแหน่งที่ถูกต้องบนแผนที่"
+
+#: alerts.alert_lon.required
+msgctxt "alerts.alert_lon.required"
+msgid "You have not selected a valid location on the map."
+msgstr "คุณไม่ได้เลือกตำแหน่งที่ถูกต้องบนแผนที่"
+
+#: alerts.alert_mobile.length
+msgctxt "alerts.alert_mobile.length"
+msgid ""
+"The Mobile Phone field does not seem to contain the right amount of digits."
+msgstr "จำนวนตัวเลขในช่องใส่หมายเลขโทรศัพท์มือถือไม่ครบถ้วน"
+
+#: alerts.alert_mobile.mobile_check
+msgctxt "alerts.alert_mobile.mobile_check"
+msgid ""
+"That Mobile Phone Number has already been registered to receive alerts for "
+"that location."
+msgstr "หมายเลขโทรศัพท์มือถือนั้นได้รับการลงทะเบียนแล้วและจะได้รับการแจ้งเตือนสำหรับตำแหน่งนั้น"
+
+#: alerts.alert_mobile.numeric
+msgctxt "alerts.alert_mobile.numeric"
+msgid ""
+"The Mobile Phone field does not appear to contain a valid phone. Please "
+"input numbers only including Country Code."
+msgstr "ช่องใส่โทรศัพท์มือถือไม่ถูกต้อง กรุณาใส่ตัวเลขเท่านั้นพร้อมรหัสประเทศ"
+
+#: alerts.alert_mobile.one_required
+msgctxt "alerts.alert_mobile.one_required"
+msgid "You must enter either your Mobile Phone Number or your Email Address."
+msgstr "คุณต้องใส่หมายเลขโทรศัพท์มือถือหรืออีเมล์ของคุณ"
+
+#: alerts.alert_mobile.required
+msgctxt "alerts.alert_mobile.required"
+msgid "The Mobile Phone field is required if the checkbox is checked."
+msgstr "จำเป็นต้องใส่หมายเลขโทรศัพท์ถ้าช่องเครื่องหมายเช็คถูก"
+
+#: alerts.alert_radius.in_array
+msgctxt "alerts.alert_radius.in_array"
+msgid "You have not set a valid radius on the map."
+msgstr "คุณยังไม่ได้ตั้งรัศมีที่ถูกต้องบนแผนที่"
+
+#: alerts.alert_radius.required
+msgctxt "alerts.alert_radius.required"
+msgid "You have not set your radius on the map."
+msgstr "คุณยังไม่ได้ตั้งรัศมีที่ถูกต้องบนแผนที่"
+
+#: alerts.alert_recipient.required
+msgctxt "alerts.alert_recipient.required"
+msgid "You have not set a recipient for alerts."
+msgstr "คุณยังไม่ได้ระบุผู้รับการแจ้งเตือน"
+
+#: alerts.alerts_subscribed
+msgctxt "alerts.alerts_subscribed"
+msgid "You have subscribed for alerts with the following categories"
+msgstr "คุณได้สมัครการแจ้งเตือนต่อไปนี้"
+
+#: alerts.code_already_verified
+msgctxt "alerts.code_already_verified"
+msgid "This code has been verified before!"
+msgstr "รหัสนี้ได้รับการยืนยันมาก่อนแล้ว!"
+
+#: alerts.code_not_found
+msgctxt "alerts.code_not_found"
+msgid ""
+"This verification code was not found! Please confirm that you have the "
+"correct URL."
+msgstr "ไม่พบรหัสการตรวจสอบนี้! กรุณายืนยันว่าคุณมี URL ที่ถูกต้อง"
+
+#: alerts.code_verified
+msgctxt "alerts.code_verified"
+msgid ""
+" Your code was verified correctly. You will now receive alerts about "
+"incidents as they happen."
+msgstr "รหัสของคุณถูกตรวจสอบอย่างถูกต้อง ตอนนี้คุณจะได้รับการแจ้งเตือนอุบัติการณ์ต่างๆที่เกิดขึ้น"
+
+#: alerts.confirm_request
+msgctxt "alerts.confirm_request"
+msgid "To confirm your alert request, please go to "
+msgstr "เพื่อยืนยันการขอแจ้งเตือนของคุณโปรดไปที่"
+
+#: alerts.create_more_alerts
+msgctxt "alerts.create_more_alerts"
+msgid "Return to the Alerts page to create more alerts"
+msgstr "กลับไปยังหน้าการแจ้งเตือนเพื่อเพิ่มรายการแจ้งเตือน"
+
+#: alerts.email_alert_request_created
+msgctxt "alerts.email_alert_request_created"
+msgid ""
+"Your Email Alert request has been created and verification message has been "
+"sent to "
+msgstr "อีเมล์แจ้งเตือนของคุณได้รับการสร้างขึ้นแล้วและข้อความยืนยันได้ถูกส่งไปที่อีเมล์ของคุณ"
+
+#: alerts.email_code
+msgctxt "alerts.email_code"
+msgid "Please enter the Email confirmation code you received below: "
+msgstr "กรุณากรอกรหัสยืนยันที่คุณได้รับในอีเมล์ข้างล่าง"
+
+#: alerts.email_error_head
+msgctxt "alerts.email_error_head"
+msgid "Your Email Alert Request Has NOT Been Saved!"
+msgstr "อีเมล์ขอแจ้งเตือนของคุณไม่ได้รับการบันทึกไว้!"
+
+#: alerts.email_ok_head
+msgctxt "alerts.email_ok_head"
+msgid "Your Email Alert Request Has Been Saved!"
+msgstr "อีเมล์ขอแจ้งเตือนของคุณได้รับการบันทึกแล้ว!"
+
+#: alerts.error
+msgctxt "alerts.error"
+msgid "The system was not able to process your confirmation request!"
+msgstr "ระบบไม่สามารถดำเนิน สิ่งที่คุณยืนยัน/ร้องขอมาก!"
+
+#: alerts.mobile_alert_request_created
+msgctxt "alerts.mobile_alert_request_created"
+msgid ""
+"Your Mobile Alert request has been created and verification message has been"
+" sent to "
+msgstr "การแจ้งเตือนผ่านระบบมือถือของคุณได้รับการสร้างขึ้นแล้วและข้อความยืนยันได้ถูกส่งไป"
+
+#: alerts.mobile_code
+msgctxt "alerts.mobile_code"
+msgid ""
+"Please enter the SMS confirmation code you received on your mobile phone "
+"below: "
+msgstr "กรุณากรอกรหัส SMS ยืนยันที่คุณได้รับในโทรศัพท์มือถือของคุณข้างล่าง"
+
+#: alerts.mobile_error_head
+msgctxt "alerts.mobile_error_head"
+msgid "Your Mobile Alert Request Has NOT Been Saved!"
+msgstr "การขอแจ้งเตือนในมือถือของคุณไม่ได้รับการบันทึกไว้!"
+
+#: alerts.mobile_ok_head
+msgctxt "alerts.mobile_ok_head"
+msgid "Your Mobile Alert Request Has Been Saved!"
+msgstr "การขอแจ้งเตือนในมือถือของคุณได้รับการบันทึก!"
+
+#: alerts.settings_error
+msgctxt "alerts.settings_error"
+msgid "This deployment is not set up to correctly process alerts"
+msgstr "การใช้งานนี้ไม่ได้ตั้งขึ้นมาเพื่อดำเนินการแจ้งเตือนอย่างถูกต้อง"
+
+#: alerts.unsubscribe
+msgctxt "alerts.unsubscribe"
+msgid ""
+"You have received this email because you subscribed to receive alerts. If "
+"you do not wish to receive future alerts go to "
+msgstr "คุณได้รับอีเมลนี้เนื่องจากคุณสมัครรับการแจ้งเตือน หากคุณไม่ต้องการที่จะรับการแจ้งเตือนในอนาคตกรุณาไปที่"
+
+#: alerts.unsubscribed
+msgctxt "alerts.unsubscribed"
+msgid "You will no longer receive alerts from "
+msgstr "คุณจะไม่ได้รับการแจ้งเตือนจาก"
+
+#: alerts.unsubscribe_failed
+msgctxt "alerts.unsubscribe_failed"
+msgid ""
+"We were not able to unsubscribe you. Please confirm that you have the "
+"correct URL."
+msgstr "เราไม่สามารถที่จะยกเลิกสมาชิกคุณ กรุณายืนยันว่าคุณมี URL ที่ถูกต้อง"
+
+#: alerts.verification_email_subject
+msgctxt "alerts.verification_email_subject"
+msgid "alerts - verification"
+msgstr "แจ้งเตือน - ตรวจสอบ"
+
+#: alerts.verify_code
+msgctxt "alerts.verify_code"
+msgid ""
+"You will not receive alerts on this location until you confirm your request."
+msgstr "คุณจะไม่ได้รับการแจ้งเตือนสำหรับสถานที่นี้จนกว่าคำร้องของคุณได้ทำการยืนยัน"

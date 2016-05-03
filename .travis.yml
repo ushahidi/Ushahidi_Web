@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+- 2.2
+script: echo 'No tests here :P'
+after_success:
+  - openssl aes-256-cbc -K $encrypted_e2c5c9d58b16_key -iv $encrypted_e2c5c9d58b16_iv
+    -in config/deploy/id_rsa_deploy.enc -out config/deploy/id_rsa_deploy -d
+  - ./config/deploy/travis.sh

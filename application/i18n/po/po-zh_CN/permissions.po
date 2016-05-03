@@ -1,0 +1,112 @@
+# 
+# Translators:
+# Lidia Cibor <lidka.cibor@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-09-11 06:22+0000\n"
+"PO-Revision-Date: 2014-08-30 18:55+0000\n"
+"Last-Translator: Lidia Cibor <lidka.cibor@gmail.com>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/ushahidi/ushahidi-v2/language/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: permissions.reports_view
+msgctxt "permissions.reports_view"
+msgid "View Reports"
+msgstr "查看报告"
+
+#: permissions.reports_edit
+msgctxt "permissions.reports_edit"
+msgid "Create/Edit/Delete Reports"
+msgstr "建立/编辑/删除 报告"
+
+#: permissions.reports_approve
+msgctxt "permissions.reports_approve"
+msgid "Approve Reports"
+msgstr "批准报告"
+
+#: permissions.reports_verify
+msgctxt "permissions.reports_verify"
+msgid "Verify Reports"
+msgstr "核实报告"
+
+#: permissions.reports_comments
+msgctxt "permissions.reports_comments"
+msgid "Manage Report Comments"
+msgstr "管理报告的评论"
+
+#: permissions.reports_download
+msgctxt "permissions.reports_download"
+msgid "Download Reports"
+msgstr "下载报告"
+
+#: permissions.reports_upload
+msgctxt "permissions.reports_upload"
+msgid "Upload Reports"
+msgstr "上传报告。"
+
+#: permissions.messages
+msgctxt "permissions.messages"
+msgid "Manage Messages"
+msgstr "管理消息"
+
+#: permissions.messages_reporters
+msgctxt "permissions.messages_reporters"
+msgid "Manage Message Reporters"
+msgstr "管理消息报告"
+
+#: permissions.stats
+msgctxt "permissions.stats"
+msgid "View Stats"
+msgstr "查看统计"
+
+#: permissions.settings
+msgctxt "permissions.settings"
+msgid "Modify Settings"
+msgstr "修改设置"
+
+#: permissions.manage
+msgctxt "permissions.manage"
+msgid "Manage Panel"
+msgstr "管理面板"
+
+#: permissions.users
+msgctxt "permissions.users"
+msgid "Manage Users"
+msgstr "管理用户"
+
+#: permissions.manage_roles
+msgctxt "permissions.manage_roles"
+msgid "Manage Roles"
+msgstr "管理角色"
+
+#: permissions.checkin
+msgctxt "permissions.checkin"
+msgid "Can checkin"
+msgstr "允许签入"
+
+#: permissions.checkin_admin
+msgctxt "permissions.checkin_admin"
+msgid "Manage checkins"
+msgstr "管理签入"
+
+#: permissions.admin_ui
+msgctxt "permissions.admin_ui"
+msgid "Access Admin UI"
+msgstr "进入管理员界面"
+
+#: permissions.member_ui
+msgctxt "permissions.member_ui"
+msgid "Access Members UI"
+msgstr "进入成员界面"
+
+#: permissions.delete_all_reports
+msgctxt "permissions.delete_all_reports"
+msgid "Delete all reports"
+msgstr "删除所有报告"

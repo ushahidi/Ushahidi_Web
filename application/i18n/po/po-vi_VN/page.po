@@ -1,0 +1,38 @@
+# 
+# Translators:
+# Thu Hoai <contact@bizover.net>, 2013
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-09-05 07:14+0000\n"
+"Last-Translator: Thu Hoai <contact@bizover.net>\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi_VN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: page.page_title.required
+msgctxt "page.page_title.required"
+msgid "Please enter a Page Title."
+msgstr "hãy nhập vào tiêu đề trang."
+
+#: page.page_title.length
+msgctxt "page.page_title.length"
+msgid "Page Title must be at least 3 and no more than 150 characters long."
+msgstr "Phần tiêu đề trang phải có ít nhất 3 ký tự và tối đa 150 ký tự về độ dài."
+
+#: page.page_tab.required
+msgctxt "page.page_tab.required"
+msgid "Please enter a Page Tab Name."
+msgstr "hãy nhập vào tên hiển thị tab của trang."
+
+#: page.page_description.required
+msgctxt "page.page_description.required"
+msgid "Please enter a Page Description."
+msgstr "hãy nhập vào mô tả trang."

@@ -1,0 +1,1658 @@
+# 
+# Translators:
+# Thu Hoai <contact@bizover.net>, 2013
+# Anh Phan <vietnamesel10n@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-09-11 06:22+0000\n"
+"PO-Revision-Date: 2013-09-11 06:17+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/ushahidi/ushahidi-v2/language/vi_VN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: ui_admin.access_denied_credentials
+msgctxt "ui_admin.access_denied_credentials"
+msgid ""
+"Access denied. Either your credentials are not valid or your request has "
+"been refused."
+msgstr "Truy cập bị từ chối. Có thể quyền ủy nhiệm của bạn không hợp lệ hoặc yêu cầu của bạn bị từ chối."
+
+#: ui_admin.access_denied_others
+msgctxt "ui_admin.access_denied_others"
+msgid ""
+"Access denied. Your request has been understood, but denied due to access "
+"limits like time. Try back later."
+msgstr "Truy cập bị từ chối. Yêu cầu của bạn có đã được nhận, nhưng bị từ chối vì bị hạn chế số lần truy cập. hãy quay lại sau."
+
+#: ui_admin.access_level
+msgctxt "ui_admin.access_level"
+msgid "Access Level"
+msgstr "Cấp độ truy cập"
+
+#: ui_admin.actions
+msgctxt "ui_admin.actions"
+msgid "Actions"
+msgstr "Thao tác"
+
+#: ui_admin.add_to_category
+msgctxt "ui_admin.add_to_category"
+msgid "Add to Category"
+msgstr "Thêm vào phân loại"
+
+#: ui_admin.added
+msgctxt "ui_admin.added"
+msgid "added"
+msgstr "đã thêm vào"
+
+#: ui_admin.added_edited
+msgctxt "ui_admin.added_edited"
+msgid "added/edited"
+msgstr "đã thêm vào/đã chỉnh sửa"
+
+#: ui_admin.addons
+msgctxt "ui_admin.addons"
+msgid "Addons"
+msgstr "Tiện ích"
+
+#: ui_admin.admin_role
+msgctxt "ui_admin.admin_role"
+msgid "Admin"
+msgstr "Quản trị viên"
+
+#: ui_admin.alerts
+msgctxt "ui_admin.alerts"
+msgid "Alerts"
+msgstr "Cảnh báo"
+
+#: ui_admin.alerts_received
+msgctxt "ui_admin.alerts_received"
+msgid "Alerts Received"
+msgstr "Cảnh báo đã nhận được"
+
+#: ui_admin.all
+msgctxt "ui_admin.all"
+msgid "All"
+msgstr "Tất cả"
+
+#: ui_admin.am
+msgctxt "ui_admin.am"
+msgid "AM"
+msgstr "Sáng"
+
+#: ui_admin.anonymous
+msgctxt "ui_admin.anonymous"
+msgid "Anonymous"
+msgstr "Vô danh"
+
+#: ui_admin.anyone_role
+msgctxt "ui_admin.anyone_role"
+msgid "Anyone"
+msgstr "Bất kỳ ai"
+
+#: ui_admin.anywhere
+msgctxt "ui_admin.anywhere"
+msgid "Anywhere"
+msgstr "Bất kỳ vị trí nào"
+
+#: ui_admin.api_banned
+msgctxt "ui_admin.api_banned"
+msgid "API Banned"
+msgstr "API bị cấm"
+
+#: ui_admin.api_logs
+msgctxt "ui_admin.api_logs"
+msgid "API Logs"
+msgstr "Nhật trình API"
+
+#: ui_admin.api_settings
+msgctxt "ui_admin.api_settings"
+msgid "API Settings"
+msgstr "Thiết lập API"
+
+#: ui_admin.api_unban
+msgctxt "ui_admin.api_unban"
+msgid "UNBAN"
+msgstr "GỠ LỆNH CẤM"
+
+#: ui_admin.api_unban_all
+msgctxt "ui_admin.api_unban_all"
+msgid "UNBAN ALL"
+msgstr "GỠ LỆNH CẤM CHO TẤT CẢ"
+
+#: ui_admin.approved
+msgctxt "ui_admin.approved"
+msgid "approved"
+msgstr "đã chấp thuận"
+
+#: ui_admin.approve_auto
+msgctxt "ui_admin.approve_auto"
+msgid "Auto Approve"
+msgstr "Tự động chấp thuận"
+
+#: ui_admin.approve_manual
+msgctxt "ui_admin.approve_manual"
+msgid "Manually Approve"
+msgstr "Chấp thuận bởi người sử dụng"
+
+#: ui_admin.archived
+msgctxt "ui_admin.archived"
+msgid "Archived"
+msgstr "Đã sao lưu"
+
+#: ui_admin.are_you_sure_you_want_to
+msgctxt "ui_admin.are_you_sure_you_want_to"
+msgid "Are you sure you want to"
+msgstr "Bạn có chắc muốn"
+
+#: ui_admin.are_you_sure_you_want_to_delete_this_item
+msgctxt "ui_admin.are_you_sure_you_want_to_delete_this_item"
+msgid "Are you sure you want to delete this item?"
+msgstr "Bạn có chắc muốn xóa đối tượng này?"
+
+#: ui_admin.are_you_sure_you_want_to_delete_this_photo
+msgctxt "ui_admin.are_you_sure_you_want_to_delete_this_photo"
+msgid "Are you sure you want to delete this photo?"
+msgstr "Bạn có chắc muốn xóa hình chụp này?"
+
+#: ui_admin.are_you_sure_you_want_to_switch_forms
+msgctxt "ui_admin.are_you_sure_you_want_to_switch_forms"
+msgid "Are you sure you want to switch forms?"
+msgstr "Bạn có chắc muốn chuyển đổi các lá đơn?"
+
+#: ui_admin.assign
+msgctxt "ui_admin.assign"
+msgid "Assign"
+msgstr "Gán"
+
+#: ui_admin.assignments
+msgctxt "ui_admin.assignments"
+msgid "Assignments"
+msgstr "Việc gán"
+
+#: ui_admin.assign_badge
+msgctxt "ui_admin.assign_badge"
+msgid "Assign Badge"
+msgstr "Gán phù hiệu"
+
+#: ui_admin.author
+msgctxt "ui_admin.author"
+msgid "Author"
+msgstr "Tác giả"
+
+#: ui_admin.author_email
+msgctxt "ui_admin.author_email"
+msgid "Author email"
+msgstr "Email tác giả"
+
+#: ui_admin.back
+msgctxt "ui_admin.back"
+msgid "Back"
+msgstr "Quay lại"
+
+#: ui_admin.banip_action
+msgctxt "ui_admin.banip_action"
+msgid "Ban IP"
+msgstr "CẤM IP"
+
+#: ui_admin.between_times
+msgctxt "ui_admin.between_times"
+msgid "Between Times"
+msgstr "Giữa các lần"
+
+#: ui_admin.blocks
+msgctxt "ui_admin.blocks"
+msgid "Blocks"
+msgstr "Khối"
+
+#: ui_admin.body
+msgctxt "ui_admin.body"
+msgid "Body"
+msgstr "Cơ thể"
+
+#: ui_admin.cancel
+msgctxt "ui_admin.cancel"
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: ui_admin.categories
+msgctxt "ui_admin.categories"
+msgid "Categories"
+msgstr "Phân loại"
+
+#: ui_admin.chart_display_error
+msgctxt "ui_admin.chart_display_error"
+msgid "Error displaying chart"
+msgstr "Xảy ra lỗi khi hiển thị biểu đồ"
+
+#: ui_admin.check_message_valid
+msgctxt "ui_admin.check_message_valid"
+msgid "Please make sure your message is valid."
+msgstr "Xin chắc chắc rằng tin nhắn của bạn là hợp lệ."
+
+#: ui_admin.check_number
+msgctxt "ui_admin.check_number"
+msgid "Please make sure the number is valid."
+msgstr "Xin chắc chắn rằng con số này là hợp lệ."
+
+#: ui_admin.check_sms_settings
+msgctxt "ui_admin.check_sms_settings"
+msgid "Please check your SMS settings!"
+msgstr "Xin vui lòng kiểm tra thiết lập SMS của bạn!"
+
+#: ui_admin.checkin_details
+msgctxt "ui_admin.checkin_details"
+msgid "Checkin Details"
+msgstr "Chi tiết về điểm đến"
+
+#: ui_admin.checkins
+msgctxt "ui_admin.checkins"
+msgid "Checkins"
+msgstr "Điểm đến"
+
+#: ui_admin.cities_loaded
+msgctxt "ui_admin.cities_loaded"
+msgid "Cities loaded"
+msgstr "Đã tải các thành phố"
+
+#: ui_admin.code
+msgctxt "ui_admin.code"
+msgid "code"
+msgstr "mã"
+
+#: ui_admin.code_out_of_sync
+msgctxt "ui_admin.code_out_of_sync"
+msgid "Code version out of sync."
+msgstr "Phiên bản mã cho việc đồng bộ hóa."
+
+#: ui_admin.color
+msgctxt "ui_admin.color"
+msgid "Color"
+msgstr "Màu sắc"
+
+#: ui_admin.comments
+msgctxt "ui_admin.comments"
+msgid "Comments"
+msgstr "Bình luận"
+
+#: ui_admin.confirmation_code
+msgctxt "ui_admin.confirmation_code"
+msgid "Your alerts confirmation code is: "
+msgstr "Xác nhận mã cảnh báo của bạn là:"
+
+#: ui_admin.confirm_msg
+msgctxt "ui_admin.confirm_msg"
+msgid "The User Has Been"
+msgstr "Người dùng này đã được"
+
+#: ui_admin.count
+msgctxt "ui_admin.count"
+msgid "Count"
+msgstr "Số lần"
+
+#: ui_admin.country_not_found
+msgctxt "ui_admin.country_not_found"
+msgid "Country Not Found"
+msgstr "Không tìm thấy quốc gia"
+
+#: ui_admin.created_edited
+msgctxt "ui_admin.created_edited"
+msgid "created/edited"
+msgstr "đã tạo/đã sửa"
+
+#: ui_admin.create_report
+msgctxt "ui_admin.create_report"
+msgid "Create a Report"
+msgstr "Tạo một báo cáo"
+
+#: ui_admin.critical_upgrade
+msgctxt "ui_admin.critical_upgrade"
+msgid "Critical Upgrade"
+msgstr "Cập nhật khẩn cấp"
+
+#: ui_admin.csv
+msgctxt "ui_admin.csv"
+msgid "CSV"
+msgstr "CSV"
+
+#: ui_admin.currently_active
+msgctxt "ui_admin.currently_active"
+msgid "Currently Active"
+msgstr "Hiện đang hoạt động"
+
+#: ui_admin.currently_inactive
+msgctxt "ui_admin.currently_inactive"
+msgid "Currently Inactive"
+msgstr "Hiện đang không hoạt động"
+
+#: ui_admin.custom_forms_insufficient_permissions
+msgctxt "ui_admin.custom_forms_insufficient_permissions"
+msgid ""
+"You don't have sufficient permissions to edit the following custom fields."
+msgstr "Bạn không có quyền tác động để thay đổi các khung thông tin dưới đây."
+
+#: ui_admin.daily
+msgctxt "ui_admin.daily"
+msgid "Daily"
+msgstr "Hằng ngày"
+
+#: ui_admin.dashboard
+msgctxt "ui_admin.dashboard"
+msgid "Dashboard"
+msgstr "Bảng điều khiển"
+
+#: ui_admin.database
+msgctxt "ui_admin.database"
+msgid "database"
+msgstr "cơ sở dữ liệu"
+
+#: ui_admin.date_time
+msgctxt "ui_admin.date_time"
+msgid "Date & Time"
+msgstr "Ngày tháng & Thời gian"
+
+#: ui_admin.date_added
+msgctxt "ui_admin.date_added"
+msgid "Date Added"
+msgstr "Đã thêm vào ngày tháng"
+
+#: ui_admin.date_modified
+msgctxt "ui_admin.date_modified"
+msgid "Date Modified"
+msgstr "Đã chỉnh sửa ngày tháng"
+
+#: ui_admin.days_of_the_week
+msgctxt "ui_admin.days_of_the_week"
+msgid "Days of the week"
+msgstr "Ngày trong tuần"
+
+#: ui_admin.db_out_of_sync
+msgctxt "ui_admin.db_out_of_sync"
+msgid "DB version out of sync."
+msgstr "Phiên bản DB đã quá hạn để đồng bộ hóa."
+
+#: ui_admin.deleted
+msgctxt "ui_admin.deleted"
+msgid "deleted"
+msgstr "đã xóa"
+
+#: ui_admin.delete_action
+msgctxt "ui_admin.delete_action"
+msgid "Delete"
+msgstr "Xóa"
+
+#: ui_admin.delete_all
+msgctxt "ui_admin.delete_all"
+msgid "Delete all reports"
+msgstr ""
+
+#: ui_admin.delete_badge
+msgctxt "ui_admin.delete_badge"
+msgid "Delete Badge"
+msgstr "Xóa phù hiệu"
+
+#: ui_admin.demo
+msgctxt "ui_admin.demo"
+msgid "Demo"
+msgstr "Bản thử nghiệm"
+
+#: ui_admin.description
+msgctxt "ui_admin.description"
+msgid "Description"
+msgstr "Mô tả"
+
+#: ui_admin.disabled
+msgctxt "ui_admin.disabled"
+msgid "Disabled"
+msgstr "Vô hiệu hóa"
+
+#: ui_admin.divider_start_field
+msgctxt "ui_admin.divider_start_field"
+msgid "Divider Start"
+msgstr "Bắt đầu phân phát"
+
+#: ui_admin.divider_end_field
+msgctxt "ui_admin.divider_end_field"
+msgid "Divider End"
+msgstr "Kết thúc phân phát"
+
+#: ui_admin.divider_class
+msgctxt "ui_admin.divider_class"
+msgid "div class"
+msgstr "div class"
+
+#: ui_admin.download_reports
+msgctxt "ui_admin.download_reports"
+msgid "Download Reports"
+msgstr "Tải về báo cáo"
+
+#: ui_admin.dropdown_choices
+msgctxt "ui_admin.dropdown_choices"
+msgid "Dropdown Choices"
+msgstr "Lựa chọn xổ xuống"
+
+#: ui_admin.edited
+msgctxt "ui_admin.edited"
+msgid "EDITED"
+msgstr "ĐÃ SỬA"
+
+#: ui_admin.edited_by
+msgctxt "ui_admin.edited_by"
+msgid "Edited By"
+msgstr "Đã sửa bởi"
+
+#: ui_admin.edit_action
+msgctxt "ui_admin.edit_action"
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: ui_admin.edit_log
+msgctxt "ui_admin.edit_log"
+msgid "Edit Log"
+msgstr "Nhật trình chỉnh sửa"
+
+#: ui_admin.email
+msgctxt "ui_admin.email"
+msgid "Email"
+msgstr "Email"
+
+#: ui_admin.entire_collective
+msgctxt "ui_admin.entire_collective"
+msgid "Entire Collective"
+msgstr "Toàn bộ việc thu thập"
+
+#: ui_admin.error_geocoding
+msgctxt "ui_admin.error_geocoding"
+msgid "Error in geocoding! HTTP error"
+msgstr "Lỗi khi đang xác định mã địa lý! Lỗi về HTTP"
+
+#: ui_admin.error_imap
+msgctxt "ui_admin.error_imap"
+msgid "IMAP PHP Library is not installed"
+msgstr "Thư viện PHP IMAP chưa được cài đặt"
+
+#: ui_admin.error_twitter
+msgctxt "ui_admin.error_twitter"
+msgid "Incorrect Credentials"
+msgstr "Giấy ủy nhiệm không hợp lệ"
+
+#: ui_admin.error_msg
+msgctxt "ui_admin.error_msg"
+msgid "Error"
+msgstr "Lỗi"
+
+#: ui_admin.error_post_incident
+msgctxt "ui_admin.error_post_incident"
+msgid "Error, unable to post incident"
+msgstr "Lỗi, không thể đăng tiến trình này"
+
+#: ui_admin.every_six_hours
+msgctxt "ui_admin.every_six_hours"
+msgid "Every Six Hours"
+msgstr "Mỗi sáu giờ"
+
+#: ui_admin.every_twelve_hours
+msgctxt "ui_admin.every_twelve_hours"
+msgid "Every Twelve Hours"
+msgstr "Mỗi mười hai giờ"
+
+#: ui_admin.experimental
+msgctxt "ui_admin.experimental"
+msgid "Experimental"
+msgstr "Thực nghiệm "
+
+#: ui_admin.faqs
+msgctxt "ui_admin.faqs"
+msgid "FAQ's"
+msgstr "Câu hỏi thường gặp"
+
+#: ui_admin.feed
+msgctxt "ui_admin.feed"
+msgid "feed"
+msgstr "feed"
+
+#: ui_admin.feedback
+msgctxt "ui_admin.feedback"
+msgid "Feedback"
+msgstr "Phản hồi"
+
+#: ui_admin.feeds
+msgctxt "ui_admin.feeds"
+msgid "feeds"
+msgstr "feed"
+
+#: ui_admin.field_choices
+msgctxt "ui_admin.field_choices"
+msgid "List of Choices"
+msgstr "Danh sách lựa chọn"
+
+#: ui_admin.field_default
+msgctxt "ui_admin.field_default"
+msgid "Default Value"
+msgstr "Giá trị mặc định"
+
+#: ui_admin.field_datatype
+msgctxt "ui_admin.field_datatype"
+msgid "Data Type"
+msgstr "Loại dữ liệu"
+
+#: ui_admin.field_datatype_javascript
+msgctxt "ui_admin.field_datatype_javascript"
+msgid "Javascript"
+msgstr "Javascript"
+
+#: ui_admin.field_datatype_markup
+msgctxt "ui_admin.field_datatype_markup"
+msgid "Markup"
+msgstr "Markup"
+
+#: ui_admin.field_datatype_numeric
+msgctxt "ui_admin.field_datatype_numeric"
+msgid "Numeric"
+msgstr "Numeric"
+
+#: ui_admin.field_datatype_text
+msgctxt "ui_admin.field_datatype_text"
+msgid "Free Text"
+msgstr "Free Text"
+
+#: ui_admin.field_height
+msgctxt "ui_admin.field_height"
+msgid "Height (In Rows)"
+msgstr "Chiều cao (tính bằng dòng)"
+
+#: ui_admin.field_hidden
+msgctxt "ui_admin.field_hidden"
+msgid "Hidden Field"
+msgstr "Khung thông tin bị ẩn"
+
+#: ui_admin.field_maxlength
+msgctxt "ui_admin.field_maxlength"
+msgid "Maximum Character Length"
+msgstr "Độ dài ký tự tối đa"
+
+#: ui_admin.field_name
+msgctxt "ui_admin.field_name"
+msgid "Field Name"
+msgstr "Tên khung thông tin"
+
+#: ui_admin.field_toggle
+msgctxt "ui_admin.field_toggle"
+msgid "Toggle"
+msgstr "Chuyển đổi"
+
+#: ui_admin.field_toggle_no
+msgctxt "ui_admin.field_toggle_no"
+msgid "No"
+msgstr "Không đồng ý"
+
+#: ui_admin.field_toggle_yes_close
+msgctxt "ui_admin.field_toggle_yes_close"
+msgid "Yes, Closed by default"
+msgstr "Đồng ý, đã đóng lại theo mặc định"
+
+#: ui_admin.field_toggle_yes_open
+msgctxt "ui_admin.field_toggle_yes_open"
+msgid "Yes, Open by default"
+msgstr "Đồng ý, mở theo mặc định"
+
+#: ui_admin.file_not_found_upload
+msgctxt "ui_admin.file_not_found_upload"
+msgid "Could not find uploaded file"
+msgstr "Không thể tìm thấy tập tin được tải lên"
+
+#: ui_admin.file_open_error
+msgctxt "ui_admin.file_open_error"
+msgid "Could not open file for reading"
+msgstr "Không thể mở tập tin để đọc dữ liệu"
+
+#: ui_admin.form_not_exists
+msgctxt "ui_admin.form_not_exists"
+msgid "That Form Does Not Exist!"
+msgstr "Phần đơn này không hề tồn tại!"
+
+#: ui_admin.forum
+msgctxt "ui_admin.forum"
+msgid "Forum"
+msgstr "Diễn đàn"
+
+#: ui_admin.free_text_field
+msgctxt "ui_admin.free_text_field"
+msgid "Text Area Field (Free Text)"
+msgstr "Khu vực khung thông tin văn bản (văn bản tự do)"
+
+#: ui_admin.date_field
+msgctxt "ui_admin.date_field"
+msgid "Date Field"
+msgstr "Khung thông tin ngày tháng"
+
+#: ui_admin.radio_field
+msgctxt "ui_admin.radio_field"
+msgid "Radio Buttons Field"
+msgstr "Khung thông tin nút lựa chọn"
+
+#: ui_admin.checkbox_field
+msgctxt "ui_admin.checkbox_field"
+msgid "Checkboxes Field"
+msgstr "Khung thông tin phần đánh dấu"
+
+#: ui_admin.dropdown_field
+msgctxt "ui_admin.dropdown_field"
+msgid "Dropdown Field"
+msgstr "Khung thông tin menu xổ xuống"
+
+#: ui_admin.from
+msgctxt "ui_admin.from"
+msgid "From"
+msgstr "Từ"
+
+#: ui_admin.from_date
+msgctxt "ui_admin.from_date"
+msgid "From"
+msgstr "Từ"
+
+#: ui_admin.geonames_timeout
+msgctxt "ui_admin.geonames_timeout"
+msgid "Geonames Timeout Error"
+msgstr "Lỗi vì thời gian kết nối đến Geonames quá hạn"
+
+#: ui_admin.get_help
+msgctxt "ui_admin.get_help"
+msgid "Get Help"
+msgstr "Nhận sự giúp đỡ"
+
+#: ui_admin.get_more_themes
+msgctxt "ui_admin.get_more_themes"
+msgid "Get more themes"
+msgstr "Tải thêm nhiều giao diện hơn"
+
+#: ui_admin.get_more_plugins
+msgctxt "ui_admin.get_more_plugins"
+msgid "Get more plugins"
+msgstr "Tải thêm nhiều tiện ích hơn"
+
+#: ui_admin.header_actions
+msgctxt "ui_admin.header_actions"
+msgid "Actions"
+msgstr "Thao tác"
+
+#: ui_admin.header_add_edit
+msgctxt "ui_admin.header_add_edit"
+msgid "Add/Edit"
+msgstr "Thêm/sửa"
+
+#: ui_admin.header_email
+msgctxt "ui_admin.header_email"
+msgid "Email"
+msgstr "Email"
+
+#: ui_admin.header_manage_users
+msgctxt "ui_admin.header_manage_users"
+msgid "Manage Users"
+msgstr "Quản lý người dùng"
+
+#: ui_admin.header_role
+msgctxt "ui_admin.header_role"
+msgid "Role"
+msgstr "Vai trò"
+
+#: ui_admin.header_user
+msgctxt "ui_admin.header_user"
+msgid "User"
+msgstr "Người dùng"
+
+#: ui_admin.help
+msgctxt "ui_admin.help"
+msgid "help"
+msgstr "trợ giúp"
+
+#: ui_admin.hourly
+msgctxt "ui_admin.hourly"
+msgid "Hourly"
+msgstr "Hằng giờ"
+
+#: ui_admin.incident_feed
+msgctxt "ui_admin.incident_feed"
+msgid "Incident feed for"
+msgstr "Feed tiến trình cho"
+
+#: ui_admin.installer_info
+msgctxt "ui_admin.installer_info"
+msgid ""
+"The installer folder still exists. Delete the installer folder. It is a "
+"potential security vulnerability."
+msgstr "Thư mục cài đặt vẫn không tồn tại. Xóa thư mục cài đặt. Đây là tiềm ẩn an ninh quan trọng."
+
+#: ui_admin.instance
+msgctxt "ui_admin.instance"
+msgid "Instance"
+msgstr "Tiến trình"
+
+#: ui_admin.instances
+msgctxt "ui_admin.instances"
+msgid "Instances"
+msgstr "Tiến trình"
+
+#: ui_admin.instance_details
+msgctxt "ui_admin.instance_details"
+msgid "Instance Details"
+msgstr "Thông tin tiến trình"
+
+#: ui_admin.invalid_parameter
+msgctxt "ui_admin.invalid_parameter"
+msgid "Invalid Parameter"
+msgstr "Thông số không hợp lệ"
+
+#: ui_admin.ip_address
+msgctxt "ui_admin.ip_address"
+msgid "IP Address"
+msgstr "Địa chỉ IP"
+
+#: ui_admin.is_date
+msgctxt "ui_admin.is_date"
+msgid "Is this a Date Field?"
+msgstr "Đây có phải là khung thông tin ngày tháng?"
+
+#: ui_admin.ispublic_visible
+msgctxt "ui_admin.ispublic_visible"
+msgid "Who Can View Answers"
+msgstr "Ai có thể xem các câu trả lời"
+
+#: ui_admin.ispublic_submit
+msgctxt "ui_admin.ispublic_submit"
+msgid "Who Can Submit Answers"
+msgstr "Ai có thể đệ trinh cầu trả lời"
+
+#: ui_admin.keyword
+msgctxt "ui_admin.keyword"
+msgid "Keyword"
+msgstr "Từ khóa"
+
+#: ui_admin.keywords
+msgctxt "ui_admin.keywords"
+msgid "Keywords"
+msgstr "Từ khóa"
+
+#: ui_admin.label_email
+msgctxt "ui_admin.label_email"
+msgid "Email Address:"
+msgstr "Địa chỉ email:"
+
+#: ui_admin.label_full_name
+msgctxt "ui_admin.label_full_name"
+msgid "Full Name:"
+msgstr "Tên đầy đủ:"
+
+#: ui_admin.label_password
+msgctxt "ui_admin.label_password"
+msgid "Password:"
+msgstr "Mật khẩu:"
+
+#: ui_admin.label_role
+msgctxt "ui_admin.label_role"
+msgid "Role:"
+msgstr "Vai trò:"
+
+#: ui_admin.label_username
+msgctxt "ui_admin.label_username"
+msgid "Username:"
+msgstr "Tên người dùng:"
+
+#: ui_admin.layers
+msgctxt "ui_admin.layers"
+msgid "Layers"
+msgstr "Lớp"
+
+#: ui_admin.login_role
+msgctxt "ui_admin.login_role"
+msgid "Moderator"
+msgstr "Người điều hành"
+
+#: ui_admin.logout
+msgctxt "ui_admin.logout"
+msgid "Logout"
+msgstr "Đăng xuất"
+
+#: ui_admin.logs
+msgctxt "ui_admin.logs"
+msgid "Logs"
+msgstr "Nhật trình"
+
+#: ui_admin.manage
+msgctxt "ui_admin.manage"
+msgid "Manage"
+msgstr "Quản lý"
+
+#: ui_admin.manage_roles
+msgctxt "ui_admin.manage_roles"
+msgid "Manage Roles & Permissions"
+msgstr "Quản lý Vai trò & Quyền hạn"
+
+#: ui_admin.manage_users
+msgctxt "ui_admin.manage_users"
+msgid "View Users"
+msgstr "Xem người dùng"
+
+#: ui_admin.manage_users_edit
+msgctxt "ui_admin.manage_users_edit"
+msgid "Add/Edit Users"
+msgstr "Thêm/sửa người dùng"
+
+#: ui_admin.manage_public_listing
+msgctxt "ui_admin.manage_public_listing"
+msgid "Manage Your Public Listing"
+msgstr "Quản lý việc liệt kê công cộng của bạn"
+
+#: ui_admin.mark_as
+msgctxt "ui_admin.mark_as"
+msgid "Mark As"
+msgstr "Đánh dấu dưới dạng"
+
+#: ui_admin.marked_as_not_spam
+msgctxt "ui_admin.marked_as_not_spam"
+msgid "marked as not spam"
+msgstr "đã đánh dấu không phải spam"
+
+#: ui_admin.marked_as_spam
+msgctxt "ui_admin.marked_as_spam"
+msgid "marked as spam"
+msgstr "đã đánh dấu dưới dạng spam"
+
+#: ui_admin.match_no_documents
+msgctxt "ui_admin.match_no_documents"
+msgid "did not match any documents"
+msgstr "Không khớp với bất kỳ tài liệu nào"
+
+#: ui_admin.message
+msgctxt "ui_admin.message"
+msgid "Message"
+msgstr "Tin nhắn"
+
+#: ui_admin.messages
+msgctxt "ui_admin.messages"
+msgid "Messages"
+msgstr "Tin nhắn"
+
+#: ui_admin.messages_laconica
+msgctxt "ui_admin.messages_laconica"
+msgid "Laconica Messages"
+msgstr "Tin nhắn Laconica"
+
+#: ui_admin.messages_twitter
+msgctxt "ui_admin.messages_twitter"
+msgid "Twitter Messages"
+msgstr "Tin nhắn Twitter"
+
+#: ui_admin.message_sent
+msgctxt "ui_admin.message_sent"
+msgid "Your message has been sent!"
+msgstr "Tin nhắn của bạn đã được gửi!"
+
+#: ui_admin.mhi
+msgctxt "ui_admin.mhi"
+msgid "MHI"
+msgstr "MHI"
+
+#: ui_admin.minute
+msgctxt "ui_admin.minute"
+msgid "Minute"
+msgstr "Phút"
+
+#: ui_admin.minutes
+msgctxt "ui_admin.minutes"
+msgid "Minutes"
+msgstr "Phút"
+
+#: ui_admin.missing_parameter
+msgctxt "ui_admin.missing_parameter"
+msgid "Missing Parameter"
+msgstr "Thiếu các thông số"
+
+#: ui_admin.moderator
+msgctxt "ui_admin.moderator"
+msgid "Moderator"
+msgstr "Người điều hành"
+
+#: ui_admin.modified
+msgctxt "ui_admin.modified"
+msgid "modified"
+msgstr "đã chỉnh sửa"
+
+#: ui_admin.modify_timezone
+msgctxt "ui_admin.modify_timezone"
+msgid "Modify Timezone Setting"
+msgstr "Chỉnh sửa thiết lập thời gian vùng miền"
+
+#: ui_admin.move_down_action
+msgctxt "ui_admin.move_down_action"
+msgid "move down"
+msgstr "di chuyển xuống"
+
+#: ui_admin.move_up_action
+msgctxt "ui_admin.move_up_action"
+msgid "move up"
+msgstr "di chuyển lên"
+
+#: ui_admin.multiple_hosted_instances
+msgctxt "ui_admin.multiple_hosted_instances"
+msgid "Multiple Hosted Instances"
+msgstr "Tiến trình Multiple hosted"
+
+#: ui_admin.my_alerts
+msgctxt "ui_admin.my_alerts"
+msgid "My Alerts"
+msgstr "Cản báo của tôi"
+
+#: ui_admin.my_checkins
+msgctxt "ui_admin.my_checkins"
+msgid "My Checkins"
+msgstr "Điểm đến của tôi"
+
+#: ui_admin.my_profile
+msgctxt "ui_admin.my_profile"
+msgid "My Profile"
+msgstr "Hồ sơ của tôi"
+
+#: ui_admin.my_reports
+msgctxt "ui_admin.my_reports"
+msgid "My Reports"
+msgstr "Báo cáo của tôi"
+
+#: ui_admin.my_votes
+msgctxt "ui_admin.my_votes"
+msgid "Votes Cast"
+msgstr "Bình chọn diễn viên"
+
+#: ui_admin.my_votes_up
+msgctxt "ui_admin.my_votes_up"
+msgid "Positive"
+msgstr "Dương tính"
+
+#: ui_admin.my_votes_down
+msgctxt "ui_admin.my_votes_down"
+msgid "Negative"
+msgstr "Âm tính"
+
+#: ui_admin.name
+msgctxt "ui_admin.name"
+msgid "Name"
+msgstr "Tên"
+
+#: ui_admin.new_alert
+msgctxt "ui_admin.new_alert"
+msgid "Create New Alert"
+msgstr "Tạo cảnh báo mới"
+
+#: ui_admin.new_private
+msgctxt "ui_admin.new_private"
+msgid "Create New Message"
+msgstr "Tạo tin nhắn mới"
+
+#: ui_admin.new_password
+msgctxt "ui_admin.new_password"
+msgid "New Password"
+msgstr "Mật khẩu mới"
+
+#: ui_admin.no
+msgctxt "ui_admin.no"
+msgid "No"
+msgstr "Không đồng ý"
+
+#: ui_admin.none_category_explanation
+msgctxt "ui_admin.none_category_explanation"
+msgid ""
+"This is a special category that will not show up on the report submission "
+"form for users submitting reports. This is used to hold reports left without"
+" categories(uncategorized reports) as a result of category deletion."
+msgstr "Đây là phần phân loại đặc biệt sẽ không xuất hiện trong phần đệ trình báo cáo từ những người dùng gửi các báo khác. Phần này được sử dụng để giữ các báo cáo còn lại vốn chưa được phân loại (các báo cáo chưa được phân loại) dưới dạng phân loại bị xóa."
+
+#: ui_admin.notification
+msgctxt "ui_admin.notification"
+msgid "Notification"
+msgstr "Thông báo"
+
+#: ui_admin.not_case_sensitive
+msgctxt "ui_admin.not_case_sensitive"
+msgid "This is not case sensitive."
+msgstr "Không phân biệt chữ in hoa."
+
+#: ui_admin.not_found
+msgctxt "ui_admin.not_found"
+msgid "Not Found"
+msgstr "Không tìm thấy"
+
+#: ui_admin.no_data
+msgctxt "ui_admin.no_data"
+msgid "No data. There are no results to show."
+msgstr "Không có dữ liệu. Không có kết quả nào được hiển thị."
+
+#: ui_admin.no_error
+msgctxt "ui_admin.no_error"
+msgid "No Error"
+msgstr "Không có lỗi"
+
+#: ui_admin.no_result_display_msg
+msgctxt "ui_admin.no_result_display_msg"
+msgid "No Results To Display!"
+msgstr "Không có kết quả để hiển thị!"
+
+#: ui_admin.of
+msgctxt "ui_admin.of"
+msgid "of"
+msgstr "của"
+
+#: ui_admin.on_specific_count
+msgctxt "ui_admin.on_specific_count"
+msgid "On Specific Count"
+msgstr "Dựa trên số lượng"
+
+#: ui_admin.openids
+msgctxt "ui_admin.openids"
+msgid "OpenID's"
+msgstr "OpenID's"
+
+#: ui_admin.page
+msgctxt "ui_admin.page"
+msgid "page"
+msgstr "trang"
+
+#: ui_admin.pages
+msgctxt "ui_admin.pages"
+msgid "pages"
+msgstr "trang"
+
+#: ui_admin.page_not_found
+msgctxt "ui_admin.page_not_found"
+msgid "Page Not Found"
+msgstr "Không tìm thấy trang"
+
+#: ui_admin.page_not_found_message_with_contact
+msgctxt "ui_admin.page_not_found_message_with_contact"
+msgid ""
+"Sorry, the page you are trying to view is not here.<p><strong>Did you follow"
+" a link from somewhere else on our site?</strong><br />If you reached this "
+"page from another part of our site, please <a href=\"%s\">contact us</a> so "
+"that we can correct our mistake.</p><p><strong>Did you follow a link from "
+"another site? </strong><br />Links from other sites can sometimes be "
+"outdated or misspelled. <a href=\"%s\">Tell us</a> where you came from and "
+"we can try to contact the other site in order to fix the "
+"problem.</p><p><strong>Did you type the URL? </strong><br />You may have "
+"typed the address (URL) incorrectly. Check to make sure you have got the "
+"exact right spelling, capitalization, etc. </p>"
+msgstr "Rất tiếc, trang bạn muốn truy cập hiện không có.<p><strong>Bạn đã đi đến đường liên kết này từ một nơi khác trên trang của chúng tôi?</strong><br />Nếu bạn truy cập đến trang này từ trang thuộc hệ thống hiện tại, xin vui lòng <a href=\"%s\">liên hệ với chúng tôi</a> để chúng tôi có thể khắc phục vấn đề này.</p><p><strong>Có phải bạn đã truy cập đến trang này từ đường dẫn ở các trang khác không thuộc hệ thống của chúng tôi? </strong><br />Liên kết ở các trang khác không thuộc hệ thống của chúng tôi thường sai về mặt cú pháp hoặc các liên kết đó đã quá hạn truy cập. <a href=\"%s\">Hãy thông báo cho chúng tôi</a> biết trang mà bạn đã truy cập trước khi click vào đường liên kết để đến trang này nhằm khắc phục vấn đề lỗi trang trên.</p><p><strong>Có phải bạn đã gõ vào đường dẫn? </strong><br />Có thể bạn đã gõ vào đường dẫn (địa chỉ) sai cú pháp. Hãy xem lại đường dẫn hay địa chỉ mà bạn đã truy cập. </p>"
+
+#: ui_admin.page_not_found_message
+msgctxt "ui_admin.page_not_found_message"
+msgid "Sorry, the page you are trying to view is not here."
+msgstr "Rất tiếc, trang bạn đang muốn truy cập hiện không tồn tại"
+
+#: ui_admin.parameters_used
+msgctxt "ui_admin.parameters_used"
+msgid "Parameters Used"
+msgstr "Thông số được sử dụng"
+
+#: ui_admin.password
+msgctxt "ui_admin.password"
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: ui_admin.password_reset
+msgctxt "ui_admin.password_reset"
+msgid "Password Reset"
+msgstr "Đặt lại mật khẩu"
+
+#: ui_admin.password_reset_message_line_1
+msgctxt "ui_admin.password_reset_message_line_1"
+msgid "Dear"
+msgstr "Thân mến"
+
+#: ui_admin.password_reset_message_line_2
+msgctxt "ui_admin.password_reset_message_line_2"
+msgid "We received a request to reset the password for"
+msgstr "Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu cho"
+
+#: ui_admin.password_reset_message_line_3
+msgctxt "ui_admin.password_reset_message_line_3"
+msgid ""
+"To change your password, please click on the link below (or copy and paste "
+"it into your browser)."
+msgstr "Để có thể thay đổi mật khẩu của bạn, vui lòng click vào liên kết phía dưới (hoặc sao chép và dán vào trình duyệt của bạn)."
+
+#: ui_admin.password_reset_message_line_4
+msgctxt "ui_admin.password_reset_message_line_4"
+msgid ""
+"As you requested, your password has now been reset. Your new details are as "
+"follows"
+msgstr "Theo như yêu cầu của bạn, mật khẩu đã được thay đôi. Thông tin chi tiết sẽ có dạng"
+
+#: ui_admin.password_reset_subject
+msgctxt "ui_admin.password_reset_subject"
+msgid "Ushahidi password reset"
+msgstr "Đặt lại mật khẩu Ushahidi"
+
+#: ui_admin.phone
+msgctxt "ui_admin.phone"
+msgid "Phone"
+msgstr "Điện thoại"
+
+#: ui_admin.please_select
+msgctxt "ui_admin.please_select"
+msgid "Please Select"
+msgstr "Xin vui lòng chọn"
+
+#: ui_admin.pm
+msgctxt "ui_admin.pm"
+msgid "PM"
+msgstr "PM"
+
+#: ui_admin.post_method_not_used
+msgctxt "ui_admin.post_method_not_used"
+msgid "Data was not sent by post method"
+msgstr "Dữ liệu không được gửi bởi phương thức đăng bài"
+
+#: ui_admin.preview
+msgctxt "ui_admin.preview"
+msgid "Preview"
+msgstr "Xem trước"
+
+#: ui_admin.private_message
+msgctxt "ui_admin.private_message"
+msgid "Message"
+msgstr "Tin nhắn"
+
+#: ui_admin.private_messages
+msgctxt "ui_admin.private_messages"
+msgid "Private Messages"
+msgstr "Tin nhắn riêng tư"
+
+#: ui_admin.private_sent
+msgctxt "ui_admin.private_sent"
+msgid "Private Message Sent"
+msgstr "Tin nhắn riêng đã được gửi"
+
+#: ui_admin.private_subject
+msgctxt "ui_admin.private_subject"
+msgid "Subject"
+msgstr "Chủ đề"
+
+#: ui_admin.private_to
+msgctxt "ui_admin.private_to"
+msgid "To"
+msgstr "Đến"
+
+#: ui_admin.public_listing
+msgctxt "ui_admin.public_listing"
+msgid "Public Listing"
+msgstr "Liệt kê công cộng"
+
+#: ui_admin.qualifiers
+msgctxt "ui_admin.qualifiers"
+msgid "Qualifiers"
+msgstr "Người thẩm định"
+
+#: ui_admin.read
+msgctxt "ui_admin.read"
+msgid "read"
+msgstr "đọc"
+
+#: ui_admin.relevance
+msgctxt "ui_admin.relevance"
+msgid "Relevance"
+msgstr "Thích hợp"
+
+#: ui_admin.report_title
+msgctxt "ui_admin.report_title"
+msgid "Report Title"
+msgstr "Báo cáo tiêu đề"
+
+#: ui_admin.report_date
+msgctxt "ui_admin.report_date"
+msgid "Report Date"
+msgstr "Ngày ghi báo cáo"
+
+#: ui_admin.reporters
+msgctxt "ui_admin.reporters"
+msgid "Reporters"
+msgstr "Người báo cáo"
+
+#: ui_admin.reporter_levels
+msgctxt "ui_admin.reporter_levels"
+msgid "Reporter Levels"
+msgstr "Nhãn người báo cáo"
+
+#: ui_admin.reports
+msgctxt "ui_admin.reports"
+msgid "Reports"
+msgstr "Báo cáo"
+
+#: ui_admin.reputation
+msgctxt "ui_admin.reputation"
+msgid "Reputation Score"
+msgstr "Điểm danh vọng"
+
+#: ui_admin.required
+msgctxt "ui_admin.required"
+msgid "Required"
+msgstr "Yêu cầu"
+
+#: ui_admin.reset
+msgctxt "ui_admin.reset"
+msgid "Reset"
+msgstr "Đặt lại"
+
+#: ui_admin.response
+msgctxt "ui_admin.response"
+msgid "Response"
+msgstr "Trả lời"
+
+#: ui_admin.results
+msgctxt "ui_admin.results"
+msgid "Results"
+msgstr "Kết quả"
+
+#: ui_admin.revoke
+msgctxt "ui_admin.revoke"
+msgid "Revoke"
+msgstr "Hủy bỏ"
+
+#: ui_admin.riverid_exists_admin
+msgctxt "ui_admin.riverid_exists_admin"
+msgid ""
+"This email already has an account managed by CrowdmapID. The user will need "
+"to use their existing Crowdmap password to login."
+msgstr "Email này có một tài khoản gắn kết với CrowdmapID. Người sử dụng sẽ cần sử dụng mật khẩu bên phía Crowdmap để đăng nhập."
+
+#: ui_admin.save_settings
+msgctxt "ui_admin.save_settings"
+msgid "Save Settings"
+msgstr "Lưu thiết lập"
+
+#: ui_admin.search
+msgctxt "ui_admin.search"
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: ui_admin.search_reports
+msgctxt "ui_admin.search_reports"
+msgid "Search Reports"
+msgstr "Tìm kiếm báo cáo"
+
+#: ui_admin.searching_for
+msgctxt "ui_admin.searching_for"
+msgid "searching for"
+msgstr "tìm kiếm về"
+
+#: ui_admin.security_info_encryption_key
+msgctxt "ui_admin.security_info_encryption_key"
+msgid ""
+"The encryption key is still set to the default value. This is insecure and "
+"must be changed."
+msgstr "Khóa mã hóa được chỉnh về giá trị mặc định. Điều này không an toàn và cần phải được thay đổi."
+
+#: ui_admin.security_info_https
+msgctxt "ui_admin.security_info_https"
+msgid ""
+"This site being served over HTTP. This should be set to HTTPS for increased "
+"security."
+msgstr "Trang này đang sử dụng phương thức HTTP. Vì lí do an ninh nên chuyển về dạng HTTPS"
+
+#: ui_admin.security_info_instructions
+msgctxt "ui_admin.security_info_instructions"
+msgid "Instructions are available on the wiki: "
+msgstr "Các hướng dẫn hiện đang được phổ biến trên wiki:"
+
+#: ui_admin.select_download_format
+msgctxt "ui_admin.select_download_format"
+msgid "Select your desired reports download format:-"
+msgstr "Chọn định dạng báo cáo tải về mà bạn muốn:-"
+
+#: ui_admin.select_field_type
+msgctxt "ui_admin.select_field_type"
+msgid "--- Select A Field Type ---"
+msgstr "--- Chọn một loại khung thông tin ---"
+
+#: ui_admin.select_item
+msgctxt "ui_admin.select_item"
+msgid "Please select an item"
+msgstr "Xin chọn một đối tượng"
+
+#: ui_admin.select_trigger_before_response
+msgctxt "ui_admin.select_trigger_before_response"
+msgid "You must select a Trigger before you can select a Response."
+msgstr "Bạn phải chọn một Trigger trước khi chọn Trả Lời"
+
+#: ui_admin.select_trigger_before_qualifiers
+msgctxt "ui_admin.select_trigger_before_qualifiers"
+msgid "You must select a Trigger before you can define Qualifiers."
+msgstr "Bạn phải chọn một Trigger trước khi bạn xác định Người Thẩm Định."
+
+#: ui_admin.sender
+msgctxt "ui_admin.sender"
+msgid "Sender"
+msgstr "Người gửi"
+
+#: ui_admin.send_to
+msgctxt "ui_admin.send_to"
+msgid "Send To"
+msgstr "Gửi đến"
+
+#: ui_admin.sent_from_website
+msgctxt "ui_admin.sent_from_website"
+msgid "This message was sent from your website at "
+msgstr "Tin nhắn này đã được gửi đến website của bạn tại"
+
+#: ui_admin.server_time
+msgctxt "ui_admin.server_time"
+msgid "Server Time"
+msgstr "Thời gian server"
+
+#: ui_admin.settings
+msgctxt "ui_admin.settings"
+msgid "Settings"
+msgstr "Thiết lập"
+
+#: ui_admin.showing_page
+msgctxt "ui_admin.showing_page"
+msgid "Showing page"
+msgstr "Hiển thị trang"
+
+#: ui_admin.showing_results
+msgctxt "ui_admin.showing_results"
+msgid "Showing results"
+msgstr "Hiển thị kết quả"
+
+#: ui_admin.shown
+msgctxt "ui_admin.shown"
+msgid "shown"
+msgstr "đã hiển thị"
+
+#: ui_admin.special_category
+msgctxt "ui_admin.special_category"
+msgid "Special Category"
+msgstr "Phân loại đặc biệt"
+
+#: ui_admin.special_category_explanation
+msgctxt "ui_admin.special_category_explanation"
+msgid ""
+"This is a special category that will not show up on the report submission "
+"form for users submitting reports. This is used in conjunction with the "
+"\"Trusted Reporters\" feature."
+msgstr "Đây là phần phân loại đặc biệt sẽ không xuất hiện trong phần mẫu đơn đệ trình báo cáo từ phía người dùng khi họ đệ trình các báo cáo. Tính năng này có liên kết với tính năng \"Người Gửi Báo Cáo Được Tin Tưởng\"."
+
+#: ui_admin.specific_area
+msgctxt "ui_admin.specific_area"
+msgid "Specific Area"
+msgstr "Khu vực xác địn"
+
+#: ui_admin.state
+msgctxt "ui_admin.state"
+msgid "State"
+msgstr "Trạng thái"
+
+#: ui_admin.statistics
+msgctxt "ui_admin.statistics"
+msgid "Statistics"
+msgstr "Thống kê"
+
+#: ui_admin.stats
+msgctxt "ui_admin.stats"
+msgid "Stats"
+msgstr "Trạng thái"
+
+#: ui_admin.stats_collection_error
+msgctxt "ui_admin.stats_collection_error"
+msgid "Stat collection failed! Please try again later."
+msgstr "Tổng hợp trạng thái thất bại! Xin vui lòng thử lại lần nữa."
+
+#: ui_admin.stats_collection_error_short
+msgctxt "ui_admin.stats_collection_error_short"
+msgid "Stat Collection Failed!"
+msgstr "Tổng hợp trạng thái thất bại!"
+
+#: ui_admin.specific_days
+msgctxt "ui_admin.specific_days"
+msgid "Specific Days"
+msgstr "Xác định ngày"
+
+#: ui_admin.subject
+msgctxt "ui_admin.subject"
+msgid "Subject"
+msgstr "Chủ đề"
+
+#: ui_admin.superadmin_role
+msgctxt "ui_admin.superadmin_role"
+msgid "Super Admin"
+msgstr "Quản trị viên chính yếu"
+
+#: ui_admin.task_performed
+msgctxt "ui_admin.task_performed"
+msgid "Task Performed"
+msgstr "Tác vụ đã thực hiện"
+
+#: ui_admin.text_field
+msgctxt "ui_admin.text_field"
+msgid "Text Field"
+msgstr "Khung thông tin văn bản"
+
+#: ui_admin.theme_name
+msgctxt "ui_admin.theme_name"
+msgid "Name"
+msgstr "Tên"
+
+#: ui_admin.title
+msgctxt "ui_admin.title"
+msgid "Manage Users"
+msgstr "Quản lý người dùng"
+
+#: ui_admin.timeout
+msgctxt "ui_admin.timeout"
+msgid "Timeout Error"
+msgstr "Lỗi về quá hạn thời gian"
+
+#: ui_admin.to
+msgctxt "ui_admin.to"
+msgid "to"
+msgstr "đến"
+
+#: ui_admin.total_records
+msgctxt "ui_admin.total_records"
+msgid "Total Records"
+msgstr "Tổng cộng các bản ghi"
+
+#: ui_admin.to_date
+msgctxt "ui_admin.to_date"
+msgid "to"
+msgstr "đến"
+
+#: ui_admin.translate_reports
+msgctxt "ui_admin.translate_reports"
+msgid "Translate Reports"
+msgstr "Dịch các báo cáo"
+
+#: ui_admin.trigger
+msgctxt "ui_admin.trigger"
+msgid "Trigger"
+msgstr "Trigger"
+
+#: ui_admin.triggering_user
+msgctxt "ui_admin.triggering_user"
+msgid "Triggering User"
+msgstr "Người dùng Trigger"
+
+#: ui_admin.triggers
+msgctxt "ui_admin.triggers"
+msgid "Triggers"
+msgstr "Trigger"
+
+#: ui_admin.unapproved
+msgctxt "ui_admin.unapproved"
+msgid "unapproved"
+msgstr "chưa được chấp thuận"
+
+#: ui_admin.unknown
+msgctxt "ui_admin.unknown"
+msgid "Unknown"
+msgstr "Chưa Rõ"
+
+#: ui_admin.unknown_failure
+msgctxt "ui_admin.unknown_failure"
+msgid "Unknown Failure"
+msgstr "Lỗi chưa rõ"
+
+#: ui_admin.unread
+msgctxt "ui_admin.unread"
+msgid "unread"
+msgstr "chưa đọc"
+
+#: ui_admin.unsubscribe_message
+msgctxt "ui_admin.unsubscribe_message"
+msgid "You will no longer receive alerts from"
+msgstr "Bạn sẽ không còn nhận cảnh báo từ"
+
+#: ui_admin.update_link
+msgctxt "ui_admin.update_link"
+msgid " Click here to upgrade now"
+msgstr "Click vào đây để nâng cấp ngay bây giờ"
+
+#: ui_admin.upgrade_ushahidi
+msgctxt "ui_admin.upgrade_ushahidi"
+msgid "Upgrade Ushahidi"
+msgstr "Nâng cấp Ushahidi"
+
+#: ui_admin.upgrade_ushahidi_status
+msgctxt "ui_admin.upgrade_ushahidi_status"
+msgid "Upgrade Ushahidi Status"
+msgstr "Trạng thái nâng cấp Ushahidi"
+
+#: ui_admin.upload_reports
+msgctxt "ui_admin.upload_reports"
+msgid "Upload Reports"
+msgstr "Tải lên báo cáo"
+
+#: ui_admin.user
+msgctxt "ui_admin.user"
+msgid "User"
+msgstr "Người dùng"
+
+#: ui_admin.users
+msgctxt "ui_admin.users"
+msgid "Users"
+msgstr "Người dùng"
+
+#: ui_admin.ushahidi
+msgctxt "ui_admin.ushahidi"
+msgid "Ushahidi"
+msgstr "Ushahidi"
+
+#: ui_admin.verified_unverified
+msgctxt "ui_admin.verified_unverified"
+msgid "Verified/Unverified"
+msgstr "Đã xác nhận/Vẫn chưa xác nhận"
+
+#: ui_admin.verify_unverify
+msgctxt "ui_admin.verify_unverify"
+msgid "Verify/Unverify"
+msgstr "Xác nhận/Chưa xác nhận"
+
+#: ui_admin.version
+msgctxt "ui_admin.version"
+msgid "Version"
+msgstr "Phiên bản"
+
+#: ui_admin.version_available
+msgctxt "ui_admin.version_available"
+msgid " is available for upgrade."
+msgstr "hiện đã có thể nâng cấp."
+
+#: ui_admin.video_encoding
+msgctxt "ui_admin.video_encoding"
+msgid "Video Encoding"
+msgstr "Mã hóa video"
+
+#: ui_admin.view_private
+msgctxt "ui_admin.view_private"
+msgid "Private Messages"
+msgstr "Tin nhắn riêng"
+
+#: ui_admin.view_site
+msgctxt "ui_admin.view_site"
+msgid "View Site"
+msgstr "Xem trang"
+
+#: ui_admin.view_report
+msgctxt "ui_admin.view_report"
+msgid "View Report"
+msgstr "Xem báo cáo"
+
+#: ui_admin.welcome
+msgctxt "ui_admin.welcome"
+msgid "Welcome, "
+msgstr "Chào mừng,"
+
+#: ui_admin.wiki
+msgctxt "ui_admin.wiki"
+msgid "Wiki"
+msgstr "Wiki"
+
+#: ui_admin.xml
+msgctxt "ui_admin.xml"
+msgid "XML"
+msgstr "XML"
+
+#: ui_admin.yes
+msgctxt "ui_admin.yes"
+msgid "Yes"
+msgstr "Đồng ý"
+
+#: ui_admin.your_search_for
+msgctxt "ui_admin.your_search_for"
+msgid "Your search for"
+msgstr "Tìm kiếm của bạn về"
+
+#: ui_admin.delete_all_instructions
+msgctxt "ui_admin.delete_all_instructions"
+msgid ""
+"Clicking the button below will delete ALL reports on the database. You "
+"should use this with caution as this operation cannot be undone."
+msgstr ""
+
+#: ui_admin.delete_all_backup
+msgctxt "ui_admin.delete_all_backup"
+msgid "We recommend you backup your database before proceeding"
+msgstr ""
+
+#: ui_admin.delete_all_button
+msgctxt "ui_admin.delete_all_button"
+msgid "I'm sure I want to delete all %s report(s) from the database."
+msgstr ""
+
+#: ui_admin.delete_all_confirm
+msgctxt "ui_admin.delete_all_confirm"
+msgid "Are you sure you want to delete all reports?"
+msgstr ""
+
+#: ui_admin.delete_all_no_reports
+msgctxt "ui_admin.delete_all_no_reports"
+msgid "There are no reports to be deleted."
+msgstr ""
+
+#: ui_admin.user_no_logins
+msgctxt "ui_admin.user_no_logins"
+msgid "Number of logins"
+msgstr ""
+
+#: ui_admin.user_last_login
+msgctxt "ui_admin.user_last_login"
+msgid "Last login"
+msgstr ""
+
+#: ui_admin.user_confirmed_account
+msgctxt "ui_admin.user_confirmed_account"
+msgid "Confirmed account?"
+msgstr ""

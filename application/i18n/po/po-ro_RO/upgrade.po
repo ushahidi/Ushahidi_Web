@@ -1,0 +1,301 @@
+# 
+# Translators:
+# Monica Ipate <monica.ipate@gmail.com>, 2012
+# Monica Ipate <monica.ipate@gmail.com>, 2012-2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-14 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Romanian (Romania) (http://www.transifex.com/ushahidi/ushahidi-v2/language/ro_RO/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: upgrade.upgrade.between
+msgctxt "upgrade.upgrade.between"
+msgid "Invalid input data. It can either be 0 for No or 1 for Yes."
+msgstr "Datele introduse sunt invalide. Poate fi fie 0 pentru Nu, fie 1 pentru Da."
+
+#: upgrade.upgrade_automatic
+msgctxt "upgrade.upgrade_automatic"
+msgid "Automatic Upgrade"
+msgstr "Upgrade automat"
+
+#: upgrade.upgrade_available
+msgctxt "upgrade.upgrade_available"
+msgid "Available Updates"
+msgstr "Actualizări disponibile"
+
+#: upgrade.upgrade_continue_btn_text
+msgctxt "upgrade.upgrade_continue_btn_text"
+msgid "Continue"
+msgstr "Continuă"
+
+#: upgrade.upgrade_db_btn_text
+msgctxt "upgrade.upgrade_db_btn_text"
+msgid "Upgrade"
+msgstr "Upgrade"
+
+#: upgrade.upgrade_db_text_1
+msgctxt "upgrade.upgrade_db_text_1"
+msgid "So, I'm going to upgrade your database from version"
+msgstr "Deci, voi face upgrade la baza de date de la versiunea"
+
+#: upgrade.upgrade_db_text_2
+msgctxt "upgrade.upgrade_db_text_2"
+msgid "to the newest database version"
+msgstr "la ultima versiune a bazei de date"
+
+#: upgrade.upgrade_db_text_3
+msgctxt "upgrade.upgrade_db_text_3"
+msgid "Click on the \"Upgrade\" button and just chillax as I perform the magic."
+msgstr "Faceți click pe butonul \"Upgrade\" și relaxațivă cât timp se efectuează magia."
+
+#: upgrade.upgrade_db_text_4
+msgctxt "upgrade.upgrade_db_text_4"
+msgid ""
+"Oh, also if you want me to backup your database, just tick the check button "
+"below and I will do that for you in a breeze."
+msgstr "Ohh, de asemenea, dacă vrei să faci backup la baza de date, bifează căsuța de mai jos și voi face asta pentru tine într-o secundă."
+
+#: upgrade.upgrade_db_text_5
+msgctxt "upgrade.upgrade_db_text_5"
+msgid ""
+"Backup database before upgrade? (<strong style=\"color:#FF0000;\">Highly "
+"recommended</strong>)"
+msgstr "Faceți un Backup la baza de date înainte de upgrade? (<strong style=\"color:#FF0000;\">Foarte recomandat</strong>)"
+
+#: upgrade.upgrade_db_title
+msgctxt "upgrade.upgrade_db_title"
+msgid "Ushahidi database upgrade"
+msgstr "Upgrade la baza de date Ushahidi"
+
+#: upgrade.upgrade_db_info
+msgctxt "upgrade.upgrade_db_info"
+msgid ""
+"Ushahidi has been updated! Before you continue, you need to update your "
+"database to the newest version (%s)."
+msgstr "Ushahidi a fost actualizat! Înainte să continui, trebuie să actualizezi baza de date cu cea mai nouă versiune (%s)."
+
+#: upgrade.upgrade_db_up_to_date
+msgctxt "upgrade.upgrade_db_up_to_date"
+msgid "Your database version is up to date."
+msgstr "Versiunea bazei de date este cea mai recentă."
+
+#: upgrade.upgrade_failed
+msgctxt "upgrade.upgrade_failed"
+msgid "Upgrade failed at some point"
+msgstr "Upgrade esuat la un anumit moment."
+
+#: upgrade.upgrade_manual
+msgctxt "upgrade.upgrade_manual"
+msgid "Manual Upgrade"
+msgstr "Upgrade manual"
+
+#: upgrade.upgrade_status
+msgctxt "upgrade.upgrade_status"
+msgid "Ushahidi upgrade status"
+msgstr "Statul Ushahidi upgrade"
+
+#: upgrade.upgrade_text_1
+msgctxt "upgrade.upgrade_text_1"
+msgid ""
+"The instructions below detail how to manually upgrade your Ushahidi "
+"deploymentl"
+msgstr "Instrucțiunile de mai jos detaliază cum se upgradează manual implementarea ta Usahahidi."
+
+#: upgrade.upgrade_text_2
+msgctxt "upgrade.upgrade_text_2"
+msgid "<dl><dt><strong>Download</strong></dt>"
+msgstr "<dl><dt><strong>Descarcă</strong></dt>"
+
+#: upgrade.upgrade_text_3
+msgctxt "upgrade.upgrade_text_3"
+msgid "<dd>- Download the most recent Ushahidi build from"
+msgstr "<dd>- Descarcă cel mai recent build Ushahidi de la"
+
+#: upgrade.upgrade_text_4
+msgctxt "upgrade.upgrade_text_4"
+msgid ""
+"<dt><strong>Backup</strong></dt><dd>- .htaccess, "
+"./applications/config/config.php, ./applications/config/database.php and "
+"./applications/config/auth.php files. </dd><dd>- Just in case something goes"
+" wrong, it's recommended you make an entire backup of your Ushahidi "
+"deployment.</dd><dt><strong>Copy files</strong></dt><dd>- Extract the "
+"downloaded zip file</dd><dd>- Depending on the operating system running the "
+"web server, use your preferred tool/mode (e.g. Telnet, FTP, SSH) to login to"
+" the webserver and replace the contents of all the folders with the newest "
+"from the recent build.</dd><dt><strong>Upgrde database</strong></dt><dd>- "
+"First determine your database schema version by looking at the "
+"<strong>db_version</strong> value in the settings table or look at the "
+"Ushahidi upgrade information at the top of this page. </dd><dd>- If you are "
+"at version 25, you need to upgrade from 25-26, 26-27, 27-28 and so on up to "
+"the latest SQL file in your <strong>/sql</strong> directory.</dd><dd>- With "
+"your database client, upgrade the database by executing the appropriate "
+"upgradex-x.sql file.</dd></dl>"
+msgstr "<dt><strong>Backup</strong></dt><dd>- .htaccess, ./applications/config/config.php, ./applications/config/database.php and ./applications/config/auth.php files. </dd><dd>- În cazul în care ceva este greșit, se recomandă un backup total al implementării Ushahidi.</dd><dt><strong>Copiază fișierele</strong></dt><dd>- Extrage fișierele zip descărcate</dd><dd>- În funcție de sistemul de operare al serverului de web, utilizați tool-urile/mod-ul preferat (e.g. Telnet, FTP, SSH) de login la webserver și înlocuiți conținutul tuturor directoarelor cu cele mai noi din build-ul recent.</dd><dt><strong>Upgrade baza de date</strong></dt><dd>- Determină în primul rând versiunea schemei bazei de date prin aflarea valorii  <strong>db_version</strong> din tabelul de setări sau uită-te la informațiile de upgrade Ushahidi din partea de sus a acestei pagini. </dd><dd>- Dacă ești la versiunea 25, trebuie să upgradezi de la 25-26, 26-27, 27-28 și așa mai departe până la ultimul fișier SQL din directorul <strong>/sql</strong> .</dd><dd>- Folosind clientul bazei de date, upgradeaza baza de date prin executarea fișierului de upgrade x.sql adecvat.</dd></dl>"
+
+#: upgrade.upgrade_tables
+msgctxt "upgrade.upgrade_tables"
+msgid ""
+"<strong>Step 3:</strong> Look inside the <strong>sql</strong> folder. "
+"Manuall run the upgrade<xx>-<xx>.sql file starting from the current db "
+"version of your install through to the final sql upgrade file."
+msgstr "<strong>Pasul 3:</strong> Uită-te în directorul <strong>sql</strong>. Execută manual fișierul upgrade<xx>-<xx>.sql pornind de la versiunea curentă a bazei de date instalate până la utimul fișer sql de upgrade."
+
+#: upgrade.upgrade_text_5
+msgctxt "upgrade.upgrade_text_5"
+msgid ""
+"<strong>Step 4:</strong> Click on the <strong>\"Continue\"</strong> button "
+"to upgrade the necessary tables."
+msgstr "<strong>Pasul 4:</strong> Click pe butonul <strong>\"Continuă\"</strong> pentru a upgrada tabelele necesare."
+
+#: upgrade.upgrade_text_6
+msgctxt "upgrade.upgrade_text_6"
+msgid "For automatic upgrade, click on the button below."
+msgstr "Pentru upgrade automat, apasă pe butonul de mai jos."
+
+#: upgrade.upgrade_title_text
+msgctxt "upgrade.upgrade_title_text"
+msgid ""
+"You are currently using Ushahidi v%1$s with database version %2$d running on"
+" %3$s"
+msgstr "În prezent, utilizați Ushahidi v%1$s cu versiunea bazei de date %2$d ce rulează pe %3$s"
+
+#: upgrade.upgrading
+msgctxt "upgrade.upgrading"
+msgid "Upgrading"
+msgstr "Upgradaing"
+
+#: upgrade.upgrade_ftp_text
+msgctxt "upgrade.upgrade_ftp_text"
+msgid ""
+"To continue with the easy upgrade, the following information is required for"
+" the FTP server that your website is hosted on."
+msgstr "Pentru a continua cu un upgrade simplu, următoarele informații sunt necesare serverului FTP pe care website-ul tău este găzduit."
+
+#: upgrade.upgrade_ftp_hostname
+msgctxt "upgrade.upgrade_ftp_hostname"
+msgid "FTP Hostname: <span>Example: \"localhost\"</span>"
+msgstr "FTP Hostname: <span>Exemplu: \"localhost\"</span>"
+
+#: upgrade.upgrade_ftp_password
+msgctxt "upgrade.upgrade_ftp_password"
+msgid "FTP Password:"
+msgstr "Parola FTP:"
+
+#: upgrade.upgrade_ftp_username
+msgctxt "upgrade.upgrade_ftp_username"
+msgid "FTP User Name:"
+msgstr "Nume utilizator FTP:"
+
+#: upgrade.upgrade_status_info
+msgctxt "upgrade.upgrade_status_info"
+msgid "You have the latest version of Ushahidi."
+msgstr "Aveți ultima versiune de Ushahidi"
+
+#: upgrade.upgrade_status_info_2
+msgctxt "upgrade.upgrade_status_info_2"
+msgid "You do not need to upgrade."
+msgstr "Nu este necesar să faci upgrade"
+
+#: upgrade.upgrade_db_version
+msgctxt "upgrade.upgrade_db_version"
+msgid "Database version: %d"
+msgstr "Versiunea bazei de date: %d"
+
+#: upgrade.upgrade_warning_software_version
+msgctxt "upgrade.upgrade_warning_software_version"
+msgid "Warning: Software version in version.php and database do not match."
+msgstr "Atenție: Versiunea software din version.php și din baza de date nu corespund."
+
+#: upgrade.upgrade_warning_db_version
+msgctxt "upgrade.upgrade_warning_db_version"
+msgid "Warning: Database version in version.php and database do not match."
+msgstr "Atenție: Versiunea bazei de date din version.php și din baza de date nu corespund."
+
+#: upgrade.upgrade_database
+msgctxt "upgrade.upgrade_database"
+msgid "Database:"
+msgstr "Baza de date:"
+
+#: upgrade.ushahidi_release_version
+msgctxt "upgrade.ushahidi_release_version"
+msgid "Ushahidi %s"
+msgstr "Ushahidi %s"
+
+#: upgrade.beta
+msgctxt "upgrade.beta"
+msgid "BETA!"
+msgstr "BETA!"
+
+#: upgrade.download
+msgctxt "upgrade.download"
+msgid "Downloading latest version of ushahidi..."
+msgstr "Descarcă ultima versiune de ushahidi..."
+
+#: upgrade.log_file
+msgctxt "upgrade.log_file"
+msgid "Log File"
+msgstr "Fișierul jurnal"
+
+#: upgrade.successfully_downloaded
+msgctxt "upgrade.successfully_downloaded"
+msgid "Successfully Downloaded. Unpacking..."
+msgstr "Descărcat cu succes. Unpacking..."
+
+#: upgrade.failed_downloading
+msgctxt "upgrade.failed_downloading"
+msgid "Failed downloading."
+msgstr "Descărcarea a eșuat."
+
+#: upgrade.successfully_unpacked
+msgctxt "upgrade.successfully_unpacked"
+msgid "Successfully Unpacked. Copying files..."
+msgstr "Dezarhivat cu succez. Copiază fișierele..."
+
+#: upgrade.failed_unpacking
+msgctxt "upgrade.failed_unpacking"
+msgid "Failed unpacking."
+msgstr "Dezarhivarea a eșuat."
+
+#: upgrade.successfully_copied
+msgctxt "upgrade.successfully_copied"
+msgid "Successfully Copied. Upgrading Database..."
+msgstr "Copiat cu succes. Upgradeaza baza de date..."
+
+#: upgrade.failed_copying
+msgctxt "upgrade.failed_copying"
+msgid "Failed copying files."
+msgstr "Copierea fișierelor a eșuat."
+
+#: upgrade.backup_success
+msgctxt "upgrade.backup_success"
+msgid "Database backup and upgrade successful."
+msgstr "Backup bază de date și upgrade efectuat cu succes."
+
+#: upgrade.backup_failed
+msgctxt "upgrade.backup_failed"
+msgid "Failed backing up database."
+msgstr "Realizarea unui back-up al bazei de date a eșuat."
+
+#: upgrade.dbupgrade_success
+msgctxt "upgrade.dbupgrade_success"
+msgid "Database upgrade successful."
+msgstr "Upgrade bază de date efectuat cu succes."
+
+#: upgrade.deleting_files
+msgctxt "upgrade.deleting_files"
+msgid "Deleting downloaded files..."
+msgstr "Fișierele descărcate se șterg..."
+
+#: upgrade.upgrade_success
+msgctxt "upgrade.upgrade_success"
+msgid "UPGRADE SUCCESSFUL. View <a href=\"%s\" target=\"_blank\">Log File</a>"
+msgstr "UPGRADE EFECTUAT CU SUCCES. Vizualizează <a href=\"%s\" target=\"_blank\">Fișerul Jurnal</a>"

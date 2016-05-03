@@ -1,0 +1,198 @@
+# 
+# Translators:
+# Thierry Gaillou <titier@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:07+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: French (France) (http://www.transifex.com/ushahidi/ushahidi-v2/language/fr_FR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: stats.approved
+msgctxt "stats.approved"
+msgid "Approved"
+msgstr "Approuv&eacute;"
+
+#: stats.categories
+msgctxt "stats.categories"
+msgid "Categories"
+msgstr "Cat&eacute;gories"
+
+#: stats.category_impact
+msgctxt "stats.category_impact"
+msgid "Category Impact"
+msgstr "Rapport par Cat&eacute;gorie"
+
+#: stats.category_impact_description
+msgctxt "stats.category_impact_description"
+msgid ""
+"This chart gives you a linear view of the reports by category over time.  "
+"Scroll from left to right to see a comparative view of the different "
+"categories. Mouse over the graph for more details."
+msgstr "Ce tableau donne une vision lin&eacute;aire des rapports par cat&eacute;gorie au fil du temps. Faites d&eacute;filer de gauche &agrave; droite pour voir un tableau comparatif des diff&eacute;rentes cat&eacute;gories. Passez la souris sur le graphique pour plus de d&eacute;tails."
+
+#: stats.choose_date_range
+msgctxt "stats.choose_date_range"
+msgid "Choose a date range."
+msgstr "Choisissez une p&eacute;riode."
+
+#: stats.countries
+msgctxt "stats.countries"
+msgid "Countries"
+msgstr "Pays"
+
+#: stats.country
+msgctxt "stats.country"
+msgid "Country"
+msgstr "Pays"
+
+#: stats.country_breakdown
+msgctxt "stats.country_breakdown"
+msgid "Country Breakdown"
+msgstr "R&eacute;partition par pays"
+
+#: stats.description
+msgctxt "stats.description"
+msgid ""
+"This is the statistics section and will contain a general description here "
+"soon. For now, browse around using the sub category links above."
+msgstr "Il s\\'agit de la section des statistiques qui contiendra une description g&eacute;n&eacute;rale d\\'ici peu. Pour l\\'instant, parcourez le site &agrave; l\\'aide des liens ci-dessus sous la cat&eacute;gorie."
+
+#: stats.error
+msgctxt "stats.error"
+msgid "Error"
+msgstr "Erreur"
+
+#: stats.glossary
+msgctxt "stats.glossary"
+msgid "Glossary"
+msgstr "Glossaire"
+
+#: stats.hit_summary
+msgctxt "stats.hit_summary"
+msgid "Hit Summary"
+msgstr "R&eacute;sum&eacute; des Hits"
+
+#: stats.legend
+msgctxt "stats.legend"
+msgid "Legend"
+msgstr "Légende"
+
+#: stats.pageviews
+msgctxt "stats.pageviews"
+msgid "Pageviews"
+msgstr "Pages vues"
+
+#: stats.pageviews_description
+msgctxt "stats.pageviews_description"
+msgid "The total number of pages that visitors have viewed on your site"
+msgstr "Le nombre total de pages que les visiteurs ont vu sur votre site"
+
+#: stats.reports
+msgctxt "stats.reports"
+msgid "Reports"
+msgstr "Rapports"
+
+#: stats.reports_categories
+msgctxt "stats.reports_categories"
+msgid "Reports Categories"
+msgstr "Rapports des Cat&eacute;gories"
+
+#: stats.reports_statistics
+msgctxt "stats.reports_statistics"
+msgid "Reports Statistics"
+msgstr "Rapports des Statistiques"
+
+#: stats.reports_status
+msgctxt "stats.reports_status"
+msgid "Reports Status"
+msgstr "Rapports des Status"
+
+#: stats.report_punchcard
+msgctxt "stats.report_punchcard"
+msgid "Report Punchcard"
+msgstr "Rapport de Cartes"
+
+#: stats.report_stats
+msgctxt "stats.report_stats"
+msgid "Report Stats"
+msgstr "Rapport des Stats"
+
+#: stats.stats_not_setup
+msgctxt "stats.stats_not_setup"
+msgid "Stats Not Set Up"
+msgstr "Statistiques non mises en place"
+
+#: stats.time_range_1
+msgctxt "stats.time_range_1"
+msgid "1 Month"
+msgstr "1 mois"
+
+#: stats.time_range_2
+msgctxt "stats.time_range_2"
+msgid "3 Months"
+msgstr "3 mois"
+
+#: stats.time_range_3
+msgctxt "stats.time_range_3"
+msgid "6 Months"
+msgstr "6 mois"
+
+#: stats.time_range_all
+msgctxt "stats.time_range_all"
+msgid "All"
+msgstr "Tous"
+
+#: stats.unapproved
+msgctxt "stats.unapproved"
+msgid "Unapproved"
+msgstr "Non approuv&eacute;s"
+
+#: stats.unique_visitors
+msgctxt "stats.unique_visitors"
+msgid "Unique Visitors"
+msgstr "Visiteurs Uniques"
+
+#: stats.unique_visitors_description
+msgctxt "stats.unique_visitors_description"
+msgid ""
+"The number of individuals coming to your deployment. Unique visitors are "
+"determined using cookies. Visitors that do not have cookies enabled will be "
+"identified using a simple heuristic taking into account IP address, "
+"resolution, browser, plugins, OS, etc."
+msgstr "Le nombre de personnes qui viennent sur votre d&eacute;ploiement. Le nombre de visiteurs uniques est d&eacute;termin&eacute; en utilisant des cookies. Les visiteurs qui n\\'ont pas activ&eacute; les cookies seront identifi&eacute;s &agrave; l\\'aide d\\'un syst&egrave;me heuristique simple prenant en compte l\\'adresse IP, la r&eacute;solution, le navigateur, plugins, OS, etc."
+
+#: stats.unverified
+msgctxt "stats.unverified"
+msgid "Unverified"
+msgstr "Non v&eacute;rifi&eacute;s"
+
+#: stats.verified
+msgctxt "stats.verified"
+msgid "Verified"
+msgstr "V&eacute;rifi&eacute;"
+
+#: stats.visitor_summary
+msgctxt "stats.visitor_summary"
+msgid "Visitor Summary"
+msgstr "R&eacute;sum&eacute; des visiteurs"
+
+#: stats.visits
+msgctxt "stats.visits"
+msgid "Visits"
+msgstr "Visites"
+
+#: stats.visits_description
+msgctxt "stats.visits_description"
+msgid ""
+"A visit is a record of a unique visitor coming to the site more than 30 "
+"minutes past his/her last pageview."
+msgstr "Une visite est un enregistrement d\\'un visiteur unique venant sur le site plus de 30 minutes apr&egrave;s sa derni&egrave;re pages vues."

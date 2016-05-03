@@ -1,0 +1,121 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-12-05 18:47+0000\n"
+"Last-Translator: Xan das Bolas <xandasbolas@riseup.net>\n"
+"Language-Team: Galician (http://www.transifex.com/ushahidi/ushahidi-v2/language/gl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: form.field_default.default
+msgctxt "form.field_default.default"
+msgid "The default value you have provided for the field is invalid."
+msgstr "O valor por defecto que forneceu para este campo non é válido."
+
+#: form.field_default.length
+msgctxt "form.field_default.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 200 characters long."
+msgstr "O Nome do Campo ha ter alomenos 3 caracteres de lonxitude e non máis de 200."
+
+#: form.field_height.between
+msgctxt "form.field_height.between"
+msgid "Please enter a value 0 to 50 for the Field Height."
+msgstr "Introduza un valor entre 0 e 50 para a Altura do Campo."
+
+#: form.field_isdate.between
+msgctxt "form.field_isdate.between"
+msgid "You have entered an invalid value for Date Field."
+msgstr "Introduciu un valor inválido para o Campo de Data."
+
+#: form.field_isdate.required
+msgctxt "form.field_isdate.required"
+msgid "Please select Yes or No for the Date Field."
+msgstr "Seleccione Sí ou Non para o Campo de Data."
+
+#: form.field_name.length
+msgctxt "form.field_name.length"
+msgid ""
+"The Field Name must be at least 3 and no more than 100 characters long."
+msgstr "O Nome do Campo debe contar con alomenos 3 caracteres de lonxitude e non máis de 100."
+
+#: form.field_name.required
+msgctxt "form.field_name.required"
+msgid "Please enter Field Name."
+msgstr "Introduza o Nome do Campo."
+
+#: form.field_name.duplicate
+msgctxt "form.field_name.duplicate"
+msgid ""
+"The field name you entered already exists on this form. Please enter another"
+" one."
+msgstr "O nome do campo que forneceu xa existe neste mesmo formulario.Por favor, introduza outro distinto."
+
+#: form.field_required.between
+msgctxt "form.field_required.between"
+msgid "You have entered an invalid value for Field Required."
+msgstr "Introduciu un valor inválido para o Campo Obrigatorio."
+
+#: form.field_required.required
+msgctxt "form.field_required.required"
+msgid "Please select Yes or No for Field Required."
+msgstr "Seleccione Sí ou Non para o Campo Obrigatorio."
+
+#: form.field_type.numeric
+msgctxt "form.field_type.numeric"
+msgid "Please select a valid Field Type."
+msgstr "Seleccione un Tipo de Campo válido."
+
+#: form.field_type.required
+msgctxt "form.field_type.required"
+msgid "Please select a Field Type."
+msgstr "Seleccione un Tipo de Campo."
+
+#: form.field_width.between
+msgctxt "form.field_width.between"
+msgid "Please enter a value 0 to 300 for the Field Width."
+msgstr "Introduza un valor entre 0 e 300 para a Anchura de Campo."
+
+#: form.form_description.required
+msgctxt "form.form_description.required"
+msgid "Please enter form's Description."
+msgstr "Forneza unha Descripción do formulario."
+
+#: form.form_id.default
+msgctxt "form.form_id.default"
+msgid "The default form cannot be deleted."
+msgstr "O formulario predetermiñado non se pode borrar."
+
+#: form.form_id.numeric
+msgctxt "form.form_id.numeric"
+msgid "Please select which form to add this field to."
+msgstr "Seleccione qué formulario engadir a ese campo"
+
+#: form.form_id.required
+msgctxt "form.form_id.required"
+msgid "Please select which form to add this field to."
+msgstr "Seleccione qué formulario engadir a ese campo"
+
+#: form.form_title.length
+msgctxt "form.form_title.length"
+msgid ""
+"The form name field must be at least 3 and no more than 100 characters long."
+msgstr "O nome do campo de formulario debe contar con alomenos 3 caracteres de lonxitudee non máis de 100."
+
+#: form.form_title.required
+msgctxt "form.form_title.required"
+msgid "Please enter the name of the form."
+msgstr "Introduza o nome do formulario."
+
+#: form.form_title.exists
+msgctxt "form.form_title.exists"
+msgid "A form with that title already exists. Please choose another."
+msgstr "Xa existe un formulario con ese mesmo título. Por favor, escolla outro."

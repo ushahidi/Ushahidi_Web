@@ -1,0 +1,63 @@
+# 
+# Translators:
+# Boripat Lebel <inactive+boripatlebel@transifex.com>, 2014
+# Ngamnet_review <ngamnetaektasaeng@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2014-08-11 09:21+0000\n"
+"Last-Translator: Ngamnet_review <ngamnetaektasaeng@gmail.com>\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/ushahidi/ushahidi-v2/language/th_TH/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th_TH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: comments.captcha.default
+msgctxt "comments.captcha.default"
+msgid "Please enter a valid security code."
+msgstr "กรุณาใส่รหัสรักษาความปลอดภัยที่ถูกต้อง"
+
+#: comments.captcha.required
+msgctxt "comments.captcha.required"
+msgid "Please enter the security code."
+msgstr "กรุณาใส่รหัสรักษาความปลอดภัย"
+
+#: comments.captcha.valid
+msgctxt "comments.captcha.valid"
+msgid "You entered the wrong security code."
+msgstr "คุณใส่รหัสรักษาความปลอดภัยที่ไม่ถูกต้อง"
+
+#: comments.comment_author.length
+msgctxt "comments.comment_author.length"
+msgid "The name field must be at least 3 characters long."
+msgstr "ช่องสำหรับชื่อต้องมีอย่างน้อย 3 ตัวอักษร"
+
+#: comments.comment_author.required
+msgctxt "comments.comment_author.required"
+msgid "The name field is required."
+msgstr "จำเป็นต้องใส่ชื่่อ"
+
+#: comments.comment_description.required
+msgctxt "comments.comment_description.required"
+msgid "The comments field is required."
+msgstr "จำเป็นต้องใส่ความเห็น"
+
+#: comments.comment_email.email
+msgctxt "comments.comment_email.email"
+msgid "The Email field does not appear to contain a valid email address."
+msgstr "ช่องอีเมล์ไม่ปรากฏอีเมล์ที่ถูกต้อง"
+
+#: comments.comment_email.length
+msgctxt "comments.comment_email.length"
+msgid "The Email field must be at least 4 and no more 64 characters long."
+msgstr "ช่องอีเมล์ต้องมีอย่างน้อย 4 และไม่เกิน 64 ตัวอักษร"
+
+#: comments.comment_email.required
+msgctxt "comments.comment_email.required"
+msgid "The Email field is required if the checkbox is checked."
+msgstr "จำเป็นต้องใส่อีเมล์ถ้าช่องทำเครื่องหมายได้ทำการเช็คถูก"

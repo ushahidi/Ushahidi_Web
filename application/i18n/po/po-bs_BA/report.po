@@ -1,0 +1,398 @@
+# 
+# Translators:
+# Leila <congra_902@yahoo.com>, 2012
+# prangec <dejan.georgievski@oneworldsee.org>, 2012
+# Dragan Lalos <draganbl@gmail.com>, 2013
+# Dražana <drazana.lepir@gmail.com>, 2012
+# Fikret Muratović <fikretmuratovic@gmail.com>, 2012
+# Samra Hodzic <samra989@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2013-08-22 06:26+0000\n"
+"PO-Revision-Date: 2013-08-22 06:22+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Bosnian (Bosnia and Herzegovina) (http://www.transifex.com/ushahidi/ushahidi-v2/language/bs_BA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bs_BA\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: report.comments_form_error
+msgctxt "report.comments_form_error"
+msgid "error!"
+msgstr "graška!\n\n\ndetalji prijedlozi istorija"
+
+#: report.country_name.single_country
+msgctxt "report.country_name.single_country"
+msgid ""
+"This deployment spans within one country only. Please make sure the report "
+"location is within the country %s."
+msgstr "Ova implementacija proteže se unutar jedne zemlje samo. Molimo provjerite izvješće lokacija unutar države %s."
+
+#: report.custom_field.values
+msgctxt "report.custom_field.values"
+msgid "Please enter a valid value for the \"%s\" field."
+msgstr ""
+
+#: report.custom_field.numeric
+msgctxt "report.custom_field.numeric"
+msgid "The \"%s\" field must be numeric."
+msgstr "Polje \"%s\" mora biti numeričko."
+
+#: report.custom_field.required
+msgctxt "report.custom_field.required"
+msgid "The \"%s\" field is required."
+msgstr "Polje \"%s\" je obavezno."
+
+#: report.custom_field.not_exist
+msgctxt "report.custom_field.not_exist"
+msgid "The \"%s\" field is does not exist."
+msgstr "\"%s\" polje ne postoji."
+
+#: report.custom_field.permission
+msgctxt "report.custom_field.permission"
+msgid "The \"%s\" field cannot be edited by your account."
+msgstr "Polje \"%s\" nije moguće mijenjati sa tvojim nalogom."
+
+#: report.custom_field.email
+msgctxt "report.custom_field.email"
+msgid "The \"%s\" field must contain a valid email address."
+msgstr "Polje \"%s\" ne sadrži ispravnu e-mail adresu. "
+
+#: report.custom_field.phone
+msgctxt "report.custom_field.phone"
+msgid "The \"%s\" field must contain a valid phone number."
+msgstr "Polje \"%s\" mora sadržati ispravan broj telefona."
+
+#: report.custom_field.date_mmddyyyy
+msgctxt "report.custom_field.date_mmddyyyy"
+msgid "The \"%s\" field must contain a valid date (MM/DD/YYYY)."
+msgstr "Polje \"%s\" mora sadr\\ati ispravan datum (d.m.YYYY)."
+
+#: report.custom_field.date_ddmmyyyy
+msgctxt "report.custom_field.date_ddmmyyyy"
+msgid "The \"%s\" field must contain a valid date (DD/MM/YYYY)."
+msgstr "Polje \"%s\" mora sadr\\ati ispravan datum (d.m.YYYY)."
+
+#: report.data_include.between
+msgctxt "report.data_include.between"
+msgid "Please select a valid item to include in the download."
+msgstr "Molimo obilježite važeću stavku da je uključite u preuzimanje."
+
+#: report.data_include.numeric
+msgctxt "report.data_include.numeric"
+msgid "Please select a valid item to include in the download."
+msgstr "Molimo obilježite važeću stavku da je uključite u preuzimanje."
+
+#: report.data_active.between
+msgctxt "report.data_active.between"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Odaberite \"Izvješća čekaju odobrenje\" ili \"Odobrena izvješća\" ili oboje."
+
+#: report.data_active.numeric
+msgctxt "report.data_active.numeric"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Odaberite \"Izvješća čekaju odobrenje\" ili \"Odobrena izvješća\" ili oboje."
+
+#: report.data_active.required
+msgctxt "report.data_active.required"
+msgid "Please select \"Reports Awaiting Approval\" or \"Approved Reports\" or both."
+msgstr "Odaberite \"Izvješća čekaju odobrenje\" ili \"Odobrena izvješća\" ili oboje."
+
+#: report.data_verified.between
+msgctxt "report.data_verified.between"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Odaberite \"Izvješća čekaju potvrdu\" ili \"Potvrđena izvješća\" ili oboje."
+
+#: report.data_verified.numeric
+msgctxt "report.data_verified.numeric"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Odaberite \"Izvješća čekaju potvrdu\" ili \"Potvrđena izvješća\" ili oboje."
+
+#: report.data_verified.required
+msgctxt "report.data_verified.required"
+msgid ""
+"Please select \"Reports Awaiting Verification\" or \"Verified Reports\" or "
+"both."
+msgstr "Odaberite \"Izvješća čekaju potvrdu\" ili \"Potvrđena izvješća\" ili oboje."
+
+#: report.data_point.between
+msgctxt "report.data_point.between"
+msgid "Please select a valid type of report to download."
+msgstr "Molimo odaberite važeći tip izvještaja za preuzimanje."
+
+#: report.data_point.numeric
+msgctxt "report.data_point.numeric"
+msgid "Please select a valid type of report to download."
+msgstr "Molimo odaberite važeći tip oizvještaja za preuzimanje."
+
+#: report.data_point.required
+msgctxt "report.data_point.required"
+msgid "Please select a valid type of report to download."
+msgstr "Molimo odaberite važeći tip izvještaja za preuzimanje."
+
+#: report.format.required
+msgctxt "report.format.required"
+msgid "You must select a download format. Select either CSV or XML."
+msgstr "Morate izabrati format snimanja. Izaberite ili CSV ili XML."
+
+#: report.format.valid
+msgctxt "report.format.valid"
+msgid "Please select a valid format to download your reports in"
+msgstr "Molimo vas da odaberete validni format za snimanje vaših izvještaja na"
+
+#: report.from_date.date_mmddyyyy
+msgctxt "report.from_date.date_mmddyyyy"
+msgid "The FROM date field does not appear to contain a valid date."
+msgstr "Polje OD kojeg datuma ne sadrži validni datum."
+
+#: report.from_date.range
+msgctxt "report.from_date.range"
+msgid "Please enter a valid FROM date. It cannot be greater than today."
+msgstr "Unesite validni datum u polje OD kojeg datuma. Datum ne može biti kasnije  od današnjeg datuma."
+
+#: report.incident_active.between
+msgctxt "report.incident_active.between"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Molimo unesite ispravnu vrijednost za odobri ovaj izvještaj"
+
+#: report.incident_active.required
+msgctxt "report.incident_active.required"
+msgid "Please enter a valid value for Approve This Report"
+msgstr "Molimo unesite ispravnu vrijednost za odobri ovaj izvještaj"
+
+#: report.incident_ampm.validvalues
+msgctxt "report.incident_ampm.validvalues"
+msgid "The am/pm field does not appear to contain a valid value."
+msgstr "Am/pm polje ne sadrži ispravnu vrijednost."
+
+#: report.incident_category.numeric
+msgctxt "report.incident_category.numeric"
+msgid "The \"Categories\" field does not appear to contain a valid category."
+msgstr "Polje \"Kategorije\" ne pokazuje da sadrži ispravnu kategoriju."
+
+#: report.incident_category.required
+msgctxt "report.incident_category.required"
+msgid "The \"Categories\" field is required."
+msgstr "Polje \"Kategorije\" je obavezno."
+
+#: report.incident_date.date_ddmmyyyy
+msgctxt "report.incident_date.date_ddmmyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "Polje datum ne pokazuje da sadrži ispravan datum. "
+
+#: report.incident_date.date_mmddyyyy
+msgctxt "report.incident_date.date_mmddyyyy"
+msgid "The date field does not appear to contain a valid date."
+msgstr "Polje datum ne pokazuje da sadrži ispravan datum."
+
+#: report.incident_date.required
+msgctxt "report.incident_date.required"
+msgid "The date field is required."
+msgstr "Polje datum je obavezno."
+
+#: report.incident_description.required
+msgctxt "report.incident_description.required"
+msgid "The \"Description\" field is required."
+msgstr "Polje \"Opis\" je obavezno."
+
+#: report.incident_hour.between
+msgctxt "report.incident_hour.between"
+msgid "The hour field does not appear to contain a valid hour."
+msgstr "Polje sat ne pokazuje da sadrži ispravan sat. "
+
+#: report.incident_hour.required
+msgctxt "report.incident_hour.required"
+msgid "The hour field is required."
+msgstr "Polje sati je obavezno."
+
+#: report.incident_information.alpha
+msgctxt "report.incident_information.alpha"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Molimo unesite ispravnu vrijednost za informacijske vjerojatnosti."
+
+#: report.incident_information.length
+msgctxt "report.incident_information.length"
+msgid "Please enter a valid value for Information Probability."
+msgstr "Molimo unesite ispravnu vrijednost za informacijske vjerojatnosti."
+
+#: report.incident_minute.between
+msgctxt "report.incident_minute.between"
+msgid "The minute field does not appear to contain a valid value."
+msgstr "Polje minute ne pokazuje da sadrži ispravnu vrijednost."
+
+#: report.incident_minute.required
+msgctxt "report.incident_minute.required"
+msgid "The minute field is required."
+msgstr "Polje minuta je obavezno."
+
+#: report.incident_news.url
+msgctxt "report.incident_news.url"
+msgid "The news source links field does not appear to contain a valid URL."
+msgstr "Polje izvori linkova vijesti ne sadrži ispravan URL. "
+
+#: report.incident_photo.size
+msgctxt "report.incident_photo.size"
+msgid "Please ensure that photo upload sizes are limited to 2MB."
+msgstr "Molimo osigurajte da je postavljena fotografija veličine do 2 MB."
+
+#: report.incident_photo.type
+msgctxt "report.incident_photo.type"
+msgid ""
+"The Upload Photos field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr "Polje postavljanje fotografija ne sadrži ispravnu fotografiju. Jedini prihvaćeni formati su .JBG, .PNG i .GIF."
+
+#: report.incident_photo.valid
+msgctxt "report.incident_photo.valid"
+msgid "The Upload Photos field does not appear to contain a valid file."
+msgstr "Polje postavljanje fotografija ne sadrži ispravan dokument. "
+
+#: report.incident_source.alpha
+msgctxt "report.incident_source.alpha"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Unesite važeću vrijednost za izvor pouzdanosti."
+
+#: report.incident_source.length
+msgctxt "report.incident_source.length"
+msgid "Please enter a valid value for Source Reliability."
+msgstr "Unesite važeću vrijednost za izvor pouzdanosti."
+
+#: report.incident_title.length
+msgctxt "report.incident_title.length"
+msgid ""
+"The \"Report Title\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "Polje \"Naslov izvješća\" mora da sadrži najmanje 3 i ne više od 200 karaktera."
+
+#: report.incident_title.required
+msgctxt "report.incident_title.required"
+msgid "The \"Report Title\" field is required."
+msgstr "Polje \"naslov prijave\" je obavezno."
+
+#: report.incident_title.csrf
+msgctxt "report.incident_title.csrf"
+msgid "Possible CSRF attack. Did you really mean to create/edit a report?"
+msgstr "Mogući CSRF napad. Jeste li stvarno htjeli kreirati / urediti ​​izvješće?"
+
+#: report.incident_verified.between
+msgctxt "report.incident_verified.between"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Molimo unesite ispravnu vrijednost za Provjeri ovaj izvještaj."
+
+#: report.incident_verified.required
+msgctxt "report.incident_verified.required"
+msgid "Please enter a valid value for Verify This Report."
+msgstr "Molimo unesite ispravnu vrijednost za Provjeri ovaj izvještaj."
+
+#: report.incident_video.url
+msgctxt "report.incident_video.url"
+msgid "The video links field does not appear to contain a valid URL."
+msgstr "Polje Video poveznice ne sadrže ispravan URL."
+
+#: report.latitude.between
+msgctxt "report.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "Polje za unos geografske širine ne sadrži validnu vrijednost geografske širine."
+
+#: report.latitude.required
+msgctxt "report.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Unošenje geografske širine je obavezno. Kliknite na mapu kako bi odredili tačnu lokaciju."
+
+#: report.locale.alpha_dash
+msgctxt "report.locale.alpha_dash"
+msgid "The locale field has an incorrect value. "
+msgstr "Polje regionalno ima neispravnu vrijednost."
+
+#: report.locale.exists
+msgctxt "report.locale.exists"
+msgid "This report already has a translation for this language."
+msgstr "Ovo izvješće već ima prijevod za ovaj jezik."
+
+#: report.locale.length
+msgctxt "report.locale.length"
+msgid "The locale field has an incorrect value. "
+msgstr "Polje regionalno ima neispravnu vrijednost."
+
+#: report.locale.locale
+msgctxt "report.locale.locale"
+msgid ""
+"The Original Report and the Translation have the same locale (language)."
+msgstr "Izvorni izvještaj i prijevod već imaju isti regionalni (jezik). "
+
+#: report.locale.required
+msgctxt "report.locale.required"
+msgid "The locale is required."
+msgstr "Ime lokaliteta je obavezno."
+
+#: report.location_name.length
+msgctxt "report.location_name.length"
+msgid ""
+"The \"Location Name\" field must be at least 3 and no more 200 characters "
+"long."
+msgstr "Polje \"Naziv lokacije\" mora da sadrži najmanje 3 i ne više od 200 karaktera. "
+
+#: report.location_name.required
+msgctxt "report.location_name.required"
+msgid "The \"Location Name\" field is required."
+msgstr "Polje \"Lokacija\" je obavezno."
+
+#: report.longitude.between
+msgctxt "report.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "Polje za unos geografske dužine ne sadrži validnu vrijednost geografske širine."
+
+#: report.longitude.required
+msgctxt "report.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Unošenje geografske dužine je obavezno. Kliknite na mapu kako bi odredili tačnu lokaciju."
+
+#: report.person_email.email
+msgctxt "report.person_email.email"
+msgid "The email field does not appear to contain a valid email address."
+msgstr "Polje e-mail  ne sadrži ispravne e-mail adrese. "
+
+#: report.person_email.length
+msgctxt "report.person_email.length"
+msgid "The email field must be at least 4 and no more 64 characters long."
+msgstr "Polje e-mail mora da sadrži najmanje 4 i ne više od 64 karaktera. "
+
+#: report.person_first.length
+msgctxt "report.person_first.length"
+msgid ""
+"The first name field must be at least 3 and no more 100 characters long."
+msgstr "Polje ime mora da sadrži najmanje 3 i ne više od 100 karaktera. "
+
+#: report.person_last.length
+msgctxt "report.person_last.length"
+msgid ""
+"The last name field must be at least 2 and no more 100 characters long."
+msgstr "Polje prezime mora da sadrži najmanje 2 i ne više od 100 karaktera. "
+
+#: report.to_date.date_mmddyyyy
+msgctxt "report.to_date.date_mmddyyyy"
+msgid "The TO date field does not appear to contain a valid date."
+msgstr "Polje DO kojeg datuma ne sadrži validni datum."
+
+#: report.to_date.range
+msgctxt "report.to_date.range"
+msgid "Please enter a valid TO date. It cannot be greater than today."
+msgstr "Unesite validni datum u polje DO kojeg datuma. Datum ne može biti kasnije  od današnjeg datuma."
+
+#: report.to_date.range_greater
+msgctxt "report.to_date.range_greater"
+msgid "Your FROM date cannot be greater than your TO date."
+msgstr "Datum u polju OD ne može biti noviji od datuma u polju DO."

@@ -1,0 +1,72 @@
+# 
+# Translators:
+# emrahgursel <emrahgursel@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2012-12-09 06:11+0000\n"
+"PO-Revision-Date: 2013-04-17 06:06+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.com/ushahidi/ushahidi-v2/language/tr_TR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: reporters.latitude.between
+msgctxt "reporters.latitude.between"
+msgid "The latitude field does not appear to contain a valid latitude."
+msgstr "Geçersiz bir enlem girdiniz."
+
+#: reporters.latitude.required
+msgctxt "reporters.latitude.required"
+msgid ""
+"The latitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Enlem alanı boş bırakılamaz. Lütfen haritada tıklayarak bir nokta belirleyiniz."
+
+#: reporters.level_id.numeric
+msgctxt "reporters.level_id.numeric"
+msgid "The Reporter Level field does not appear to contain a valid Level."
+msgstr "Haberci Seviyesi geçerli değil"
+
+#: reporters.level_id.required
+msgctxt "reporters.level_id.required"
+msgid "The Reporter Level field does not appear to contain a valid Level."
+msgstr "Haberci Seviyesi geçerli değil"
+
+#: reporters.location_name.length
+msgctxt "reporters.location_name.length"
+msgid ""
+"The location name field must be at least 3 and no more 200 characters long."
+msgstr "Yer ismi alanı en az 3, en fazla 200 karakterden oluşmalıdır."
+
+#: reporters.location_name.required
+msgctxt "reporters.location_name.required"
+msgid "The location name field is required."
+msgstr "Yer ismi alanı boş bırakılamaz."
+
+#: reporters.longitude.between
+msgctxt "reporters.longitude.between"
+msgid "The longitude field does not appear to contain a valid longitude."
+msgstr "Geçersiz bir boylam girdiniz."
+
+#: reporters.longitude.required
+msgctxt "reporters.longitude.required"
+msgid ""
+"The longitude field is required. Please click on the map to pinpoint a "
+"location."
+msgstr "Boylam kısmı boş bırakılamaz. Lütfen haritada tıklayarak bir nokta belirleyiniz."
+
+#: reporters.reporter_id.numeric
+msgctxt "reporters.reporter_id.numeric"
+msgid "Invalid Reporter"
+msgstr "Geçersiz Haberci"
+
+#: reporters.reporter_id.required
+msgctxt "reporters.reporter_id.required"
+msgid "Invalid Reporter"
+msgstr "Geçersiz Haberci"

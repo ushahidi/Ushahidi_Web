@@ -1,0 +1,858 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Ushahidi v2.X\n"
+"Report-Msgid-Bugs-To: http://github.com/ushahidi/Ushahidi-Localizations/issues\n"
+"POT-Creation-Date: 2014-03-12 06:26+0000\n"
+"PO-Revision-Date: 2014-03-12 06:20+0000\n"
+"Last-Translator: ushbot <devteam@ushahidi.com>\n"
+"Language-Team: Georgian (Georgia) (http://www.transifex.com/projects/p/ushahidi-v2/language/ka_GE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ka_GE\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: ushahidi-i18n-manager\n"
+
+#: settings.allow_comments.between
+msgctxt "settings.allow_comments.between"
+msgid "The allow comments field does not appear to contain a valid value."
+msgstr "ნების დამრთველი კომენტარების ველს არ აქვს მართებული მონაცემი/valid value?"
+
+#: settings.allow_comments.required
+msgctxt "settings.allow_comments.required"
+msgid "The allow comments field is required."
+msgstr "ნების დამრთველი კომენტარების ველის არსებობა აუცილებელია."
+
+#: settings.allow_feed.between
+msgctxt "settings.allow_feed.between"
+msgid "The include feed field does not appear to contain a valid value."
+msgstr "მომცველ ველს არ აქვს მართებული მონაცემი/valid value?"
+
+#: settings.allow_feed.required
+msgctxt "settings.allow_feed.required"
+msgid "The include feed field is required."
+msgstr "მომცველი ველის არსებობა აუცილებელია."
+
+#: settings.allow_feed_category.between
+msgctxt "settings.allow_feed_category.between"
+msgid ""
+"The include feed category field does not appear to contain a valid value."
+msgstr ""
+
+#: settings.allow_feed_category.required
+msgctxt "settings.allow_feed_category.required"
+msgid "The include feed category field is required."
+msgstr ""
+
+#: settings.allow_alerts.between
+msgctxt "settings.allow_alerts.between"
+msgid "The allow alerts field does not appear to contain a valid value."
+msgstr ""
+
+#: settings.allow_alerts.required
+msgctxt "settings.allow_alerts.required"
+msgid "The allow alerts field is required."
+msgstr ""
+
+#: settings.allow_reports.between
+msgctxt "settings.allow_reports.between"
+msgid "The allow reports field does not appear to contain a valid value."
+msgstr "ნების დამრთველ ანგარიშის ველს არ აქვს მართებული მონაცემი/valid value?"
+
+#: settings.allow_reports.required
+msgctxt "settings.allow_reports.required"
+msgid "The allow reports field is required."
+msgstr "ნების დამრთველი ანგარიშის ველის არსებობა აუცილებელია."
+
+#: settings.allow_stat_sharing.between
+msgctxt "settings.allow_stat_sharing.between"
+msgid "The stat sharing field does not appear to contain a valid value."
+msgstr "სტატისტიკის გაზიარების ველს არ აქვს მართებული მონაცემი/valid value?"
+
+#: settings.allow_stat_sharing.required
+msgctxt "settings.allow_stat_sharing.required"
+msgid "The stat sharing field is required."
+msgstr "სტატისტიკის გაზიარების ველის არსებობა აუცილებელია."
+
+#: settings.api.default_record_limit
+msgctxt "settings.api.default_record_limit"
+msgid "Default number of records to be fetched per API request"
+msgstr "ჩანაწერების დეფოლტ რიცხვი თითოეული API მოთხოვნისას"
+
+#: settings.api.maximum_record_limit
+msgctxt "settings.api.maximum_record_limit"
+msgid "Maximum number of records to be fetched per API request"
+msgstr "ჩანაწერების მაქსიმალური რიცხვი თითოეული API მოთხოვნისას"
+
+#: settings.api.maximum_requests_per_ip_address
+msgctxt "settings.api.maximum_requests_per_ip_address"
+msgid "Maximum number of API requests per IP address"
+msgstr " API მოთხოვნების მაქსიმალური რიცხვი თითოეულ IP მისამართზე"
+
+#: settings.api_akismet.alpha_numeric
+msgctxt "settings.api_akismet.alpha_numeric"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "აკისმეტის ველს არ აქვს მართებული მონაცემი/valid value?"
+
+#: settings.api_akismet.length
+msgctxt "settings.api_akismet.length"
+msgid "The Akismet field does not appear to contain a valid value."
+msgstr "აკისმეტის ველს არ აქვს მართებული მონაცემი/valid value?"
+
+#: settings.banner_image.type
+msgctxt "settings.banner_image.type"
+msgid ""
+"The Site Banner field does not appear to contain a valid image. The only "
+"accepted formats are .JPG, .PNG and .GIF."
+msgstr ""
+
+#: settings.banner_image.size
+msgctxt "settings.banner_image.size"
+msgid "Please ensure that \"Banner Image\" size is less than 250 KB."
+msgstr ""
+
+#: settings.banner_image.valid
+msgctxt "settings.banner_image.valid"
+msgid "The \"Banner Image\" field does not appear to contain a valid file."
+msgstr ""
+
+#: settings.cache_pages.between
+msgctxt "settings.cache_pages.between"
+msgid "The cache pages field is required."
+msgstr "ქეშირებული გვერდების ველის არსებობა აუცილებელია."
+
+#: settings.cache_pages.required
+msgctxt "settings.cache_pages.required"
+msgid "The cache pages field does not appear to contain a valid value."
+msgstr "ქეშირებული გვერდების ველს არ აქვს მართებული მონაცემი/valid value?"
+
+#: settings.cache_pages_lifetime.in_array
+msgctxt "settings.cache_pages_lifetime.in_array"
+msgid ""
+"The cache pages lifetime field does not appear to contain a valid value."
+msgstr "ქეშირებული გვერდების მუდმივ/lifetime ველს არ აქვს მართებული მონაცემი/valid value?"
+
+#: settings.cache_pages_lifetime.required
+msgctxt "settings.cache_pages_lifetime.required"
+msgid "The cache pages lifetime field is required."
+msgstr "ქეშირებული გვერდების ველის მუდმივი/lifetime ველის არსებობა აუცილებელია."
+
+#: settings.cleanurl.clean_url_disabled
+msgctxt "settings.cleanurl.clean_url_disabled"
+msgid ""
+"It looks like your server is not configured to handle clean URLs. You will "
+"need to change the configuration of your server before you can enable clean "
+"URLs. See more info on how to enable clean URLs at <a "
+"href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-"
+"rewrite\" target=\"_blank\">this forum post</a>"
+msgstr "როგორც ჩანს,თქვენს სერვერი არ არის კონფიგურირებული ისე რომ მიიღოს სუფთა URL-ები. თქვენ დაგჭირდებათ შეცვალოთ სერვერის კონფიგურაცია სანამ შეძლებთ დაუშვათ სუფთა URL-ები. იხილეთ მეტი ინფორმაცია ამ ფორუმზე თუ როგორ შეძლოთ დაუშვათ სუფთა URL-ები <a href=\"http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite\" target=\"_blank\">post</a>"
+
+#: settings.cleanurl.clean_url_enabled
+msgctxt "settings.cleanurl.clean_url_enabled"
+msgid ""
+"This option makes Ushahidi to be accessed via \"clean\" URLs (without "
+"\"index.php\" in the URL)."
+msgstr "ეს ფუნქცია საშუალებას აძლევს უშაჰიდის/Ushahidi მისაწვდომი იყოს \"სუფთა\" URLებით.\"index.php\" გარეშე URL-ში."
+
+#: settings.cleanurl.enable_clean_url
+msgctxt "settings.cleanurl.enable_clean_url"
+msgid "Enable Clean URLs"
+msgstr "გააქტიურება სუფთა URL-ების"
+
+#: settings.cleanurl.title
+msgctxt "settings.cleanurl.title"
+msgid "Clean URLs"
+msgstr ""
+
+#: settings.clickatell_api.length
+msgctxt "settings.clickatell_api.length"
+msgid "The Clickatell API number field must be no more 20 characters long."
+msgstr "The Clickatell API-ის რიცხვის ველი უნდა შეიცავდეს არაუმეტეს 20 ასოს."
+
+#: settings.clickatell_api.required
+msgctxt "settings.clickatell_api.required"
+msgid "The Clickatell API number field is required."
+msgstr "The Clickatell API0ის რიცხვის ველი სავალდებულოა."
+
+#: settings.clickatell_password.length
+msgctxt "settings.clickatell_password.length"
+msgid ""
+"The Clickatell Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "Clickatell-ის პაროლის ველი უნდა მოიცავდეს მინუმუმ 5 მაქსიმუმ 50 სიმბოლოს."
+
+#: settings.clickatell_password.required
+msgctxt "settings.clickatell_password.required"
+msgid "The Clickatell Password field is required."
+msgstr "The Clickatell-ის პაროლის ველის არსებობა აუცილებელია."
+
+#: settings.clickatell_username.length
+msgctxt "settings.clickatell_username.length"
+msgid "The Clickatell Username field must be no more 50 characters long."
+msgstr "The Clickatell-ის მომხმარებლის სახელის ველი უნდა იყოს მაქსიმუმ 50 სიმბოლოს სიგრძის."
+
+#: settings.clickatell_username.required
+msgctxt "settings.clickatell_username.required"
+msgid "The Clickatell Username field is required."
+msgstr "The Clickatell-ის მომხმარებლის სახელის ველის არსებობა აუცილებელია."
+
+#: settings.configure_map
+msgctxt "settings.configure_map"
+msgid "Configure Map"
+msgstr "კონფიგურაციის რუქა"
+
+#: settings.default_location
+msgctxt "settings.default_location"
+msgid "Default Location"
+msgstr "დეფოლტ ადგილმდებარეობა"
+
+#: settings.default_map_all.alpha_numeric
+msgctxt "settings.default_map_all.alpha_numeric"
+msgid "The color feed field does not appear to contain a valid value."
+msgstr "ველის ფერს არ აქვს მართებული მონაცემი?"
+
+#: settings.default_map_all.length
+msgctxt "settings.default_map_all.length"
+msgid "The color field must be no more 6 characters long."
+msgstr "ფერის ველი არ უნდა აღემატებოდეს 6 სიმბოლოს."
+
+#: settings.default_map_all.required
+msgctxt "settings.default_map_all.required"
+msgid "The color field is required."
+msgstr "ფერის ველის არსებობა აუცილებელია."
+
+#: settings.default_map_view
+msgctxt "settings.default_map_view"
+msgid "Default Map View"
+msgstr "დეფოლტ რუქის შეხედულება/View"
+
+#: settings.default_zoom_level
+msgctxt "settings.default_zoom_level"
+msgid "Default Zoom Level"
+msgstr "დეფოლტ ზუმის დონე/Level"
+
+#: settings.download_city_list
+msgctxt "settings.download_city_list"
+msgid "Retrieve Cities From Geonames"
+msgstr "ჯეონეიმსიდან ქალაქების აღდგენა"
+
+#: settings.email_host.length
+msgctxt "settings.email_host.length"
+msgid "The Mail server port field is too long."
+msgstr "ფოსტის სერვერის პორტის ველი ძალიან გრძელია"
+
+#: settings.email_host.numeric
+msgctxt "settings.email_host.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "ფოსტის სერვერის პორტის ველი უნდა მოიცავდეს მხოლოდ რიცხვებს."
+
+#: settings.email_password.length
+msgctxt "settings.email_password.length"
+msgid ""
+"The Mail Server Password field must be at least 5 and no more 50 characters "
+"long."
+msgstr "ფოსტის სერვერის პაროლის ველი უნდა უნდა იყოს მინიმუმ 5 მაქსიმუმ 50 სიმბოლოს სიგრძის."
+
+#: settings.email_password.required
+msgctxt "settings.email_password.required"
+msgid "The Mail Server Password field is required."
+msgstr "ფოსტის სერვერის პაროლის ველის არსებობა აუცილებელია."
+
+#: settings.email_port.length
+msgctxt "settings.email_port.length"
+msgid "The Mail server port field is too long."
+msgstr "ფოსტის სერვერის პორტის ველი ძალიან გრძელია"
+
+#: settings.email_port.numeric
+msgctxt "settings.email_port.numeric"
+msgid "The Mail server port field should contain numbers only."
+msgstr "ფოსტის სერვერის პორტის ველი უნდა მოიცავდეს მხოლოდ რიცხვებს."
+
+#: settings.email_servertype.length
+msgctxt "settings.email_servertype.length"
+msgid "The Mail server port field is too long."
+msgstr "ფოსტის სერვერის პორტის ველი ძალიან გრძელია"
+
+#: settings.email_servertype.required
+msgctxt "settings.email_servertype.required"
+msgid "The Mail Server Type field is required."
+msgstr "ფოსტის სერვერის ტიპის ველის არსებობა აუცილებელია."
+
+#: settings.email_username.length
+msgctxt "settings.email_username.length"
+msgid "The Mail Server Username field must be no more 50 characters long."
+msgstr "ფოსტის სერვერის მომხმარებლის სახელის ველი უნდა იყოს მაქსიმუმ 50 სიმბოლოს სიგრძის."
+
+#: settings.email_username.required
+msgctxt "settings.email_username.required"
+msgid "The Mail Server Username field is required."
+msgstr "ფოსტის სერვერის მომხმარებლის სახელის ველის არსებობა აუცილებელია."
+
+#: settings.facebook.title
+msgctxt "settings.facebook.title"
+msgid "Facebook Setup Options"
+msgstr ""
+
+#: settings.facebook.description
+msgctxt "settings.facebook.description"
+msgid ""
+"To get the information below you will need to create a new Facebook "
+"application at"
+msgstr ""
+
+#: settings.facebook.description_2
+msgctxt "settings.facebook.description_2"
+msgid ""
+"These settings allow users to login via Facebook, this <strong>does "
+"not</strong> create a facebook application for your deployment"
+msgstr ""
+
+#: settings.facebook.app_id
+msgctxt "settings.facebook.app_id"
+msgid "Facebook App ID"
+msgstr ""
+
+#: settings.facebook.app_secret
+msgctxt "settings.facebook.app_secret"
+msgid "Facebook App Secret"
+msgstr ""
+
+#: settings.google_analytics.length
+msgctxt "settings.google_analytics.length"
+msgid ""
+"The Google Analytics field must contain a valid Web Property ID in the "
+"format UA-XXXXX-XX."
+msgstr "Google Analytics-ის ველი უნდა შეიცავდეს მოქმედ ვებ საკუთრების ID-ის/valid Web Property ფორმატით UA-XXXXX-XX."
+
+#: settings.https.enable_https
+msgctxt "settings.https.enable_https"
+msgid "Enable HTTPS"
+msgstr ""
+
+#: settings.https.https_disabled
+msgctxt "settings.https.https_disabled"
+msgid ""
+"This option makes Ushahidi be accessed in unsecure mode; "
+"<strong>without</strong> \"https://\" in the URL prefix"
+msgstr ""
+
+#: settings.https.https_enabled
+msgctxt "settings.https.https_enabled"
+msgid ""
+"This option makes Ushahidi be accessed in secure mode; with "
+"<strong>https</strong> in the URL prefix"
+msgstr ""
+
+#: settings.https.title
+msgctxt "settings.https.title"
+msgid "HTTPS"
+msgstr ""
+
+#: settings.items_per_page.between
+msgctxt "settings.items_per_page.between"
+msgid ""
+"The items per page (Frontend) field does not appear to contain a valid "
+"value."
+msgstr "პუნქტების/items ველს თოთოეულ გვერდზე (ინტერფეისი/frontend) არ აქვს მართებული მონაცემი?"
+
+#: settings.items_per_page.required
+msgctxt "settings.items_per_page.required"
+msgid "The items per page (Frontend) field is required."
+msgstr "პუნქტების ველის (ინტერფეისი) არსებობა აუცილებელია."
+
+#: settings.items_per_page_admin.between
+msgctxt "settings.items_per_page_admin.between"
+msgid ""
+"The items per page (Admin) field does not appear to contain a valid value."
+msgstr "პუნქტების/items ველს თოთოეულ გვერდზე (ადმინ) არ აქვს მართებული მონაცემი?"
+
+#: settings.items_per_page_admin.required
+msgctxt "settings.items_per_page_admin.required"
+msgid "The items per page (Admin) field is required."
+msgstr "პუნქტების ველის (ადმინ) არსებობა აუცილებელი."
+
+#: settings.map.default_location
+msgctxt "settings.map.default_location"
+msgid ""
+"Setting up your map provider is a straight- forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "თქვენი რუქის პროვაიდერის მოწყობა უბრალო პროვესია. შეარჩიეთ პროვაიდერი, მიიღეთ API key პროვაიდერის საიტიდან, და შეიყვანეთ API key"
+
+#: settings.map.zoom
+msgctxt "settings.map.zoom"
+msgid "Zoom Level"
+msgstr "ზუმის დონე"
+
+#: settings.map_provider.choose
+msgctxt "settings.map_provider.choose"
+msgid "Select a Map Provider"
+msgstr "შეარჩიეთ რუქის პროვაიდერი"
+
+#: settings.map_provider.enter_api
+msgctxt "settings.map_provider.enter_api"
+msgid "Enter the new API Key"
+msgstr "შეიყვანეთ ახალი API Key"
+
+#: settings.map_provider.get_api
+msgctxt "settings.map_provider.get_api"
+msgid "Get an API Key"
+msgstr "მიიღეთ API Key"
+
+#: settings.map_provider.info
+msgctxt "settings.map_provider.info"
+msgid ""
+"Setting up your map provider is a straight-forward process. Select a "
+"provider, obtain an API key from the provider's site, and enter the API key."
+msgstr "თქვენი რუქის პროვაიდერის მოწყობა უბრალო პროვესია. შეარჩიეთ პროვაიდერი. შეარჩიეთ პროვაიდერი, მიიღეთ API key პროვაიდერის საიტიდან, და შეიყვანეთ API key"
+
+#: settings.map_provider.name
+msgctxt "settings.map_provider.name"
+msgid "Map provider"
+msgstr "რუქის პროვაიდერი"
+
+#: settings.map_timeline
+msgctxt "settings.map_timeline"
+msgid "Map Timeline"
+msgstr ""
+
+#: settings.map_settings
+msgctxt "settings.map_settings"
+msgid "Map Settings"
+msgstr "რუქის პარამეტრებიs"
+
+#: settings.multiple_countries
+msgctxt "settings.multiple_countries"
+msgid "Does this Ushahidi Deployment span multiple countries?"
+msgstr "გააკეთეთ უშაჰიდის განლაგების მანძილის გაზომვა სხვადასხვა ქვეყნებისთვის"
+
+#: settings.select_default_location
+msgctxt "settings.select_default_location"
+msgid "Please select a default country"
+msgstr "გთხოვთ შეარჩიოთ დეფოლტ ქვეყანა"
+
+#: settings.set_location
+msgctxt "settings.set_location"
+msgid "Click and drag the map to set your exact location"
+msgstr "დააწკაპეთ და ჩააგდეთ რუქა რომ დააყენოთ თქვენი ზუსტი ადგილმდებარეობა"
+
+#: settings.site.allow_clustering
+msgctxt "settings.site.allow_clustering"
+msgid "Cluster Reports on Map"
+msgstr "კასეტური/Cluster მონაცემები რუქაზე"
+
+#: settings.site.allow_comments
+msgctxt "settings.site.allow_comments"
+msgid "Allow Users to Submit Comments to Reports"
+msgstr "ნება დართეთ მომხმარებლებს განათავსონ კომენტარები ანგარიშზე"
+
+#: settings.site.allow_feed
+msgctxt "settings.site.allow_feed"
+msgid "Include RSS News Feed on Website"
+msgstr "დაურთეთ RSS სიახლეების ველი ვებ გვერდს"
+
+#: settings.site.allow_feed_category
+msgctxt "settings.site.allow_feed_category"
+msgid "Create New Category from Feeds"
+msgstr ""
+
+#: settings.site.allow_alerts
+msgctxt "settings.site.allow_alerts"
+msgid "Allow Users To Subscribe For Alerts"
+msgstr ""
+
+#: settings.site.allow_reports
+msgctxt "settings.site.allow_reports"
+msgid "Allow Users To Submit Reports"
+msgstr "ნება დართეთ მომხმარებლებს წარმოადგინონ ანგარიშები"
+
+#: settings.site.api_akismet
+msgctxt "settings.site.api_akismet"
+msgid "Akismet Key"
+msgstr "აკისმეტის პაროლი/Akismet Key"
+
+#: settings.site.banner
+msgctxt "settings.site.banner"
+msgid "Site Banner"
+msgstr ""
+
+#: settings.site.blocks_per_row
+msgctxt "settings.site.blocks_per_row"
+msgid "Blocks Per Row"
+msgstr ""
+
+#: settings.site.cache_pages
+msgctxt "settings.site.cache_pages"
+msgid "Cache Pages"
+msgstr "ქეშირებული გვერდები"
+
+#: settings.site.cache_pages_lifetime
+msgctxt "settings.site.cache_pages_lifetime"
+msgid "Cache Pages Lifetime"
+msgstr "მუდმივი/Lifetime ქეშირებული გვერდები"
+
+#: settings.site.checkins
+msgctxt "settings.site.checkins"
+msgid "Enable Checkins"
+msgstr ""
+
+#: settings.site.copyright_statement
+msgctxt "settings.site.copyright_statement"
+msgid "Site Copyright Statement"
+msgstr "საიტის უფლებების დამცავი განცხადება"
+
+#: settings.site.default_category_colors
+msgctxt "settings.site.default_category_colors"
+msgid "Default Color For All Categories"
+msgstr "დეფოლტ ფერი ყველა კატეგორიისთვის"
+
+#: settings.site.default_category_icons
+msgctxt "settings.site.default_category_icons"
+msgid "Default Icon For All Categories"
+msgstr ""
+
+#: settings.site.delete_banner_image
+msgctxt "settings.site.delete_banner_image"
+msgid "Delete Banner Image"
+msgstr ""
+
+#: settings.site.delete_default_map_all_icon
+msgctxt "settings.site.delete_default_map_all_icon"
+msgid "Delete Default Icon"
+msgstr ""
+
+#: settings.site.display_contact_page
+msgctxt "settings.site.display_contact_page"
+msgid "Display Contact Page"
+msgstr "ეკრანის კონტაქტების გვერდი"
+
+#: settings.site.display_howtohelp_page
+msgctxt "settings.site.display_howtohelp_page"
+msgid "Display \"How to Help\" Page"
+msgstr "ეკრანის \"როგორ დავეხმაროთ\"გვერდი"
+
+#: settings.site.email_alerts
+msgctxt "settings.site.email_alerts"
+msgid "Alerts Email Address"
+msgstr "ელ ფოსტის მისამართის გამაფრთხილებლები"
+
+#: settings.site.email_notice
+msgctxt "settings.site.email_notice"
+msgid ""
+"<span>In order to receive reports by email, please configure your email "
+"account settings.</span>"
+msgstr "<span>In ბრძანება ანგარიშების ელ ფოსტაზე მისაღებად, გთხოვთ კონფიგურაცია გაუკეთეთ თქვენს ელ ფოსტის ანგარიშის პარამეტრებს.</span>"
+
+#: settings.site.email_site
+msgctxt "settings.site.email_site"
+msgid "Site Email Address"
+msgstr "საიტის ელ ფოსტის მისამართი"
+
+#: settings.site.google_analytics
+msgctxt "settings.site.google_analytics"
+msgid "Google Analytics"
+msgstr ""
+
+#: settings.site.google_analytics_example
+msgctxt "settings.site.google_analytics_example"
+msgid "Web Property ID - Format: UA-XXXXX-XX"
+msgstr "ვებ მფლობელის ID - ფორმატი: UA-XXXXX-XX"
+
+#: settings.site.items_per_page
+msgctxt "settings.site.items_per_page"
+msgid "Items Per Page - Front End"
+msgstr "პუნქტები თოთოეულ გვერდზე - წინა ბოლო/Front End"
+
+#: settings.site.items_per_page_admin
+msgctxt "settings.site.items_per_page_admin"
+msgid "Items Per Page - Admin"
+msgstr "პუნქტები თითოეულ გვერდზე - ადმინ"
+
+#: settings.site.kismet_notice
+msgctxt "settings.site.kismet_notice"
+msgid ""
+"Prevent comment spam using <a href=\"http://akismet.com/\" "
+"target=\"_blank\">Akismet</a> from Automattic. <BR />You can get a free API "
+"key by registering for a <a href=\"http://en.wordpress.com/api-keys/\" "
+"target=\"_blank\">WordPress.com user account</a>"
+msgstr "კომენტარების სპამად გამოყენების თავიდან აცილება P<a href=\"http://akismet.com/\" target=\"_blank\">Akismet</a> from Automattic. <BR />თქვენ შეგიძლიათ მიიღოთ უფასო API key დარეგისტრირებით <a href=\"http://en.wordpress.com/api-keys/\" target=\"_blank\">WordPress.com user account</a>"
+
+#: settings.site.laconica_configuration
+msgctxt "settings.site.laconica_configuration"
+msgid "Laconica Credentials"
+msgstr ""
+
+#: settings.site.laconica_site
+msgctxt "settings.site.laconica_site"
+msgid "Laconica Site "
+msgstr "Laconica საიტი "
+
+#: settings.site.language
+msgctxt "settings.site.language"
+msgid "Site Language"
+msgstr "საიტის ენა"
+
+#: settings.site.manually_approve_users
+msgctxt "settings.site.manually_approve_users"
+msgid "Manually Approve Users"
+msgstr ""
+
+#: settings.site.message
+msgctxt "settings.site.message"
+msgid "Site Message"
+msgstr "საიტის შეტყობინება"
+
+#: settings.site.name
+msgctxt "settings.site.name"
+msgid "Site Name"
+msgstr "საიტის სახელი"
+
+#: settings.site.private_deployment
+msgctxt "settings.site.private_deployment"
+msgid "Private Deployment"
+msgstr "პირადი განლაგება"
+
+#: settings.site.require_email_confirmation
+msgctxt "settings.site.require_email_confirmation"
+msgid "Require User Email Confirmation"
+msgstr ""
+
+#: settings.site.submit_report_message
+msgctxt "settings.site.submit_report_message"
+msgid "Submit Report Message"
+msgstr ""
+
+#: settings.site.share_site_stats
+msgctxt "settings.site.share_site_stats"
+msgid "Enable Statistics (Stored on Ushahidi's server)"
+msgstr "სტატისტიკის განთავსება (შენახული უშაჰიდის სერვერზე)"
+
+#: settings.site.tagline
+msgctxt "settings.site.tagline"
+msgid "Site Tagline"
+msgstr "საიტის ქვესათაური/Tagline"
+
+#: settings.site.timezone
+msgctxt "settings.site.timezone"
+msgid "Timezone"
+msgstr ""
+
+#: settings.site.title
+msgctxt "settings.site.title"
+msgid "Site Settings"
+msgstr "საიტის პარამეტრები"
+
+#: settings.site.twitter_configuration
+msgctxt "settings.site.twitter_configuration"
+msgid "Twitter Search Terms"
+msgstr "ტვიტერის ძებნის პირობები"
+
+#: settings.site.twitter_hashtags
+msgctxt "settings.site.twitter_hashtags"
+msgid "Hashtags - Separate with commas "
+msgstr "ჰეშთეგები - დააშორეთ მძიმეებით"
+
+#: settings.site.feed_geolocation_user
+msgctxt "settings.site.feed_geolocation_user"
+msgid "Feeds geolocation - Geonames username"
+msgstr ""
+
+#: settings.site_email.email
+msgctxt "settings.site_email.email"
+msgid "The site email field does not appear to contain a valid email address."
+msgstr "საიტის ელ ფოსტის ველს არ აქვს მოქმედი ელ ფოსტის მისამართი?"
+
+#: settings.site_email.length
+msgctxt "settings.site_email.length"
+msgid ""
+"The site email field must be at least 4 and no more 100 characters long."
+msgstr "საიტის ელ ფოსტის ველი უნდა იყოს მინიმუმ 4 მაქსიმუმ 100 სიმბოლოს სიგრძის."
+
+#: settings.site_name.length
+msgctxt "settings.site_name.length"
+msgid "The site name field must be at least 3 and no more 50 characters long."
+msgstr "საიტის სახელის ველი უნდა იყოს მინიმუმ 3 მაქსიმუმ 50 სიმბოლოს სიგრძის."
+
+#: settings.site_name.required
+msgctxt "settings.site_name.required"
+msgid "The site name field is required."
+msgstr "საიტის სახელის ველის არსებობა აუცილებელია."
+
+#: settings.site_tagline.length
+msgctxt "settings.site_tagline.length"
+msgid "The tagline field must be at least 3 and no more 100 characters long."
+msgstr "ქვესათაურის/tagline ველი უნდა იყოს მინიმუმ 3 მაქსიმუმ 100 სიმბოლოს სიგრძის."
+
+#: settings.site_tagline.required
+msgctxt "settings.site_tagline.required"
+msgid "The tagline field is required."
+msgstr "ქვესათაურის/tagline ველის არსებობა აუცილებელია."
+
+#: settings.sms.clickatell_api
+msgctxt "settings.sms.clickatell_api"
+msgid "Your Clickatell API Number"
+msgstr "თქვენი Clickatell-ის API რიცხვი"
+
+#: settings.sms.clickatell_check_balance
+msgctxt "settings.sms.clickatell_check_balance"
+msgid "Check Your Clickatell Credit Balance"
+msgstr "შეამოწმეთ თქვენი Clickatell-ის საკრედიტო ბალანსი"
+
+#: settings.sms.clickatell_load_balance
+msgctxt "settings.sms.clickatell_load_balance"
+msgid "Load Credit Balance"
+msgstr "ჩატვირთეთ საკრედიტო ბალანსი"
+
+#: settings.sms.clickatell_password
+msgctxt "settings.sms.clickatell_password"
+msgid "Your Clickatell Password"
+msgstr "თქვენი Clickatel-ის პაროლი"
+
+#: settings.sms.clickatell_text_1
+msgctxt "settings.sms.clickatell_text_1"
+msgid ""
+"Sign up for Clickatells service by <a "
+"href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" "
+"target=\"_blank\">clicking here</a>"
+msgstr "დარეგისტრირდით/Sign up Clickatells-ის სერვისზე ასე <a href=\"https://www.clickatell.com/central/user/client/step1.php?prod_id=2\" target=\"_blank\">clicking here</a>"
+
+#: settings.sms.clickatell_text_2
+msgctxt "settings.sms.clickatell_text_2"
+msgid "Enter your Clickatell access information below"
+msgstr "შეიყვანეთ თქვენი Clickatell-ის შესასვლელი ინფორმაცია ქვემოთ"
+
+#: settings.sms.clickatell_username
+msgctxt "settings.sms.clickatell_username"
+msgid "Your Clickatell User Name"
+msgstr "თქვენი Clickatell-ის მომხმარებლის სახელი"
+
+#: settings.sms.flsms_description
+msgctxt "settings.sms.flsms_description"
+msgid ""
+"FrontlineSMS is free and open source software that enables users to send and"
+" receive text messages with large groups of people through mobile phones. "
+"Click on the box below to download the latest version from FrontlineSMS.com."
+msgstr ""
+
+#: settings.sms.flsms_download
+msgctxt "settings.sms.flsms_download"
+msgid "Download and install FrontlineSMS"
+msgstr ""
+
+#: settings.sms.flsms_instructions
+msgctxt "settings.sms.flsms_instructions"
+msgid ""
+"Detailed instructions on how to send SMS from your FronlineSMS installation "
+"are available <strong><a "
+"href=\"https://wiki.ushahidi.com/pages/viewpage.action?pageId=5670692\" "
+"target=\"_blank\">here</a></strong>. The URL and API Key below are required "
+"to set up the sync with FrontlineSMS."
+msgstr ""
+
+#: settings.sms.flsms_link
+msgctxt "settings.sms.flsms_link"
+msgid "Copy and paste this into the FrontlineSMS \"Address\" field"
+msgstr ""
+
+#: settings.sms.flsms_key
+msgctxt "settings.sms.flsms_key"
+msgid "Copy and paste this into the FrontlineSMS \"Ushahidi API Key\" field"
+msgstr ""
+
+#: settings.sms.flsms_synchronize
+msgctxt "settings.sms.flsms_synchronize"
+msgid "Connecting FrontlineSMS to this Ushahidi deployment"
+msgstr ""
+
+#: settings.sms.flsms_text_1
+msgctxt "settings.sms.flsms_text_1"
+msgid "Enter phone number(s) connected to Frontline SMS in the field(s) below"
+msgstr "შეიყვანეთ Frontline SMS-ს დაკავშირებული ტელეფონის ნომრები ქვემოთ მოცემულ ველებში"
+
+#: settings.sms.flsms_text_2
+msgctxt "settings.sms.flsms_text_2"
+msgid "Enter the number without any + or dashes below"
+msgstr "ნომერი შეიყვანეთ  + ნიშნის ან სხვა სიმბოლოების გარეშე"
+
+#: settings.sms.option_1
+msgctxt "settings.sms.option_1"
+msgid "Option 1: Use Frontline SMS"
+msgstr "პარამეტრი 1: გამოყენება Frontline SMS"
+
+#: settings.sms.option_2
+msgctxt "settings.sms.option_2"
+msgid "Option 2: Use a Global SMS Gateway"
+msgstr "პარამეტრი 2: გამოყენება გლობალური SMS გასასვლელის/Gateway"
+
+#: settings.sms.title
+msgctxt "settings.sms.title"
+msgid "SMS Setup Options"
+msgstr "შეტყობინებების დაყენების პარამეტრები"
+
+#: settings.sms_no1.length
+msgctxt "settings.sms_no1.length"
+msgid "The phone 1 field does not appear to contain a valid value."
+msgstr "ტელეფონი 1-ის ველს არ აქვს მართებული მონაცემი?"
+
+#: settings.sms_no1.numeric
+msgctxt "settings.sms_no1.numeric"
+msgid "The phone 1 field should contain numbers only."
+msgstr "ტელეფონი 1-ის ველი უნდა მოიცავდეს მხოლოდ რიცხვებს."
+
+#: settings.sms_no2.length
+msgctxt "settings.sms_no2.length"
+msgid "The phone 2 field is too long."
+msgstr "ტელეფონი 2-ის ველი ძალიან გრძელია"
+
+#: settings.sms_no2.numeric
+msgctxt "settings.sms_no2.numeric"
+msgid "The phone 2 field should contain numbers only."
+msgstr "ტელეფონი 2-ის ველი უნდა მოიცავდეს მხოლოდ რიცხვებს."
+
+#: settings.sms_no3.length
+msgctxt "settings.sms_no3.length"
+msgid "The phone 3 field is too long."
+msgstr "ტელეფონი 3-ის ველი ძალიან გრძელია"
+
+#: settings.sms_no3.numeric
+msgctxt "settings.sms_no3.numeric"
+msgid "The phone 3 field should contain numbers only."
+msgstr "ტელეფონი 3-ის ველი უნდა მოიცავდეს მხოლოდ რიცხვებ."
+
+#: settings.twitter.title
+msgctxt "settings.twitter.title"
+msgid "Twitter Setup Options"
+msgstr ""
+
+#: settings.twitter.description
+msgctxt "settings.twitter.description"
+msgid ""
+"To get the information below, set up your deployment as a new Twitter "
+"application at"
+msgstr ""
+
+#: settings.twitter.api_key
+msgctxt "settings.twitter.api_key"
+msgid "Consumer Key"
+msgstr ""
+
+#: settings.twitter.api_key_secret
+msgctxt "settings.twitter.api_key_secret"
+msgid "Consumer secret"
+msgstr ""
+
+#: settings.twitter.token
+msgctxt "settings.twitter.token"
+msgid "Access Token"
+msgstr ""
+
+#: settings.twitter.token_secret
+msgctxt "settings.twitter.token_secret"
+msgid "Access Token Secret"
+msgstr ""
+
+#: settings.test_settings
+msgctxt "settings.test_settings"
+msgid "Test settings"
+msgstr ""
