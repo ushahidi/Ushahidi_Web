@@ -683,9 +683,11 @@ class Installer_Wizard {
 	private static function _database_connect()
 	{
 		$params = self::$_data['database'];
-		
-		self::$_connection = mysqli_connect($params['host'], $params['user'],
-		    $params['pass'], TRUE);
+        $database_name = $params['database'];
+
+
+        self::$_connection = mysqli_connect($params['host'], $params['user'],
+		    $params['pass'], $database_name);
 		
 		if ( ! self::$_connection)
 		{
@@ -693,20 +695,7 @@ class Installer_Wizard {
 
 			return FALSE;
 		}
-		
-		$database_name = $params['database'];
-		
-		if ( ! mysqli_select_db(self::$_connection, $database_name))
-		{
-			if (self::_execute_query(sprintf("CREATE DATABASE %s", self::_escape_str($database_name))))
-			{
-				mysqli_select_db(self::$_connection, $database_name, self::$_connection);
-			}
-			else
-			{
-				self::$_errors[] = sprintf("Error creating database: %s", mysqli_error(self::$_connection));
-			}
-		}
+
 				
 	}
 	
