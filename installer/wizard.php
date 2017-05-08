@@ -54,7 +54,7 @@ class Installer_Wizard {
 		'mbstring',
 		
 		// Database access
-		'mysql',
+		'mysqli',
 		
 		// cURL for remote site access
 		'curl',
