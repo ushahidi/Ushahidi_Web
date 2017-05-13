@@ -2,7 +2,7 @@
 
 class protochart {
 	
-	function protochart() {
+	function __construct() {
 	
 	}
 
