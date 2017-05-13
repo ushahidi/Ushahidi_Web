@@ -632,7 +632,7 @@ class ORM_Core {
 	 * @param   object   Validation array
 	 * @return  boolean
 	 */
-	public function validate(Validation $array, $save = FALSE)
+	public function validate($array, $save = FALSE)
 	{
 		if ( ! $array->submitted())
 		{
