@@ -472,7 +472,7 @@ class Incident_Model extends ORM {
 	 * Deletes all other content related to the incident - performs
 	 * an SQL destroy
 	 */
-	public function delete()
+	public function delete($id = NULL)
 	{
 		// Delete Location
 		ORM::factory('location')
