@@ -19,7 +19,7 @@ class html extends html_Core {
 	 * @param string $input
 	 * @return string
 	 */
-	public function clean($input)
+	public static function clean($input)
 	{
 		require_once APPPATH.'libraries/htmlpurifier/HTMLPurifier.auto.php';
 
