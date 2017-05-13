@@ -51,7 +51,7 @@ class html extends html_Core {
 	 * @param bool $encode Encode html entities?
 	 * @return string
 	 */
-	public function strip_tags($input, $encode = TRUE)
+	public static function strip_tags($input, $encode = TRUE)
 	{
 		require_once APPPATH.'libraries/htmlpurifier/HTMLPurifier.auto.php';
 
@@ -74,7 +74,7 @@ class html extends html_Core {
 	 * 
 	 * @return string
 	 **/
-	public function allowed_html()
+	public static function allowed_html()
 	{
 		require_once APPPATH.'libraries/htmlpurifier/HTMLPurifier.auto.php';
 		
