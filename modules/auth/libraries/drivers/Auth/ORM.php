@@ -525,7 +525,7 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 * @param   object   user model object
 	 * @return  void
 	 */
-	protected function complete_login(User_Model $user)
+	protected function complete_login($user)
 	{
 		// Update the number of logins
 		$user->logins += 1;
