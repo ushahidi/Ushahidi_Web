@@ -3,7 +3,7 @@
 class notifications_Core 
 {
 	
-	public function notify_admins($subject = NULL, $message = NULL)	
+	public static function notify_admins($subject = NULL, $message = NULL)
 	{
 		
 		// Don't show the exceptions for this operation to the user. Log them

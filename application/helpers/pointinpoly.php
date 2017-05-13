@@ -6,7 +6,7 @@ class pointinpoly {
     
     var $pointOnVertex = true; // Check if the point sits exactly on one of the vertices
 
-	function pointinpoly(){
+	function __construct(){
 	
 	}
 	
