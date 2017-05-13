@@ -268,7 +268,7 @@ class User_Model extends Auth_User_Model {
 	 * Overrides the default delete method for the ORM.
 	 * Deletes roles associated with the user before user is removed from DB.
 	 */
-	public function delete()
+	public function delete($id = null)
 	{
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		
