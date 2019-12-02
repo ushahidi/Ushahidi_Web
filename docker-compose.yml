@@ -1,0 +1,27 @@
+version: "2"
+services:
+  mysql:
+    image: mysql:5.5
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ushahidi
+      MYSQL_USER: ushahidi
+      MYSQL_PASSWORD: ushahidi
+    ports:
+      - "33062:3306"
+    volumes:
+      - ./sql/ushahidi.sql:/docker-entrypoint-initdb.d/01-ushahidi.sql
+  platform:
+    build: .
+    environment:
+      DOCKERIZE_TIMEOUT: 180s
+      DOCKERIZE_WAIT_FOR_mysql: tcp://mysql:3306
+      DB_DATABASE: ushahidi
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USERNAME: ushahidi
+      DB_PASSWORD: ushahidi
+      SITE_DEFAULT_KEY: e(W87Gt(pix9)eFPurY)D
+    # command: start
+    ports:
+      - "80:80"
