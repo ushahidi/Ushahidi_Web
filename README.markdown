@@ -1,7 +1,7 @@
 Ushahidi Platform
 =================
-The Ushahidi Platform is an open source web application for information collection, visualization and interactive 
-mapping. It allows people to collect and share their own stories using various mediums such
+The Ushahidi Platform is an open-source web application for information collection, visualization and interactive 
+mapping. It allows people to collect,and share their own stories using various mediums such
 as SMS, Web Forms, Email or Twitter. For more information about the platform and use cases (case studies) visit: http://www.ushahidi.com
 
 
@@ -136,7 +136,7 @@ Installation
 
     __NOTE: Your account must have all the privileges listed above in order to run Ushahidi on your webserver.__
 
-* ####Ensure PHP error_reporting level is compatable
+* ####Ensure PHP error_reporting level is compatible,
     As of PHP-5.4 Ushahidi doesn't work with the error_reporting level E_STRICT.  Ensure this level is excluded from the error_reporting configuration.
 
 * ####Run the install script
