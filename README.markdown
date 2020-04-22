@@ -1,3 +1,6 @@
+# Deprecated
+You are probably looking for https://github.com/ushahidi/platform and https://github.com/ushahidi/platform-client. You can find all the latest documentation, how to contribute, and how to install the new version at https://docs.ushahidi.com/index/
+
 Ushahidi Platform
 =================
 The Ushahidi Platform is an open source web application for information collection, visualization and interactive 
