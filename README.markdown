@@ -118,7 +118,11 @@ Installation
     __NOTE: The process of configuring file permissions is different for various operating systems. Here are some helpful links about permissions for the Windows (http://support.microsoft.com/kb/308419) and Unix (http://www.washington.edu/computing/unix/permissions.html) operating systems.__
 
 * ####Create the Ushahidi database
-    Ushahidi stores all its information in a database. You must therefore create this database in order to install Ushahidi. This is done as follows:
+    Ushahidi stores all its information in a database. You must therefore create this database in order to install Ushahidi.
+
+    With phpMyAdmin, simply create a new empty database and assign a user with all privledges to it. 
+
+    On the command line, create a database as follows:
     
         mysqladmin -u 'username' -p create 'databasename'
     
@@ -139,11 +143,12 @@ Installation
 
     __NOTE: Your account must have all the privileges listed above in order to run Ushahidi on your webserver.__
 
+   
 * ####Ensure PHP error_reporting level is compatable
     As of PHP-5.4 Ushahidi doesn't work with the error_reporting level E_STRICT.  Ensure this level is excluded from the error_reporting configuration.
 
 * ####Run the install script
-    To run the install script, point your browser to the base url of your website: (e.g. http://www.example.com).
+    To run the install script, point your browser to the base url of your website or local installation: (e.g. http://www.example.com, or http://localhost:8888/[file directory]).
     
     You will be guided through a series of screens to set up the database and site settings depending on the installation method you choose (Basic or Advanced)
 
