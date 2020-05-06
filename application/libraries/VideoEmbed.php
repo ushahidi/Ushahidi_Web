@@ -97,8 +97,9 @@ class VideoEmbed
 		{
 			$components = parse_url($raw);
 			parse_str($components['query'], $query);
-			if (! isset($query[$this->service['keep-params']]) ) break;
-			$raw = $this->service['baseurl']. $query[$this->service['keep-params']];
+			if ( isset($query[$this->service['keep-params']]) ){
+				$raw = $this->service['baseurl']. $query[$this->service['keep-params']];
+			}
 		}
 
 		return $raw;
