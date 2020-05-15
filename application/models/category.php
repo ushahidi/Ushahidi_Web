@@ -248,7 +248,7 @@ class Category_Model extends ORM_Tree {
 	/**
 	 * Extend the default ORM delete to remove related records
 	 */
-	public function delete()
+	public function delete($id = null)
 	{
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		

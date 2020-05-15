@@ -42,7 +42,7 @@ class Form_Model extends ORM
 	/**
 	 * Deletes the a form and all its associated data
 	 */
-	public function delete()
+	public function delete($id = null)
 	{
 		// Delete all fields associated with this form
 		ORM::factory('form_field')->where('form_id', $this->id)->delete_all();

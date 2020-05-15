@@ -4,7 +4,7 @@ class Role_Model extends Auth_Role_Model {
 
 	protected $has_and_belongs_to_many = array('permissions', 'users');
 	
-	public function delete()
+	public function delete($id = null)
 	{
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		
