@@ -98,7 +98,7 @@ class html extends html_Core {
 	 * @param bool $double_encode
 	 * @return string
 	 */
-	public function escape($input, $double_encode = FALSE)
+	public static function escape($input, $double_encode = FALSE)
 	{
 		// Ensure we have valid correctly encoded string..
 		// http://stackoverflow.com/questions/1412239/why-call-mb-convert-encoding-to-sanitize-text
