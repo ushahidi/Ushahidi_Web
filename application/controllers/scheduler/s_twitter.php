@@ -132,8 +132,8 @@ class S_Twitter_Controller extends Controller {
 				$tweet_lon = null;
 				if ($tweet->{'coordinates'} != null)
 				{
-					$tweet_lat = $tweet->{'coordinates'}->coordinates[0];
-					$tweet_lon = $tweet->{'coordinates'}->coordinates[1];
+					$tweet_lat = $tweet->{'coordinates'}->coordinates[1];
+					$tweet_lon = $tweet->{'coordinates'}->coordinates[0];
 				}
 
 				// Save Tweet as Message
