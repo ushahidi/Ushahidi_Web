@@ -10,3 +10,4 @@ application/config/config.php
 application/config/database.php
 application/config/encryption.php
 tests/phpunit/phpunit.xml
+/nbproject/
