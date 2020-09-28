@@ -47,7 +47,7 @@ class map_Core {
 			if ($layer->active)
 			{
 
-				if ($all == TRUE OR $layer->openlayers == $openlayers_type)
+				if ($all == TRUE OR $layer->openlayers == $openlayers_type )
 				{
 					//++ Bing doesn't have the first argument
 					if ($layer->openlayers == "Bing")
@@ -59,19 +59,19 @@ class map_Core {
 						    . "\t key: \"".$layer->data['key']."\"\n"
 						    . "}";
 						
-						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."($bing_options);\n\n";
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers_class."($bing_options);\n\n";
 					}
 					// Allow layers to specify a custom set of OpenLayers options
 					// this should allow plugins to add OpenLayers Layer types we haven't considered here
 					// See http://dev.openlayers.org/docs/files/OpenLayers/Layer-js.html for other layer types
 					elseif (isset($layer->openlayers_options) AND $layer->openlayers_options != null)
 					{
-						$js .= "var ".$layer->name." = new OpenLayers.Layer.{$layer->openlayers}({$layer->openlayers_options});\n\n";
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.{$layer->openlayers_class}({$layer->openlayers_options});\n\n";
 					}
 					// Finally construct JS for the majority of layers
 					else
 					{
-						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers_class."(\"".$layer->title."\", ";
 
 						if ($layer->openlayers == 'XYZ' || $layer->openlayers == 'WMS' || $layer->openlayers == 'TMS')
 						{
@@ -212,6 +212,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'esri_topo';
 		$layer->openlayers = "XYZ";
+		$layer->openlayers_class = "XYZ";
 		$layer->title = 'Esri World Topo Map';
 		$layer->description = 'This world topographic map (aka "the community basemap") includes boundaries, cities, water features, physiographic features, parks, landmarks, transportation, and buildings.';
 		$layer->api_url = '';
@@ -229,6 +230,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'esri_street';
 		$layer->openlayers = "XYZ";
+		$layer->openlayers_class = "XYZ";
 		$layer->title = 'Esri Street Map';
 		$layer->description = 'This map service presents highway-level data for the world and street-level data for North America, Europe, Southern Africa, parts of Asia, and more.';
 		$layer->api_url = '';
@@ -246,6 +248,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'esri_imagery';
 		$layer->openlayers = "XYZ";
+		$layer->openlayers_class = "XYZ";
 		$layer->title = 'Esri Imagery Map';
 		$layer->description = 'This map service presents satellite imagery for the world and high-resolution imagery for the United States, Great Britain, and hundreds of cities around the world.';
 		$layer->api_url = '';
@@ -263,6 +266,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'esri_natgeo';
 		$layer->openlayers = "XYZ";
+		$layer->openlayers_class = "XYZ";
 		$layer->title = 'Esri National Geographic Map';
 		$layer->description = 'This map is designed to be used as a general reference map for informational and educational purposes as well as a basemap by GIS professionals and other users for creating web maps and web mapping applications.';
 		$layer->api_url = '';
@@ -280,6 +284,23 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'google_satellite';
 		$layer->openlayers = "Google";
+		$layer->openlayers_class = "Google";
+		$layer->title = 'Google Maps Satellite';
+		$layer->description = 'Google Maps Satellite Imagery.';
+		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false&amp;language='.Kohana::config('locale.language.0');
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'google.maps.MapTypeId.SATELLITE',
+			'animationEnabled' => TRUE,
+		);
+		$layers[$layer->name] = $layer;
+
+		// GOOGLE Satellite for osm
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'google_satellite_alt';
+		$layer->openlayers = "OSM.Mapnik";
+		$layer->openlayers_class = "Google";
 		$layer->title = 'Google Maps Satellite';
 		$layer->description = 'Google Maps Satellite Imagery.';
 		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false&amp;language='.Kohana::config('locale.language.0');
@@ -295,6 +316,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'google_hybrid';
 		$layer->openlayers = "Google";
+		$layer->openlayers_class = "Google";
 		$layer->title = 'Google Maps Hybrid';
 		$layer->description = 'Google Maps with roads and terrain.';
 		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false&amp;language='.Kohana::config('locale.language.0');
@@ -310,6 +332,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'google_normal';
 		$layer->openlayers = "Google";
+		$layer->openlayers_class = "Google";
 		$layer->title = 'Google Maps Normal';
 		$layer->description = 'Standard Google Maps Roads';
 		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false&amp;language='.Kohana::config('locale.language.0');
@@ -325,6 +348,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'google_physical';
 		$layer->openlayers = "Google";
+		$layer->openlayers_class = "Google";
 		$layer->title = 'Google Maps Physical';
 		$layer->description = 'Google Maps Hillshades';
 		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false&amp;language='.Kohana::config('locale.language.0');
@@ -340,6 +364,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'bing_road';
 		$layer->openlayers = "Bing";
+		$layer->openlayers_class = "Bing";
 		$layer->title = 'Bing-Road';
 		$layer->description = 'Bing Road Maps';
 		$layer->api_signup = Kohana::config('core.site_protocol').'://www.bingmapsportal.com/';
@@ -357,6 +382,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'bing_hybrid';
 		$layer->openlayers = "Bing";
+		$layer->openlayers_class = "Bing";
 		$layer->title = 'Bing-Hybrid';
 		$layer->description = 'Bing hybrid of streets and satellite tiles.';
 		$layer->api_signup = Kohana::config('core.site_protocol').'://www.bingmapsportal.com/';
@@ -374,6 +400,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'bing_satellite';
 		$layer->openlayers = "Bing";
+		$layer->openlayers_class = "Bing";
 		$layer->title = 'Bing-Satellite';
 		$layer->description = 'Bing Satellite Tiles';
 		$layer->api_signup = Kohana::config('core.site_protocol').'://www.bingmapsportal.com/';
@@ -391,6 +418,25 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'osm_mapnik';
 		$layer->openlayers = "OSM.Mapnik";
+		$layer->openlayers_class = "OSM.Mapnik";
+		$layer->title = 'OSM Mapnik';
+		$layer->description = 'The main OpenStreetMap map';
+		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'attribution' => '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+			'url' => 'http://tile.openstreetmap.org/${z}/${x}/${y}.png',
+			'type' => '',
+			'transitionEffect' => 'resize',
+		);
+		$layers[$layer->name] = $layer;
+
+	// OpenStreetMap Mapnik for google
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'osm_mapnik_alt';
+		$layer->openlayers = "Google";
+		$layer->openlayers_class = "OSM.Mapnik";
 		$layer->title = 'OSM Mapnik';
 		$layer->description = 'The main OpenStreetMap map';
 		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
@@ -408,6 +454,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'osm_cycle';
 		$layer->openlayers = "OSM.CycleMap";
+		$layer->openlayers_class = "OSM.CycleMap";
 		$layer->title = 'OSM Cycling Map';
 		$layer->description = 'OpenStreetMap with highlighted bike lanes';
 		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
@@ -425,6 +472,7 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'osm_TransportMap';
 		$layer->openlayers = "OSM.TransportMap";
+		$layer->openlayers_class = "OSM.TransportMap";
 		$layer->title = 'OSM Transport Map';
 		$layer->description = 'TransportMap';
 		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
