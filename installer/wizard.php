@@ -54,7 +54,7 @@ class Installer_Wizard {
 		'mbstring',
 		
 		// Database access
-		'mysql',
+		'mysqli',
 		
 		// cURL for remote site access
 		'curl',
@@ -625,7 +625,7 @@ class Installer_Wizard {
 		
 		if ( ! self::$_connection)
 		{
-			self::$_errors[] = sprintf("Database connection error: %s", mysql_error());
+			self::$_errors[] = sprintf("Database connection error: %s", mysqli_error(self::$_connection));
 			
 			return FALSE;
 		}
@@ -683,30 +683,19 @@ class Installer_Wizard {
 	private static function _database_connect()
 	{
 		$params = self::$_data['database'];
-		
-		self::$_connection = mysql_connect($params['host'], $params['user'], 
-		    $params['pass'], TRUE);
+        $database_name = $params['database'];
+
+
+        self::$_connection = mysqli_connect($params['host'], $params['user'],
+		    $params['pass'], $database_name);
 		
 		if ( ! self::$_connection)
 		{
-			self::$_errors[] = sprintf("Connection error: <strong>%s</strong>", mysql_error());
+			self::$_errors[] = sprintf("Connection error: <strong>%s</strong>", mysqli_error(self::$_connection));
 
 			return FALSE;
 		}
-		
-		$database_name = $params['database'];
-		
-		if ( ! mysql_select_db($database_name))
-		{
-			if (self::_execute_query(sprintf("CREATE DATABASE %s", self::_escape_str($database_name))))
-			{
-				mysql_select_db($database_name, self::$_connection);
-			}
-			else
-			{
-				self::$_errors[] = sprintf("Error creating database: %s", mysql_error());
-			}
-		}
+
 				
 	}
 	
@@ -723,10 +712,10 @@ class Installer_Wizard {
 		
 		if (strlen(trim($query)) > 0)
 		{
-			if ( ! mysql_query($query))
+			if ( ! mysqli_query(self::$_connection, $query))
 			{
 				self::$_errors[] = sprintf("Encountered error <strong>%s</strong> when executing query <code>%s</code>", 
-				    mysql_error(), $query);
+				    mysqli_error(self::$_connection), $query);
 			
 				return FALSE;
 			}
@@ -746,7 +735,7 @@ class Installer_Wizard {
 			self::_database_connect();
 		}
 		
-		return mysql_real_escape_string($string);
+		return mysqli_real_escape_string(self::$_connection, $string);
 	}
 	
 	/**
