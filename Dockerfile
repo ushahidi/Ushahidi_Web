@@ -1,9 +1,13 @@
 FROM php:5.5-apache
 
 ENV DOCKERIZE_VERSION v0.6.1
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y \
+RUN cat > /etc/apt/sources.list <<EOF
+deb http://archive.debian.org/debian/ jessie main contrib non-free
+deb-src http://archive.debian.org/debian/ jessie main contrib non-free
+EOF
+RUN apt-get update --allow-unauthenticated && \
+    apt-get upgrade -y --allow-unauthenticated && \
+    apt-get install -y --allow-unauthenticated \
       wget \
       libfreetype6-dev \
       libjpeg62-turbo-dev \
@@ -24,11 +28,12 @@ RUN apt-get update && \
     docker-php-ext-install imap && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-install gd && \
-    wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
-    tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
-    rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 WORKDIR /var/www/html/
 COPY ./ /var/www/html/
