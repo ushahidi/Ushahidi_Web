@@ -1,6 +1,6 @@
 FROM php:5.5-apache
 
-ENV DOCKERIZE_VERSION v0.6.1
+ENV DOCKERIZE_VERSION v0.7.0
 RUN cat > /etc/apt/sources.list <<EOF
 deb http://archive.debian.org/debian/ jessie main contrib non-free
 deb-src http://archive.debian.org/debian/ jessie main contrib non-free
@@ -31,9 +31,9 @@ RUN apt-get update --allow-unauthenticated && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
-    tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
-    rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+RUN curl -L --output /tmp/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    tar -C /usr/local/bin -xzvf /tmp/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    rm /tmp/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 WORKDIR /var/www/html/
 COPY ./ /var/www/html/
