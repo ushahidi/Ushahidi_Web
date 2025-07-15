@@ -154,8 +154,10 @@ class Cache_File_Driver implements Cache_Driver {
 			}
 			else
 			{
-				$data = file_get_contents($file);
-
+				$data = @file_get_contents($file);
+				if ($data === FALSE) {
+					return NULL;
+				}
 				// Find the hash of the data
 				$hash = substr($data, 0, 40);
 
